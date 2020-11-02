@@ -1,19 +1,19 @@
 export default {
-    $statusBarColor: '#c1c1c1',
-    $navBarBackgroundColor: '#fefefe',
-    $navBarButtonColor: '#fd7e14',
+    $statusBarColor: '#fff',
+    $navBarBackgroundColor: '#fff',
+    $navBarButtonColor: '#f77e05',
     $navBarButtonFontSize: 10,
-    $navBarTextColor: '#fd7e14',
+    $navBarTextColor: '#f77e05',
     $screenBackgroundColor: '#fff',
-    $drawerBgColor: '#fff',
 
+    $drawerBgColor: '#fff',
     $drawerHeaderBackgroundColor: '#fff',
     $drawerHeaderBorderColor: '#D6D6D6',
     $drawerHeaderTextColor: '#000',
     $drawerHeaderButtonColor: '#888888',
 
-    $primaryColor: '#FF6008',
-    $primaryColorText: '#fff',
+    $primaryColor: '#f77e05',
+    $primaryColorText: '#474747',
 
     $successColor: '#7DCFB6',
     $infoColor: '#FCEADE',

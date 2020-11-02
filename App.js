@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -16,17 +8,17 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import LoginScreen from './src/screens/LoginScreen';
+import AuthNavigator from './src/navigation/AuthNavigator';
+import MainNavigator from './src/navigation/MainNavigator';
 
 const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <LoginScreen />
-      </SafeAreaView>
-    </>
-  );
+  const login = false
+  if (login) {
+    return <AuthNavigator />
+  }
+  if (!login) {
+    return <MainNavigator />
+  }
 };
 
 const styles = StyleSheet.create({
