@@ -4,10 +4,12 @@ import {
     TouchableOpacity,
     ScrollView,
     View,
+    Button,
     FlatList,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 import UserGridItem from '../components/UserGridItem';
+import PosterDetailsScreen from './PosterDetailsScreen';
 
 const category = [
     { id: '1', title: 'Actor' },
@@ -37,6 +39,7 @@ const renderGridItem = (user) => {
 }
 
 const PortfolioListScreen = (props) => {
+
     return (
         <View style={styles.container}>
             <ScrollView horizontal style={{ backgroundColor: 'white' }}>

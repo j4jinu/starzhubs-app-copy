@@ -8,7 +8,11 @@ const PosterGridItem = (props) => {
             {
                 <TouchableOpacity
                     style={styles.gridItem}
-                    onPress={() => props.navigation.navigate('PosterDetails')}
+                    onPress={() => props.navigation.navigate('PosterDetails', {
+                        posterId: props.id,
+                        title: props.poster,
+                        image: props.image
+                    })}
                     activeOpacity={0.7}
                 >
                     <View style={styles.container}>
@@ -19,7 +23,7 @@ const PosterGridItem = (props) => {
                                 resizeMode: 'stretch', borderRadius: 10
                             }}
                             source={{
-                                uri: 'https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fscottmendelson%2Ffiles%2F2017%2F05%2Fpirates_of_the_caribbean_dead_men_tell_no_tales_by_mintmovi3-db23j4w.jpg'
+                                uri: props.image
                             }}
                         />
                         <View style={styles.owner}>
@@ -38,6 +42,7 @@ const PosterGridItem = (props) => {
                                 <Text style={{ fontSize: 10, color: 'gray' }}>{'25 Oct 2020'}</Text>
                             </View>
                         </View>
+                        <Text>{props.poster}</Text>
                         <Text style={{
                             marginHorizontal: 10,
                             color: theme.$primaryColorText,

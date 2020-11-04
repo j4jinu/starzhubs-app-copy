@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, View, TouchableOpacity, StyleSheet, TextInput, Text, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import theme from '../config/theme';
 
 const SignupScreen = (props) => {
     return (
@@ -11,7 +12,7 @@ const SignupScreen = (props) => {
                     <Icon
                         name='user'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         textContentType={'name'}
@@ -23,7 +24,7 @@ const SignupScreen = (props) => {
                     <Icon
                         name='envelope'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         keyboardType={'email-address'}
@@ -36,7 +37,7 @@ const SignupScreen = (props) => {
                     <Icon
                         name='phone'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         keyboardType={'number-pad'}
@@ -48,7 +49,7 @@ const SignupScreen = (props) => {
                     <Icon
                         name='lock'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         secureTextEntry={true}
@@ -60,7 +61,7 @@ const SignupScreen = (props) => {
                     <Icon
                         name='lock'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         secureTextEntry={true}
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     registerBtn: {
         alignSelf: 'center',
         width: '90%',
-        backgroundColor: 'orange',
+        backgroundColor: theme.$primaryColor,
         padding: 5,
         borderRadius: 8,
         alignItems: 'center',

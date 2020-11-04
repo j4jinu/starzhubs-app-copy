@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import theme from '../config/theme';
 
 const ForgotPasswordScreen = () => {
     const [loading, setLoading] = useState(false)
@@ -21,7 +22,7 @@ const ForgotPasswordScreen = () => {
                             <Icon
                                 name='envelope'
                                 size={20}
-                                color={'orange'}
+                                color={theme.$primaryColor}
                             />
                             <TextInput
                                 keyboardType={'email-address'}
@@ -32,7 +33,7 @@ const ForgotPasswordScreen = () => {
                         </View>
                         <TouchableOpacity
                             style={{
-                                backgroundColor: 'orange',
+                                backgroundColor: theme.$primaryColor,
                                 height: 45,
                                 width: 45,
                                 borderRadius: 100,
@@ -79,7 +80,7 @@ const ForgotPasswordScreen = () => {
                         <Icon
                             name='envelope'
                             size={20}
-                            color={'orange'}
+                            color={theme.$primaryColor}
                         />
                         <TextInput
                             style={styles.inputField}
@@ -90,7 +91,7 @@ const ForgotPasswordScreen = () => {
                         <Icon
                             name='envelope'
                             size={20}
-                            color={'orange'}
+                            color={theme.$primaryColor}
                         />
                         <TextInput
                             style={styles.inputField}
@@ -101,7 +102,7 @@ const ForgotPasswordScreen = () => {
                         <Icon
                             name='envelope'
                             size={20}
-                            color={'orange'}
+                            color={theme.$primaryColor}
                         />
                         <TextInput
                             style={styles.inputField}
@@ -110,7 +111,7 @@ const ForgotPasswordScreen = () => {
                     </View>
                     <TouchableOpacity
                         style={{
-                            backgroundColor: 'orange',
+                            backgroundColor: theme.$primaryColor,
                             height: 45,
                             width: 45,
                             borderRadius: 100,
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     containerBackground1: {
-        backgroundColor: 'orange',
+        backgroundColor: theme.$primaryColor,
         borderTopStartRadius: 50
     },
     title: {

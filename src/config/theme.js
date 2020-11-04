@@ -12,7 +12,7 @@ export default {
     $drawerHeaderTextColor: '#000',
     $drawerHeaderButtonColor: '#888888',
 
-    $primaryColor: '#f77e05',
+    $primaryColor: '#F98644',
     $primaryColorText: '#474747',
 
     $successColor: '#7DCFB6',

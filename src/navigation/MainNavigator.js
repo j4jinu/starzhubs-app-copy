@@ -12,11 +12,15 @@ import NotificationListScreen from '../screens/NotificationListScreen';
 import AccountScreen from '../screens/AccountScreen';
 import UserDetailsScreen from '../screens/UserDetailsScreen';
 import PosterDetailsScreen from '../screens/PosterDetailsScreen';
+import SearchScreen from '../screens/SearchScreen';
+import theme from '../config/theme';
+import FilterScreen from '../screens/FilterScreen';
+import EditProfileScreen from '../screens/EditProfileScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
         screen: HomeTopTabNavigator,
-        navigationOptions: {
+        navigationOptions: ({ navigate, navigation }) => ({
             title: 'Explore',
             headerStyle: {
                 elevation: 0,
@@ -31,16 +35,19 @@ const HomeNavigator = createStackNavigator({
                     style={{ marginRight: 15 }}
                     size={25}
                     name='search'
-                    onPress={() => alert('This is a button!')}
+                    onPress={() => navigation.navigate('Filter')}
                 />
             ),
-        }
+        })
     },
     UserDetails: {
         screen: UserDetailsScreen
     },
     PosterDetails: {
         screen: PosterDetailsScreen
+    },
+    Search: {
+        screen: SearchScreen
     }
 }, {
     defaultNavigationOptions: {
@@ -54,7 +61,7 @@ const HomeNavigator = createStackNavigator({
 const UserNavigator = createStackNavigator({
     Users: {
         screen: PortfolioListScreen,
-        navigationOptions: {
+        navigationOptions: ({ navigate, navigation }) => ({
             headerStyle: {
                 elevation: 0,
                 shadowOpacity: 0
@@ -64,14 +71,17 @@ const UserNavigator = createStackNavigator({
                     style={{ marginRight: 15 }}
                     size={25}
                     name='filter-outline'
-                    onPress={() => alert('This is a button!')}
+                    onPress={() => navigation.navigate('Filter')}
                 />
             ),
-        },
+        }),
     },
     UserDetails: {
-        screen: UserDetailsScreen
-    }
+        screen: UserDetailsScreen,
+    },
+    Filter: {
+        screen: FilterScreen
+    },
 }, {
     defaultNavigationOptions: {
         mode: 'modal',
@@ -116,6 +126,9 @@ const AccountNavigator = createStackNavigator({
             headerShown: false
         }
     },
+    Edit: {
+        screen: EditProfileScreen
+    }
 }, {
     defaultNavigationOptions: {
         mode: 'modal',
@@ -162,7 +175,7 @@ const MainNavigator = createBottomTabNavigator(
             },
         }),
         tabBarOptions: {
-            activeTintColor: 'orange',
+            activeTintColor: theme.$primaryColor,
             inactiveTintColor: 'gray',
         },
         swipeEnabled: true,

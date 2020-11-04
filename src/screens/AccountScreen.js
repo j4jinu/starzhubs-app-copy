@@ -8,11 +8,12 @@ import {
     View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import theme from '../config/theme';
 
 
 const Divider = <View style={{ width: '100%', height: 1, backgroundColor: '#e6e6e6' }} />
 
-const AccountScreen = () => {
+const AccountScreen = (props) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.container}>
@@ -72,10 +73,13 @@ const AccountScreen = () => {
                     <View style={styles.section}>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="shield-account" size={24} color={'gray'} />
-                            <View style={styles.sectionDetails}>
+                            <TouchableOpacity
+                                style={styles.sectionDetails}
+                                onPress={() => props.navigation.navigate('Edit')}
+                            >
                                 <Text style={styles.sectionDetailsTitle}>Profile Details</Text>
                                 <Text style={styles.sectionDetailsSubtitle}>Manage your profile</Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
                     </View>
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     logoutBtn: {
-        borderColor: 'orange',
+        borderColor: theme.$primaryColor,
         borderWidth: 1,
         marginHorizontal: 20,
         padding: 8,
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
     logoutBtnText: {
         fontSize: 18,
         textTransform: 'uppercase',
-        color: 'orange'
+        color: theme.$primaryColor
     },
     profileContainer: {
         flex: 1,

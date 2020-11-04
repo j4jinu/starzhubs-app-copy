@@ -5,6 +5,7 @@ import SignupScreen from '../screens/SignupScreen';
 import PortfolioListScreen from '../screens/PortfolioListScreen';
 import HomePortfolioList from '../components/HomePortfolioList';
 import HomePosterList from '../components/HomePosterList';
+import theme from '../config/theme';
 
 const RouteConfigs = {
     Portfolio: HomePortfolioList,
@@ -14,14 +15,14 @@ const RouteConfigs = {
 
 const TabNavigatorConfig = {
     upperCaseLabel: true,
-    activeTintColor: 'orange',
+    activeTintColor: theme.$primaryColor,
     showIcon: true,
     showLabel: false,
     indicatorStyle: {
-        activeTintColor: 'orange'
+        activeTintColor: theme.$primaryColor
     },
     tabBarOptions: {
-        activeTintColor: 'orange',
+        activeTintColor: theme.$primaryColor,
         inactiveTintColor: 'gray',
         pressColor: 'gray',
         style: {

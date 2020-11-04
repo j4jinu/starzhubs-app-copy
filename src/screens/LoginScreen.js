@@ -30,7 +30,7 @@ const LoginScreen = (props) => {
                     <Icon
                         name='mail'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         keyboardType={'email-address'}
@@ -43,7 +43,7 @@ const LoginScreen = (props) => {
                     <Icon
                         name='lock'
                         size={20}
-                        color={'orange'}
+                        color={theme.$primaryColor}
                     />
                     <TextInput
                         secureTextEntry={true}
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     loginBtn: {
         alignSelf: 'center',
         width: '90%',
-        backgroundColor: 'orange',
+        backgroundColor: theme.$primaryColor,
         padding: 5,
         borderRadius: 10,
         alignItems: 'center',
@@ -165,13 +165,13 @@ const styles = StyleSheet.create({
         fontFamily: 'montserrat-regular'
     },
     registerLayoutText2: {
-        color: 'orange',
+        color: theme.$primaryColor,
         fontSize: 14,
         fontWeight: 'bold',
         fontFamily: 'montserrat-regular'
     },
     welcomeText: {
-        color: 'orange',
+        color: theme.$primaryColor,
         fontSize: 22,
         marginTop: 50,
         marginBottom: 20,
