@@ -1,9 +1,9 @@
 import React from 'react';
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import HomeTopTabNavigator from "./HomeTopTabNavigator";
 import PortfolioListScreen from '../screens/PortfolioListScreen';
@@ -16,6 +16,13 @@ import SearchScreen from '../screens/SearchScreen';
 import theme from '../config/theme';
 import FilterScreen from '../screens/FilterScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
+import FriendScreen from '../screens/FriendScreen';
+import HomePosterList from '../components/HomePosterList';
+import MyConnectionScreen from '../screens/MyConnectionScreen';
+import PendingConnectionScreen from '../screens/PendingConnectionScreen';
+import SentConnectionScreen from '../screens/SentConnectionScreen';
+import BuddyTopNavigator from './BuddyTopNavigator';
+import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
@@ -46,8 +53,11 @@ const HomeNavigator = createStackNavigator({
     PosterDetails: {
         screen: PosterDetailsScreen
     },
-    Search: {
-        screen: SearchScreen
+    Filter: {
+        screen: FilterScreen
+    },
+    MediaDetails: {
+        screen: MediaDetailsScreen
     }
 }, {
     defaultNavigationOptions: {
@@ -84,7 +94,6 @@ const UserNavigator = createStackNavigator({
     },
 }, {
     defaultNavigationOptions: {
-        mode: 'modal',
         headerTitleStyle: {
             fontWeight: '100',
             fontSize: 17
@@ -99,7 +108,6 @@ const PosterNavigator = createStackNavigator({
     }
 }, {
     defaultNavigationOptions: {
-        mode: 'modal',
         headerTitleStyle: {
             fontWeight: '100',
             fontSize: 17
@@ -111,7 +119,6 @@ const NotificationNavigator = createStackNavigator({
     Notifications: NotificationListScreen,
 }, {
     defaultNavigationOptions: {
-        mode: 'modal',
         headerTitleStyle: {
             fontWeight: '100',
             fontSize: 17
@@ -131,7 +138,6 @@ const AccountNavigator = createStackNavigator({
     }
 }, {
     defaultNavigationOptions: {
-        mode: 'modal',
         headerTitleStyle: {
             fontWeight: '100',
             fontSize: 17
@@ -139,11 +145,88 @@ const AccountNavigator = createStackNavigator({
     }
 })
 
+const BuddyNavigator = createStackNavigator({
+    Connections: {
+        screen: BuddyTopNavigator,
+        navigationOptions: {
+            title: 'Friends',
+            headerStyle: {
+                elevation: 0,
+                shadowOpacity: 0
+            },
+            headerTitleStyle: {
+                fontWeight: '100',
+                fontSize: 17
+            },
+        }
+    },
+    UserDetails: {
+        screen: UserDetailsScreen,
+    },
+}, {
+    defaultNavigationOptions: {
+        headerTitleStyle: {
+            fontWeight: '100',
+            fontSize: 17
+        },
+    }
+})
+
+const FriendsNavigator = createMaterialTopTabNavigator(
+    {
+        Connections: MyConnectionScreen,
+        Pending: PendingConnectionScreen,
+        Sent: SentConnectionScreen,
+    },
+    {
+        defaultNavigationOptions: {
+            upperCaseLabel: false,
+            activeTintColor: theme.$primaryColor,
+            showIcon: true,
+            showLabel: false,
+            indicatorStyle: {
+                activeTintColor: theme.$primaryColor
+            },
+            labelStyle: {
+                fontSize: 14,
+                fontWeight: 'bold'
+            },
+            tabBarOptions: {
+                labelStyle: {
+                    fontSize: 14,
+                    textTransform: 'capitalize',
+                    fontWeight: "bold"
+                },
+                activeTintColor: theme.$primaryColor,
+                inactiveTintColor: 'gray',
+                pressColor: 'gray',
+                style: {
+                    backgroundColor: 'white',
+                    elevation: 0,
+                    width: '90%'
+                },
+                indicatorStyle: {
+                    backgroundColor: theme.$primaryColor
+                },
+            },
+            tabsStyle: {
+                backgroundColor: 'white',
+                elevation: 0,
+            },
+            style: {
+                backgroundColor: 'white'
+            }
+        }
+    }
+)
+
 const MainNavigator = createBottomTabNavigator(
     {
-        Users: UserNavigator,
-        Posters: PosterNavigator,
+        // Users: UserNavigator,
+        // Posters: PosterNavigator,
         Home: HomeNavigator,
+        Search: FilterScreen,
+        Friends: BuddyNavigator,
         Notification: NotificationNavigator,
         Profile: AccountNavigator
     },
@@ -151,23 +234,28 @@ const MainNavigator = createBottomTabNavigator(
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
-                let IconComponent = MaterialCommunityIcons;
+                let IconComponent = Ionicons;
                 let iconName;
                 if (routeName === 'Home') {
                     iconName = focused
                         ? 'home'
-                        : 'home';
-                } else if (routeName === 'Users') {
-                    iconName = focused ? 'account-group' : 'account-group';
-                } else if (routeName === 'Posters') {
-                    iconName = focused ? 'post' :
-                        'post'
+                        : 'home-outline';
+                } else if (routeName === 'Search') {
+                    iconName = focused
+                        ? 'search'
+                        : 'search-outline';
+                } else if (routeName === 'Friends') {
+                    iconName = focused
+                        ? 'ios-people'
+                        : 'people-outline'
                 } else if (routeName === 'Notification') {
-                    iconName = focused ? 'bell' :
-                        'bell'
+                    iconName = focused
+                        ? 'ios-notifications'
+                        : 'ios-notifications-outline'
                 } else if (routeName === 'Profile') {
-                    iconName = focused ? 'account' :
-                        'account'
+                    iconName = focused
+                        ? 'person'
+                        : 'person-outline'
                 }
 
                 // You can return any component that you like here!
@@ -180,7 +268,7 @@ const MainNavigator = createBottomTabNavigator(
         },
         swipeEnabled: true,
         animationEnabled: true,
-        initialRouteName: 'Home'
+        initialRouteName: 'Home',
     }
 )
 

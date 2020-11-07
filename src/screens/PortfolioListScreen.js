@@ -42,13 +42,6 @@ const PortfolioListScreen = (props) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView horizontal style={{ backgroundColor: 'white' }}>
-                {category.map(cat => (
-                    <TouchableOpacity key={cat.id} style={styles.categoryItem}>
-                        <Text>{cat.title}</Text>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
             <FlatList
                 keyExtractor={(item, index) => item.id}
                 data={users}
@@ -59,6 +52,21 @@ const PortfolioListScreen = (props) => {
                     />
                 )}
                 numColumns={2}
+                ListHeaderComponent={
+                    <ScrollView
+                        horizontal
+                        style={{
+                            backgroundColor: 'white',
+                            marginVertical: 5
+                        }}
+                    >
+                        {category.map(cat => (
+                            <TouchableOpacity key={cat.id} style={styles.categoryItem}>
+                                <Text>{cat.title}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                }
             />
         </View>
     );
@@ -66,7 +74,7 @@ const PortfolioListScreen = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     categoryItem: {
         backgroundColor: 'white',

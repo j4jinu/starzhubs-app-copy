@@ -54,6 +54,7 @@ const HomeScreen = (props) => {
 
     return (
         <ScrollView>
+
             <View style={{ flex: 1, flexDirection: 'column' }}>
                 <ScrollView horizontal>
                     {category.map(cat => (

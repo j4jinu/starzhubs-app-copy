@@ -6,30 +6,41 @@ import PortfolioListScreen from '../screens/PortfolioListScreen';
 import HomePortfolioList from '../components/HomePortfolioList';
 import HomePosterList from '../components/HomePosterList';
 import theme from '../config/theme';
+import PosterListScreen from '../screens/PosterListScreen';
 
 const RouteConfigs = {
-    Portfolio: HomePortfolioList,
+    Portfolio: PortfolioListScreen,
     Media: HomePosterList,
-    Poster: HomePosterList
+    Poster: PosterListScreen
 }
 
 const TabNavigatorConfig = {
     upperCaseLabel: true,
     activeTintColor: theme.$primaryColor,
-    showIcon: true,
     showLabel: false,
     indicatorStyle: {
         activeTintColor: theme.$primaryColor
     },
     tabBarOptions: {
+        labelStyle: {
+            fontSize: 14,
+            textTransform: 'capitalize',
+            fontWeight: "bold",
+        },
         activeTintColor: theme.$primaryColor,
         inactiveTintColor: 'gray',
         pressColor: 'gray',
+        indicatorStyle: {
+            backgroundColor: theme.$primaryColor
+        },
         style: {
             backgroundColor: 'white',
-        }
+            elevation: 0,
+            shadowOpacity: 0,
+        },
     },
     tabsStyle: {
+        width: 100,
         backgroundColor: 'white'
     },
     style: {

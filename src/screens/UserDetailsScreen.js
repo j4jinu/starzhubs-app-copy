@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, Image, View, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper'
 import theme from '../config/theme';
+import UserTalentSection from '../components/UserTalentSection';
+import UserMediaSection from '../components/UserMediaSection';
+import UserPosterSection from '../components/UserPosterSection';
 
 const avatars = [
     { id: 'h', image: 'https://deadline.com/wp-content/uploads/2030/10/AP_20210337197617-e1603795015914.jpg?w=681&h=383&crop=1' },
@@ -12,9 +15,11 @@ const avatars = [
     { id: 'a', image: 'https://img.theweek.in/content/dam/week/news/entertainment/images/2019/4/25/Johnny-Depp-dating.jpg' }
 ]
 
-const UserDetailsScreen = () => {
+const UserDetailsScreen = (props) => {
+    const [content, setContent] = useState('T')
+
     return (
-        <ScrollView>
+        <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
             <View style={styles.container}>
                 <Swiper
                     style={styles.wrapper}
@@ -23,7 +28,7 @@ const UserDetailsScreen = () => {
                     {avatars.map(a => (
                         <Image
                             key={a.id}
-                            style={{ width: '100%', height: 230, resizeMode: 'cover' }}
+                            style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                             source={{
                                 uri: a.image
                             }}
@@ -34,12 +39,109 @@ const UserDetailsScreen = () => {
                 <TouchableOpacity style={styles.requestBtn}>
                     <Icon
                         name="account-arrow-right"
-                        size={20}
+                        size={25}
                         color={'white'}
                     />
                 </TouchableOpacity>
-
+                <Text style={styles.personName}>
+                    {'Test User'}
+                </Text>
+                <Text style={styles.otherText}>
+                    {'Male, 02-10-1995'}
+                </Text>
+                <Text style={styles.otherText}>
+                    {'Alappuzha, Kerala'}
+                </Text>
+                <Text style={styles.otherText}>
+                    {'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
+                </Text>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    marginVertical: 15,
+                    backgroundColor: '#f6f6f6',
+                    paddingVertical: 8
+                }}>
+                    <View>
+                        <Text style={styles.subtitle}>Height</Text>
+                        <Text>0</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.subtitle}>Weight</Text>
+                        <Text>0</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.subtitle}>Complexion</Text>
+                        <Text>0</Text>
+                    </View>
+                    <View>
+                        <Text style={styles.subtitle}>Body</Text>
+                        <Text>0</Text>
+                    </View>
+                </View>
+                <View
+                    style={styles.row}
+                >
+                    <TouchableOpacity
+                        onPress={() => setContent('T')}
+                        activeOpacity={0.7}
+                        style={{
+                            borderColor: content === 'T' ? 'orange' : 'white',
+                            borderBottomWidth: 3,
+                            paddingVertical: 5,
+                            paddingHorizontal: 8,
+                            paddingBottom: 12,
+                            width: '24%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Text style={{ fontWeight: 'bold' }}>
+                            Talents
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setContent('M')}
+                        activeOpacity={0.7}
+                        style={{
+                            borderColor: content === 'M' ? 'orange' : 'white',
+                            borderBottomWidth: 3,
+                            paddingVertical: 5,
+                            paddingHorizontal: 8,
+                            paddingBottom: 12,
+                            width: '24%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Text style={{ fontWeight: 'bold' }}>
+                            Media
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => setContent('P')}
+                        activeOpacity={0.7}
+                        style={{
+                            borderColor: content === 'P' ? 'orange' : 'white',
+                            borderBottomWidth: 3,
+                            paddingVertical: 5,
+                            paddingHorizontal: 8,
+                            paddingBottom: 12,
+                            width: '24%',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}
+                    >
+                        <Text style={{ fontWeight: 'bold' }}>
+                            Posters
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                {content === 'T' && <UserTalentSection navigation={props.navigation} />}
+                {content === 'M' && <UserMediaSection navigation={props.navigation} />}
+                {content === 'P' && <UserPosterSection navigation={props.navigation} />}
             </View>
+
         </ScrollView>
     );
 };
@@ -47,39 +149,46 @@ const UserDetailsScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: 'white'
     },
     requestBtn: {
         backgroundColor: theme.$primaryColor,
         borderRadius: 100,
-        height: 40,
-        width: 40,
+        height: 50,
+        width: 50,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 5,
         alignSelf: 'flex-end',
-        marginTop: -20,
+        marginTop: -25,
         marginRight: 15
     },
-    wrapper: { height: 230 },
-    slide1: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#9DD6EB'
+    personName: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: theme.$primaryColorText,
+        marginLeft: 15,
+        marginBottom: 8
     },
-    slide2: {
-        flex: 1,
-        justifyContent: 'center',
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#97CAE5'
+        marginTop: 10,
+        marginHorizontal: 20
     },
-    slide3: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#92BBD9'
+    subtitle: {
+        fontWeight: 'bold',
+        color: theme.$primaryColorText
     },
+    otherText: {
+        marginHorizontal: 15,
+        marginVertical: 1,
+        fontSize: 14,
+        color: theme.$primaryColorText
+    },
+    wrapper: { height: 300 },
     text: {
         color: '#fff',
         fontSize: 30,

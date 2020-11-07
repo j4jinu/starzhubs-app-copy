@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
     },
     description: {
         marginHorizontal: 5,
-        marginVertical: 5
+        marginVertical: 5,
+        lineHeight: 20
     },
     posterInfo: {
         backgroundColor: 'white',
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         padding: 8,
         marginTop: -10,
         borderRadius: theme.$borderRadius
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         padding: 8,
         marginTop: 10,
         flexDirection: 'row',
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginHorizontal: 20,
+        marginHorizontal: 10,
         padding: 12,
         marginTop: 15,
         justifyContent: 'center',

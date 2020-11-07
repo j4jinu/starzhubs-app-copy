@@ -1,25 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 
-const UserGridItem = (props) => {
+const MediaGrid = (props) => {
     return (
         <>
             {
                 <TouchableOpacity
                     style={styles.gridItem}
-                    onPress={() => props.navigation.navigate('UserDetails')}
                     activeOpacity={0.7}
+                    onPress={() => props.navigation.navigate('MediaDetails', {
+                        media: props.image
+                    })}
                 >
                     <View style={styles.container}>
                         <Image
-                            style={{ width: '100%', height: '75%', resizeMode: 'cover' }}
+                            style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{
-                                uri: 'https://upload.wikimedia.org/wikipedia/commons/7/79/Johnny_Depp_Deauville_2019.jpg'
+                                uri: props.image
                             }}
                         />
-                        <Text style={styles.gridItemText}>{props.name}</Text>
-                        <Text style={{ marginLeft: 10, marginTop: 1 }}>{'France'}</Text>
-                        <Text style={{ marginLeft: 10, marginTop: 1 }}>{'Actor, Singer'}</Text>
                     </View>
                 </TouchableOpacity>
             }
@@ -31,15 +30,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#e9e9e9',
-        paddingBottom: 10
     },
     gridItem: {
         flex: 1,
         width: 200,
-        height: 250,
+        height: 150,
         backgroundColor: '#f1f1f1',
-        marginHorizontal: 1,
-        marginVertical: 1
+        marginHorizontal: 3,
+        marginVertical: 3
     },
     gridItemText: {
         fontFamily: 'montserrat-medium',
@@ -51,4 +49,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default UserGridItem;
+export default MediaGrid;

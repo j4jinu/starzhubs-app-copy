@@ -31,11 +31,18 @@ const AccountScreen = (props) => {
                                 uri: 'https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fscottmendelson%2Ffiles%2F2017%2F05%2Fpirates_of_the_caribbean_dead_men_tell_no_tales_by_mintmovi3-db23j4w.jpg'
                             }}
                         />
-                        <Text style={styles.profileTitle}>Test User</Text>
+                        <View>
+                            <Text style={styles.profileTitle}>Test User</Text>
+                            <Text style={{ fontSize: 12, marginLeft: 10, color: 'gray' }}>user@example.com</Text>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.sectionContainer}>
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="filmstrip" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -44,9 +51,13 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                     {Divider}
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="checkbox-intermediate" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -55,10 +66,13 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-
-                    </View>
+                    </TouchableOpacity>
                     {Divider}
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="post-outline" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -67,24 +81,29 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.sectionContainer}>
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="shield-account" size={24} color={'gray'} />
-                            <TouchableOpacity
-                                style={styles.sectionDetails}
-                                onPress={() => props.navigation.navigate('Edit')}
-                            >
+                            <View style={styles.sectionDetails}>
                                 <Text style={styles.sectionDetailsTitle}>Profile Details</Text>
                                 <Text style={styles.sectionDetailsSubtitle}>Manage your profile</Text>
-                            </TouchableOpacity>
+                            </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                     {Divider}
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="account-group" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -93,10 +112,14 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.sectionContainer}>
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="help-rhombus" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -105,9 +128,13 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                     {Divider}
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="format-list-text" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -116,9 +143,13 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                     {Divider}
-                    <View style={styles.section}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="comment-text" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
@@ -127,11 +158,22 @@ const AccountScreen = (props) => {
                             </View>
                         </View>
                         <Icon name="chevron-right" size={24} color={'gray'} />
-                    </View>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity activeOpacity={0.5} style={styles.logoutBtn}>
-                    <Text style={styles.logoutBtnText}>LOG OUT</Text>
-                </TouchableOpacity>
+                <View style={styles.sectionContainer}>
+                    <TouchableOpacity
+                        style={styles.section}
+                        activeOpacity={0.7}
+                        onPress={() => props.navigation.navigate('Edit')}
+                    >
+                        <View style={{ flexDirection: 'row' }}>
+                            <Icon name="logout" size={24} color={'gray'} />
+                            <View style={styles.sectionDetails}>
+                                <Text style={styles.sectionDetailsTitle}>Logout</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.appInfo}>
                     <Text style={{ color: 'black' }}>APP VERSION: 1.0.00</Text>
                 </View>
@@ -157,6 +199,8 @@ const styles = StyleSheet.create({
         marginTop: -40,
         borderRadius: 100,
         padding: 5,
+        borderWidth: 3,
+        borderColor: theme.$primaryColor,
         backgroundColor: 'white'
     },
     logoutBtn: {
@@ -206,11 +250,13 @@ const styles = StyleSheet.create({
     },
     sectionDetailsTitle: {
         fontSize: 14,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: theme.$primaryColorText
     },
     sectionDetailsSubtitle: {
         fontSize: 12,
-        fontWeight: '100'
+        fontWeight: '100',
+        color: 'gray'
     }
 })
 

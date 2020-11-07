@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme'
 
 const PosterGridItem = (props) => {
@@ -20,8 +20,9 @@ const PosterGridItem = (props) => {
                             style={{
                                 width: '100%',
                                 height: 200,
-                                resizeMode: 'stretch', borderRadius: 10
+                                borderRadius: 10
                             }}
+                            resizeMode={'cover'}
                             source={{
                                 uri: props.image
                             }}
@@ -42,12 +43,15 @@ const PosterGridItem = (props) => {
                                 <Text style={{ fontSize: 10, color: 'gray' }}>{'25 Oct 2020'}</Text>
                             </View>
                         </View>
-                        <Text>{props.poster}</Text>
-                        <Text style={{
-                            marginHorizontal: 10,
-                            color: theme.$primaryColorText,
-                            marginTop: 5
-                        }}
+                        <Text style={styles.title}>{props.poster}</Text>
+                        <Text
+                            numberOfLines={4}
+                            style={{
+                                marginHorizontal: 15,
+                                color: theme.$primaryColorText,
+                                marginTop: 5,
+                                lineHeight: 20
+                            }}
                         >
                             {'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '}
                         </Text>
@@ -96,6 +100,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         marginLeft: 15
+    },
+    title: {
+        alignSelf: 'flex-start',
+        marginLeft: 15,
+        marginTop: 10,
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: theme.$primaryColorText
     }
 })
 
