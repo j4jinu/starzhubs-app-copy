@@ -23,6 +23,9 @@ import PendingConnectionScreen from '../screens/PendingConnectionScreen';
 import SentConnectionScreen from '../screens/SentConnectionScreen';
 import BuddyTopNavigator from './BuddyTopNavigator';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
+import HelpScreen from '../screens/HelpScreen';
+import PoliciesScreen from '../screens/PoliciesScreen';
+import FeedbackScreen from '../screens/FeedbackScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
@@ -135,6 +138,24 @@ const AccountNavigator = createStackNavigator({
     },
     Edit: {
         screen: EditProfileScreen
+    },
+    Help: {
+        screen: HelpScreen,
+        navigationOptions: {
+            title: 'Help'
+        }
+    },
+    Policy: {
+        screen: PoliciesScreen,
+        navigationOptions: {
+            title: 'Terms of Policy'
+        }
+    },
+    Feedback: {
+        screen: FeedbackScreen,
+        navigationOptions: {
+            title: 'Feedback'
+        }
     }
 }, {
     defaultNavigationOptions: {

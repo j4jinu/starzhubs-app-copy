@@ -118,7 +118,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('Help')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="help-rhombus" size={24} color={'gray'} />
@@ -133,7 +133,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('Policy')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="format-list-text" size={24} color={'gray'} />
@@ -148,7 +148,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('Feedback')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="comment-text" size={24} color={'gray'} />
