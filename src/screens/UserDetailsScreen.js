@@ -16,6 +16,9 @@ const avatars = [
 ]
 
 const UserDetailsScreen = (props) => {
+    const image = props.navigation.getParam('image')
+    const name = props.navigation.getParam('name')
+    const location = props.navigation.getParam('location')
     const [content, setContent] = useState('T')
 
     return (
@@ -30,7 +33,7 @@ const UserDetailsScreen = (props) => {
                             key={a.id}
                             style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                             source={{
-                                uri: a.image
+                               uri: `http://13.232.190.226/api/user/avatar/${image.avatar}`
                             }}
                         />
 
@@ -44,13 +47,13 @@ const UserDetailsScreen = (props) => {
                     />
                 </TouchableOpacity>
                 <Text style={styles.personName}>
-                    {'Test User'}
+                    {name}
                 </Text>
                 <Text style={styles.otherText}>
-                    {'Male, 02-10-1995'}
+                    {'Female, 02-10-1995'}
                 </Text>
                 <Text style={styles.otherText}>
-                    {'Alappuzha, Kerala'}
+                    {location.place}, {location.state}
                 </Text>
                 <Text style={styles.otherText}>
                     {'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
