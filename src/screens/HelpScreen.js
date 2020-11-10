@@ -21,15 +21,16 @@ const HelpScreen = ({ navigation }) => {
 				<View
 					style={{
 						flexDirection: 'row',
-						width: '100%',
+						width: '95%',
 						marginTop: '10%',
-						paddingHorizontal: '6%',
+						paddingHorizontal:"5%"
 					}}
 				>
 					<Icon
 						name="ios-information-circle"
 						size={20}
 						color="#F98644"
+						
 					/>
 					<Text
 						style={{
@@ -69,8 +70,8 @@ const HelpScreen = ({ navigation }) => {
 					style={{
 						flexDirection: 'row',
 						marginTop: '3%',
-						paddingHorizontal: '6%',
-						width: '100%',
+						paddingHorizontal: '5%',
+						width: '95%',
 						marginBottom: '10%',
 					}}
 				>

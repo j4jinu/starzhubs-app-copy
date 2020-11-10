@@ -7,6 +7,9 @@ const PosterDetailsScreen = (props) => {
     const posterId = props.navigation.getParam('posterId')
     const title = props.navigation.getParam('title')
     const image = props.navigation.getParam('image')
+    const description=props.navigation.getParam('description')
+    const endDate=props.navigation.getParam('endDate')
+    const startDate=props.navigation.getParam('startDate')
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -18,7 +21,7 @@ const PosterDetailsScreen = (props) => {
                     }}
                     resizeMode='cover'
                     source={{
-                        uri: image
+                        uri: `http://13.232.190.226/api/poster/view/${props.image}`,
                     }}
                 />
                 <View style={styles.posterInfo}>
@@ -30,15 +33,15 @@ const PosterDetailsScreen = (props) => {
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5, marginVertical: 15 }}>
                         <View>
-                            <Text style={{ fontSize: 12 }}>Starts : 22/07/2020</Text>
+                <Text style={{ fontSize: 12 }}>Starts : {startDate}</Text>
                         </View>
                         <View>
-                            <Text style={{ fontSize: 12 }}>Ends: 22/07/2020</Text>
+                <Text style={{ fontSize: 12 }}>Ends: {endDate}</Text>
                         </View>
                     </View>
                     <Text style={{ fontWeight: 'bold', marginHorizontal: 5 }}>{'Description'}</Text>
                     <Text style={styles.description}>
-                        {'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. '}
+                        {description}
                     </Text>
                 </View>
                 <View style={styles.authorInfo}>
