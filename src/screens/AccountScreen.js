@@ -19,11 +19,26 @@ const AccountScreen = (props) => {
             <View style={styles.container}>
                 <View>
                     <Image
-                        style={{ width: '100%', height: 200, resizeMode: 'stretch' }}
+                        style={{ width: '100%', height: 250, resizeMode: 'stretch' }}
                         source={{
                             uri: 'https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fscottmendelson%2Ffiles%2F2017%2F05%2Fpirates_of_the_caribbean_dead_men_tell_no_tales_by_mintmovi3-db23j4w.jpg'
                         }}
                     />
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        style={{
+                            alignSelf: 'flex-end',
+                            position: 'absolute',
+                            top: '5%', left: '90%', right: 0, bottom: 0,
+                            marginRight: 10
+                        }}
+                    >
+                        <Icon
+                            color={'white'}
+                            name='camera'
+                            size={30}
+                        />
+                    </TouchableOpacity>
                     <View style={styles.profileContainer}>
                         <Image
                             style={styles.avatar}
@@ -41,7 +56,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('Talents')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="filmstrip" size={24} color={'gray'} />
@@ -56,7 +71,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('MyMedia')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="checkbox-intermediate" size={24} color={'gray'} />
@@ -71,7 +86,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('MyPosters')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="post-outline" size={24} color={'gray'} />
@@ -102,7 +117,7 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => props.navigation.navigate('MyBuddy')}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="account-group" size={24} color={'gray'} />

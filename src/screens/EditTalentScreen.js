@@ -1,3 +1,4 @@
+import React from 'react'
 import {
     View,
     Text,
@@ -6,12 +7,23 @@ import {
     Button,
     StyleSheet
 } from 'react-native'
+import theme from '../config/theme'
 
-const EditTalentScreen = () => {
+const EditTalentScreen = (props) => {
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <View>
-                <Text></Text>
+                <Text
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        bottom: 0,
+                        left: 0,
+                        right: 0
+                    }}
+                >
+                    Hi
+                </Text>
             </View>
         </ScrollView>
     )
