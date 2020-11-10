@@ -2,7 +2,48 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme'
 
-const PosterGridItem = (props) => {
+const MyPosterGridItem = (props) => {
+    const confirmDelete = (pid) =>
+  Alert.alert('','Are you sure to delete this poster?',
+  [
+				{
+					text: 'Cancel',
+					// onPress: () => {navigation.navigate('My Media')},
+					style: 'cancel',
+				},
+				{
+					text: 'OK',
+					onPress: () => posterDeleteHandler(pid),
+				},
+			],
+			{ cancelable: false }
+        );
+        const posterDeleteHandler = (id) => {
+            console.warn('Poster deleted');
+            const requestOptions = {
+                method: 'DELETE',
+                headers: {
+                    Authorization: 'Bearer ' + auth.token,
+                },
+            };
+            fetch(`http://13.232.190.226/api/poster/${id}`, requestOptions)
+                .then((response) => response.json())
+                .then(
+                    (response) => {
+                        if (response.success === true) {
+                            alert(response.message);
+                           props.getPosters();
+                        } else {
+                            alert(error);
+                        }
+                    },
+                    (error) => {
+                        alert(
+                            'Something went wrong. Try again later.'
+                        );
+                    }
+                );
+        };
     return (
         <>
             {
@@ -42,11 +83,20 @@ const PosterGridItem = (props) => {
                                     uri: `http://13.232.190.226/api/poster/view/${props.image}`,
                                 }}
                             />
-                    
+                           
+                            <View style={{flexDirection:"row"}}>
                             <View style={styles.ownerDetails}>
-                                <Text style={{ fontSize: 13 }}>{'Test User'}</Text>
+                                <Text style={{ fontSize: 13 }}>{'Ends On'}</Text>
                                 <Text style={{ fontSize: 10, color: 'gray' }}>{props.endDate}</Text>
                             </View>
+                            <View>
+                                <TouchableOpacity onPress={() =>confirmDelete(props.id)}>
+                                <Icon name="delete" size={20} color="orange"style={{marginLeft: 135}}/>
+                                </TouchableOpacity>
+                            </View>
+
+                            </View>
+                            
                         </View>
                         <Text style={styles.title}>{props.poster}</Text>
                         <Text
@@ -116,4 +166,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default PosterGridItem;
+export default MyPosterGridItem;

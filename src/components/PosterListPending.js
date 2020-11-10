@@ -1,9 +1,30 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-const PosterListPending = () => {
+import { FlatList } from 'react-native-gesture-handler';
+import MyPosterGridItem from './MyPosterGridItem';
+const PosterListPending = (props) => {
+    const {posters} = props.posters
+    const {getPosters} = props.getPosters
     return (
         <View>
-            <Text>Poster List Pending</Text>
+             <FlatList
+                keyExtractor={item => item.id}
+                data={posters}
+                renderItem={({ item }) => (
+
+                    <MyPosterGridItem
+                        id={item._id}
+                        poster={item.title}
+                        image={item.image}
+                        endDate={item.endDate}
+                        startDate={item.startDate}
+                        description={item.description}
+                        userId={item.userId}
+                        navigation={props.navigation}
+                        getPosters = {props.getPosters}
+                    />
+                )}
+            />
         </View>
     );
 }

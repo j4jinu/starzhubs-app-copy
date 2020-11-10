@@ -29,6 +29,9 @@ const PosterListScreen = (props) => {
                         id={item.id}
                         poster={item.name}
                         image={item.image}
+                        endDate={item.endDate}
+                        startDate={item.startDate}
+                        description={item.description}
                         navigation={props.navigation}
                     />
                 )}
