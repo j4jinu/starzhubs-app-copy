@@ -14,7 +14,7 @@ import theme from '../config/theme';
 
 const EditProfileScreen = () => {
     return (
-        <ScrollView>
+        <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
             <View>
                 <View style={styles.inputFieldBackground}>
                     <Icon
@@ -93,14 +93,6 @@ const styles = StyleSheet.create({
         paddingRight: 8,
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 3,
     },
     inputField: {
         alignSelf: 'center',

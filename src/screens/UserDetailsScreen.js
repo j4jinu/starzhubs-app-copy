@@ -59,7 +59,7 @@ const UserDetailsScreen = (props) => {
                     flexDirection: 'row',
                     justifyContent: 'space-around',
                     marginVertical: 15,
-                    backgroundColor: '#f6f6f6',
+                    backgroundColor: '#fff',
                     paddingVertical: 8
                 }}>
                     <View>
@@ -86,7 +86,7 @@ const UserDetailsScreen = (props) => {
                         onPress={() => setContent('T')}
                         activeOpacity={0.7}
                         style={{
-                            borderColor: content === 'T' ? 'orange' : 'white',
+                            borderColor: content === 'T' ? 'orange' : '#eee',
                             borderBottomWidth: 3,
                             paddingVertical: 5,
                             paddingHorizontal: 8,
@@ -104,7 +104,7 @@ const UserDetailsScreen = (props) => {
                         onPress={() => setContent('M')}
                         activeOpacity={0.7}
                         style={{
-                            borderColor: content === 'M' ? 'orange' : 'white',
+                            borderColor: content === 'M' ? 'orange' : '#eee',
                             borderBottomWidth: 3,
                             paddingVertical: 5,
                             paddingHorizontal: 8,
@@ -122,7 +122,7 @@ const UserDetailsScreen = (props) => {
                         onPress={() => setContent('P')}
                         activeOpacity={0.7}
                         style={{
-                            borderColor: content === 'P' ? 'orange' : 'white',
+                            borderColor: content === 'P' ? 'orange' : '#eee',
                             borderBottomWidth: 3,
                             paddingVertical: 5,
                             paddingHorizontal: 8,
@@ -176,7 +176,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 10,
-        marginHorizontal: 20
+        backgroundColor: '#eee',
+        paddingVertical: 5,
+        paddingHorizontal: 8
     },
     subtitle: {
         fontWeight: 'bold',

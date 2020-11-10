@@ -26,6 +26,9 @@ import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import HelpScreen from '../screens/HelpScreen';
 import PoliciesScreen from '../screens/PoliciesScreen';
 import FeedbackScreen from '../screens/FeedbackScreen';
+import EditTalentScreen from '../screens/EditTalentScreen';
+import MyPostersScreen from '../screens/MyPostersScreen';
+import MyMediaScreen from '../screens/MyMediaScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
@@ -38,7 +41,7 @@ const HomeNavigator = createStackNavigator({
             },
             headerTitleStyle: {
                 fontWeight: '100',
-                fontSize: 17
+                fontSize: 16
             },
             headerRight: () => (
                 <MaterialIcons
@@ -66,7 +69,7 @@ const HomeNavigator = createStackNavigator({
     defaultNavigationOptions: {
         headerTitleStyle: {
             fontWeight: '100',
-            fontSize: 17
+            fontSize: 16
         },
     }
 })
@@ -99,7 +102,7 @@ const UserNavigator = createStackNavigator({
     defaultNavigationOptions: {
         headerTitleStyle: {
             fontWeight: '100',
-            fontSize: 17
+            fontSize: 16
         },
     }
 })
@@ -113,7 +116,7 @@ const PosterNavigator = createStackNavigator({
     defaultNavigationOptions: {
         headerTitleStyle: {
             fontWeight: '100',
-            fontSize: 17
+            fontSize: 16
         },
     }
 })
@@ -124,7 +127,7 @@ const NotificationNavigator = createStackNavigator({
     defaultNavigationOptions: {
         headerTitleStyle: {
             fontWeight: '100',
-            fontSize: 17
+            fontSize: 16
         },
     }
 })
@@ -138,6 +141,9 @@ const AccountNavigator = createStackNavigator({
     },
     Edit: {
         screen: EditProfileScreen
+    },
+    Talents: {
+        screen: EditTalentScreen,
     },
     Help: {
         screen: HelpScreen,
@@ -156,12 +162,30 @@ const AccountNavigator = createStackNavigator({
         navigationOptions: {
             title: 'Feedback'
         }
+    },
+    MyPosters: {
+        screen: MyPostersScreen,
+        navigationOptions: {
+            title: 'Your posters'
+        }
+    },
+    MyMedia: {
+        screen: MyMediaScreen,
+        navigationOptions: {
+            title: 'Your media'
+        }
+    },
+    MyBuddy: {
+        screen: BuddyTopNavigator,
+        navigationOptions: {
+            title: 'Your connections'
+        }
     }
 }, {
     defaultNavigationOptions: {
         headerTitleStyle: {
             fontWeight: '100',
-            fontSize: 17
+            fontSize: 16
         },
     }
 })
@@ -177,7 +201,7 @@ const BuddyNavigator = createStackNavigator({
             },
             headerTitleStyle: {
                 fontWeight: '100',
-                fontSize: 17
+                fontSize: 16
             },
         }
     },
@@ -188,7 +212,7 @@ const BuddyNavigator = createStackNavigator({
     defaultNavigationOptions: {
         headerTitleStyle: {
             fontWeight: '100',
-            fontSize: 17
+            fontSize: 16
         },
     }
 })
@@ -247,7 +271,7 @@ const MainNavigator = createBottomTabNavigator(
         // Posters: PosterNavigator,
         Home: HomeNavigator,
         Search: FilterScreen,
-        Friends: BuddyNavigator,
+        // Friends: BuddyNavigator,
         Notification: NotificationNavigator,
         Profile: AccountNavigator
     },
