@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import PosterListActive from '../components/PosterListActive';
+import PosterListExpired from '../components/PosterListExpired';
+import PosterListPending from '../components/PosterListPending';
+import PosterListRejected from '../components/PosterListRejected';
 import UserMediaSection from '../components/UserMediaSection';
 import UserPosterSection from '../components/UserPosterSection';
 import UserTalentSection from '../components/UserTalentSection';
@@ -112,6 +116,10 @@ const MyPostersScreen = () => {
                         </Text>
                 </TouchableOpacity>
             </View>
+            {content === 'A' && <PosterListActive />}
+            {content === 'P' && <PosterListPending />}
+            {content === 'E' && <PosterListExpired />}
+            {content === 'R' && <PosterListRejected />}
         </View>
     );
 }
