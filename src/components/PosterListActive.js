@@ -3,7 +3,7 @@ import { FlatList, Text, View } from 'react-native';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
     const {posters} = props.posters
-    const {getPosters} = props.getPosters
+    // const {getPosters} = props.getPosters
     return (
         <View>
            
@@ -21,7 +21,7 @@ const PosterListActive = (props) => {
                         description={item.description}
                         userId={item.userId}
                         navigation={props.navigation}
-                        getPosters = {getPosters}
+                        // getPosters = {getPosters}
                     />
                 )}
             />

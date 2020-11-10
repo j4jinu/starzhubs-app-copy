@@ -5,7 +5,7 @@ import MyPosterGridItem from './MyPosterGridItem';
 
 const PosterListExpired = (props) => {
     const {posters} = props.posters
-    const {getPosters} = props.getPosters
+    // const {getPosters} = props.getPosters
     return (
         <View>
            <FlatList
@@ -21,7 +21,7 @@ const PosterListExpired = (props) => {
                         description={item.description}
                         userId={item.userId}
                         navigation={props.navigation}
-                        getPosters = {props.getPosters}
+                        // getPosters = {props.getPosters}
                     />
                 )}
             />

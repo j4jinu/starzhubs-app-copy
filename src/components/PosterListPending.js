@@ -4,7 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListPending = (props) => {
     const {posters} = props.posters
-    const {getPosters} = props.getPosters
+    // const {getPosters} = props.getPosters
     return (
         <View>
              <FlatList
@@ -21,7 +21,7 @@ const PosterListPending = (props) => {
                         description={item.description}
                         userId={item.userId}
                         navigation={props.navigation}
-                        getPosters = {props.getPosters}
+                        // getPosters = {props.getPosters}
                     />
                 )}
             />
