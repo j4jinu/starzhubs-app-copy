@@ -1,8 +1,10 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const MyPosterGridItem = (props) => {
+    console.log("my",props)
     const confirmDelete = (pid) =>
   Alert.alert('','Are you sure to delete this poster?',
   [

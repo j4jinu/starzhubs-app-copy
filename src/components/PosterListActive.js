@@ -2,12 +2,16 @@ import React from 'react';
 import { FlatList, Text, View } from 'react-native';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
-    const {posters} = props.posters
+    console.log(props)
+    const {posters} = props
    
+    if (posters.length === 0) {
+        return <Text style={{fontSize:25,fontWeight:"bold",color:"orange", textAlign: 'center',}}>No Active Posters</Text>
+    }
     return (
         <View>
-           {props.posters.length===0 && (<Text style={{fontSize:25,fontWeight:"bold",color:"orange",alignItems:"center"}}>No Posters</Text>)}
-            {props.posters.length>0 && (
+           {/* {props.posters.length===0 && (<Text style={{fontSize:25,fontWeight:"bold",color:"orange",alignItems:"center"}}>No Posters</Text>)}
+            {props.posters.length>0 && ( */}
             <FlatList
                 keyExtractor={item => item.id}
                 data={posters}
@@ -26,7 +30,7 @@ const PosterListActive = (props) => {
                     />
                 )}
             />
-            )}
+            {/* )} */}
         </View>
     );
 }

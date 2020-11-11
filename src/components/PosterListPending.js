@@ -3,7 +3,11 @@ import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListPending = (props) => {
-    const {posters} = props.posters
+    const {posters} = props
+    console.log('posters in props', posters)
+    if (posters.length === 0) {
+        return <Text style={{fontSize:25,fontWeight:"bold",color:"orange",textAlign: 'center'}}>No Pending Posters</Text>
+    }
    
     return (
         <View>

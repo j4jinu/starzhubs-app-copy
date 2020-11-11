@@ -3,8 +3,10 @@ import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListRejected = (props) => {
-    const {posters} = props.posters
-    // const {getPosters} = props.getPosters
+    const {posters} = props
+    if (posters.length === 0) {
+        return <Text style={{fontSize:25,fontWeight:"bold",color:"orange",textAlign: 'center'}}>No Rejected Posters</Text>
+    }
     return (
         <View>
              <FlatList

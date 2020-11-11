@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme';
 
 const BuddyItem = (props) => {
+    
     return (
         <TouchableOpacity
             activeOpacity={0.7}
@@ -16,12 +17,12 @@ const BuddyItem = (props) => {
                     borderRadius: 100
                 }}
                 source={{
-                    uri: props.image
+                    uri: `http://13.232.190.226/api/user/avatar/${props.image}`
                 }}
             />
             <View style={styles.details}>
-                <Text style={{ fontSize: 17, marginBottom: 5, color: theme.$primaryColorText }}>{'Test User'}</Text>
-                <Text style={{ fontSize: 13, color: 'gray' }}>{'Actor, Singer, Model'}</Text>
+                <Text style={{ fontSize: 17, marginBottom: 5, color: theme.$primaryColorText }}>{props.nmae}</Text>
+                <Text style={{ fontSize: 13, color: 'gray' }}>{props.talent}</Text>
                 <Text style={{ fontSize: 13, color: 'gray' }}>{'Alappuzha, Kerala'}</Text>
             </View>
         </TouchableOpacity>
