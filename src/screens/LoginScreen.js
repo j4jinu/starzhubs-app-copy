@@ -8,12 +8,38 @@ import {
     TextInput,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import theme from '../config/theme'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import theme from '../config/theme';
+import { AuthContext } from '../context/authContext';
+
+const loginSchema = yup.object({
+    username: yup.string()
+        .required('Enter email address'),
+    password: yup.string()
+        .required('Enter your password')
+})
 
 const LoginScreen = (props) => {
-
+    const auth = React.useContext(AuthContext)
+    const loginUser = async (values) => {
+        const loginResponse = await fetch('https://api.starzhubs.com/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+        const loginData = await loginResponse.json()
+        if (!loginData.success) {
+            return alert(loginData.message)
+        }
+        auth.login(loginData.data.userId, loginData.data.token)
+        props.navigation.navigate('Home')
+    }
     return (
         <ScrollView>
             <View>
@@ -26,47 +52,105 @@ const LoginScreen = (props) => {
                 <Text style={styles.welcomeText}>
                     Welcome to StarZHubs
                     </Text>
-                <View style={styles.inputFieldBackground}>
-                    <Icon
-                        name='mail'
-                        size={20}
-                        color={theme.$primaryColor}
-                    />
-                    <TextInput
-                        keyboardType={'email-address'}
-                        textContentType={'emailAddress'}
-                        style={styles.inputField}
-                        placeholder={'Email address'}
-                    />
-                </View>
-                <View style={styles.inputFieldBackground}>
-                    <Icon
-                        name='lock'
-                        size={20}
-                        color={theme.$primaryColor}
-                    />
-                    <TextInput
-                        secureTextEntry={true}
-                        style={styles.inputField}
-                        placeholder={'Password'}
-                    />
-                </View>
-                <TouchableOpacity
-                    onPress={() => props.navigation.navigate('PasswordRecovery')}
+                <Formik
+                    initialValues={{ username: '', password: '' }}
+                    validationSchema={loginSchema}
+                    onSubmit={values => loginUser(values)}
                 >
-                    <Text style={styles.forgotText}>
-                        Forgot Password?
-                        </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.loginBtn}
-                    onPress={() => props.navigation.navigate('Home')}
-                >
-                    <Text style={styles.loginBtnText}>
-                        LOG IN
-                        </Text>
-                </TouchableOpacity>
+                    {({
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isSubmitting,
+                        touched,
+                        errors,
+                        values
+                    }) => (
+                            <>
+                                <View
+                                    style={{
+                                        alignSelf: 'center',
+                                        borderWidth: 1,
+                                        borderRadius: 10,
+                                        width: '90%',
+                                        paddingLeft: 8,
+                                        paddingRight: 8,
+                                        marginTop: 8,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        borderColor: errors.username ? 'red' : '#e6e6e6'
+                                    }}>
+                                    <Icon
+                                        name='mail'
+                                        size={20}
+                                        color={theme.$primaryColor}
+                                    />
+                                    <TextInput
+                                        keyboardType={'email-address'}
+                                        textContentType={'emailAddress'}
+                                        style={styles.inputField}
+                                        placeholder={'Email address'}
+                                        onChangeText={handleChange('username')}
+                                        onBlur={handleBlur('username')}
+                                        value={values.username}
+                                    />
+                                </View>
+                                <Text style={styles.errorText}>
+                                    {touched.username && errors.username}
+                                </Text>
+                                <View
+                                    style={{
+                                        alignSelf: 'center',
+                                        borderWidth: 1,
+                                        borderRadius: 10,
+                                        width: '90%',
+                                        paddingLeft: 8,
+                                        paddingRight: 8,
+                                        marginTop: 8,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        borderColor: errors.password ? 'red' : '#e6e6e6'
+                                    }}
+                                >
+                                    <Icon
+                                        name='lock'
+                                        size={20}
+                                        color={theme.$primaryColor}
+                                    />
+                                    <TextInput
+                                        secureTextEntry={true}
+                                        style={styles.inputField}
+                                        placeholder={'Password'}
+                                        onChangeText={handleChange('password')}
+                                        onBlur={handleBlur('password')}
+                                        value={values.password}
+                                    />
+                                </View>
+                                <Text style={styles.errorText}>
+                                    {touched.password && errors.password}
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => props.navigation.navigate('PasswordRecovery')}
+                                >
+                                    <Text style={styles.forgotText}>
+                                        Forgot Password?
+                                    </Text>
+                                </TouchableOpacity>
+                                {!isSubmitting &&
+                                    <TouchableOpacity
+                                        activeOpacity={0.8}
+                                        style={styles.loginBtn}
+                                        onPress={handleSubmit}
+                                    >
+                                        <Text style={styles.loginBtnText}>
+                                            LOG IN
+                                    </Text>
+                                    </TouchableOpacity>
+                                }
+                                {isSubmitting && <ActivityIndicator size={'large'} color={theme.$primaryColor} />}
+                            </>
+                        )}
+                </Formik>
                 <View style={styles.registerLayout}>
                     <Text style={styles.registerLayoutText1}>
                         New to Starzhubs?
@@ -91,6 +175,10 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'white',
     },
+    errorText: {
+        marginHorizontal: '8%',
+        color: 'red'
+    },
     forgotText: {
         color: 'purple',
         alignSelf: 'flex-end',
@@ -114,19 +202,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         width: '90%',
-        marginVertical: 8,
         paddingLeft: 8,
         paddingRight: 8,
+        marginTop: 8,
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 3,
     },
     inputField: {
         alignSelf: 'center',

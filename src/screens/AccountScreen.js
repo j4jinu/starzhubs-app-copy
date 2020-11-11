@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     StyleSheet,
     Image,
@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import theme from '../config/theme';
+import { AuthContext } from '../context/authContext';
 
 
 const Divider = <View style={{ width: '100%', height: 1, backgroundColor: '#e6e6e6' }} />
 
 const AccountScreen = (props) => {
+    const auth = useContext(AuthContext)
     return (
         <ScrollView style={styles.container}>
             <View style={styles.container}>
@@ -179,12 +181,17 @@ const AccountScreen = (props) => {
                     <TouchableOpacity
                         style={styles.section}
                         activeOpacity={0.7}
-                        onPress={() => props.navigation.navigate('Edit')}
+                        onPress={() => {
+                            auth.logout();
+                            props.navigation.navigate('Auth')
+                        }}
                     >
                         <View style={{ flexDirection: 'row' }}>
                             <Icon name="logout" size={24} color={'gray'} />
                             <View style={styles.sectionDetails}>
-                                <Text style={styles.sectionDetailsTitle}>Logout</Text>
+                                <Text style={styles.sectionDetailsTitle}>
+                                    Logout
+                                </Text>
                             </View>
                         </View>
                     </TouchableOpacity>

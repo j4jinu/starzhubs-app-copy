@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  StatusBar,
-} from 'react-native';
+import AppNavigator from './src/navigation/AppNavigator';
+import { useAuth } from './src/context/authHook';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers } from 'redux'
-import AppNavigator from './src/navigation/AppNavigator';
-import AuthNavigator from './src/navigation/AuthNavigator';
-import MainNavigator from './src/navigation/MainNavigator';
-import posterReducer from './src/store/reducers/posterReducer';
+import { AuthContext } from './src/context/authContext';
 
 // const rootReducer = combineReducers({
 //   posters: posterReducer
@@ -17,8 +11,22 @@ import posterReducer from './src/store/reducers/posterReducer';
 
 // const store = createStore(rootReducer)
 
+
 const App = () => {
-  return <AppNavigator />
+  const { token, login, logout, userId, role, name, rating, avatar } = useAuth();
+  return (
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        userId: userId,
+        login: login,
+        logout: logout
+      }}
+    >
+      <AppNavigator />
+    </AuthContext.Provider>
+  )
 };
 
 export default App;
