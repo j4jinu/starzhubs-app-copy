@@ -3,10 +3,11 @@ import { FlatList, Text, View } from 'react-native';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
     const {posters} = props.posters
-    // const {getPosters} = props.getPosters
+   
     return (
         <View>
-           
+           {props.posters.length===0 && (<Text style={{fontSize:25,fontWeight:"bold",color:"orange",alignItems:"center"}}>No Posters</Text>)}
+            {props.posters.length>0 && (
             <FlatList
                 keyExtractor={item => item.id}
                 data={posters}
@@ -21,10 +22,11 @@ const PosterListActive = (props) => {
                         description={item.description}
                         userId={item.userId}
                         navigation={props.navigation}
-                        // getPosters = {getPosters}
+                      
                     />
                 )}
             />
+            )}
         </View>
     );
 }
