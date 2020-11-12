@@ -14,21 +14,23 @@ const posters = [
 ]
 
 const UserMediaSection = (props) => {
+    // console.warn("talents",props.talents);
+    const {talents} = props
+    if (talents === undefined || talents.length === 0) {
+        return <Text>No media files</Text>
+    }
     return (
         <View style={styles.container}>
             <FlatList
-                keyExtractor={item => item.id}
-                data={posters}
+                keyExtractor={item => item._id}
+                data={talents}
                 renderItem={({ item }) => (
                     <MediaGrid
-                        id={item.id}
-                        poster={item.name}
-                        image={item.image}
-                        navigation={props.navigation}
+                        media = {item.media}
                     />
                 )}
                 numColumns={3}
-                ListHeaderComponent={<Text style={styles.title}>Actor</Text>}
+                // ListHeaderComponent={(item) => <Text style={styles.title}> {console.log(item)}</Text>}
             />
         </View>
     );

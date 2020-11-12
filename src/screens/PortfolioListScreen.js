@@ -92,7 +92,7 @@ const PortfolioListScreen = (props) => {
                 data={users}
                 renderItem={({ item }) => (
                     <UserGridItem
-                        user={item.gender}
+                        userId={item._id}
                         name={item.name}
                         image={item.image}
                         location={item.location}

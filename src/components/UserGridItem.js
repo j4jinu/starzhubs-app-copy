@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 
 const UserGridItem = (props) => {
-    const {image, location, talents} = props
+    const {image, location, talents, userId} = props
     console.warn("talents",talents);
     return (
         <>
@@ -10,10 +10,7 @@ const UserGridItem = (props) => {
                 <TouchableOpacity
                     style={styles.gridItem}
                     onPress={() => props.navigation.navigate('UserDetails',{
-                        image:props.image,
-                        name:props.name,
-                        data:props.user,
-                        location:props.location,
+                        userId: props.userId,
                     })}
                     activeOpacity={0.7}
                 >

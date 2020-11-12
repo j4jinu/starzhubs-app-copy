@@ -53,7 +53,7 @@ const LoginScreen = (props) => {
                     Welcome to StarZHubs
                     </Text>
                 <Formik
-                    initialValues={{ username: '', password: '' }}
+                    initialValues={{ username: 'jinu@promasoft.net', password: '123' }}
                     validationSchema={loginSchema}
                     onSubmit={values => loginUser(values)}
                 >
