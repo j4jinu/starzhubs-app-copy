@@ -3,15 +3,27 @@ import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListPending = (props) => {
-    const {posters} = props
-    console.log('posters in props', posters)
+    const { posters } = props
+    const { getPosters } = props
     if (posters.length === 0) {
-        return <Text style={{fontSize:25,fontWeight:"bold",color:"orange",textAlign: 'center'}}>No Pending Posters</Text>
+        return (
+            <Text
+                style={{
+                    fontSize: 16,
+                    marginTop: 20,
+                    fontWeight: "bold",
+                    color: "tomato",
+                    textAlign: 'center',
+                }}
+            >
+                No Active Posters
+            </Text>
+        )
     }
-   
+
     return (
         <View>
-             <FlatList
+            <FlatList
                 keyExtractor={item => item.id}
                 data={posters}
                 renderItem={({ item }) => (
@@ -24,8 +36,9 @@ const PosterListPending = (props) => {
                         startDate={item.startDate}
                         description={item.description}
                         userId={item.userId}
+                        getPosters={getPosters}
                         navigation={props.navigation}
-                        
+
                     />
                 )}
             />

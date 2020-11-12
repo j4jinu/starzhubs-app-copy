@@ -16,28 +16,28 @@ const MyPostersScreen = (props) => {
     const [loading, setLoading] = useState(false)
     const [posters, setPosters] = useState([])
     useEffect(() => {
-        const getPosters = async (status) => {
-            setLoading(true)
-            setPosters([])
-            console.log(content);
-            try {
-                const response = await fetch(`http://13.232.190.226/api/poster/${content}`, {
-                    method: 'GET',
-                    headers: {
-                   Authorization: 'Bearer ' + auth.token,
-                },
-                })
-                const posterData = await response.json()
-                posterData.success ? setPosters(posterData.data.posters) : null
-                // console.log("posters",posters)
-                setLoading(false)
-            } catch (error) {
-                setLoading(false)
-                alert('Something went wrong.')
-            }
-        }
         getPosters();
     }, [content])
+    const getPosters = async (status) => {
+        setLoading(true)
+        setPosters([])
+        try {
+            const response = await fetch(`http://13.232.190.226/api/poster/${content}`, {
+                method: 'GET',
+                headers: {
+               Authorization: 'Bearer ' + auth.token,
+            },
+            })
+            const posterData = await response.json()
+            posterData.success ? setPosters(posterData.data.posters) : null
+            setLoading(false)
+        } catch (error) {
+            setLoading(false)
+            alert('Something went wrong.')
+        }
+    }
+    
+
     return (
         <View style={styles.container}>
             <View
@@ -146,19 +146,23 @@ const MyPostersScreen = (props) => {
             )}
             {content === 'me' && !loading && <PosterListActive
             posters= {posters} 
+            getPoster={getPosters}
             navigation={props.navigation}
             />
             }
             {content === 'pending' && !loading && <PosterListPending 
             posters= {posters} 
+            getPoster={getPosters}
             navigation={props.navigation}
              />}
             {content === 'expired' && !loading && <PosterListExpired 
             posters= {posters} 
+            getPoster={getPosters}
             navigation={props.navigation}
              />}
             {content === 'denied' && !loading && <PosterListRejected
             posters= {posters} 
+            getPoster={getPosters}
             navigation={props.navigation}
              />}
         </View>
