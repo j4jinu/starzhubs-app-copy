@@ -1,4 +1,4 @@
 export default {
     // API baseUrl
-    baseUrl: 'https://api.starzhubs.com/api/'
+    baseUrl: 'http://13.232.190.226/api/'
 };

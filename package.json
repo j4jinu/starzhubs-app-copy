@@ -29,6 +29,7 @@
     "react-native-sectioned-multi-select": "^0.8.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^7.1.0",
+    "react-native-webview": "^10.10.2",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.9.0",
     "react-navigation-tabs": "^2.10.1",

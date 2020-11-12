@@ -26,7 +26,7 @@ const loginSchema = yup.object({
 const LoginScreen = (props) => {
     const auth = React.useContext(AuthContext)
     const loginUser = async (values) => {
-        const loginResponse = await fetch('https://api.starzhubs.com/api/auth/login', {
+        const loginResponse = await fetch('http://13.232.190.226/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -53,7 +53,7 @@ const LoginScreen = (props) => {
                     Welcome to StarZHubs
                     </Text>
                 <Formik
-                    initialValues={{ username: '', password: '' }}
+                    initialValues={{ username: 'jinu@promasoft.net', password: '123' }}
                     validationSchema={loginSchema}
                     onSubmit={values => loginUser(values)}
                 >

@@ -2,13 +2,15 @@ import React from 'react'
 import { StyleSheet, View, Text } from "react-native";
 import theme from '../config/theme';
 
-const UserTalentSection = () => {
+const UserTalentSection = (props) => {
     return (
         <View style={styles.container}>
+            {props.talents.map((t,key) => (
+            <>
             <Text
                 style={styles.title}
             >
-                Actor
+                {t.category.title}
             </Text>
             <View
                 style={styles.row}
@@ -21,7 +23,7 @@ const UserTalentSection = () => {
                     }}
                 >
                     <Text>Level</Text>
-                    <Text>0</Text>
+                    <Text>{t.level=='1'?"Beginner":t.level=='2'?"Average":t.level=='3'?"Good":t.level=='4'?"Excellent":"Experienced"}</Text>
                 </View>
                 <View
                     style={{
@@ -31,7 +33,7 @@ const UserTalentSection = () => {
                     }}
                 >
                     <Text>Experience</Text>
-                    <Text>0</Text>
+                    <Text>{t.chars.years} Years</Text>
                 </View>
                 <View
                     style={{
@@ -41,7 +43,7 @@ const UserTalentSection = () => {
                     }}
                 >
                     <Text>Works</Text>
-                    <Text>0</Text>
+                    <Text>{t.chars.films}</Text>
                 </View>
             </View>
             <Text
@@ -57,8 +59,10 @@ const UserTalentSection = () => {
                     color: theme.$primaryColorText
                 }}
             >
-                {'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'}
+                {t.description}
             </Text>
+            </>
+            ))}
         </View>
     );
 }
