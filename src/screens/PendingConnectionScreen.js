@@ -1,30 +1,44 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
+import { AuthContext } from '../context/authContext';
+const PendingConnectionScreen = (props) => {
+    const auth = useContext(AuthContext)
+    const [requests, setRequests] = useState([]);
+    useEffect(() => {
+		getRequests();
+	}, []);
 
-const buddies = [
-    { id: '1', name: 'User A' },
-    { id: '2', name: 'User B' },
-    { id: '3', name: 'User C' },
-    { id: '4', name: 'User D' },
-    { id: '5', name: 'User E' },
-    { id: '7', name: 'User F' },
-    { id: '8', name: 'User G' },
-    { id: '9', name: 'User H' },
-]
-
-const PendingConnectionScreen = () => {
+	const getRequests = () => {
+		fetch('http://13.232.190.226/api/talent/req/received', {
+			method: 'GET',
+			headers: {
+				Authorization: 'Bearer ' + auth.token,
+			},
+		})
+			.then((response) => response.json())
+			.then((response) => {
+                setRequests(response.data.requests);
+                setUserImages(response.data.requests.fromUser.image);
+            })
+			.catch((error) => {
+				alert(response.message);
+			});
+	};
     return (
         <FlatList
             style={{ backgroundColor: '#efefef' }}
             keyExtractor={item => item.id}
-            data={buddies}
+            data={requests}
             renderItem={({ item }) => (
                 <BuddyRequestItem
-                    id={item.id}
-                    name={item.name}
-                    image={'https://upload.wikimedia.org/wikipedia/commons/7/79/Johnny_Depp_Deauville_2019.jpg'}
-                    onSelect={() => props.navigation.navigate('UserDetails')}
+                    reqId={item._id}
+                    name={item.fromUser.name}
+                    image={item.fromUser.image}
+                    talent={item.talent}
+                    userId={item.fromUser._id}
+                    reqType="received"
+                    navigation={props.navigation}
                 />
             )}
         />

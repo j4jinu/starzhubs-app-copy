@@ -1,34 +1,57 @@
-import React from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import { FlatList, Text, View } from 'react-native';
 import BuddyItem from '../components/BuddyItem';
-
-const buddies = [
-    { id: '1', name: 'User A' },
-    { id: '2', name: 'User B' },
-    { id: '3', name: 'User C' },
-    { id: '4', name: 'User D' },
-    { id: '5', name: 'User E' },
-    { id: '7', name: 'User F' },
-    { id: '8', name: 'User G' },
-    { id: '9', name: 'User H' },
-]
+import { AuthContext } from '../context/authContext';
 
 const MyConnectionScreen = (props) => {
-    return (
-        <FlatList
-            style={{ backgroundColor: '#efefef' }}
-            keyExtractor={item => item.id}
-            data={buddies}
-            renderItem={({ item }) => (
-                <BuddyItem
-                    id={item.id}
-                    name={item.name}
-                    image={'https://upload.wikimedia.org/wikipedia/commons/7/79/Johnny_Depp_Deauville_2019.jpg'}
-                    onSelect={() => props.navigation.navigate('UserDetails')}
-                />
-            )}
-        />
-    );
+    const auth = useContext(AuthContext)
+    const [isFriends, setIsFriends] = useState([])
+    useEffect(() => {
+        getConnectionRequests();
+    })
+    const getConnectionRequests = () => {
+        fetch(`http://13.232.190.226/api/talent/req/approved`, {
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + auth.token,
+            },
+        })
+        .then((response) => response.json())
+        .then((response) => {
+            setIsFriends(response.data.connections);
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    };
+
+    if (!isFriends === undefined || isFriends.length !== 0) {
+        return (
+            <FlatList
+                style={{ backgroundColor: '#efefef' }}
+                keyExtractor={item => item.id}
+                data={isFriends}
+                renderItem={({ item }) => (
+                    <BuddyItem
+                        id={item._id}
+                        name={item.fromUser._id ===auth.userId ?item.toUser.name:item.toUser.name}
+                        image={item.fromUser._id ===auth.userId ?item.toUser.image:item.fromUser.image}
+                        location={item.fromUser._id ===auth.userId ?item.toUser.location:item.fromUser.location}
+                        onSelect={() => props.navigation.navigate('UserDetails',{
+                            userId: item.fromUser._id===auth.userId ?item.toUser._id:item.fromUser._id,
+                        })}
+                    />
+                )}
+            />
+        );
+    }
+    else{
+        return (
+            <View>
+                <Text>No Connections</Text>
+            </View>
+        )
+    }
 };
 
 export default MyConnectionScreen;

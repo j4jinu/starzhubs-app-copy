@@ -2,14 +2,17 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import theme from '../config/theme';
-
+import Moment from 'moment'; 
 const PosterDetailsScreen = (props) => {
+   
     const posterId = props.navigation.getParam('posterId')
     const title = props.navigation.getParam('title')
     const image = props.navigation.getParam('image')
     const description=props.navigation.getParam('description')
     const endDate=props.navigation.getParam('endDate')
     const startDate=props.navigation.getParam('startDate')
+    const user=props.navigation.getParam('user')
+    
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -21,7 +24,7 @@ const PosterDetailsScreen = (props) => {
                     }}
                     resizeMode='cover'
                     source={{
-                        uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+                        uri: `http://13.232.190.226/api/poster/view/${image}`,
                     }}
                 />
                 <View style={styles.posterInfo}>
@@ -33,10 +36,10 @@ const PosterDetailsScreen = (props) => {
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5, marginVertical: 15 }}>
                         <View>
-                <Text style={{ fontSize: 12 }}>Starts : {startDate}</Text>
+                <Text style={{ fontSize: 12 }}>Starts : {Moment(startDate).format('DD/MM/YYYY')}</Text>
                         </View>
                         <View>
-                <Text style={{ fontSize: 12 }}>Ends: {endDate}</Text>
+                <Text style={{ fontSize: 12 }}>Ends: {Moment(endDate).format('DD/MM/YYYY')}</Text>
                         </View>
                     </View>
                     <Text style={{ fontWeight: 'bold', marginHorizontal: 5 }}>{'Description'}</Text>
@@ -52,7 +55,7 @@ const PosterDetailsScreen = (props) => {
                             borderRadius: 100
                         }}
                         source={{
-                            uri: 'https://upload.wikimedia.org/wikipedia/commons/7/79/Johnny_Depp_Deauville_2019.jpg'
+                            uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                         }}
                     />
                     <View
@@ -64,7 +67,7 @@ const PosterDetailsScreen = (props) => {
                         }}
                     >
                         <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{'Test User'}</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{user.name}</Text>
                     </View>
                 </View>
                 <TouchableOpacity
