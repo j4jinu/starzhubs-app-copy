@@ -16,7 +16,7 @@ const PosterListRejected = (props) => {
                     textAlign: 'center',
                 }}
             >
-                No Active Posters
+                No Rejected Posters
             </Text>
         )
     }

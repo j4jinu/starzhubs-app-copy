@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     StyleSheet,
     Image,
@@ -15,17 +15,40 @@ import { AuthContext } from '../context/authContext';
 const Divider = <View style={{ width: '100%', height: 1, backgroundColor: '#e6e6e6' }} />
 
 const AccountScreen = (props) => {
+
     const auth = useContext(AuthContext)
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        const getUserDetails = async () => {
+            try {
+                let response = await fetch(`http://13.232.190.226/api/user/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + auth.token
+                    }
+                })
+                let userData = await response.json()
+                setUser(userData.data.user)
+                console.log("user data", userData.data.user);
+            } catch (error) {
+            }
+        }
+        getUserDetails()
+    }, [])
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.container}>
                 <View>
-                    <Image
-                        style={{ width: '100%', height: 250, resizeMode: 'stretch' }}
-                        source={{
-                            uri: 'https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fscottmendelson%2Ffiles%2F2017%2F05%2Fpirates_of_the_caribbean_dead_men_tell_no_tales_by_mintmovi3-db23j4w.jpg'
-                        }}
-                    />
+                    {user.image && user.image.avatar !== undefined && (
+                        <Image
+                            style={{ width: '100%', height: 250, resizeMode: 'stretch' }}
+                            source={{
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`
+                            }}
+                        />
+                    )}
                     <TouchableOpacity
                         activeOpacity={0.7}
                         style={{
@@ -42,18 +65,9 @@ const AccountScreen = (props) => {
                         />
                     </TouchableOpacity>
                     <View style={styles.profileContainer}>
-                        <Text style={styles.profileTitle}>Test User</Text>
-                        <Text style={{ fontSize: 12, marginLeft: 10, color: 'gray' }}>user@example.com</Text>
-                        <View style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'center',
-                            paddingHorizontal: 10,
-                            marginTop: 10
-                        }}>
-                            <Text style={{ flex: 1 }}>0 Connections</Text>
-                            <Text style={{ flex: 1 }}>0 Talents</Text>
+                        <View>
+                            <Text style={styles.profileTitle}>{user.name}</Text>
+                            <Text style={{ fontSize: 12, marginLeft: 10, color: 'gray' }}>{user.email}</Text>
                         </View>
                     </View>
                 </View>

@@ -1,12 +1,15 @@
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useContext } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import theme from '../config/theme';
+import { AuthContext } from '../context/authContext';
 
 const BuddyRequestItem = (props) => {
-    const confirmDelete = (requestId, status) =>
+    const auth = useContext(AuthContext)
+
+    const confirmApprove = () =>
 		Alert.alert(
 			'',
-			'Are you sure to delete this request?',
+			'Are you sure to accept this request?',
 			[
 				{
 					text: 'Cancel',
@@ -16,15 +19,52 @@ const BuddyRequestItem = (props) => {
 				{
 					text: 'OK',
 					onPress: () =>
-						requestHandler(requestId,status),
+						requestHandler(),
 				},
 			],
 			{ cancelable: false }
 		);
-        const requestHandler = (requestId, status) => {
+    
+    const confirmDelete = () =>
+		Alert.alert(
+			'',
+			'Are you sure to delete this request?',
+			[
+				{
+					text: 'No',
+					// onPress: () => {navigation.navigate('My Media')},
+					style: 'cancel',
+				},
+				{
+					text: 'Yes',
+					onPress: () =>
+                    unfriendRequest(),
+				},
+			],
+			{ cancelable: false }
+        )
+        const unfriendRequest = () => {
+            fetch(`http://13.232.190.226/api/talent/req/reject/${props.reqId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + auth.token
+                }
+            })
+            .then(response => response.json())
+            .then(response => {
+                if (response.success === true) {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            (error) => {
+                alert('Failed: ' + error)
+            })
+        }
+            const requestHandler = () => {
             // console.warn(status)
-            fetch(
-                `http://13.232.190.226/api/talent/user/approve/${requestId}/${status}`,
+            fetch(`http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`,
                 {
                     method: 'PUT',
                     headers: {
@@ -35,13 +75,7 @@ const BuddyRequestItem = (props) => {
                 .then((response) => response.json())
                 .then((response) => {
                     alert(response.message);
-    
-                    if (status === '2') {
-                        getRequests();
-                    } else {
-                        setActiveRequests(false);
-                        setIsConnection(true);
-                    }
+                    props.navigation.navigate('MyConnectionScreen',{navigation:props.navigation})
                 })
                 .catch((error) => {
                     alert(error);
@@ -49,30 +83,34 @@ const BuddyRequestItem = (props) => {
         };
     
     return (
-        <View
-            style={styles.container}
-        >
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                <Image
-                    style={{
-                        width: 75,
-                        height: 75,
-                        borderRadius: 100
-                    }}
-                    source={{
-                       uri:`http://13.232.190.226/api/user/avatar/${props.image}`
-                    }}
-                />
-                <View style={styles.details}>
-                    <Text style={{ fontSize: 17, marginBottom: 5, color: theme.$primaryColorText }}>{props.name}</Text>
-                    <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>{'Talent(s) Requested'}</Text>
-                    <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>{props.talents}</Text>
+        <View style={styles.container}>
+            {/* <TouchableOpacity onSelect={() => props.navigation.navigate('UserDetails',{
+                        userId: item.fromUser._id
+                    })}> */}
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <Image
+                        style={{
+                            width: 75,
+                            height: 75,
+                            borderRadius: 100
+                        }}
+                        source={{
+                        uri:`http://13.232.190.226/api/user/avatar/${props.image.avatar}`
+                        }}
+                    />
+                    <View style={styles.details}>
+                        <Text style={{ fontSize: 17, marginBottom: 5, color: theme.$primaryColorText,fontWeight:'bold' }}>{props.name}</Text>
+                        <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>{'Talent(s) Requested'}</Text>
+                        <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>{props.talents}</Text>
+                    </View>
                 </View>
-            </View>
+            {/* </TouchableOpacity> */}
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 15 }}>
+                {props.reqType==="received"?(
+                <>
                 <TouchableOpacity
                     activeOpacity={0.7}
-                    onPress={()=> confirmDelete(item._id,2)}
+                    onPress={confirmDelete}
                     style={{
                         alignItems: 'center',
                         backgroundColor: 'white',
@@ -95,9 +133,26 @@ const BuddyRequestItem = (props) => {
                         paddingHorizontal: 20,
                         borderRadius: theme.$borderRadius
                     }}
+                    onPress={confirmApprove}
                 >
                     <Text style={{ color: 'white' }}>Accept</Text>
                 </TouchableOpacity>
+                </>
+                ):(
+                    <TouchableOpacity
+                    activeOpacity={0.7}
+                    style={{
+                        alignItems: 'center',
+                        backgroundColor: theme.$primaryColor,
+                        paddingVertical: 5,
+                        paddingHorizontal: 20,
+                        borderRadius: theme.$borderRadius
+                    }}
+                    onPress={confirmDelete}
+                >
+                    <Text style={{ color: 'white' }}>Cancel</Text>
+                </TouchableOpacity> 
+                )}
             </View>
         </View>
     );

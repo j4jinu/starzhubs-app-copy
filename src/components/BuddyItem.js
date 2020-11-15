@@ -17,13 +17,12 @@ const BuddyItem = (props) => {
                     borderRadius: 100
                 }}
                 source={{
-                    uri: `http://13.232.190.226/api/user/avatar/${props.image}`
+                    uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`
                 }}
             />
             <View style={styles.details}>
-                <Text style={{ fontSize: 17, marginBottom: 5, color: theme.$primaryColorText }}>{props.nmae}</Text>
-                <Text style={{ fontSize: 13, color: 'gray' }}>{props.talent}</Text>
-                <Text style={{ fontSize: 13, color: 'gray' }}>{'Alappuzha, Kerala'}</Text>
+                <Text style={{ fontSize: 17, color: theme.$primaryColorText, fontWeight:'bold' }}>{props.name}</Text>
+                <Text style={{ fontSize: 13, color: 'gray' }}>{props.location.place}, {props.location.state}</Text>
             </View>
         </TouchableOpacity>
     );

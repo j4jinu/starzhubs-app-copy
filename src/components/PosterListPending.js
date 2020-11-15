@@ -16,7 +16,7 @@ const PosterListPending = (props) => {
                     textAlign: 'center',
                 }}
             >
-                No Active Posters
+                No Pending Posters
             </Text>
         )
     }

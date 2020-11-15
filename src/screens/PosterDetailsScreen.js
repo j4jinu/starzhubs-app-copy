@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import theme from '../config/theme';
-import Moment from 'moment'; 
+import Moment from 'moment';
+import { AuthContext } from '../context/authContext';
 const PosterDetailsScreen = (props) => {
-   
+    const auth = useContext(AuthContext)
     const posterId = props.navigation.getParam('posterId')
     const title = props.navigation.getParam('title')
     const image = props.navigation.getParam('image')
-    const description=props.navigation.getParam('description')
-    const endDate=props.navigation.getParam('endDate')
-    const startDate=props.navigation.getParam('startDate')
-    const user=props.navigation.getParam('user')
-    
+    const description = props.navigation.getParam('description')
+    const endDate = props.navigation.getParam('endDate')
+    const startDate = props.navigation.getParam('startDate')
+    const user = props.navigation.getParam('user')
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -36,10 +37,10 @@ const PosterDetailsScreen = (props) => {
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 5, marginVertical: 15 }}>
                         <View>
-                <Text style={{ fontSize: 12 }}>Starts : {Moment(startDate).format('DD/MM/YYYY')}</Text>
+                            <Text style={{ fontSize: 12 }}>Starts : {Moment(startDate).format('DD/MM/YYYY')}</Text>
                         </View>
                         <View>
-                <Text style={{ fontSize: 12 }}>Ends: {Moment(endDate).format('DD/MM/YYYY')}</Text>
+                            <Text style={{ fontSize: 12 }}>Ends: {Moment(endDate).format('DD/MM/YYYY')}</Text>
                         </View>
                     </View>
                     <Text style={{ fontWeight: 'bold', marginHorizontal: 5 }}>{'Description'}</Text>
@@ -57,25 +58,30 @@ const PosterDetailsScreen = (props) => {
                         source={{
                             uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                         }}
-                    />
-                    <View
-                        style={{
-                            flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            marginLeft: 10
-                        }}
-                    >
-                        <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{user.name}</Text>
-                    </View>
+                    /><TouchableOpacity onPress={() => props.navigation.navigate('UserDetails', {
+                        userId: user._id
+                    })}>
+                        <View
+                            style={{
+                                flex: 1,
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                marginLeft: 10
+                            }}
+                        >
+                            <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{user.name}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.requestBtn}
-                >
-                    <Text style={{ fontSize: 17, color: 'white' }}>{'Show Interest'}</Text>
-                </TouchableOpacity>
+                {user._id === auth.userId ? null : (
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        style={styles.requestBtn}
+                    >
+                        <Text style={{ fontSize: 17, color: 'white' }}>{'Show Interest'}</Text>
+                    </TouchableOpacity>
+                )}
             </View>
         </ScrollView>
     );

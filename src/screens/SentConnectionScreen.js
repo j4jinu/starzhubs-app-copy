@@ -1,31 +1,48 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
+import { AuthContext } from '../context/authContext';
 
-const buddies = [
-    { id: '1', name: 'User A' },
-    { id: '2', name: 'User B' },
-    { id: '3', name: 'User C' },
-    { id: '4', name: 'User D' },
-    { id: '5', name: 'User E' },
-    { id: '7', name: 'User F' },
-    { id: '8', name: 'User G' },
-    { id: '9', name: 'User H' },
-]
 
 const SentConnectionScreen = () => {
+
+    const auth = useContext(AuthContext)
+    const [isFriends, setIsFriends] = useState([])
+    useEffect(() => {
+        getConnectionRequests();
+    })
+    const getConnectionRequests = () => {
+        fetch(`http://13.232.190.226/api/talent/req/approved`, {
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer ' + auth.token,
+            },
+        })
+        .then((response) => response.json())
+        .then((response) => {
+            setIsFriends(response.data.connections);
+        })
+        .catch((error) => {
+            alert(error);
+        });
+    };
     return (
         <FlatList
             style={{ backgroundColor: '#efefef' }}
             keyExtractor={item => item.id}
-            data={buddies}
+            data={isFriends}
+            extraData={getConnectionRequests}
             renderItem={({ item }) => (
+                item.fromUser._id ===auth.userId?(
                 <BuddyRequestItem
-                    id={item.id}
-                    name={item.name}
-                    image={'https://upload.wikimedia.org/wikipedia/commons/7/79/Johnny_Depp_Deauville_2019.jpg'}
-                    onSelect={() => props.navigation.navigate('UserDetails')}
+                    id={item._id}
+                    name={item.toUser.name}
+                    image={item.toUser.image}
+                    onSelect={() => props.navigation.navigate('UserDetails',{
+                        userId: item.toUser._id
+                    })}
                 />
+                ):null
             )}
         />
     );

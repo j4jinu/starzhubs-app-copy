@@ -14,6 +14,7 @@ import { Snackbar } from 'react-native-paper';
 
 
 const UserDetailsScreen = (props) => {
+
     const auth = useContext(AuthContext)
     const userId = props.navigation.getParam('userId')
     const [user, setUser] = useState({ image: {} })
@@ -21,13 +22,10 @@ const UserDetailsScreen = (props) => {
     const [posters, setPosters] = useState([])
     const [userLocation, setUserLocation] = useState({})
     const [content, setContent] = useState('T')
-
     const [isRequestModal, setRequestModal] = useState(false)
     const [loggedUser, setLoggedUser] = useState([])
     const [checked, setChecked] = useState([]);
-    const [isFriends, setIsFriends] = useState({ details: {} })
-    const [openApproval, setOpenApproval] = useState(false);
-    const [openDecline, setOpenDecline] = useState(false);
+    const [isFriends, setIsFriends] = useState({ details: {}})
     const [visible, setVisible] = useState(false);
     const [message, setMessage] = useState();
 
@@ -39,16 +37,15 @@ const UserDetailsScreen = (props) => {
                     'Authorization': 'Bearer ' + auth.token
                 }
             })
-                .then(response => response.json())
-                .then(response => {
-                    console.log("user", response.data.user);
-                    setUser(response.data.user)
-                    setTalents(response.data.talents)
-                    setUserLocation(response.data.user.location)
-                    setPosters()
-                })
-                .catch(error => {
-                });
+            .then(response => response.json())
+            .then(response => {
+                setUser(response.data.user)
+                setTalents(response.data.talents)
+                setUserLocation(response.data.user.location)
+                setPosters()
+            })
+            .catch(error => {
+            });
         }
         getUserDetails()
     }, [])
@@ -56,7 +53,7 @@ const UserDetailsScreen = (props) => {
     useEffect(() => {
         checkFriendship()
     }, [])
-
+  
     useEffect(() => {
         getLoggedUser()
     }, [])
@@ -68,14 +65,14 @@ const UserDetailsScreen = (props) => {
                 'Authorization': 'Bearer ' + auth.token
             }
         })
-            .then(response => response.json())
-            .then(response => {
-                setLoggedUser(response.data.user)
-            })
-            .catch(error => {
-            });
+        .then(response => response.json())
+        .then(response => {
+            setLoggedUser(response.data.user)
+        })
+        .catch(error => {
+        });
     }
-
+    
     const calculateAge = (dob) => {
         var dobYear = Moment(user.dob).format('YYYY')
         var today = new Date();
@@ -85,7 +82,6 @@ const UserDetailsScreen = (props) => {
         var dobDate = Moment(user.dob).format('DD')
         var toDate = Moment(today).format('DD')
         var age = toYear - dobYear;
-
         var m = toMonth - dobMonth;
         if (m < 0 || (m === 0 && toDate < dobDate)) {
             age--;
@@ -100,42 +96,39 @@ const UserDetailsScreen = (props) => {
                 'Authorization': 'Bearer ' + auth.token
             }
         })
-            .then(response => response.json())
-            .then(response => {
-                setIsFriends(response.data);
-            })
-            .catch(error => {
-            })
+        .then(response => response.json())
+        .then(response => {
+            setIsFriends(response.data);
+        })
+        .catch(error => {
+        })
     }
 
-
-    const handleRequest = () => {
-        if (loggedUser.isAdminApproved === 0) {
+    const handleRequest = () =>{
+        if(loggedUser.isAdminApproved === 0){
             Alert.alert(
                 "",
                 "Only Admin Approved User Can Sent Request. Your Profile is Under Validation.",
-                [
-                    {
-                        text: "Ok",
-                        style: "cancel"
-                    },
-                ],
+                [{
+                    text: "Ok",
+                    style: "cancel"
+                }],
                 { cancelable: false }
             );
         }
-        else {
+        else{
             setRequestModal(true)
-        }
+       }
     }
 
     const initValues = {
         notes: '',
     }
-
+  
     const validation = yup.object({
         notes: yup.string().required('Please say something')
     })
-
+  
     const handleSubmit = (values) => {
         const requestOptions = {
             method: 'POST',
@@ -149,56 +142,48 @@ const UserDetailsScreen = (props) => {
                 userId: userId
             })
         }
-        console.log("body", requestOptions.body);
-
         fetch(`http://13.232.190.226/api/talent/req/user`, requestOptions)
-            .then(response => response.json())
-            .then(response => {
-                if (response.success === true) {
-                    checkFriendship()
-                    setRequestModal(false)
-                    const msg = "Request Sent Successfully"
-                    setMessage(msg)
-                    setVisible(!visible)
-                } else {
-                    console.warn(response.message)
-                }
-            },
-                (error) => {
-                    console.warn(error)
-                })
+        .then(response => response.json())
+        .then(response => {
+            if (response.success === true) {
+                checkFriendship()
+                setRequestModal(false)
+                const msg ="Request Sent Successfully"
+                setMessage(msg)
+                setVisible(!visible)
+            } else {
+                const msg ="Something went wrong. Try again!"
+                setMessage(msg)
+                setVisible(!visible)
+            }
+        },
+        (error) => {
+            console.warn(error)
+        })
     }
 
     const handleToggle = (value) => {
-        // setSelectedChip(value)
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
-        console.warn(currentIndex);
-        // // setIsChip(!isChip)
         if (currentIndex === -1) {
             newChecked.push(value);
         } else {
             newChecked.splice(currentIndex, 1);
         }
         setChecked(newChecked);
-        console.warn("final", checked);
     };
 
-    const cancelRequest = () => {
+    const cancelRequest = () =>{
         Alert.alert(
             "Cancel Request",
             "Do you want to cancel this request?",
-            [
-                {
-                    text: "No",
-                    // onPress: () => {navigation.navigate('My Media')},
-                    style: "cancel"
-                },
-                {
-                    text: "Yes",
-                    onPress: () => requestDeleteHandler(isFriends.details._id)
-                }
-            ],
+            [{
+                text: "No",
+                style: "cancel"
+            },
+            { text: "Yes", 
+              onPress: () => requestDeleteHandler(isFriends.details._id) 
+            }],
             { cancelable: false }
         );
     }
@@ -210,59 +195,55 @@ const UserDetailsScreen = (props) => {
                 'Authorization': 'Bearer ' + auth.token
             }
         })
-            .then(response => response.json())
-            .then(response => {
-                if (response.success === true) {
-                    handleCloseDecline()
-                    checkFriendship()
-                    const msg = "Request Cancelled Successfully"
-                    setMessage(msg)
-                    setVisible(!visible)
-                } else {
-                    const msg = "Something went wrong. Try again!"
-                    setMessage(msg)
-                    setVisible(!visible)
-                }
-            },
-                (error) => {
-                    handleCloseApproval()
-                    alert('Failed: ' + error)
-                })
+        .then(response => response.json())
+        .then(response => {
+            if (response.success === true) {
+                checkFriendship()
+                const msg ="Request Cancelled Successfully"
+                setMessage(msg)
+                setVisible(!visible)
+            } else {
+                const msg ="Something went wrong. Try again!"
+                setMessage(msg)
+                setVisible(!visible)
+            }
+        },
+        (error) => {
+            alert('Failed: ' + error)
+        })
     }
 
     const handleClickOpenDecline = () => {
         Alert.alert(
-            "Decline Request",
-            "Are you sure to remove this connection?",
-            [
-                {
-                    text: "No",
-                    // onPress: () => {navigation.navigate('My Media')},
-                    style: "cancel"
-                },
-                {
-                    text: "Yes",
-                    onPress: () => unfriendRequest(isFriends.details._id)
-                }
-            ],
+          "Decline Request",
+          "Are you sure to remove this connection?",
+          [{
+              text: "No",
+              style: "cancel"
+            },
+            { text: "Yes", 
+              onPress: () => unfriendRequest(isFriends.details._id) 
+            }],
             { cancelable: false }
         );
     }
+
     const handleRecievedRequest = () => {
         Alert.alert(
-            "Respond To Request",
-            "How you'd like to respond to this request?",
-            [
-                {
-                    text: "Decine",
-                    onPress: () => unfriendRequest(isFriends.details._id),
-                    style: "cancel"
-                },
-                {
-                    text: "Accept",
-                    onPress: () => approveRequest(isFriends.details._id)
-                }
-            ],
+          "Respond To Request",
+          "How you'd like to respond to this request?",
+            [{
+                text: "Do Later",
+                style: "cancel"
+            },
+            {
+                text: "Decline",
+                onPress: () => unfriendRequest(isFriends.details._id),
+                style: "cancel"
+            },
+            { text: "Accept", 
+              onPress: () => approveRequest(isFriends.details._id) 
+            }],
             { cancelable: false }
         );
     }
@@ -274,22 +255,24 @@ const UserDetailsScreen = (props) => {
                 'Authorization': 'Bearer ' + auth.token
             }
         })
-            .then(response => response.json())
-            .then(response => {
-                if (response.success === true) {
-                    handleCloseApproval()
-                    checkFriendship()
-                    alert(response.message)
-                } else {
-                    alert(response.message)
-                }
-            },
-                (error) => {
-                    handleCloseApproval()
-                    alert('Failed: ' + error)
-                })
+        .then(response => response.json())
+        .then(response => {
+            if (response.success === true) {
+                checkFriendship()
+                const msg ="Request Approved Successfully"
+                setMessage(msg)
+                setVisible(!visible)
+            } else {
+                const msg ="Something went wrong. Try again!"
+                setMessage(msg)
+                setVisible(!visible)
+            }
+        },
+        (error) => {
+            alert('Failed: ' + error)
+        })
     }
-
+    
     const unfriendRequest = (requestId) => {
         fetch(`http://13.232.190.226/api/talent/req/reject/${requestId}`, {
             method: 'DELETE',
@@ -297,51 +280,37 @@ const UserDetailsScreen = (props) => {
                 'Authorization': 'Bearer ' + auth.token
             }
         })
-            .then(response => response.json())
-            .then(response => {
-                if (response.success === true) {
-                    handleCloseDecline()
-                    checkFriendship()
-                    const msg = "Connection Removed Successfully"
-                    setMessage(msg)
-                    setVisible(!visible)
-                } else {
-                    const msg = "Something went wrong. Try again!"
-                    setMessage(msg)
-                    setVisible(!visible)
-                }
-            },
-                (error) => {
-                    handleCloseApproval()
-                    alert('Failed: ' + error)
-                })
+        .then(response => response.json())
+        .then(response => {
+        if (response.success === true) {
+            checkFriendship()
+            const msg ="Connection Removed Successfully"
+            setMessage(msg)
+            setVisible(!visible)
+        } else {
+            const msg ="Something went wrong. Try again!"
+                setMessage(msg)
+                setVisible(!visible)
+            }
+        },
+        (error) => {
+            alert('Failed: ' + error)
+        })
     }
 
-    const handleCloseDecline = () => {
-        setOpenDecline(false);
-    };
-    const handleClickOpenApproval = () => {
-        setOpenApproval(true);
-    }
-    const handleCloseApproval = () => {
-        setOpenApproval(false);
-    };
-    const onDismissSnackBar = () => {
+    const onDismissSnackBar = () =>{
         setVisible(false);
     }
 
     return (
-
         <>
-            {/* <View style={styles.container}> */}
-            <Snackbar
+            <Snackbar 
                 visible={visible}
                 duration={7000}
                 onDismiss={onDismissSnackBar}
             >
                 {message}
             </Snackbar>
-            {/* </View> */}
 
             <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
                 <View style={styles.container}>
@@ -552,9 +521,9 @@ const UserDetailsScreen = (props) => {
                             </View>
                             <View style={{ justifyContent: 'center' }}>
                                 <View style={{ alignItems: 'center', width: "100%" }}>
-                                    <View>
+                                    <View style={{width:'100%',height:'auto'}}>
                                         <Image
-                                            style={{ width: 150, height: 150 }}
+                                            style={{ width: '100%', height: 200 }}
                                             source={{
                                                 uri: user.image !== undefined ? `http://13.232.190.226/api/user/avatar/${user.image.avatar}` : "https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVID19_SECVPF.gif",
                                             }}
@@ -703,7 +672,16 @@ const styles = StyleSheet.create({
         padding: 8,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    inputField: {
+        alignSelf: 'center',
+        width: '90%',
+        textTransform: 'lowercase',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 8,
+        fontFamily: 'montserrat-regular'
+    },
 })
 
 export default UserDetailsScreen;
