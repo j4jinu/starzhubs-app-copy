@@ -23,11 +23,15 @@ const renderGridItem = (user) => {
 const HomePortfolioList = (props) => {
     return (
         <FlatList
+            style={{ backgroundColor: '#fafafa', marginTop: 20 }}
             keyExtractor={(item, index) => item.id}
-            data={users}
+            data={props.users}
             renderItem={({ item }) => (
                 <UserGridItem
+                    userId={item._id}
                     name={item.name}
+                    locaton={item.locaton}
+                    image={item.image}
                     navigation={props.navigation}
                 />
             )}

@@ -42,15 +42,18 @@ const AccountScreen = (props) => {
                         />
                     </TouchableOpacity>
                     <View style={styles.profileContainer}>
-                        <Image
-                            style={styles.avatar}
-                            source={{
-                                uri: 'https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fscottmendelson%2Ffiles%2F2017%2F05%2Fpirates_of_the_caribbean_dead_men_tell_no_tales_by_mintmovi3-db23j4w.jpg'
-                            }}
-                        />
-                        <View>
-                            <Text style={styles.profileTitle}>Test User</Text>
-                            <Text style={{ fontSize: 12, marginLeft: 10, color: 'gray' }}>user@example.com</Text>
+                        <Text style={styles.profileTitle}>Test User</Text>
+                        <Text style={{ fontSize: 12, marginLeft: 10, color: 'gray' }}>user@example.com</Text>
+                        <View style={{
+                            flex: 1,
+                            flexDirection: 'row',
+                            justifyContent: 'flex-start',
+                            alignItems: 'center',
+                            paddingHorizontal: 10,
+                            marginTop: 10
+                        }}>
+                            <Text style={{ flex: 1 }}>0 Connections</Text>
+                            <Text style={{ flex: 1 }}>0 Talents</Text>
                         </View>
                     </View>
                 </View>
@@ -242,7 +245,6 @@ const styles = StyleSheet.create({
     },
     profileContainer: {
         flex: 1,
-        flexDirection: 'row',
         backgroundColor: 'white',
         paddingBottom: 15
     },

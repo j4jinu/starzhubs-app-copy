@@ -30,10 +30,11 @@ import EditTalentScreen from '../screens/EditTalentScreen';
 import MyPostersScreen from '../screens/MyPostersScreen';
 import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
+import HomeScreenSingle from '../screens/HomeScreenSingle';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
-        screen: HomeTopTabNavigator,
+        screen: HomeScreenSingle,
         navigationOptions: ({ navigate, navigation }) => ({
             title: 'Explore',
             headerStyle: {

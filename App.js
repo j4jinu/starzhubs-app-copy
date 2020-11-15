@@ -14,6 +14,7 @@ import { AuthContext } from './src/context/authContext';
 
 const App = () => {
   const { token, login, logout, userId, role, name, rating, avatar } = useAuth();
+  console.log("Login status: ", token);
   return (
     <AuthContext.Provider
       value={{
