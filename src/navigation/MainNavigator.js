@@ -30,6 +30,8 @@ import EditTalentScreen from '../screens/EditTalentScreen';
 import MyPostersScreen from '../screens/MyPostersScreen';
 import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
+import TalentListScreen from '../screens/TalentListScreen';
+import AddTalentScreen from '../screens/AddTalentScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
@@ -150,7 +152,13 @@ const AccountNavigator = createStackNavigator({
         screen: EditProfileScreen
     },
     Talents: {
+        screen: TalentListScreen,
+    },
+    EditTalents: {
         screen: EditTalentScreen,
+    },
+    AddTalents: {
+        screen: AddTalentScreen,
     },
     Help: {
         screen: HelpScreen,

@@ -1,19 +1,18 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
-import {StyleSheet,Text,View,TouchableOpacity,TextInput,ActivityIndicator,Picker,Image,PermissionsAndroid,} from 'react-native';
+import React, {	useState, useContext,	useEffect,	Fragment,} from 'react';
+import {	StyleSheet,	Text,	View,	TouchableOpacity,	TextInput,	ActivityIndicator,	Picker,	Image,	PermissionsAndroid,} from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Gicon from 'react-native-vector-icons/FontAwesome';
 import Eicon from 'react-native-vector-icons/FontAwesome5';
-// import * as ImagePicker from 'expo-image-picker';
+import ImagePicker from 'react-native-image-picker';
 import { Rating, AirbnbRating } from 'react-native-elements';
-// import MultiSelect from 'react-native-multiple-select';
 import { Snackbar } from 'react-native-paper';
 import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons'
-const industryNames = [
-{
+
+const industryNames = [ {
     name: 'Industry',
     id: 0,
     children: [
@@ -59,62 +58,62 @@ const industryNames = [
         },
     ]
 }]
+    
+export default function AddTalentScreen(props) {
+  
+  const auth = useContext(AuthContext);
+  const [selectedValue, setSelectedValue] = useState("");
+  const [industryValue, setIndustryValue] = useState();
+  const [value, setValue] = useState("first");
+  const [talent, setTalent] = useState()
+  const [categories, setCategories] = useState([])
+  const [isProfileImageMode, setIsProfileImageMode] = useState(false)
+  const [industries, setIndustries] = useState([]);
+  const [loading, setLoading] = useState(false)
+  const [bodyTypeValue, setbodyTypeValue] = useState();
+  const [labels, setlabels] = useState();
+  const [complexionValue, setcomplexionValue] = useState();
+  const [imageType,setImageType]=useState()
+  const [headimg, setHeadImage] = useState()
+  const [rightimg, setRightImage] = useState();  
+  const [leftimg, setLeftImage] = useState()
+  const [fullsizeimg, setFullImage] = useState()
+  const [selectedItems, setSelectedItems] = useState([])
+  const [level,setLevel]=useState('')
+  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState();
 
 
-const EditTalentScreen = (props) => {
-    const talentId = props.navigation.getParam('talentId');
-    const category = props.navigation.getParam('category');
-    const industry = props.navigation.getParam('industry');
-    const films = props.navigation.getParam('films');
-    const years = props.navigation.getParam('years');
-    const description = props.navigation.getParam('description');
-    const levels = props.navigation.getParam('levels');
-	const auth = useContext(AuthContext);
-	const [selectedValue, setSelectedValue] = useState('');
-	const [industryValue, setIndustryValue] = useState();
-	const [value, setValue] = useState('first');
-	const [talent, setTalent] = useState();
-	const [categories, setCategories] = useState([]);
-	const [isProfileImageMode, setIsProfileImageMode] = useState(false);
-	const [industries, setIndustries] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [bodyTypeValue, setbodyTypeValue] = useState();
-	const [labels, setlabels] = useState();
-	const [complexionValue, setcomplexionValue] = useState();
-	const [imageType, setImageType] = useState();
-	const [headimg, setHeadImage] = useState();
-	const [rightimg, setRightImage] = useState();
-	const [leftimg, setLeftImage] = useState();
-	const [fullsizeimg, setFullImage] = useState();
-	const [selectedItems, setSelectedItems] = useState(industry);
-	const [level, setLevel] = useState('');
-	const [visible, setVisible] = useState(false);
-	const [message, setMessage] = useState();
 
 	const initialTalentValues = {
-		talentId: talentId,
-		level: levels,
-		experience: years,
-		industry: industry,
-		films: films,
-		description: description
+    talentId: talent,
+    // level: '',
+    type: 'Aspirant',
+    experience: '',
+    // industry:[],
+    projects: '',
+    complexion: 'Brown',
+    bodyType: 'Athletic',
+    height: 0,
+    weight: 0,
+    description:'description'
 	};
 
 	const phoneRegExp = /^[0-9]*$/;
 	const talentValidationSchema = Yup.object({
 		talentId: Yup.string().required('Select one category'),
-		level: Yup.string().required('Select your level'),
-	    industry: Yup.string().required('Select one industry'),
-	 	//complexion: Yup.string().required('Select one complexion'),
-	 	//bodyType: Yup.string().required('Please choose one'),
-	    experience: Yup.string()
+		// level: Yup.string().required('Select your level'),
+		// industry: Yup.string().required('Select one industry'),
+		complexion: Yup.string().required('Select one complexion'),
+		bodyType: Yup.string().required('Please choose one'),
+		experience: Yup.string()
 			.matches(phoneRegExp, 'Invalid input')
 			.required('Enter experience details'),
-		films: Yup.string()
+		projects: Yup.string()
 			.matches(phoneRegExp, 'Invalid input')
 			.required('Enter no. of projects'),
-		//height: Yup.string().required('Enter height'),
-	    //weight: Yup.string().required('Enter weight'),
+		height: Yup.string().required('Enter height'),
+		weight: Yup.string().required('Enter weight'),
 		description: Yup.string().required('Enter talent  details'),
 	});
 
@@ -126,17 +125,32 @@ const EditTalentScreen = (props) => {
 					Authorization: 'Bearer ' + auth.token,
 				},
 			};
-			fetch(`http://13.232.190.226/api/user/talent`,requestOptions)
+			fetch(
+				`http://13.232.190.226/api/user/talent`,
+				requestOptions
+			)
 				.then((response) => response.json())
-				.then((response) => {
-					if (response.success === true) {
-						setTalent(response.data.talents);
-						// setIsLoading(false)
-					} else {alert('Error: ',response.message);}
+				.then(
+					(response) => {
+						if (response.success === true) {
+							setTalent(
+								response.data
+									.talents
+							);
+							// setIsLoading(false)
+						} else {
+							alert(
+								'Error: ',
+								response.message
+							);
+						}
 						// setIsLoading(false)
 					},
 					(error) => {
-						alert('Talent fetching failed: ' +error);
+						alert(
+							'Talent fetching failed: ' +
+								error
+						);
 						// setIsLoading(false)
 					}
 				);
@@ -162,6 +176,11 @@ const EditTalentScreen = (props) => {
 		getCategory();
 	}, []);
 
+	// const handleSubmit = (values) => {
+	//   console.warn(values);
+
+	// }
+
 	const isProfileImageModeHandler = (tid) => {
 		// var index = e.nativeEvent.target.selectedIndex;
 		// const cat = e.nativeEvent.target[itemIndex].text.toLowerCase();
@@ -175,45 +194,74 @@ const EditTalentScreen = (props) => {
 			return;
 		}
 	};
+
+
+	const resetForm = (values) =>{
+		values:''
+	}
+
+
 	const handleSubmit = (values) => {
-		values.level = levels || level
-		values.industry = industry || selectedItems
-		console.warn("Form data: ", values);
-	
+		setLoading(true);
+		// console.warn(JSON.stringify(values));
+		// if (industries.length === 0) {
+		//     alert("Choose atleast one industry")
+		//     return
+		// }
+		// setOpenBackdrop(true)
 		const requestOptions = {
-			method: 'PUT',
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				"Authorization": 'Bearer ' + auth.token
+				Authorization: 'Bearer ' + auth.token,
 			},
 			body: JSON.stringify({
+				talentId: values.talentId,
+				level: level,
+				description: values.description,
+				height: values.height,
+				weight: values.weight,
+				bodyType: values.bodyType,
+				complexion: values.complexion,
 				chars: {
-					"industry": values.industry,
-					"films": values.films,
-					"years": values.years
+					films: values.projects,
+					years: values.experience,
+					type: values.type,
+					industry: selectedItems,
 				},
-				description: values.description || '',
-				level: values.level 
-			})
-		}
-		fetch(`http://13.232.190.226/api/talent/user/${talentId}`, requestOptions)
-		.then(response => response.json())
-		.then(response => {
-		if (response.success === true) {
-			setMessage("Data updated successfully")
-			setVisible(true)
-		} else {
-			setMessage("Something went wrong. Try again !")
-			setVisible(true)
-		}
-	},
-	(error) => {
-	})
+			}),
+		};
+
+		fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+			.then((response) => response.json())
+			.then(
+				(response) => {
+					if (response.success === true) {
+						setLoading(false);
+						const msg ="New Talent added successfully. Check your profile page and add medias."
+						setMessage(msg)
+						setVisible(!visible)
+						// navigation.navigate('Account');
+					} else {
+						// alert(response.message);
+						setMessage(response.message)
+						setVisible(!visible)
+					}
+					setLoading(false);
+				},
+				(error) => {
+					setLoading(false);
+					alert(response.message);
+				}
+			);
 	};
 
+	const onDismissSnackBar = () =>{
+		 setVisible(false);
+	}
 
 	const uploadAvatar = (imgType, imgurl) => {
-		console.warn('URL', imgurl);
+    console.warn("URL",imgurl);
 		let image;
 		if (imgType === 'head_shot') {
 			image = headimg;
@@ -223,8 +271,8 @@ const EditTalentScreen = (props) => {
 			image = rightimg;
 		} else {
 			image = fullsizeimg;
-		}
-		const uri = imgurl;
+    }
+    const uri = imgurl;
 		var formData = new FormData();
 		formData.append('imageType', imageType);
 		let fileType = uri.substring(uri.lastIndexOf('.') + 1);
@@ -261,92 +309,243 @@ const EditTalentScreen = (props) => {
 					alert('Upload failed: ' + error);
 				}
 			);
-	};
-
-	const requestCameraPermission = async (imgType) => {
-		console.warn(imgType);
-		try {
-			const granted = await PermissionsAndroid.request(
-				PermissionsAndroid.PERMISSIONS
-					.READ_EXTERNAL_STORAGE
-			);
-			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-				pickImage(imgType);
-			} else {
-				console.warn('Camera permission denied');
-			}
-		} catch (err) {
-			console.warn(err);
-		}
-	};
+    };
+    
+    const requestCameraPermission = async (imgType) => {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+              title: 'Cool Photo App Camera Permission',
+              message:
+                'Cool Photo App needs access to your camera ' +
+                'so you can take awesome pictures.',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            pickImage(imgType);
+          } else {
+            console.log('Camera permission denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      };
+	// const requestCameraPermission = async (imgType) => {
+    // console.warn(imgType);
+	// 	try {
+	// 		const granted = await PermissionsAndroid.request(
+	// 			PermissionsAndroid.PERMISSIONS
+	// 				.READ_EXTERNAL_STORAGE
+	// 		);
+	// 		if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+	// 			pickImage(imgType);
+	// 		} else {
+	// 			console.warn('Camera permission denied');
+	// 		}
+	// 	} catch (err) {
+	// 		console.warn(err);
+	// 	}
+	// };
 
 	const pickImage = async (imgType) => {
-		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.All,
-			allowsEditing: true,
-			aspect: [4, 3],
-			quality: 1,
-		});
-		var imgurl;
-		if (imgType == 'head_shot') {
-			console.warn(result.uri);
-			setHeadImage(result.uri);
-		} else if (imgType == 'left_profile') {
-			setLeftImage(result.uri);
-		} else if (imgType == 'right_profile') {
-			setRightImage(result.uri);
-		} else {
-			setFullImage(result.uri);
-		}
-		imgurl = result.uri;
-		uploadAvatar(imgType, imgurl);
+        var options = {
+            title: 'Select Image',
+            customButtons: [
+              { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+            ],
+            storageOptions: {
+              skipBackup: true,
+              path: 'images',
+            },
+        };
+
+        var imgurl;
+        ImagePicker.launchImageLibrary(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+              console.log('User cancelled image picker');
+            } else if (response.error) {
+              console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+              console.log('User tapped custom button: ', response.customButton);
+              alert(response.customButton);
+            } else {
+                if (imgType == 'head_shot') {
+                    console.warn(response.uri);
+                    setHeadImage(response.uri);
+                } else if (imgType == 'left_profile') {
+                    setLeftImage(response.uri);
+                } else if (imgType == 'right_profile') {
+                    setRightImage(response.uri);
+                } else {
+                    setFullImage(response.uri);
+                }
+                imgurl = response.uri;
+                uploadAvatar(imgType, imgurl);
+            }
+          });
+		// let result = await ImagePicker.launchImageLibraryAsync({
+		// 	mediaTypes: ImagePicker.MediaTypeOptions.All,
+		// 	allowsEditing: true,
+		// 	aspect: [4, 3],
+		// 	quality: 1,
+        // });
+        // var imgurl;
+        //     if (imgType == 'head_shot') {
+        // console.warn(result.uri);
+        //         setHeadImage(result.uri);
+        //     } else if (imgType == 'left_profile') {
+        //         setLeftImage(result.uri);
+        //     } else if (imgType == 'right_profile') {
+        //         setRightImage(result.uri);
+        //     } else {
+        //         setFullImage(result.uri);
+        //     }
+        // imgurl = result.uri;
+        //     uploadAvatar(imgType, imgurl);
 	};
 
 	const handleLevelChange = (rating) => {
 		setLevel(rating);
-	};
-	const onDismissSnackBar = () => {
-		setVisible(false);
-	};
-	const onSelectedItemsChange = (selectedItems) => {
-		setSelectedItems(selectedItems);
-	};
+  };
+  
+  const onSelectedItemsChange = selectedItems => {
+    setSelectedItems(selectedItems)
+  };
+
+
+  const handleReset = (resetForm) => {
+	  resetForm();
+  };
 	return (
 		<View style={styles.container}>
-			<Snackbar visible={visible}	duration={7000}	onDismiss={onDismissSnackBar}>{message}</Snackbar>
+			<Snackbar
+				visible={visible}
+				duration={7000}
+				onDismiss={onDismissSnackBar}
+				action={{
+				// label: 'Undo',
+				// onPress = () => onDismissSnackBar()
+				}}>
+				{message}
+			</Snackbar>
 			<Formik
 				enableReinitialize={true}
 				initialValues={initialTalentValues}
 				validationSchema={talentValidationSchema}
-				onSubmit={(values) => {	handleSubmit(values);}}
+				onSubmit={(values,actions) => {
+					handleSubmit(values),
+					actions.resetForm({
+						values:{
+							experience:''
+						}
+					})
+				}}
 			>
-				{({	handleChange,handleBlur,handleSubmit,setFieldValue,resetForm,values,errors,	}) => (
+				{({
+					handleChange,
+					handleBlur,
+					handleSubmit,
+					setFieldValue,
+					resetForm,
+					values,
+					errors,
+				}) => (
 					<React.Fragment>
 						<View style={styles.inputView}>
-							<Cicon name="merge-type" size={20} style={{ color:'#fd9242'}}/>
-							<Text style={{color:'black'}}>{category}</Text>
+							<Cicon
+								name="merge-type"
+								size={20}
+								style={{
+									color:
+										'#fd9242',
+									marginTop:
+										'2%',
+								}}
+							/>
+							<Picker
+								selectedValue={
+									selectedValue
+								}
+								style={{
+									height: 20,
+									width:
+										'100%',
+								}}
+								onValueChange={(
+									itemValue,
+									itemIndex
+								) => {
+									setFieldValue(
+										'talentId',
+										itemValue
+									);
+									setSelectedValue(
+										itemValue
+									);
+									isProfileImageModeHandler(
+										itemValue
+									);
+								}}
+							>
+								<Picker.Item
+									label="Select Category"
+									value="0"
+								/>
+								{categories.map(
+									(
+										cat
+									) => (
+										<Picker.Item
+											label={
+												cat.title
+											}
+											value={
+												cat._id
+											}
+										/>
+									)
+								)}
+							</Picker>
 						</View>
-						<Text style={styles.error}>{errors.talentId}</Text>
+						<Text style={styles.error}>
+							{errors.talentId}
+						</Text>
 
-						 <View
+						<View
 							style={{
-								flexDirection:'column',
+								flexDirection:
+									'column',
 								marginTop: '3%',
-								marginLeft:'0%',
-								paddingBottom:'2%',
-								backgroundColor:'white',	
+								marginLeft:
+									'0%',
+									paddingBottom:'2%',
+								backgroundColor:
+									'white',
+								// height: 70,
 								width: '80%',
 								borderRadius: 10,
 							}}
 						>
-							<Text style={{marginLeft:	'5%',}}	>Select Confidence Level</Text>
+							<Text
+								style={{
+									marginLeft:
+										'5%',
+								}}
+							>
+								Select
+								Confidence Level
+							</Text>
 
 							<Rating
 								type="custom"
 								startingValue={
-									levels
+									level
 								}
-								defaultRating={levels}
 								//tintColor="#f5f5f5"
 								//tintColor="grey"
 								ratingColor="orange"
@@ -363,23 +562,12 @@ const EditTalentScreen = (props) => {
 										'-3%',
 								}}
 							/>
-							<Text
-								style={{
-									marginLeft:
-										'5%',
-									marginTop:
-										'3%',
-									fontSize: 12,
-									color:
-										'grey',
-								}}
-							>
-								Swipe left or
-								right
+							<Text style={{marginLeft:'5%', marginTop:'3%', fontSize:12, color:'grey'}}	>
+								Swipe left or right
 							</Text>
-						</View> 
+						</View>
 
-						<View style={styles.inputView}>
+                        <View style={styles.inputView}>
 							<View style={{width:'10%',marginTop:'6%'}}	>
 								<Gicon
 									name="industry"
@@ -405,22 +593,20 @@ const EditTalentScreen = (props) => {
 						<Text style={styles.error}>
 							{errors.industry}
 						</Text>
-
-						 <View style={styles.inputView}>
+                        <View style={styles.inputView}>
 							<Eicon
 								name="envelope-open-text"
 								size={15}
 								style={{
 									color:
 										'#fd9242',
-									marginTop: '4%',
+									marginTop: 5,
 								}}
 							/>
 							<TextInput
 								style={
 									styles.inputText
 								}
-								defaultValue={String(years)}
 								placeholder="Experience"
 								placeholderTextColor="#003f5c"
 								keyboardType="numeric"
@@ -435,7 +621,7 @@ const EditTalentScreen = (props) => {
 							/>
 						</View>
 						<Text style={styles.error}>
-							{errors.years}
+							{errors.experience}
 						</Text>
 						<View style={styles.inputView}>
 							<Eicon
@@ -444,29 +630,28 @@ const EditTalentScreen = (props) => {
 								style={{
 									color:
 										'#fd9242',
-									marginTop: '4%',
+									marginTop: 5,
 								}}
 							/>
 							<TextInput
 								style={
 									styles.inputText
 								}
-								defaultValue={String(films)}
 								placeholder="No.of Projects"
 								placeholderTextColor="#003f5c"
 								keyboardType="numeric"
 								autoCapitalize="sentences"
 								// defaultValue={user.email}
 								onChangeText={handleChange(
-									'films'
+									'projects'
 								)}
 								onBlur={handleBlur(
-									'films'
+									'projects'
 								)}
 							/>
 						</View>
 						<Text style={styles.error}>
-							{errors.films}
+							{errors.projects}
 						</Text>
 						<View
 							style={
@@ -476,19 +661,22 @@ const EditTalentScreen = (props) => {
 							<Cicon
 								name="class"
 								size={15}
-								style={{color:'#fd9242',marginTop:'8%',	marginLeft: 5,}}
+								style={{
+									color:
+										'#fd9242',
+									marginTop: '6%',
+									marginLeft: 5,
+								}}
 							/>
 							<TextInput
 								style={
 									styles.inputTextDes
 								}
-								defaultValue={description}
 								placeholder="Description"
 								placeholderTextColor="#003f5c"
 								keyboardType="email-address"
 								autoCapitalize="sentences"
-								numberOfLines={
-									3
+								numberOfLines={	3
 								}
 								multiline={true}
 								// defaultValue={user.email}
@@ -499,9 +687,9 @@ const EditTalentScreen = (props) => {
 									'description'
 								)}
 							/>
-						</View> 
+						</View>
 
-						{/* {isProfileImageMode && (
+						{isProfileImageMode && (
 							<Fragment>
 								<View
 									style={{
@@ -518,16 +706,12 @@ const EditTalentScreen = (props) => {
 										}}
 									>
 										<TouchableOpacity
-											onPress={() => {
-												requestCameraPermission(
-													'head_shot'
-												);
-											}}
+											onPress={() => {requestCameraPermission('head_shot')}}
 										>
 											<Image
 												source={
-													!headimg
-														? require('../../assets/headshot.jpg')
+													!headimg 
+														? require('../assets/headshot.jpg')
 														: {
 																uri: headimg,
 														  }
@@ -547,16 +731,13 @@ const EditTalentScreen = (props) => {
 										}}
 									>
 										<TouchableOpacity
-											onPress={() =>
-												requestCameraPermission(
-													'left_profile'
-												)
-											}
+											onPress={() => requestCameraPermission('left_profile')}
 										>
 											<Image
 												source={
 													!leftimg
-														? require('../../assets/left_profile.jpg')
+													
+														? require('../assets/left_profile.jpg')
 														: {
 																uri: leftimg,
 														  }
@@ -585,16 +766,13 @@ const EditTalentScreen = (props) => {
 										}}
 									>
 										<TouchableOpacity
-											onPress={() =>
-												requestCameraPermission(
-													'right_profile'
-												)
-											}
+											onPress={() => requestCameraPermission('right_profile')}
 										>
 											<Image
 												source={
-													!rightimg
-														? require('../../assets/right_profile.jpg')
+												!	rightimg 
+													
+														? require('../assets/right_profile.jpg')
 														: {
 																uri: rightimg,
 														  }
@@ -616,17 +794,12 @@ const EditTalentScreen = (props) => {
 											marginTop: 10,
 										}}
 									>
-										<TouchableOpacity
-											onPress={() =>
-												requestCameraPermission(
-													'fullsize'
-												)
-											}
-										>
+										<TouchableOpacity	onPress={() =>requestCameraPermission('fullsize')}>
 											<Image
 												source={
 													!fullsizeimg
-														? require('../../assets/fullsize.jpg')
+												
+														? require('../assets/fullsize.jpg')
 														: {
 																uri: fullsizeimg,
 														  }
@@ -821,7 +994,7 @@ const EditTalentScreen = (props) => {
 									}
 								</Text>
 							</Fragment>
-						)} */}
+						)}
 
 						<TouchableOpacity
 							style={styles.loginBtn}
@@ -846,9 +1019,13 @@ const EditTalentScreen = (props) => {
 				)}
 			</Formik>
 
+			<TouchableOpacity style={{marginBottom:'10%'}}>
+				<Text Style={{fontWeight:'bold', color:'black'}}>Skip</Text>
+			</TouchableOpacity>
 		</View>
 	);
-};
+}
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -883,8 +1060,7 @@ const styles = StyleSheet.create({
 		padding: 5,
 		backgroundColor: 'white',
 		borderRadius: 10,
-        marginTop: '5%',
-        
+		marginTop: '5%',
 	},
 	inputText: {
 		// height: 50,
@@ -927,7 +1103,5 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontWeight: 'bold',
 		fontSize: 15,
-    },
-
+	},
 });
-export default EditTalentScreen;
