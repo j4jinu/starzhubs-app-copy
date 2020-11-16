@@ -6,15 +6,19 @@ import {
     Image,
     FlatList,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity,
+    ActivityIndicator
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+import HomeMediaList from '../components/HomeMediaList';
 import HomePortfolioList from '../components/HomePortfolioList';
+import theme from '../config/theme';
 const HomeScreenSingle = (props) => {
     const [isLoading, setIsLoading] = React.useState(true)
     const [poster, setPoster] = React.useState([])
     const [users, setUsers] = React.useState([])
     const [media, setMedia] = React.useState([])
+    const [talent, setTalent] = React.useState([])
 
     useEffect(() => {
         const fetchHomeData = async () => {
@@ -27,10 +31,9 @@ const HomeScreenSingle = (props) => {
                 let userData = await usersResponse.json()
                 userData.success ? setUsers(userData.data.users) : setUsers([])
                 let mediaData = await mediaResponse.json()
-                mediaData.success ? setMedia(mediaData.talents) : setMedia([])
+                mediaData.success ? setTalent(mediaData.talents) : setTalent([])
                 let resData = await response.json()
                 resData.success ? setPoster(resData.data.posters) : setPoster([])
-                console.warn(userData);
                 setIsLoading(false)
             } catch (error) {
                 console.error(error);
@@ -39,6 +42,29 @@ const HomeScreenSingle = (props) => {
         }
         fetchHomeData()
     }, [])
+
+    const renderMedia = (data) => {
+        console.log(("DATA: ", data));
+        if (data.length === 0) {
+            setMedia([])
+            return
+        }
+        data.map(t => {
+            if (t.media !== []) {
+                media.push(t.media)
+            }
+        });
+        console.log("Media files: ", media);
+    }
+
+    if (isLoading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator color={theme.$primarycolor} size={'large'} />
+            </View>
+        )
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -52,11 +78,10 @@ const HomeScreenSingle = (props) => {
                                 image: p.image,
                                 description: p.description,
                                 endDate: p.endDate,
-                                startDate: p.startDate
-
+                                startDate: p.startDate,
+                                user: p.userId
                             })}
                         >
-
                             <Image
                                 style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                                 source={{
@@ -78,6 +103,7 @@ const HomeScreenSingle = (props) => {
                         "We understands the needs and importance of the roles designed, and the time spent by the artists in the industry to fill a perfect character in an appropriate place"
                     </Text>
                 </View>
+                <HomeMediaList talents={talent} navigation={props.navigation} />
             </ScrollView>
         </View>
     );

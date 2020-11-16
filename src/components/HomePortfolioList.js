@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, Image, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import UserGridItem from '../components/UserGridItem';
+import theme from '../config/theme';
 
 const users = [
     { name: 'A', id: '1' },
@@ -36,7 +37,17 @@ const HomePortfolioList = (props) => {
                 />
             )}
             numColumns={2}
-            ListHeaderComponent={<Text style={styles.title}>Trending Profiles</Text>}
+            ListHeaderComponent={
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 15 }}>
+                    <Text style={styles.title}>Trending Profiles</Text>
+                    <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => props.navigation.navigate('UsersList')}
+                    >
+                        <Text style={{ color: 'white', }}>View More</Text>
+                    </TouchableOpacity>
+                </View>
+            }
         />
     );
 };
@@ -45,8 +56,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginHorizontal: 10,
-        marginVertical: 10
+        color: theme.$primaryColorText
+    },
+    btn: {
+        backgroundColor: theme.$primaryColor,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: theme.$borderRadius
     }
 })
 

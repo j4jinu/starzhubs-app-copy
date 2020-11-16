@@ -37,10 +37,6 @@ const HomeNavigator = createStackNavigator({
         screen: HomeScreenSingle,
         navigationOptions: ({ navigate, navigation }) => ({
             title: 'Explore',
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerTitleStyle: {
                 fontWeight: '100',
                 fontSize: 16
@@ -69,6 +65,9 @@ const HomeNavigator = createStackNavigator({
     },
     MediaDetails: {
         screen: MediaDetailsScreen
+    },
+    UsersList: {
+        screen: PortfolioListScreen
     }
 }, {
     defaultNavigationOptions: {
@@ -83,10 +82,6 @@ const UserNavigator = createStackNavigator({
     Users: {
         screen: PortfolioListScreen,
         navigationOptions: ({ navigate, navigation }) => ({
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerRight: () => (
                 <MaterialCommunityIcons
                     style={{ marginRight: 15 }}
@@ -206,10 +201,6 @@ const BuddyNavigator = createStackNavigator({
         screen: BuddyTopNavigator,
         navigationOptions: {
             title: 'Friends',
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerTitleStyle: {
                 fontWeight: '100',
                 fontSize: 16
@@ -258,7 +249,6 @@ const FriendsNavigator = createMaterialTopTabNavigator(
                 pressColor: 'gray',
                 style: {
                     backgroundColor: 'white',
-                    elevation: 0,
                     width: '90%'
                 },
                 indicatorStyle: {
