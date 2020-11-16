@@ -20,11 +20,10 @@ const PosterListActive = (props) => {
     }
     return (
         <View>
-            {/* {props.posters.length===0 && (<Text style={{fontSize:25,fontWeight:"bold",color:"orange",alignItems:"center"}}>No Posters</Text>)}
-            {props.posters.length>0 && ( */}
             <FlatList
                 keyExtractor={item => item.id}
                 data={posters}
+                extraData={posters}
                 renderItem={({ item }) => (
 
                     <MyPosterGridItem

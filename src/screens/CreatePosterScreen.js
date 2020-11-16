@@ -10,12 +10,12 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
 
-const EditPosterScreen = (props) => {
+const CreatePosterScreen = (props, { navigation }) => {
 	const auth = useContext(AuthContext);
 	const [message, setMessage] = useState();
 	const [image, setImage] = useState();
-	const [startDate, setStartDate] = useState();
-	const [endDate, setEndDate] = useState();
+	const [startDate, setStartDate] = useState('');
+	const [endDate, setEndDate] = useState('');
 	const [isStartDate, setIsStartDate] = useState(false);
 	const [isEndDate, setIsEndDate] = useState(false);
 	const [isImage, setIsImage] = useState(false);
@@ -34,16 +34,19 @@ const EditPosterScreen = (props) => {
 
 
 	const handleSubmit = (values) => {
-		if (startDate === '') { setIsStartDate(true) } else { setStartDate(false) }
-		if (endDate === '') { setIsEndDate(true) } else { setEndDate(false) }
-		if (image === null) { setIsImage(true) } else { setIsImage(false) }
 
+		if (startDate === '') { setIsStartDate(true) } else { setStartDate(false) }
+
+		if (endDate === '') { setIsEndDate(true) } else { setEndDate(false) }
+		if (image === undefined) { setIsImage(true) } else { setIsImage(false) }
+		console.log("image", isImage)
 		var formData = new FormData()
 		formData.append('title', values.title)
 		formData.append('description', values.description)
 		formData.append('startDate', startDate)
 		formData.append('endDate', endDate)
 		const uri = image;
+		console.log("posterimage", image)
 		let fileType = uri.substring(uri.lastIndexOf(".") + 1);
 		formData.append("poster", {
 			uri,
@@ -58,8 +61,8 @@ const EditPosterScreen = (props) => {
 			},
 			body: formData
 		}
-		console.warn(formData);
 		fetch(`http://13.232.190.226/api/poster`, requestOptions)
+
 			.then(response => response.json())
 			.then(response => {
 				if (response.success === true) {
@@ -68,7 +71,7 @@ const EditPosterScreen = (props) => {
 					setVisible(!visible)
 					setStartDate('')
 					setEndDate('')
-					setImage(null)
+					setImage('')
 					props.navigation.navigate('MyPosters')
 				} else {
 					alert("Error: ", response)
@@ -80,56 +83,81 @@ const EditPosterScreen = (props) => {
 					alert('Poster upload failed: ' + error)
 				})
 	}
-
-	const requestCameraPermission = async () => {
-		try {
-			const granted = await PermissionsAndroid.request(
-				PermissionsAndroid.PERMISSIONS
-					.READ_EXTERNAL_STORAGE
-			);
-			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-				pickImage();
-			} else {
-				console.warn('Camera permission denied');
-			}
-		} catch (err) {
-			console.warn(err);
-		}
-	};
-	const pickImage = async () => {
-		let result = await ImagePicker.launchImageLibrary({
-			mediaType: ImagePicker.MediaTypeOptions.All,
-			allowsEditing: true,
-			aspect: [4, 3],
-			quality: 1,
-		});
-		if (result.uri === '') { setIsImage(true) }
-		else { setIsImage(false); setImage(result.uri) }
-	};
-
 	const handleStartDate = (date) => {
 		setSDate(date)
 		if (date === '') {
 			setIsStartDate(true)
 		}
 		else {
-			setStartDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD')); setIsStartDate(false)
+			setStartDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
+			setIsStartDate(false)
 		}
 	}
 	const handleEndDate = (date) => {
-		console.warn("Picked: ", date);
 		setEDate(date)
 		if (date === '') { setIsStarDate(true) }
 		else {
-			const endDateFormat = Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD')
-			setEndDate(endDateFormat);
+			setEndDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
 			setIsEndDate(false)
 		}
 	}
 	const onDismissSnackBar = () => {
 		setVisible(false);
 	};
+	const requestCameraPermission = async () => {
+		try {
+			const granted = await PermissionsAndroid.request(
+				PermissionsAndroid.PERMISSIONS.CAMERA,
+				{
+					title: 'Cool Photo App Camera Permission',
+					message:
+						'Cool Photo App needs access to your camera ' +
+						'so you can take awesome pictures.',
+					buttonNeutral: 'Ask Me Later',
+					buttonNegative: 'Cancel',
+					buttonPositive: 'OK',
+				},
+			);
+			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+				chooseFile();
+				//console.log('You can use the camera');
+			} else {
+				console.log('Camera permission denied');
+			}
+		} catch (err) {
+			console.warn(err);
+		}
+	};
 
+	const chooseFile = () => {
+		//console.log('choose file');
+		var options = {
+			title: 'Select Image',
+			customButtons: [
+				{ name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+			],
+			storageOptions: {
+				skipBackup: true,
+				path: 'images',
+			},
+		};
+		ImagePicker.launchImageLibrary(options, (response) => {
+			//console.log('Response = ', response);
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+			} else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			} else if (response.customButton) {
+				console.log('User tapped custom button: ', response.customButton);
+				alert(response.customButton);
+			} else if (response.uri === '') { setIsImage(true) }
+			else {
+				setIsImage(false);
+				setImage(response.data)
+
+			}
+		});
+	};
 	return (
 		<>
 			<ScrollView>
@@ -159,7 +187,7 @@ const EditPosterScreen = (props) => {
 										</TouchableOpacity>
 										{isImage && (
 											<Text style={{ fontSize: 13, color: 'red', alignSelf: 'center', marginTop: 1, }}>
-												Choose a poster image
+												Choose a Poster image
 											</Text>
 										)}
 										<View style={{
@@ -191,7 +219,7 @@ const EditPosterScreen = (props) => {
 														fontSize: 13,
 														color: 'red',
 														alignSelf: 'center',
-														marginTop: -10,
+														marginTop: -2,
 													}}
 												>
 													{errors.title}
@@ -351,7 +379,6 @@ const EditPosterScreen = (props) => {
 		</>
 	);
 };
-export default EditPosterScreen;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -415,4 +442,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 	},
 });
+
+export default CreatePosterScreen;
+
 

@@ -7,7 +7,6 @@ import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
 const MyPosterGridItem = (props) => {
     const { userId } = props
-    console.log("user image fro props: ", userId);
     const auth = useContext(AuthContext)
     const [visible, setVisible] = useState(false);
     const [user, setUser] = useState({ image: {} })
@@ -16,7 +15,6 @@ const MyPosterGridItem = (props) => {
             [
                 {
                     text: 'CANCEL',
-                    // onPress: () => {navigation.navigate('My Media')},
                     style: 'cancel',
                 },
                 {
