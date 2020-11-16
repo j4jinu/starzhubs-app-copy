@@ -30,6 +30,7 @@ import EditTalentScreen from '../screens/EditTalentScreen';
 import MyPostersScreen from '../screens/MyPostersScreen';
 import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
+import CreatePosterScreen from '../screens/CreatePosterScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
@@ -118,7 +119,12 @@ const PosterNavigator = createStackNavigator({
     },
     EditPoster: {
         screen: EditPosterScreen
-    }
+    },
+    CreatePosters: {
+        screen: CreatePosterScreen,
+
+    },
+
 }, {
     defaultNavigationOptions: {
         headerTitleStyle: {
@@ -176,6 +182,7 @@ const AccountNavigator = createStackNavigator({
             title: 'Your posters'
         }
     },
+
     MyMedia: {
         screen: MyMediaScreen,
         navigationOptions: {
@@ -190,7 +197,11 @@ const AccountNavigator = createStackNavigator({
     },
     EditPoster: {
         screen: EditPosterScreen
-    }
+    },
+    CreatePosters: {
+        screen: CreatePosterScreen,
+
+    },
 }, {
     defaultNavigationOptions: {
         headerTitleStyle: {
