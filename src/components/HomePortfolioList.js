@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, Image, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import UserGridItem from '../components/UserGridItem';
+import theme from '../config/theme';
 
 const users = [
     { name: 'A', id: '1' },
@@ -23,16 +24,30 @@ const renderGridItem = (user) => {
 const HomePortfolioList = (props) => {
     return (
         <FlatList
+            style={{ backgroundColor: '#fafafa', marginTop: 20 }}
             keyExtractor={(item, index) => item.id}
-            data={users}
+            data={props.users}
             renderItem={({ item }) => (
                 <UserGridItem
+                    userId={item._id}
                     name={item.name}
+                    locaton={item.locaton}
+                    image={item.image}
                     navigation={props.navigation}
                 />
             )}
             numColumns={2}
-            ListHeaderComponent={<Text style={styles.title}>Trending Profiles</Text>}
+            ListHeaderComponent={
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 15 }}>
+                    <Text style={styles.title}>Trending Profiles</Text>
+                    <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => props.navigation.navigate('UsersList')}
+                    >
+                        <Text style={{ color: 'white', }}>View More</Text>
+                    </TouchableOpacity>
+                </View>
+            }
         />
     );
 };
@@ -41,8 +56,13 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginHorizontal: 10,
-        marginVertical: 10
+        color: theme.$primaryColorText
+    },
+    btn: {
+        backgroundColor: theme.$primaryColor,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        borderRadius: theme.$borderRadius
     }
 })
 

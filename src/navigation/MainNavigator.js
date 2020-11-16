@@ -32,16 +32,14 @@ import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
 import TalentListScreen from '../screens/TalentListScreen';
 import AddTalentScreen from '../screens/AddTalentScreen';
+import CreatePosterScreen from '../screens/CreatePosterScreen';
+import HomeScreenSingle from '../screens/HomeScreenSingle';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
-        screen: HomeTopTabNavigator,
+        screen: HomeScreenSingle,
         navigationOptions: ({ navigate, navigation }) => ({
             title: 'Explore',
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerTitleStyle: {
                 fontWeight: '100',
                 fontSize: 16
@@ -70,6 +68,9 @@ const HomeNavigator = createStackNavigator({
     },
     MediaDetails: {
         screen: MediaDetailsScreen
+    },
+    UsersList: {
+        screen: PortfolioListScreen
     }
 }, {
     defaultNavigationOptions: {
@@ -84,10 +85,6 @@ const UserNavigator = createStackNavigator({
     Users: {
         screen: PortfolioListScreen,
         navigationOptions: ({ navigate, navigation }) => ({
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerRight: () => (
                 <MaterialCommunityIcons
                     style={{ marginRight: 15 }}
@@ -120,7 +117,12 @@ const PosterNavigator = createStackNavigator({
     },
     EditPoster: {
         screen: EditPosterScreen
-    }
+    },
+    CreatePosters: {
+        screen: CreatePosterScreen,
+
+    },
+
 }, {
     defaultNavigationOptions: {
         headerTitleStyle: {
@@ -184,6 +186,7 @@ const AccountNavigator = createStackNavigator({
             title: 'Your posters'
         }
     },
+
     MyMedia: {
         screen: MyMediaScreen,
         navigationOptions: {
@@ -198,7 +201,11 @@ const AccountNavigator = createStackNavigator({
     },
     EditPoster: {
         screen: EditPosterScreen
-    }
+    },
+    CreatePosters: {
+        screen: CreatePosterScreen,
+
+    },
 }, {
     defaultNavigationOptions: {
         headerTitleStyle: {
@@ -213,10 +220,6 @@ const BuddyNavigator = createStackNavigator({
         screen: BuddyTopNavigator,
         navigationOptions: {
             title: 'Friends',
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerTitleStyle: {
                 fontWeight: '100',
                 fontSize: 16
@@ -265,7 +268,6 @@ const FriendsNavigator = createMaterialTopTabNavigator(
                 pressColor: 'gray',
                 style: {
                     backgroundColor: 'white',
-                    elevation: 0,
                     width: '90%'
                 },
                 indicatorStyle: {

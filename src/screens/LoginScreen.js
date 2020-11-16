@@ -79,7 +79,8 @@ const LoginScreen = (props) => {
                                         flexDirection: 'row',
                                         alignItems: 'center',
                                         borderColor: errors.username ? 'red' : '#e6e6e6'
-                                    }}>
+                                    }}
+                                >
                                     <Icon
                                         name='mail'
                                         size={20}
