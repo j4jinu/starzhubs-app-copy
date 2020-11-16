@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
-const PendingConnectionScreen = () => {
+import { AuthContext } from '../context/authContext';
+const PendingConnectionScreen = (props) => {
+    const auth = useContext(AuthContext)
     const [requests, setRequests] = useState([]);
     useEffect(() => {
 		getRequests();
@@ -16,7 +18,7 @@ const PendingConnectionScreen = () => {
 		})
 			.then((response) => response.json())
 			.then((response) => {
-				setRequests(response.data.requests);
+                setRequests(response.data.requests);
                 setUserImages(response.data.requests.fromUser.image);
             })
 			.catch((error) => {
@@ -30,11 +32,13 @@ const PendingConnectionScreen = () => {
             data={requests}
             renderItem={({ item }) => (
                 <BuddyRequestItem
-                    id={item._id}
-                    name={item.fromUser._id ===auth.userId ?item.toUser.name:item.toUser.name}
-                    image={item.fromUser._id ===auth.userId ?item.toUser.image.avatar:item.fromUser.image.avatar}
+                    reqId={item._id}
+                    name={item.fromUser.name}
+                    image={item.fromUser.image}
                     talent={item.talent}
-                    //onSelect={() => props.navigation.navigate('UserDetails')}
+                    userId={item.fromUser._id}
+                    reqType="received"
+                    navigation={props.navigation}
                 />
             )}
         />

@@ -6,8 +6,8 @@ import { AuthContext } from '../context/authContext';
 const AuthLoadingScreen = (props) => {
     const auth = useContext(AuthContext)
     useEffect(() => {
-        props.navigation.navigate(auth.login === true ? 'App' : 'Auth');
-    })
+        props.navigation.navigate(auth.token === null ? 'Auth' : 'App');
+    }, [])
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <ActivityIndicator

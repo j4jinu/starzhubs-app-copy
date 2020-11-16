@@ -30,17 +30,17 @@ import EditTalentScreen from '../screens/EditTalentScreen';
 import MyPostersScreen from '../screens/MyPostersScreen';
 import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
+<<<<<<< HEAD
 import CreatePosterScreen from '../screens/CreatePosterScreen';
+=======
+import HomeScreenSingle from '../screens/HomeScreenSingle';
+>>>>>>> ef7f4c3c418155930d76baefda04a95b42d3f849
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
-        screen: HomeTopTabNavigator,
+        screen: HomeScreenSingle,
         navigationOptions: ({ navigate, navigation }) => ({
             title: 'Explore',
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerTitleStyle: {
                 fontWeight: '100',
                 fontSize: 16
@@ -69,6 +69,9 @@ const HomeNavigator = createStackNavigator({
     },
     MediaDetails: {
         screen: MediaDetailsScreen
+    },
+    UsersList: {
+        screen: PortfolioListScreen
     }
 }, {
     defaultNavigationOptions: {
@@ -83,10 +86,6 @@ const UserNavigator = createStackNavigator({
     Users: {
         screen: PortfolioListScreen,
         navigationOptions: ({ navigate, navigation }) => ({
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerRight: () => (
                 <MaterialCommunityIcons
                     style={{ marginRight: 15 }}
@@ -216,10 +215,6 @@ const BuddyNavigator = createStackNavigator({
         screen: BuddyTopNavigator,
         navigationOptions: {
             title: 'Friends',
-            headerStyle: {
-                elevation: 0,
-                shadowOpacity: 0
-            },
             headerTitleStyle: {
                 fontWeight: '100',
                 fontSize: 16
@@ -268,7 +263,6 @@ const FriendsNavigator = createMaterialTopTabNavigator(
                 pressColor: 'gray',
                 style: {
                     backgroundColor: 'white',
-                    elevation: 0,
                     width: '90%'
                 },
                 indicatorStyle: {
