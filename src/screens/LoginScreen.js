@@ -78,7 +78,7 @@ const LoginScreen = (props) => {
                                         marginTop: 8,
                                         flexDirection: 'row',
                                         alignItems: 'center',
-                                        borderColor: errors.username ? 'red' : '#e6e6e6'
+                                        borderColor: errors.username ? 'red' : 'gray'
                                     }}
                                 >
                                     <Icon
@@ -96,9 +96,9 @@ const LoginScreen = (props) => {
                                         value={values.username}
                                     />
                                 </View>
-                                <Text style={styles.errorText}>
+                                {touched.username && errors.username && <Text style={styles.errorText}>
                                     {touched.username && errors.username}
-                                </Text>
+                                </Text>}
                                 <View
                                     style={{
                                         alignSelf: 'center',
@@ -110,7 +110,7 @@ const LoginScreen = (props) => {
                                         marginTop: 8,
                                         flexDirection: 'row',
                                         alignItems: 'center',
-                                        borderColor: errors.password ? 'red' : '#e6e6e6'
+                                        borderColor: errors.password ? 'red' : 'gray'
                                     }}
                                 >
                                     <Icon
@@ -127,9 +127,9 @@ const LoginScreen = (props) => {
                                         value={values.password}
                                     />
                                 </View>
-                                <Text style={styles.errorText}>
+                                {touched.password && errors.password && <Text style={styles.errorText}>
                                     {touched.password && errors.password}
-                                </Text>
+                                </Text>}
                                 <TouchableOpacity
                                     onPress={() => props.navigation.navigate('PasswordRecovery')}
                                 >
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginRight: '8%',
         fontWeight: 'bold',
-        marginTop: 5,
+        marginTop: 12,
         marginBottom: 12,
         fontSize: 14,
         fontFamily: 'montserrat-medium'
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     },
     inputFieldBackground: {
         alignSelf: 'center',
-        borderColor: '#e6e6e6',
+        borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 10,
         width: '90%',
