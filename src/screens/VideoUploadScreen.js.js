@@ -22,7 +22,7 @@ const mediaSchema = yup.object({
   description: yup.string().required('Enter description'),
 });
 
-const PhotoUploadScreen = () => {
+const VideoUploadScreen = () => {
   const auth = useContext(AuthContext);
   const [image, setImage] = useState('');
 
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhotoUploadScreen;
+export default VideoUploadScreen;

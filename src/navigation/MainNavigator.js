@@ -1,11 +1,14 @@
 import React from 'react';
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+} from 'react-navigation-tabs';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeTopTabNavigator from "./HomeTopTabNavigator";
+import HomeTopTabNavigator from './HomeTopTabNavigator';
 import PortfolioListScreen from '../screens/PortfolioListScreen';
 import PosterListScreen from '../screens/PosterListScreen';
 import NotificationListScreen from '../screens/NotificationListScreen';
@@ -35,323 +38,328 @@ import AddTalentScreen from '../screens/AddTalentScreen';
 import CreatePosterScreen from '../screens/CreatePosterScreen';
 import HomeScreenSingle from '../screens/HomeScreenSingle';
 import PhotoUploadScreen from '../screens/PhotoUploadScreen';
+import VideoUploadScreen from '../screens/VideoUploadScreen.js';
 
-const HomeNavigator = createStackNavigator({
+const HomeNavigator = createStackNavigator(
+  {
     Portfolio: {
-        screen: HomeScreenSingle,
-        navigationOptions: ({ navigate, navigation }) => ({
-            title: 'Explore',
-            headerTitleStyle: {
-                fontWeight: '100',
-                fontSize: 16
-            },
-            headerRight: () => (
-                <MaterialIcons
-                    style={{ marginRight: 15 }}
-                    size={25}
-                    name='search'
-                    onPress={() => navigation.navigate('Filter')}
-                />
-            ),
-        })
+      screen: HomeScreenSingle,
+      navigationOptions: ({navigate, navigation}) => ({
+        title: 'Explore',
+        headerTitleStyle: {
+          fontWeight: '100',
+          fontSize: 16,
+        },
+        headerRight: () => (
+          <MaterialIcons
+            style={{marginRight: 15}}
+            size={25}
+            name="search"
+            onPress={() => navigation.navigate('Filter')}
+          />
+        ),
+      }),
     },
     UserDetails: {
-        screen: UserDetailsScreen
+      screen: UserDetailsScreen,
     },
     PosterDetails: {
-        screen: PosterDetailsScreen
+      screen: PosterDetailsScreen,
     },
     EditPoster: {
-        screen: EditPosterScreen
+      screen: EditPosterScreen,
     },
     Filter: {
-        screen: FilterScreen
+      screen: FilterScreen,
     },
     MediaDetails: {
-        screen: MediaDetailsScreen
+      screen: MediaDetailsScreen,
     },
     UsersList: {
-        screen: PortfolioListScreen
-    }
-}, {
+      screen: PortfolioListScreen,
+    },
+  },
+  {
     defaultNavigationOptions: {
-        headerTitleStyle: {
-            fontWeight: '100',
-            fontSize: 16
-        },
-    }
-})
+      headerTitleStyle: {
+        fontWeight: '100',
+        fontSize: 16,
+      },
+    },
+  },
+);
 
-const UserNavigator = createStackNavigator({
+const UserNavigator = createStackNavigator(
+  {
     Users: {
-        screen: PortfolioListScreen,
-        navigationOptions: ({ navigate, navigation }) => ({
-            headerRight: () => (
-                <MaterialCommunityIcons
-                    style={{ marginRight: 15 }}
-                    size={25}
-                    name='filter-outline'
-                    onPress={() => navigation.navigate('Filter')}
-                />
-            ),
-        }),
+      screen: PortfolioListScreen,
+      navigationOptions: ({navigate, navigation}) => ({
+        headerRight: () => (
+          <MaterialCommunityIcons
+            style={{marginRight: 15}}
+            size={25}
+            name="filter-outline"
+            onPress={() => navigation.navigate('Filter')}
+          />
+        ),
+      }),
     },
     UserDetails: {
-        screen: UserDetailsScreen,
+      screen: UserDetailsScreen,
     },
     Filter: {
-        screen: FilterScreen
+      screen: FilterScreen,
     },
-}, {
+  },
+  {
     defaultNavigationOptions: {
-        headerTitleStyle: {
-            fontWeight: '100',
-            fontSize: 16
-        },
-    }
-})
+      headerTitleStyle: {
+        fontWeight: '100',
+        fontSize: 16,
+      },
+    },
+  },
+);
 
-const PosterNavigator = createStackNavigator({
+const PosterNavigator = createStackNavigator(
+  {
     Posters: PosterListScreen,
     PosterDetails: {
-        screen: PosterDetailsScreen
+      screen: PosterDetailsScreen,
     },
     EditPoster: {
-        screen: EditPosterScreen
+      screen: EditPosterScreen,
     },
     CreatePosters: {
-        screen: CreatePosterScreen,
-
+      screen: CreatePosterScreen,
     },
-
-}, {
+  },
+  {
     defaultNavigationOptions: {
-        headerTitleStyle: {
-            fontWeight: '100',
-            fontSize: 16
-        },
-    }
-})
+      headerTitleStyle: {
+        fontWeight: '100',
+        fontSize: 16,
+      },
+    },
+  },
+);
 
-const NotificationNavigator = createStackNavigator({
+const NotificationNavigator = createStackNavigator(
+  {
     Notifications: NotificationListScreen,
-}, {
+  },
+  {
     defaultNavigationOptions: {
-        headerTitleStyle: {
-            fontWeight: '100',
-            fontSize: 16
-        },
-    }
-})
+      headerTitleStyle: {
+        fontWeight: '100',
+        fontSize: 16,
+      },
+    },
+  },
+);
 
-const AccountNavigator = createStackNavigator({
+const AccountNavigator = createStackNavigator(
+  {
     Account: {
-        screen: AccountScreen,
-        navigationOptions: {
-            headerShown: false
-        }
+      screen: AccountScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
     },
     Edit: {
-        screen: EditProfileScreen
+      screen: EditProfileScreen,
     },
     Talents: {
-        screen: TalentListScreen,
+      screen: TalentListScreen,
     },
     EditTalents: {
-        screen: EditTalentScreen,
+      screen: EditTalentScreen,
     },
     AddTalents: {
-        screen: AddTalentScreen,
+      screen: AddTalentScreen,
     },
     Help: {
-        screen: HelpScreen,
-        navigationOptions: {
-            title: 'Help'
-        }
+      screen: HelpScreen,
+      navigationOptions: {
+        title: 'Help',
+      },
     },
     Policy: {
-        screen: PoliciesScreen,
-        navigationOptions: {
-            title: 'Terms of Policy'
-        }
+      screen: PoliciesScreen,
+      navigationOptions: {
+        title: 'Terms of Policy',
+      },
     },
     Feedback: {
-        screen: FeedbackScreen,
-        navigationOptions: {
-            title: 'Feedback'
-        }
+      screen: FeedbackScreen,
+      navigationOptions: {
+        title: 'Feedback',
+      },
     },
     MyPosters: {
-        screen: MyPostersScreen,
-        navigationOptions: {
-            title: 'Your posters'
-        }
+      screen: MyPostersScreen,
+      navigationOptions: {
+        title: 'Your posters',
+      },
     },
     MyMedia: {
-        screen: MyMediaScreen,
-        navigationOptions: {
-            title: 'Your media'
-        }
+      screen: MyMediaScreen,
+      navigationOptions: {
+        title: 'Your media',
+      },
     },
     Photo: {
-        screen: PhotoUploadScreen,
-        navigationOptions: {
-            title: 'Upload a photo'
-        }
+      screen: PhotoUploadScreen,
+      navigationOptions: {
+        title: 'Upload a photo',
+      },
     },
     Video: {
-        screen: PhotoUploadScreen,
-        navigationOptions: {
-            title: 'Upload a video'
-        }
+      screen: VideoUploadScreen,
+      navigationOptions: {
+        title: 'Upload a video',
+      },
     },
     MyBuddy: {
-        screen: BuddyTopNavigator,
-        navigationOptions: {
-            title: 'Your connections'
-        }
+      screen: BuddyTopNavigator,
+      navigationOptions: {
+        title: 'Your connections',
+      },
     },
     EditPoster: {
-        screen: EditPosterScreen
+      screen: EditPosterScreen,
     },
     CreatePosters: {
-        screen: CreatePosterScreen,
-
+      screen: CreatePosterScreen,
     },
-}, {
+  },
+  {
     defaultNavigationOptions: {
-        headerTitleStyle: {
-            fontWeight: '100',
-            fontSize: 16
-        },
-    }
-})
+      headerTitleStyle: {
+        fontWeight: '100',
+        fontSize: 16,
+      },
+    },
+  },
+);
 
-const BuddyNavigator = createStackNavigator({
+const BuddyNavigator = createStackNavigator(
+  {
     Connections: {
-        screen: BuddyTopNavigator,
-        navigationOptions: {
-            title: 'Friends',
-            headerTitleStyle: {
-                fontWeight: '100',
-                fontSize: 16
-            },
-        }
+      screen: BuddyTopNavigator,
+      navigationOptions: {
+        title: 'Friends',
+        headerTitleStyle: {
+          fontWeight: '100',
+          fontSize: 16,
+        },
+      },
     },
     UserDetails: {
-        screen: UserDetailsScreen,
+      screen: UserDetailsScreen,
     },
-}, {
+  },
+  {
     defaultNavigationOptions: {
-        headerTitleStyle: {
-            fontWeight: '100',
-            fontSize: 16
-        },
-    }
-})
+      headerTitleStyle: {
+        fontWeight: '100',
+        fontSize: 16,
+      },
+    },
+  },
+);
 
 const FriendsNavigator = createMaterialTopTabNavigator(
-    {
-        Connections: MyConnectionScreen,
-        Pending: PendingConnectionScreen,
-        Sent: SentConnectionScreen,
+  {
+    Connections: MyConnectionScreen,
+    Pending: PendingConnectionScreen,
+    Sent: SentConnectionScreen,
+  },
+  {
+    defaultNavigationOptions: {
+      upperCaseLabel: false,
+      activeTintColor: theme.$primaryColor,
+      showIcon: true,
+      showLabel: false,
+      indicatorStyle: {
+        activeTintColor: theme.$primaryColor,
+      },
+      labelStyle: {
+        fontSize: 14,
+        fontWeight: 'bold',
+      },
+      tabBarOptions: {
+        labelStyle: {
+          fontSize: 14,
+          textTransform: 'capitalize',
+          fontWeight: 'bold',
+        },
+        activeTintColor: theme.$primaryColor,
+        inactiveTintColor: 'gray',
+        pressColor: 'gray',
+        style: {
+          backgroundColor: 'white',
+          width: '90%',
+        },
+        indicatorStyle: {
+          backgroundColor: theme.$primaryColor,
+        },
+      },
+      tabsStyle: {
+        backgroundColor: 'white',
+        elevation: 0,
+      },
+      style: {
+        backgroundColor: 'white',
+      },
     },
-    {
-        defaultNavigationOptions: {
-            upperCaseLabel: false,
-            activeTintColor: theme.$primaryColor,
-            showIcon: true,
-            showLabel: false,
-            indicatorStyle: {
-                activeTintColor: theme.$primaryColor
-            },
-            labelStyle: {
-                fontSize: 14,
-                fontWeight: 'bold'
-            },
-            tabBarOptions: {
-                labelStyle: {
-                    fontSize: 14,
-                    textTransform: 'capitalize',
-                    fontWeight: "bold"
-                },
-                activeTintColor: theme.$primaryColor,
-                inactiveTintColor: 'gray',
-                pressColor: 'gray',
-                style: {
-                    backgroundColor: 'white',
-                    width: '90%'
-                },
-                indicatorStyle: {
-                    backgroundColor: theme.$primaryColor
-                },
-            },
-            tabsStyle: {
-                backgroundColor: 'white',
-                elevation: 0,
-            },
-            style: {
-                backgroundColor: 'white'
-            }
-        }
-    }
-)
+  },
+);
 
 const MainNavigator = createBottomTabNavigator(
-    {
-        // Users: UserNavigator,
-        Posters: PosterNavigator,
-        Search: FilterScreen,
-        Home: HomeNavigator,
-        // Friends: BuddyNavigator,
-        Notification: NotificationNavigator,
-        Profile: AccountNavigator
+  {
+    // Users: UserNavigator,
+    Posters: PosterNavigator,
+    Search: FilterScreen,
+    Home: HomeNavigator,
+    // Friends: BuddyNavigator,
+    Notification: NotificationNavigator,
+    Profile: AccountNavigator,
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const {routeName} = navigation.state;
+        let IconComponent = Ionicons;
+        let iconName;
+        if (routeName === 'Home') {
+          iconName = focused ? 'home' : 'home-outline';
+        } else if (routeName === 'Search') {
+          iconName = focused ? 'search' : 'search-outline';
+        } else if (routeName === 'Posters') {
+          iconName = focused ? 'albums' : 'albums-outline';
+        } else if (routeName === 'Friends') {
+          iconName = focused ? 'ios-people' : 'people-outline';
+        } else if (routeName === 'Notification') {
+          iconName = focused
+            ? 'ios-notifications'
+            : 'ios-notifications-outline';
+        } else if (routeName === 'Profile') {
+          iconName = focused ? 'person' : 'person-outline';
+        }
+
+        // You can return any component that you like here!
+        return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: theme.$primaryColor,
+      inactiveTintColor: 'gray',
     },
-    {
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                const { routeName } = navigation.state;
-                let IconComponent = Ionicons;
-                let iconName;
-                if (routeName === 'Home') {
-                    iconName = focused
-                        ? 'home'
-                        : 'home-outline';
-                } else if (routeName === 'Search') {
-                    iconName = focused
-                        ? 'search'
-                        : 'search-outline';
-                } else if (routeName === 'Posters') {
-                    iconName = focused
-                        ? 'albums'
-                        : 'albums-outline';
-                }
-                else if (routeName === 'Friends') {
-                    iconName = focused
-                        ? 'ios-people'
-                        : 'people-outline'
-                } else if (routeName === 'Notification') {
-                    iconName = focused
-                        ? 'ios-notifications'
-                        : 'ios-notifications-outline'
-                } else if (routeName === 'Profile') {
-                    iconName = focused
-                        ? 'person'
-                        : 'person-outline'
-                }
+    swipeEnabled: true,
+    animationEnabled: true,
+    initialRouteName: 'Home',
+  },
+);
 
-                // You can return any component that you like here!
-                return <IconComponent name={iconName} size={25} color={tintColor} />;
-            },
-        }),
-        tabBarOptions: {
-            activeTintColor: theme.$primaryColor,
-            inactiveTintColor: 'gray',
-        },
-        swipeEnabled: true,
-        animationEnabled: true,
-        initialRouteName: 'Home',
-    }
-)
-
-export default createAppContainer(MainNavigator)
+export default createAppContainer(MainNavigator);
