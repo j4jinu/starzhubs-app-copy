@@ -30,6 +30,11 @@ import EditTalentScreen from '../screens/EditTalentScreen';
 import MyPostersScreen from '../screens/MyPostersScreen';
 import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
+<<<<<<< HEAD
+=======
+import TalentListScreen from '../screens/TalentListScreen';
+import AddTalentScreen from '../screens/AddTalentScreen';
+>>>>>>> 58f9d6d81ed565e22af3eec03116ff1c83896240
 import CreatePosterScreen from '../screens/CreatePosterScreen';
 import HomeScreenSingle from '../screens/HomeScreenSingle';
 
@@ -152,7 +157,13 @@ const AccountNavigator = createStackNavigator({
         screen: EditProfileScreen
     },
     Talents: {
+        screen: TalentListScreen,
+    },
+    EditTalents: {
         screen: EditTalentScreen,
+    },
+    AddTalents: {
+        screen: AddTalentScreen,
     },
     Help: {
         screen: HelpScreen,

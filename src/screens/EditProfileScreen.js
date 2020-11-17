@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import * as yup from 'yup'
+import { Formik } from 'formik';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 
@@ -80,7 +81,7 @@ const EditProfileScreen = () => {
                         dob: '',
                         password: ''
                     }}
-                    validationSchema={loginSchema}
+                    validationSchema={profileSchema}
                     onSubmit={values => saveUserInfo(values)}
                 >
                     {({

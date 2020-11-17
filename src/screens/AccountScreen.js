@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
     },
     sectionDetails: {
         flexDirection: 'column',
+        justifyContent: 'center',
         marginLeft: 10,
     },
     sectionDetailsTitle: {
