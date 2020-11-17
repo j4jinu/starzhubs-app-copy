@@ -40,7 +40,7 @@ const PosterListActive = (props) => {
                     />
                 )}
             />
-            {/* )} */}
+
         </View>
     );
 }
