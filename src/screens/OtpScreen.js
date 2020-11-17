@@ -47,7 +47,7 @@ const OtpScreen = (props) => {
             }}>Enter OTP received in your email</Text>
             <Formik
                 initialValues={{
-                   otp: ''
+                    otp: ''
                 }}
                 validationSchema={otpSchema}
                 onSubmit={(values, { setSubmitting }) => submitOtp(values, { setSubmitting })}
