@@ -11,7 +11,7 @@ import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { Checkbox } from 'react-native-paper';
-import RangeSlider from 'react-native-range-slider'
+import RangeSlider from 'rn-range-slider';
 const industryNames = [
     {
         name: 'Industry',
