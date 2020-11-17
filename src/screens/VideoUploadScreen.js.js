@@ -18,6 +18,7 @@ import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
 
 const mediaSchema = yup.object({
+  link: yup.string().required('Enter your YouTube video link'),
   caption: yup.string().required('Enter caption about this media'),
   description: yup.string().required('Enter description'),
 });
@@ -50,6 +51,34 @@ const VideoUploadScreen = () => {
             values,
           }) => (
             <>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  textContentType={'URL'}
+                  style={styles.inputField}
+                  placeholder={'Link'}
+                  onChangeText={handleChange('link')}
+                  onBlur={handleBlur('link')}
+                  value={values.link}
+                />
+              </View>
+              {touched.link && errors.link && (
+                <Text style={styles.errorText}>
+                  {touched.link && errors.link}
+                </Text>
+              )}
               <View
                 style={{
                   alignSelf: 'center',
@@ -99,7 +128,7 @@ const VideoUploadScreen = () => {
                   keyboardType={'email-address'}
                   textContentType={'emailAddress'}
                   style={styles.inputField}
-                  placeholder={'description'}
+                  placeholder={'Description'}
                   onChangeText={handleChange('description')}
                   onBlur={handleBlur('description')}
                   value={values.description}
