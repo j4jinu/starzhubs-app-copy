@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 
-otpSchema = yup.object({
+const otpSchema = yup.object({
     otp: yup.string()
         .required('Enter OTP')
 })
