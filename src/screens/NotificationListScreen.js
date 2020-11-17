@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, FlatList, Image, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
+import { AuthContext } from '../context/authContext';
 
 const posters = [
     { name: 'A', id: '1' },
@@ -13,19 +14,43 @@ const posters = [
     { name: 'H', id: '8' },
 ]
 
-const renderGridItem = (poster) => {
+const renderGridItem = (alerts) => {
     return <NotificationItem
-        poster={poster.item.name}
+        title={alerts.item.title}
         onSelect={() => props.navigation.navigate('UserDetails')}
     />
 }
 
 const NotificationListScreen = () => {
+    const auth = useContext(AuthContext)
+    const [alerts, setAlerts] = useState([])
+
+    useEffect(() => {
+        const getNotifications = async () => {
+            try {
+                const res = await fetch(`http://13.232.190.226/api/alert`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + auth.token
+                    }
+                })
+                const resData = await res.json()
+                if (!resData.success) {
+                    alert(resData.message)
+                    return
+                }
+                setAlerts(resData.data.notifications)
+            } catch (error) {
+                alert('Something went wrong. Try again later.')
+            }
+        }
+        getNotifications();
+    })
     return (
         <>
             <FlatList
                 keyExtractor={(item, index) => item.id}
-                data={posters}
+                data={alerts}
                 renderItem={renderGridItem}
             />
         </>
