@@ -81,7 +81,7 @@ const EditProfileScreen = () => {
                         dob: '',
                         password: ''
                     }}
-                    validationSchema={loginSchema}
+                    validationSchema={profileSchema}
                     onSubmit={values => saveUserInfo(values)}
                 >
                     {({

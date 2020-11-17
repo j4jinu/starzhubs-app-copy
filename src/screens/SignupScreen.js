@@ -19,7 +19,6 @@ const profileSchema = yup.object({
 })
 
 const SignupScreen = (props) => {
-
     // Register new user
     const register = async (values, { setSubmitting }) => {
         if (values.password !== values.confPassword) {
@@ -39,11 +38,10 @@ const SignupScreen = (props) => {
             }),
         };
         try {
-            const response = await fetch(`https://api.starzhubs.com/api/user/otp`, requestOptions)
+            const response = await fetch(`http://13.232.190.226/api/user/otp`, requestOptions)
             const responseData = await response.json()
             if (responseData.success) {
                 props.navigation.navigate('otp', {
-                    otp: responseData.data.otp,
                     userId: responseData.data.userId
                 })
             } else {

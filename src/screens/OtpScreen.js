@@ -1,14 +1,21 @@
 import React, { useContext } from 'react';
-import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import * as yup from 'yup'
+import { Formik } from 'formik';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 
+otpSchema = yup.object({
+    otp: yup.string()
+        .required('Enter OTP')
+})
+
 const OtpScreen = (props) => {
     const auth = useContext(AuthContext)
-    const { otp, userId } = props.navigation.getParam()
+    const userId = props.navigation.getParam('userId')
 
-    const submitOtp = async () => {
+    const submitOtp = async (values) => {
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -17,7 +24,7 @@ const OtpScreen = (props) => {
                 userId: userId,
             }),
         };
-        const response = await fetch(`https://api.starzhubs.com/api/user`, requestOptions)
+        const response = await fetch(`http://13.232.190.226/api/user`, requestOptions)
         const resData = await response.json()
         if (!resData.success) {
             alert(resData.message)
@@ -38,39 +45,68 @@ const OtpScreen = (props) => {
                 marginBottom: 10,
                 marginLeft: '5%'
             }}>Enter OTP received in your email</Text>
-            <View
-                style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderColor: 'gray',
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
+            <Formik
+                initialValues={{
+                   otp: ''
                 }}
+                validationSchema={otpSchema}
+                onSubmit={(values, { setSubmitting }) => submitOtp(values, { setSubmitting })}
             >
-                <Icon
-                    name='user'
-                    size={20}
-                    color={theme.$primaryColor}
-                />
-                <TextInput
-                    textContentType={'name'}
-                    style={styles.inputField}
-                    placeholder={'OTP'}
-                />
-            </View>
-            <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.registerBtn}
-            >
-                <Text style={styles.registerBtnText}>
-                    Submit
-                </Text>
-            </TouchableOpacity>
+                {({
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                    touched,
+                    errors,
+                    values
+                }) => (
+                        <>
+                            <View
+                                style={{
+                                    alignSelf: 'center',
+                                    borderWidth: 1,
+                                    borderRadius: 10,
+                                    width: '90%',
+                                    paddingLeft: 8,
+                                    paddingRight: 8,
+                                    marginTop: 8,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    borderColor: errors.otp ? 'red' : 'gray'
+                                }}
+                            >
+                                <Icon
+                                    name='user'
+                                    size={20}
+                                    color={theme.$primaryColor}
+                                />
+                                <TextInput
+                                    style={styles.inputField}
+                                    placeholder={'OTP'}
+                                    onChangeText={handleChange('otp')}
+                                    onBlur={handleBlur('otp')}
+                                    value={values.otp}
+                                />
+                            </View>
+                            {touched.otp && errors.otp && <Text style={styles.errorText}>
+                                {touched.otp && errors.otp}
+                            </Text>}
+                            {!isSubmitting &&
+                                <TouchableOpacity
+                                    activeOpacity={0.8}
+                                    style={styles.registerBtn}
+                                    onPress={handleSubmit}
+                                >
+                                    <Text style={styles.registerBtnText}>
+                                        Submit
+                                    </Text>
+                                </TouchableOpacity>
+                            }
+                            {isSubmitting && <ActivityIndicator style={{ marginTop: 10 }} size={'large'} color={theme.$primaryColor} />}
+                        </>
+                    )}
+            </Formik>
         </View>
     );
 }
@@ -79,6 +115,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'flex-start',
+    },
+    errorText: {
+        marginHorizontal: '8%',
+        color: 'red'
     },
     inputField: {
         alignSelf: 'center',
