@@ -30,11 +30,8 @@ import EditTalentScreen from '../screens/EditTalentScreen';
 import MyPostersScreen from '../screens/MyPostersScreen';
 import MyMediaScreen from '../screens/MyMediaScreen';
 import EditPosterScreen from '../screens/EditPosterScreen';
-<<<<<<< HEAD
 import CreatePosterScreen from '../screens/CreatePosterScreen';
-=======
 import HomeScreenSingle from '../screens/HomeScreenSingle';
->>>>>>> ef7f4c3c418155930d76baefda04a95b42d3f849
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {

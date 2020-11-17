@@ -74,7 +74,7 @@ const HomeScreenSingle = (props) => {
                             activeOpacity={0.7}
                             onPress={() => props.navigation.navigate('PosterDetails', {
                                 posterId: p._id,
-                                title: p.poster,
+                                title: p.title,
                                 image: p.image,
                                 description: p.description,
                                 endDate: p.endDate,
