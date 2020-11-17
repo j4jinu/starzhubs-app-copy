@@ -1,8 +1,11 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme'
+import { AuthContext } from '../context/authContext';
 
 const PosterGridItem = (props) => {
+    const { userId } = props
+    const auth = useContext(AuthContext)
     return (
         <>
             {
@@ -12,9 +15,9 @@ const PosterGridItem = (props) => {
                         posterId: props.id,
                         title: props.poster,
                         image: props.image,
-                        description:props.description,
-                        endDate:props.endDate,
-                        startDate:props.startDate
+                        description: props.description,
+                        endDate: props.endDate,
+                        startDate: props.startDate
 
                     })}
                     activeOpacity={0.7}
@@ -39,10 +42,12 @@ const PosterGridItem = (props) => {
                                     borderRadius: 100
                                 }}
                                 source={{
-                                    uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+                                    uri: userId.image === undefined ? `https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVI
+                                    D19_SECVPF.gif`: `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`
+
                                 }}
                             />
-                    
+
                             <View style={styles.ownerDetails}>
                                 <Text style={{ fontSize: 13 }}>{'Test User'}</Text>
                                 <Text style={{ fontSize: 10, color: 'gray' }}>{props.endDate}</Text>
@@ -58,7 +63,7 @@ const PosterGridItem = (props) => {
                                 lineHeight: 20
                             }}
                         >{props.description}
-                            
+
                         </Text>
                     </View>
                 </TouchableOpacity>
