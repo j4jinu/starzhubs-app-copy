@@ -34,6 +34,7 @@ import TalentListScreen from '../screens/TalentListScreen';
 import AddTalentScreen from '../screens/AddTalentScreen';
 import CreatePosterScreen from '../screens/CreatePosterScreen';
 import HomeScreenSingle from '../screens/HomeScreenSingle';
+import PhotoUploadScreen from '../screens/PhotoUploadScreen';
 
 const HomeNavigator = createStackNavigator({
     Portfolio: {
@@ -186,11 +187,22 @@ const AccountNavigator = createStackNavigator({
             title: 'Your posters'
         }
     },
-
     MyMedia: {
         screen: MyMediaScreen,
         navigationOptions: {
             title: 'Your media'
+        }
+    },
+    Photo: {
+        screen: PhotoUploadScreen,
+        navigationOptions: {
+            title: 'Upload a photo'
+        }
+    },
+    Video: {
+        screen: PhotoUploadScreen,
+        navigationOptions: {
+            title: 'Upload a video'
         }
     },
     MyBuddy: {
@@ -288,9 +300,9 @@ const FriendsNavigator = createMaterialTopTabNavigator(
 const MainNavigator = createBottomTabNavigator(
     {
         // Users: UserNavigator,
-        // Posters: PosterNavigator,
-        Home: HomeNavigator,
+        Posters: PosterNavigator,
         Search: FilterScreen,
+        Home: HomeNavigator,
         // Friends: BuddyNavigator,
         Notification: NotificationNavigator,
         Profile: AccountNavigator
@@ -309,7 +321,12 @@ const MainNavigator = createBottomTabNavigator(
                     iconName = focused
                         ? 'search'
                         : 'search-outline';
-                } else if (routeName === 'Friends') {
+                } else if (routeName === 'Posters') {
+                    iconName = focused
+                        ? 'albums'
+                        : 'albums-outline';
+                }
+                else if (routeName === 'Friends') {
                     iconName = focused
                         ? 'ios-people'
                         : 'people-outline'
