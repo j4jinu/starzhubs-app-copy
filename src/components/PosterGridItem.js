@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme'
+import Moment from 'moment';
+import { AuthContext } from '../context/authContext';
 
 const PosterGridItem = (props) => {
+    const { userId } = props
+    const auth = useContext(AuthContext)
     return (
         <>
             {
@@ -12,9 +16,10 @@ const PosterGridItem = (props) => {
                         posterId: props.id,
                         title: props.poster,
                         image: props.image,
-                        description:props.description,
-                        endDate:props.endDate,
-                        startDate:props.startDate
+                        description: props.description,
+                        endDate: props.endDate,
+                        startDate: props.startDate,
+                        user: userId
 
                     })}
                     activeOpacity={0.7}
@@ -39,13 +44,15 @@ const PosterGridItem = (props) => {
                                     borderRadius: 100
                                 }}
                                 source={{
-                                    uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+                                    uri: userId.image === undefined ? `https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVI
+                                    D19_SECVPF.gif`: `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`
+
                                 }}
                             />
-                    
+
                             <View style={styles.ownerDetails}>
                                 <Text style={{ fontSize: 13 }}>{'Test User'}</Text>
-                                <Text style={{ fontSize: 10, color: 'gray' }}>{props.endDate}</Text>
+                                <Text style={{ fontSize: 10, color: 'gray' }}>{Moment(props.endDate).format("DD/MM/YYYY")}</Text>
                             </View>
                         </View>
                         <Text style={styles.title}>{props.poster}</Text>
@@ -56,10 +63,7 @@ const PosterGridItem = (props) => {
                                 color: theme.$primaryColorText,
                                 marginTop: 5,
                                 lineHeight: 20
-                            }}
-                        >{props.description}
-                            
-                        </Text>
+                            }}>{props.description}</Text>
                     </View>
                 </TouchableOpacity>
             }

@@ -12,7 +12,7 @@ const NotificationItem = (props) => {
                         onPress={props.onSelect}
                         activeOpacity={0.7}
                     >
-                        <Text>{'Notification'}</Text>
+                        <Text>{props.title}</Text>
                     </TouchableOpacity>
                     {divider}
                 </>
