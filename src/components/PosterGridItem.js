@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ActivityIndicator, StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme'
+import Moment from 'moment';
 import { AuthContext } from '../context/authContext';
 
 const PosterGridItem = (props) => {
@@ -17,7 +18,8 @@ const PosterGridItem = (props) => {
                         image: props.image,
                         description: props.description,
                         endDate: props.endDate,
-                        startDate: props.startDate
+                        startDate: props.startDate,
+                        user: userId
 
                     })}
                     activeOpacity={0.7}
@@ -50,7 +52,7 @@ const PosterGridItem = (props) => {
 
                             <View style={styles.ownerDetails}>
                                 <Text style={{ fontSize: 13 }}>{'Test User'}</Text>
-                                <Text style={{ fontSize: 10, color: 'gray' }}>{props.endDate}</Text>
+                                <Text style={{ fontSize: 10, color: 'gray' }}>{Moment(props.endDate).format("DD/MM/YYYY")}</Text>
                             </View>
                         </View>
                         <Text style={styles.title}>{props.poster}</Text>
@@ -61,10 +63,7 @@ const PosterGridItem = (props) => {
                                 color: theme.$primaryColorText,
                                 marginTop: 5,
                                 lineHeight: 20
-                            }}
-                        >{props.description}
-
-                        </Text>
+                            }}>{props.description}</Text>
                     </View>
                 </TouchableOpacity>
             }
