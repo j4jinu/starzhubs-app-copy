@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 
-otpSchema = yup.object({
+const otpSchema = yup.object({
     otp: yup.string()
         .required('Enter OTP')
 })
@@ -47,7 +47,7 @@ const OtpScreen = (props) => {
             }}>Enter OTP received in your email</Text>
             <Formik
                 initialValues={{
-                   otp: ''
+                    otp: ''
                 }}
                 validationSchema={otpSchema}
                 onSubmit={(values, { setSubmitting }) => submitOtp(values, { setSubmitting })}
