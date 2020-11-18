@@ -39,6 +39,7 @@ import CreatePosterScreen from '../screens/CreatePosterScreen';
 import HomeScreenSingle from '../screens/HomeScreenSingle';
 import PhotoUploadScreen from '../screens/PhotoUploadScreen';
 import VideoUploadScreen from '../screens/VideoUploadScreen.js';
+import FilterResultScreen from '../screens/FilterResultScreen';
 
 const HomeNavigator = createStackNavigator(
   {
@@ -71,6 +72,9 @@ const HomeNavigator = createStackNavigator(
     },
     Filter: {
       screen: FilterScreen,
+    },
+    FilterResult: {
+      screen: FilterResultScreen,
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
