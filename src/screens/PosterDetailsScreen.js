@@ -284,10 +284,10 @@ const PosterDetailsScreen = (props) => {
                                 <TouchableOpacity onPress={() => setRequestModal(false)}><Icon name="close-circle" size={35} color={'black'} /></TouchableOpacity>
                             </View>
                             <View style={{ justifyContent: 'center' }}>
-                                <View style={{ alignItems: 'center', width: "100%" }}>
+                                <View style={{ alignItems: 'center', width: "100%", marginTop: "-5%" }}>
                                     <View>
                                         <Image
-                                            style={{ width: 250, height: 200 }}
+                                            style={{ width: 375, height: 250 }}
                                             source={{
                                                 uri: `http://13.232.190.226/api/poster/view/${image}`,
                                             }}
@@ -304,9 +304,20 @@ const PosterDetailsScreen = (props) => {
                                         }}
                                     >
                                         {({ values, handleChange, handleBlur, errors, setFieldTouched, touched, isValid, handleSubmit }) => (
-                                            <View style={{ marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+                                            <View style={{ marginTop: 10 }}>
                                                 <TextInput
-                                                    style={{ borderWidth: 1, borderColor: 'orange', borderRadius: 4, paddingLeft: 10 }}
+                                                    style={{
+                                                        alignSelf: 'center',
+                                                        borderColor: '#e6e6e6',
+                                                        borderWidth: 1,
+                                                        borderRadius: 10,
+                                                        width: '95%',
+                                                        marginVertical: 8,
+                                                        paddingLeft: 8,
+                                                        paddingRight: 8,
+                                                        flexDirection: 'row',
+                                                        alignItems: 'center',
+                                                    }}
                                                     underlineColorAndroid="transparent"
                                                     placeholder="Message"
                                                     numberOfLines={3}
@@ -316,7 +327,7 @@ const PosterDetailsScreen = (props) => {
                                                     onBlur={handleBlur("notes")} />
                                                 <Text style={styles.error}>{errors.notes}</Text>
                                                 <View style={{ marginTop: 20, width: '100%', alignItems: 'center' }}>
-                                                    <TouchableOpacity style={{ borderRadius: 10, backgroundColor: 'orange', padding: 10, width: '50%', alignItems: 'center', marginVertical: "-5%" }} onPress={handleSubmit}>
+                                                    <TouchableOpacity style={{ borderRadius: 20, backgroundColor: 'tomato', padding: 10, width: '50%', alignItems: 'center', marginVertical: "-5%" }} onPress={handleSubmit}>
                                                         <Text style={{ color: 'white', fontWeight: 'bold' }}>Send Request</Text>
                                                     </TouchableOpacity>
                                                 </View>
