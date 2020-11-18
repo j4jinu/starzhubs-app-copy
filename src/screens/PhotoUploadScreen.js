@@ -241,7 +241,7 @@ const PhotoUploadScreen = (props) => {
                   activeOpacity={0.8}
                   style={styles.registerBtn}
                   onPress={handleSubmit}>
-                  <Text style={styles.registerBtnText}>REGISTER</Text>
+                  <Text style={styles.registerBtnText}>UPLOAD</Text>
                 </TouchableOpacity>
               )}
               {isSubmitting && (

@@ -55,6 +55,7 @@ const VideoUploadScreen = (props) => {
     const match = text.match(fullreg);
     if (match && match.length > 0) {
       values.talentId = talentId;
+      values.link = 'https://www.youtube.com/watch?v=' + ytLink
       console.log('Values: ', values);
       try {
         const response = await fetch(
@@ -71,6 +72,7 @@ const VideoUploadScreen = (props) => {
         const resData = await response.json();
         if (resData.success) {
           alert(resData.message);
+          props.navigation.navigate('MyMedia')
         } else {
           alert(resData.message);
         }
