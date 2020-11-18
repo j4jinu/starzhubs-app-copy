@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import WebView from 'react-native-webview';
@@ -14,41 +15,9 @@ import MediaGrid from '../components/MediaGrid';
 import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 
-const posters = [
-  {
-    id: 'h',
-    name: 'Poster A',
-    image:
-      'https://deadline.com/wp-content/uploads/2030/10/AP_20210337197617-e1603795015914.jpg?w=681&h=383&crop=1',
-  },
-  {
-    id: 'f',
-    name: 'Poster B',
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/7/79/Johnny_Depp_Deauville_2019.jpg',
-  },
-  {
-    id: 'l',
-    name: 'Poster C',
-    image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQAs-E4jTq8f50vjVirikRNtW3ggDySwb2A5g&usqp=CAU',
-  },
-  {
-    id: 'r',
-    name: 'Poster D',
-    image:
-      'https://ca-times.brightspotcdn.com/dims4/default/60d39e3/2147483647/strip/true/crop/2047x1151+0+0/resize/840x472!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F63%2F26%2Fb97131a2a20b0a8b805c0defa552%2Fla-1533757303-22e1u7m67i-snap-image',
-  },
-  {
-    id: 'a',
-    name: 'Poster E',
-    image:
-      'https://img.theweek.in/content/dam/week/news/entertainment/images/2019/4/25/Johnny-Depp-dating.jpg',
-  },
-];
-
 const MyMediaScreen = (props) => {
   const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [talents, setTalents] = useState([]);
 
   useEffect(() => {
@@ -62,16 +31,34 @@ const MyMediaScreen = (props) => {
         });
         const resData = await res.json();
         if (!resData.success) {
+          setLoading(false);
           alert(resData.message);
           return;
+        } else {
+          setTalents(resData.data.talents);
+          setLoading(false);
         }
-        setTalents(resData.data.talents);
       } catch (error) {
+        setLoading(false);
         alert('Something went wrong. Try again later.');
       }
     };
     getTalents();
   }, []);
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <ActivityIndicator color={theme.$primaryColor} size={'large'} />
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.container}>
       {talents.map((t) => (
@@ -82,6 +69,7 @@ const MyMediaScreen = (props) => {
               justifyContent: 'space-between',
               paddingHorizontal: 10,
               paddingVertical: 8,
+              marginTop: 10,
             }}>
             <Text style={{fontWeight: 'bold', fontSize: 17}}>
               {t.category.title}
@@ -89,7 +77,11 @@ const MyMediaScreen = (props) => {
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => props.navigation.navigate('Photo')}
+                onPress={() =>
+                  props.navigation.navigate('Photo', {
+                    talentId: t._id,
+                  })
+                }
                 style={{
                   backgroundColor: 'white',
                   borderRadius: theme.$borderRadius,
@@ -111,7 +103,11 @@ const MyMediaScreen = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.7}
-                onPress={() => props.navigation.navigate('Video')}
+                onPress={() =>
+                  props.navigation.navigate('Video', {
+                    talentId: t._id,
+                  })
+                }
                 style={{
                   backgroundColor: 'white',
                   borderRadius: theme.$borderRadius,
@@ -181,6 +177,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    paddingBottom: 25,
   },
   gridItem: {
     flex: 1,
@@ -197,6 +194,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 8,
     marginTop: 10,
+    marginBottom: 15,
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',

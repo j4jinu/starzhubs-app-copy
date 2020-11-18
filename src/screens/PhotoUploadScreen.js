@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  PermissionsAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
@@ -22,12 +23,73 @@ const mediaSchema = yup.object({
   description: yup.string().required('Enter description'),
 });
 
-const PhotoUploadScreen = () => {
+const PhotoUploadScreen = (props) => {
   const auth = useContext(AuthContext);
   const [image, setImage] = useState('');
+  const [isImage, setIsImage] = useState(false);
 
-  const uploadMedia = async (values) => {
-    alert(values);
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'starzhubs needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        chooseFile();
+        //console.log('You can use the camera');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const chooseFile = () => {
+    //console.log('choose file');
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      //console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else if (response.uri === '') {
+        setIsImage(true);
+      } else {
+        setIsImage(false);
+        setImage(response.data);
+      }
+    });
+  };
+
+  const uploadMedia = async (values, {setSubmitting}) => {
+    if (image === '') {
+      alert('Please choose an Image');
+      setSubmitting(false);
+      return;
+    }
+    alert(image);
   };
 
   return (
@@ -39,7 +101,9 @@ const PhotoUploadScreen = () => {
             description: '',
           }}
           validationSchema={mediaSchema}
-          onSubmit={(values) => uploadMedia(values)}>
+          onSubmit={(values, {setSubmitting}) =>
+            uploadMedia(values, {setSubmitting})
+          }>
           {({
             handleChange,
             handleBlur,
@@ -50,6 +114,28 @@ const PhotoUploadScreen = () => {
             values,
           }) => (
             <>
+              {image !== '' && (
+                <Image
+                  source={{uri: image}}
+                  style={{width: '100%', height: 200, marginBottom: 10}}
+                />
+              )}
+              <TouchableOpacity
+                style={styles.imageBtn}
+                onPress={requestCameraPermission}>
+                <Text style={{color: theme.$primaryColor}}> Choose Image</Text>
+              </TouchableOpacity>
+              {isImage && (
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color: 'red',
+                    alignSelf: 'center',
+                    marginTop: 1,
+                  }}>
+                  Choose a Poster image
+                </Text>
+              )}
               <View
                 style={{
                   alignSelf: 'center',
@@ -110,6 +196,21 @@ const PhotoUploadScreen = () => {
                   {touched.description && errors.description}
                 </Text>
               )}
+              {!isSubmitting && (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.registerBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>REGISTER</Text>
+                </TouchableOpacity>
+              )}
+              {isSubmitting && (
+                <ActivityIndicator
+                  style={{marginTop: 10}}
+                  size={'large'}
+                  color={theme.$primaryColor}
+                />
+              )}
             </>
           )}
         </Formik>
@@ -121,6 +222,7 @@ const PhotoUploadScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   errorText: {
     marginHorizontal: '5%',
@@ -138,13 +240,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  imageBtn: {
+    width: '90%',
+    borderWidth: 1,
+    borderColor: theme.$primaryColor,
+    alignSelf: 'center',
+    marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 8,
+  },
+  registerBtn: {
+    alignSelf: 'center',
+    width: '90%',
+    backgroundColor: theme.$primaryColor,
+    padding: 5,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 8,
+  },
+  registerBtnText: {
+    fontSize: 18,
+    marginVertical: 5,
+    color: 'white',
+    fontFamily: 'montserrat-medium',
+    textTransform: 'uppercase',
   },
 });
 

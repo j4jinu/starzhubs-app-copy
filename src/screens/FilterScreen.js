@@ -1,17 +1,29 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 // import CheckBox from '@react-native-community/checkbox';
 // import RangeSlider, { Slider } from 'react-native-range-slider-expo';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 // import MultiSelectView from 'react-native-multiselect-view'
 // import CustomMultiPicker from "react-native-multiple-select-list";
 // import MultiSelect from 'react-native-multiple-select';
-import { Snackbar } from 'react-native-paper';
-import { AuthContext } from '../context/authContext';
+import {Snackbar} from 'react-native-paper';
+import {AuthContext} from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import Icon from 'react-native-vector-icons/MaterialIcons'
-import { Checkbox } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Checkbox} from 'react-native-paper';
 import RangeSlider from 'rn-range-slider';
+import Thumb from '../components/slider/Thumb';
+import Rail from '../components/slider/Rail';
+import RailSelected from '../components/slider/RailSelected';
+import Label from '../components/slider/Label';
+import Notch from '../components/slider/Notch';
+import theme from '../config/theme';
 const industryNames = [
   {
     name: 'Industry',
@@ -57,11 +69,11 @@ const industryNames = [
         id: 'Telugu',
         name: 'Telugu',
       },
-    ]
-  }]
+    ],
+  },
+];
 
-
-const FilterScreen = ({ navigation }) => {
+const FilterScreen = ({navigation}) => {
   const auth = useContext(AuthContext);
 
   const [ageFromValue, setAgeFromValue] = useState(0);
@@ -88,105 +100,135 @@ const FilterScreen = ({ navigation }) => {
   const [isMale, setMale] = useState(false);
   const [isOthers, setOthers] = useState(false);
 
-  const [categories, setCategories] = useState([])
-  const [selectedItems, setSelectedItems] = useState([])
-  const [isActor, setActor] = useState(false)
-  const [gender, setGender] = useState([])
-  const [skinTone, setSkinTone] = useState([])
-  const [bodyType, setBodyType] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isActor, setActor] = useState(false);
+  const [gender, setGender] = useState([]);
+  const [skinTone, setSkinTone] = useState([]);
+  const [bodyType, setBodyType] = useState([]);
 
-  const [isCategoryOn, setCategoryOn] = useState(false)
-  const [isGenderOn, setGenderOn] = useState(false)
-  const [isBodyTypeOn, setBodyTypeOn] = useState(false)
-  const [isSkinToneOn, setSkinToneOn] = useState(false)
+  const [isCategoryOn, setCategoryOn] = useState(false);
+  const [isGenderOn, setGenderOn] = useState(false);
+  const [isBodyTypeOn, setBodyTypeOn] = useState(false);
+  const [isSkinToneOn, setSkinToneOn] = useState(false);
 
   const [visible, setVisible] = useState(false);
 
-
   useEffect(() => {
     const getCategory = () => {
-      fetch("http://13.232.190.226/api/category", {
-        method: 'GET'
+      fetch('http://13.232.190.226/api/category', {
+        method: 'GET',
       })
-        .then(response => response.json())
-        .then(response => {
-          setCategories(response.categories)
-          console.log("filetr", response.categories);
+        .then((response) => response.json())
+        .then((response) => {
+          setCategories(response.categories);
+          console.log('filetr', response.categories);
           // setIsLoading(false)
           // setTalentId(response.categories[0]._id)
         })
-        .catch(error => {
+        .catch((error) => {
           // setIsLoading(false)
         });
+    };
+    getCategory();
+  }, []);
+
+  const onSelectedItemsChange = (selectedItem) => {
+    setSelectedItems(selectedItem);
+    if (selectedItems === []) {
+      setCategoryOn(true);
+    } else {
+      setCategoryOn(false);
     }
-    getCategory()
-  }, [])
-
-
-  const onSelectedItemsChange = selectedItem => {
-    setSelectedItems(selectedItem)
-    if (selectedItems === []) { setCategoryOn(true) } else { setCategoryOn(false) }
-    // if(selectedItem == '5f5b2b8e96b2173a30948ac6'){
-    //   setActor(!isActor)
-    // }
   };
 
   const handleGender = (gnder) => {
-    const gndr = [...gender]
-    const currentIndex = gender.indexOf(gnder)
+    const gndr = [...gender];
+    const currentIndex = gender.indexOf(gnder);
     if (currentIndex === -1) {
       gndr.push(gnder);
     } else {
       gndr.splice(currentIndex, 1);
     }
     setGender(gndr);
-    if (gender === []) { setGenderOn(true) } else { setGenderOn(false) }
-  }
+    if (gender === []) {
+      setGenderOn(true);
+    } else {
+      setGenderOn(false);
+    }
+  };
 
   const handleskinTone = (skin) => {
-    const skintone = [...skinTone]
-    const currentIndex = skinTone.indexOf(skin)
+    const skintone = [...skinTone];
+    const currentIndex = skinTone.indexOf(skin);
     if (currentIndex === -1) {
       skintone.push(skin);
     } else {
       skintone.splice(currentIndex, 1);
     }
     setSkinTone(skintone);
-    if (skinTone === []) { setSkinToneOn(true) } else { setSkinToneOn(false) }
+    if (skinTone === []) {
+      setSkinToneOn(true);
+    } else {
+      setSkinToneOn(false);
+    }
   };
 
   const handleBodyType = (btype) => {
-    const bdtype = [...bodyType]
-    const currentIndex = bodyType.indexOf(btype)
+    const bdtype = [...bodyType];
+    const currentIndex = bodyType.indexOf(btype);
     if (currentIndex === -1) {
       bdtype.push(btype);
     } else {
       bdtype.splice(currentIndex, 1);
     }
     setBodyType(bdtype);
-    if (bodyType === []) { setBodyTypeOn(true) } else { setBodyTypeOn(false) }
+    if (bodyType === []) {
+      setBodyTypeOn(true);
+    } else {
+      setBodyTypeOn(false);
+    }
   };
 
   const handleSubmit = () => {
-    if (selectedItems.length === 0) { setCategoryOn(true) } else { setCategoryOn(false) }
-    if (gender.length === 0) { setGenderOn(true) } else { setGenderOn(false) }
-    selectedItems.forEach(element => {
-      if (element === "5f5b2b8e96b2173a30948ac6" || element === '5f5b2b9c96b2173a30948ac7') {
-        if (bodyType.length === 0) { setBodyTypeOn(true) } else { setBodyTypeOn(false) }
-        if (skinTone.length === 0) { setSkinToneOn(true) } else { setSkinToneOn(false) }
+    if (selectedItems.length === 0) {
+      setCategoryOn(true);
+    } else {
+      setCategoryOn(false);
+    }
+    if (gender.length === 0) {
+      setGenderOn(true);
+    } else {
+      setGenderOn(false);
+    }
+    selectedItems.forEach((element) => {
+      if (
+        element === '5f5b2b8e96b2173a30948ac6' ||
+        element === '5f5b2b9c96b2173a30948ac7'
+      ) {
+        if (bodyType.length === 0) {
+          setBodyTypeOn(true);
+        } else {
+          setBodyTypeOn(false);
+        }
+        if (skinTone.length === 0) {
+          setSkinToneOn(true);
+        } else {
+          setSkinToneOn(false);
+        }
       }
-    })
-    const minHeight = heightFromValue
-    const maxHeight = heightToValue
-    const minWeight = weightFromValue
-    const maxWeight = weightToValue
-    const minAge = ageFromValue
-    const maxAge = ageToValue
+    });
+    const minHeight = heightFromValue;
+    const maxHeight = heightToValue;
+    const minWeight = weightFromValue;
+    const maxWeight = weightToValue;
+    const minAge = ageFromValue;
+    const maxAge = ageToValue;
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": 'Bearer ' + auth.token
+        Authorization: 'Bearer ' + auth.token,
       },
       body: JSON.stringify({
         minAge: minAge,
@@ -198,36 +240,84 @@ const FilterScreen = ({ navigation }) => {
         talents: selectedItems,
         gender: gender,
         complexion: skinTone,
-        bodyType: bodyType
-      })
-    }
+        bodyType: bodyType,
+      }),
+    };
     fetch(`http://13.232.190.226/api/talent/filter`, requestOptions)
-      .then(response => response.json())
-      .then(response => {
-        if (response.success === true) {
-          console.warn(response.data.users);
-          navigation.navigate('Filter', {
-            filter: response.data.users
-          })
-        } else {
-          setVisible(!visible);
-        }
-      },
-        (error) => {
-        })
-  }
+      .then((response) => response.json())
+      .then(
+        (response) => {
+          if (response.success === true) {
+            console.warn(response.data.users);
+            navigation.navigate('Filter', {
+              filter: response.data.users,
+            });
+          } else {
+            setVisible(!visible);
+          }
+        },
+        (error) => {},
+      );
+  };
 
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+  const [low, setLow] = useState(0);
+  const [hight, setHigh] = useState(10);
 
+  const [ageLow, setAgeLow] = useState(0);
+  const [ageHigh, setAgeHigh] = useState(10);
 
+  const [weightLow, setWeightLow] = useState(0);
+  const [weightHigh, setWeighHigh] = useState(10);
+
+  const [heightLow, setHeightLow] = useState(0);
+  const [heightHigh, setHeightHigh] = useState(0);
+
+  const renderThumb = useCallback(() => <Thumb />, []);
+  const renderRail = useCallback(() => <Rail />, []);
+  const renderRailSelected = useCallback(() => <RailSelected />, []);
+  const renderLabel = useCallback((value) => <Label text={value} />, []);
+  const renderNotch = useCallback(() => <Notch />, []);
+
+  // Age slider
+  const handleAgeValueChange = useCallback((low, high) => {
+    setAgeLow(low);
+    setAgeHigh(high);
+  }, []);
+
+  // Weight slider
+  const handleWeightValueChange = useCallback((low, high) => {
+    setWeightLow(low);
+    setWeighHigh(high);
+  }, []);
+
+  // Height slider
+  const handleHeightValueChange = useCallback((low, high) => {
+    setHeightLow(low);
+    setHeightHigh(high);
+  }, []);
   return (
     <ScrollView>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>	No Users Found !</Snackbar>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+        {' '}
+        No Users Found !
+      </Snackbar>
       <View>
-        <Text style={{ color: "#663300", fontWeight: "bold", marginLeft: "5%", marginTop: "7%", fontSize: 15, marginBottom: "3%" }}> Category</Text>
-        <View style={{ width: '100%', justifyContent: 'center' }}	>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            marginLeft: '5%',
+            marginTop: '7%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          {' '}
+          Category
+        </Text>
+        <View style={{width: '100%', justifyContent: 'center'}}>
           <SectionedMultiSelect
             items={industryNames}
             IconRenderer={Icon}
@@ -240,301 +330,438 @@ const FilterScreen = ({ navigation }) => {
             selectedItems={selectedItems}
           />
         </View>
-
-        {/* <View style={{marginHorizontal:'5%'}}>
-				<MultiSelect
-          hideTags
-          items={categories}
-          uniqueKey="_id"
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={selectedItems}
-          selectText="Select Category"
-          // searchInputPlaceholderText="Search Items..."
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#222"
-          selectedItemTextColor="orange"
-          selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          displayKey="title"
-          searchInputStyle={{ color: '#CCC'}}
-          submitButtonColor="orange"
-          submitButtonText="Submit"
-          styleDropdownMenuSubsection={{paddingLeft:'3%', borderRadius:5, elevation:4}}
-				/>
-      </View> */}
         {isCategoryOn && (
-          <Text style={{ fontSize: 13, color: 'red', alignSelf: 'center', marginTop: 1, }}>Select atleast one category</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              color: 'red',
+              alignSelf: 'center',
+              marginTop: 1,
+            }}>
+            Select atleast one category
+          </Text>
         )}
-
-        {/* {categories !== undefined ? categories.map(cat => (
-          <View style={{width:"0%"}}>
-            <View style={{flexDirection:"row"}}>
-              <CheckBox 
-              disabled={false}
-              // value={isSelectedone}
-              // onValueChange={setSelectionone}
-              tintColors={{ true: 'orange'}}
-              /> 
-              <Text style={{color:"orange",marginLeft:"1%",marginTop:"1%"}}> {cat.title}</Text> 
-            </View>
-          </View>
-        )): null} */}
-
-        <Text style={{ color: "#663300", fontWeight: "bold", marginLeft: "5%", marginTop: "3%", fontSize: 15, marginBottom: "3%" }}>Gender</Text>
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity style={isFemale ? styles.active : styles.inactive} onPress={() => { setFemale(!isFemale); handleGender('Female') }}>
-            <Text style={isFemale ? styles.fontactive : styles.fontinactive}>Female</Text>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            marginLeft: '5%',
+            marginTop: '3%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          Gender
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity
+            style={isFemale ? styles.active : styles.inactive}
+            onPress={() => {
+              setFemale(!isFemale);
+              handleGender('Female');
+            }}>
+            <Text style={isFemale ? styles.fontactive : styles.fontinactive}>
+              Female
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={isMale ? styles.active : styles.inactive} onPress={() => { setMale(!isMale); handleGender('Male') }}>
-            <Text style={isMale ? styles.fontactive : styles.fontinactive}>Male</Text>
+          <TouchableOpacity
+            style={isMale ? styles.active : styles.inactive}
+            onPress={() => {
+              setMale(!isMale);
+              handleGender('Male');
+            }}>
+            <Text style={isMale ? styles.fontactive : styles.fontinactive}>
+              Male
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={isOthers ? styles.active : styles.inactive} onPress={() => { setOthers(!isOthers); handleGender('Transgender') }}>
-            <Text style={isOthers ? styles.fontactive : styles.fontinactive}>Others</Text>
+          <TouchableOpacity
+            style={isOthers ? styles.active : styles.inactive}
+            onPress={() => {
+              setOthers(!isOthers);
+              handleGender('Transgender');
+            }}>
+            <Text style={isOthers ? styles.fontactive : styles.fontinactive}>
+              Others
+            </Text>
           </TouchableOpacity>
         </View>
         {isGenderOn && (
-          <Text style={{ fontSize: 13, color: 'red', alignSelf: 'center', marginTop: 1, }}>Select atleast one gender</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              color: 'red',
+              alignSelf: 'center',
+              marginTop: 1,
+            }}>
+            Select atleast one gender
+          </Text>
         )}
-
-        <Text style={{ color: "#663300", fontWeight: "bold", marginLeft: "5%", marginTop: "3%", fontSize: 15, marginBottom: "3%" }}>Age</Text>
-        <View style={{ marginTop: "-5%" }}>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            marginLeft: '5%',
+            marginTop: '3%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          Age
+        </Text>
+        <View>
           <RangeSlider
-            minValue={1}
-            maxValue={100}
-            tintColor={'#da0f22'}
-            handleBorderWidth={1}
-            handleBorderColor="#454d55"
-            selectedMinimum={20}
-            selectedMaximum={40}
-            style={{ flex: 1, height: 70, padding: 10, backgroundColor: '#ddd' }}
-            onChange={(data) => { console.log(data); }}
+            style={styles.slider}
+            min={0}
+            max={100}
+            step={1}
+            floatingLabel
+            renderThumb={renderThumb}
+            renderRail={renderRail}
+            renderRailSelected={renderRailSelected}
+            renderLabel={renderLabel}
+            renderNotch={renderNotch}
+            onValueChanged={handleAgeValueChange}
           />
-          {/* <RangeSlider min={1} max={100}
-          fromValueOnChange={value => setAgeFromValue(value)}
-          toValueOnChange={value => setAgeToValue(value)}
-          initialFromValue={11}
-          inRangeBarColor='orange'
-          fromKnobColor='orange'
-          toKnobColor='orange'
-          styleSize={12}
-          showRangeLabels={false}
-        /> */}
         </View>
-
-        {/* {isActor?(
-      <> */}
-        {/* <Text style={{color:"#663300",fontWeight:"bold",marginLeft:"5%",marginTop:"-10%",fontSize:15,marginBottom:"3%"}}>Height(cm)</Text>
-      <View style={{marginTop:"-5%"}}>
-        <RangeSlider min={100} max={250}
-          fromValueOnChange={value => setHeightFromValue(value)}
-          toValueOnChange={value => setHeightToValue(value)}
-          initialFromValue={25}
-          inRangeBarColor='orange'
-          fromKnobColor='orange'
-          toKnobColor='orange'
-          styleSize={12}
-          showRangeLabels={false}
-          showValueLabels={true}
-        />
-      </View> */}
-
-        {/* <Text style={{color:"#663300",fontWeight:"bold",marginLeft:"5%",marginTop:"-10%",fontSize:15,marginBottom:"3%"}}>Weight(Kg)</Text>
-      <View style={{marginTop:"-5%"}}>
-        <RangeSlider min={10} max={200}
-          fromValueOnChange={value => setWeightFromValue(value)}
-          toValueOnChange={value => setWeightToValue(value)}
-          initialFromValue={30}
-          inRangeBarColor='orange'
-          fromKnobColor='orange'
-          toKnobColor='orange'
-          styleSize={12}
-          showRangeLabels={false}
-          showValueLabels={true}
-        />
-      </View> */}
-
-        <Text style={{ color: "#663300", fontWeight: "bold", marginLeft: "5%", marginTop: "-10%", fontSize: 15, marginBottom: "3%" }}>Skin Tone</Text>
-        <View style={{ flexDirection: "row", width: "100%", marginLeft: "5%" }}>
-          <View style={{ width: "50%" }}>
-            <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            marginLeft: '5%',
+            marginTop: '3%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          Height
+        </Text>
+        <View>
+          <RangeSlider
+            style={styles.slider}
+            min={0}
+            max={100}
+            step={1}
+            floatingLabel
+            renderThumb={renderThumb}
+            renderRail={renderRail}
+            renderRailSelected={renderRailSelected}
+            renderLabel={renderLabel}
+            renderNotch={renderNotch}
+            onValueChanged={handleHeightValueChange}
+          />
+        </View>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            paddingLeft: 15,
+            marginTop: '3%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          Weight
+        </Text>
+        <View>
+          <RangeSlider
+            style={styles.slider}
+            min={0}
+            max={100}
+            step={1}
+            floatingLabel
+            renderThumb={renderThumb}
+            renderRail={renderRail}
+            renderRailSelected={renderRailSelected}
+            renderLabel={renderLabel}
+            renderNotch={renderNotch}
+            onValueChanged={handleWeightValueChange}
+          />
+        </View>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            marginLeft: '5%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          Skin Tone
+        </Text>
+        <View style={{flexDirection: 'row', width: '100%', marginLeft: '5%'}}>
+          <View style={{width: '50%'}}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isDark ? 'checked' : 'unchecked'}
-                onPress={() => { setDark(!isDark); handleskinTone('Dark') }}
-                color='orange'
+                onPress={() => {
+                  setDark(!isDark);
+                  handleskinTone('Dark');
+                }}
+                color={theme.$primaryColor}
               />
-              {/* <CheckBox 
-            disabled={false}
-            value={isDark}
-            onValueChange={()=>{setDark(!isDark);handleskinTone('Dark')}}
-            tintColors={{ true: 'orange'}}
-            />  */}
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}> Dark</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                {' '}
+                Dark
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isBrown ? 'checked' : 'unchecked'}
-                onPress={() => { setBrown(!isBrown); handleskinTone('Brown') }}
-                color='orange'
+                onPress={() => {
+                  setBrown(!isBrown);
+                  handleskinTone('Brown');
+                }}
+                color={theme.$primaryColor}
               />
-              {/* <CheckBox 
-              disabled={false}
-              value={isBrown}
-              onValueChange={()=>{setBrown(!isBrown);handleskinTone('Brown')}}
-              tintColors={{ true: 'orange'}}
-            />  */}
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}>Brown</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                Brown
+              </Text>
             </View>
           </View>
-          <View style={{ width: "50%", marginLeft: "8%" }}>
-            <View style={{ flexDirection: "row" }}>
+          <View style={{width: '50%', marginLeft: '8%'}}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isWheatish ? 'checked' : 'unchecked'}
-                onPress={() => { setWheatish(!isWheatish); handleskinTone('Wheatish') }}
-                color='orange'
+                onPress={() => {
+                  setWheatish(!isWheatish);
+                  handleskinTone('Wheatish');
+                }}
+                color={theme.$primaryColor}
               />
-              {/* <CheckBox 
-            disabled={false}
-            value={isWheatish}
-            onValueChange={()=>{setWheatish(!isWheatish);handleskinTone('Wheatish')}}
-            tintColors={{ true: 'orange'}}
-            />  */}
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}>Wheatish</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                Wheatish
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isFair ? 'checked' : 'unchecked'}
-                onPress={() => { setFair(!isFair); handleskinTone('Fair') }}
-                color='orange'
+                onPress={() => {
+                  setFair(!isFair);
+                  handleskinTone('Fair');
+                }}
+                color={theme.$primaryColor}
               />
-              {/* <CheckBox 
-              disabled={false}
-              value={isFair}
-              onValueChange={()=>{setFair(!isFair);handleskinTone('Fair')}}
-              tintColors={{ true: 'orange'}}
-            />  */}
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}>Fair</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                Fair
+              </Text>
             </View>
           </View>
         </View>
         {isSkinToneOn && (
-          <Text style={{ fontSize: 13, color: 'red', alignSelf: 'center', marginTop: 1, }}>Select skintone</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              color: 'red',
+              alignSelf: 'center',
+              marginTop: 1,
+            }}>
+            Select skintone
+          </Text>
         )}
-
-
-        <Text style={{ color: "#663300", fontWeight: "bold", marginLeft: "5%", marginTop: "3%", fontSize: 15, marginBottom: "3%" }}>Body Tone</Text>
-        <View style={{ flexDirection: "row", width: "100%", marginLeft: "5%" }}>
-          <View style={{ width: "50%" }}>
-            <View style={{ flexDirection: "row" }}>
+        <Text
+          style={{
+            color: '#663300',
+            fontWeight: 'bold',
+            marginLeft: '5%',
+            marginTop: '3%',
+            fontSize: 15,
+            marginBottom: '3%',
+          }}>
+          Body Tone
+        </Text>
+        <View style={{flexDirection: 'row', width: '100%', marginLeft: '5%'}}>
+          <View style={{width: '50%'}}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isFit ? 'checked' : 'unchecked'}
-                onPress={() => { setFit(!isFit); handleBodyType('Fit') }}
-                color='orange'
+                onPress={() => {
+                  setFit(!isFit);
+                  handleBodyType('Fit');
+                }}
+                color={theme.$primaryColor}
               />
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}> Fit</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                {' '}
+                Fit
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isHourglass ? 'checked' : 'unchecked'}
-                onPress={() => { setHourglass(!isHourglass); handleBodyType('Hourglass') }}
-                color='orange'
+                onPress={() => {
+                  setHourglass(!isHourglass);
+                  handleBodyType('Hourglass');
+                }}
+                color={theme.$primaryColor}
               />
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}>Hourglass</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                Hourglass
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isAverageBuild ? 'checked' : 'unchecked'}
-                onPress={() => { setAverageBuild(!isAverageBuild); handleBodyType('Average Build') }}
-                color='orange'
+                onPress={() => {
+                  setAverageBuild(!isAverageBuild);
+                  handleBodyType('Average Build');
+                }}
+                color={theme.$primaryColor}
               />
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}> Average Build</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                {' '}
+                Average Build
+              </Text>
             </View>
           </View>
-          <View style={{ width: "50%", marginLeft: "8%" }}>
-            <View style={{ flexDirection: "row" }}>
+          <View style={{width: '50%', marginLeft: '8%'}}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isSlim ? 'checked' : 'unchecked'}
-                onPress={() => { setSlim(!isSlim); handleBodyType('Slim') }}
-                color='orange'
+                onPress={() => {
+                  setSlim(!isSlim);
+                  handleBodyType('Slim');
+                }}
+                color={theme.$primaryColor}
               />
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}>Slim</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                Slim
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isFatty ? 'checked' : 'unchecked'}
-                onPress={() => { setFatty(!isFatty); handleBodyType('Fatty') }}
-                color='orange'
+                onPress={() => {
+                  setFatty(!isFatty);
+                  handleBodyType('Fatty');
+                }}
+                color={theme.$primaryColor}
               />
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}>Fatty</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                Fatty
+              </Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{flexDirection: 'row'}}>
               <Checkbox
                 status={isAthletic ? 'checked' : 'unchecked'}
-                onPress={() => { setAthletic(!isAthletic); handleBodyType('Athletic') }}
-                color='orange'
+                onPress={() => {
+                  setAthletic(!isAthletic);
+                  handleBodyType('Athletic');
+                }}
+                color={theme.$primaryColor}
               />
-              <Text style={{ color: "orange", marginLeft: "1%", marginTop: "6%" }}> Athletic</Text>
+              <Text
+                style={{
+                  color: theme.$primaryColorText,
+                  marginLeft: '1%',
+                  marginTop: '6%',
+                }}>
+                {' '}
+                Athletic
+              </Text>
             </View>
           </View>
         </View>
         {isBodyTypeOn && (
-          <Text style={{ fontSize: 13, color: 'red', alignSelf: 'center', marginTop: 1, }}>Select bodytype</Text>
+          <Text
+            style={{
+              fontSize: 13,
+              color: 'red',
+              alignSelf: 'center',
+              marginTop: 1,
+            }}>
+            Select bodytype
+          </Text>
         )}
-        {/* </>
-      ):null}
-       */}
-        <View style={{ width: "100%", alignItems: "center", marginTop: "5%" }}>
+        <View style={{width: '100%', alignItems: 'center', marginTop: '5%'}}>
           <TouchableOpacity style={styles.filterbutton} onPress={handleSubmit}>
-            <Text style={{ color: "white", fontWeight: "bold" }}>Apply Filter</Text>
+            <Text style={{color: 'white', fontWeight: 'bold'}}>
+              Apply Filter
+            </Text>
           </TouchableOpacity>
         </View>
-
       </View>
-      {/* )}
-     </Formik> */}
     </ScrollView>
-
   );
-}
+};
 const styles = StyleSheet.create({
-
   active: {
-    alignItems: "center",
-    backgroundColor: "orange",
+    alignItems: 'center',
+    backgroundColor: theme.$primaryColor,
     padding: 10,
-    marginLeft: "10%",
-    width: "20%",
-    borderRadius: 4,
-    borderWidth: 0,
+    width: '33.333333%',
+    marginHorizontal: 1,
   },
   inactive: {
-    alignItems: "center",
-    backgroundColor: "#f3f3f3",
+    alignItems: 'center',
+    backgroundColor: 'white',
     padding: 10,
-
-    marginLeft: "10%",
-    width: "20%",
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: "orange"
-
+    width: '33.333333%',
+    marginHorizontal: 1,
+    borderColor: theme.$primaryColor,
   },
   filterbutton: {
-    alignItems: "center",
-    backgroundColor: "orange",
+    alignItems: 'center',
+    backgroundColor: theme.$primaryColor,
     padding: 10,
-    marginBottom: "10%",
-    width: "50%",
-    borderRadius: 15,
-    borderWidth: 0,
-
+    marginBottom: '10%',
+    width: '90%',
+    borderRadius: 8,
+    alignSelf: 'center',
   },
   fontactive: {
-    color: "white"
+    color: 'white',
   },
   fontinactive: {
-    color: "orange"
-  }
+    color: theme.$primaryColor,
+  },
+  slider: {
+    marginHorizontal: 15,
+  },
 });
 
 export default FilterScreen;
