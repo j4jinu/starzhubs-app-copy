@@ -66,6 +66,9 @@ const PhotoUploadScreen = (props) => {
         skipBackup: true,
         path: 'images',
       },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.2
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       //console.log('Response = ', response);
@@ -92,9 +95,9 @@ const PhotoUploadScreen = (props) => {
       setSubmitting(false);
       return;
     }
-    setisloading(true);
     const image_uri = image;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
+    console.log("Type:", fileType);
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('description', values.description);
