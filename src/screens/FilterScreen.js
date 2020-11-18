@@ -6,12 +6,7 @@ import React, {
   useCallback,
 } from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-// import CheckBox from '@react-native-community/checkbox';
-// import RangeSlider, { Slider } from 'react-native-range-slider-expo';
 import {ScrollView} from 'react-native-gesture-handler';
-// import MultiSelectView from 'react-native-multiselect-view'
-// import CustomMultiPicker from "react-native-multiple-select-list";
-// import MultiSelect from 'react-native-multiple-select';
 import {Snackbar} from 'react-native-paper';
 import {AuthContext} from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
@@ -24,61 +19,11 @@ import RailSelected from '../components/slider/RailSelected';
 import Label from '../components/slider/Label';
 import Notch from '../components/slider/Notch';
 import theme from '../config/theme';
-const industryNames = [
-  {
-    name: 'Industry',
-    id: 0,
-    children: [
-      {
-        id: 'Assameese',
-        name: 'Assameese',
-      },
-      {
-        id: 'Bengali',
-        name: 'Bengali',
-      },
-      {
-        id: 'Gujarathi',
-        name: 'Gujarathi',
-      },
-      {
-        id: 'Hindi',
-        name: 'Hindi',
-      },
-      {
-        id: 'Kannada',
-        name: 'Kannada',
-      },
-      {
-        id: 'Malayalam',
-        name: 'Malayalam',
-      },
-      {
-        id: 'Marathi',
-        name: 'Marathi',
-      },
-      {
-        id: 'Punjabi',
-        name: 'Punjabi',
-      },
-      {
-        id: 'Tamil',
-        name: 'Tamil',
-      },
-      {
-        id: 'Telugu',
-        name: 'Telugu',
-      },
-    ],
-  },
-];
 
-const FilterScreen = ({navigation}) => {
+const FilterScreen = (props) => {
   const auth = useContext(AuthContext);
-
-  const [ageFromValue, setAgeFromValue] = useState(0);
   const [ageToValue, setAgeToValue] = useState(0);
-
+  const [ageFromValue, setAgeFromValue] = useState(0);
   const [heightFromValue, setHeightFromValue] = useState(0);
   const [heightToValue, setHeightToValue] = useState(0);
   const [weightFromValue, setWeightFromValue] = useState(0);
@@ -100,7 +45,6 @@ const FilterScreen = ({navigation}) => {
   const [isMale, setMale] = useState(false);
   const [isOthers, setOthers] = useState(false);
 
-  const [categories, setCategories] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isActor, setActor] = useState(false);
   const [gender, setGender] = useState([]);
@@ -113,27 +57,28 @@ const FilterScreen = ({navigation}) => {
   const [isSkinToneOn, setSkinToneOn] = useState(false);
 
   const [visible, setVisible] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const getCategory = () => {
-      fetch('http://13.232.190.226/api/category', {
-        method: 'GET',
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          setCategories(response.categories);
-          console.log('filetr', response.categories);
-          // setIsLoading(false)
-          // setTalentId(response.categories[0]._id)
-        })
-        .catch((error) => {
-          // setIsLoading(false)
-        });
+    const getCategory = async () => {
+      try {
+        const res = await fetch('http://13.232.190.226/api/category/app');
+        const resData = await res.json();
+        if (resData.success) {
+          setCategories(resData.categories);
+        } else {
+          setCategories([]);
+        }
+        console.log('Category array: ', categories);
+      } catch (error) {
+        console.log('Error: ', error);
+      }
     };
     getCategory();
   }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
+    console.log(selectedItem);
     setSelectedItems(selectedItem);
     if (selectedItems === []) {
       setCategoryOn(true);
@@ -249,7 +194,7 @@ const FilterScreen = ({navigation}) => {
         (response) => {
           if (response.success === true) {
             console.warn(response.data.users);
-            navigation.navigate('Filter', {
+            props.navigation.navigate('FilterResult', {
               filter: response.data.users,
             });
           } else {
@@ -263,17 +208,6 @@ const FilterScreen = ({navigation}) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-  const [low, setLow] = useState(0);
-  const [hight, setHigh] = useState(10);
-
-  const [ageLow, setAgeLow] = useState(0);
-  const [ageHigh, setAgeHigh] = useState(10);
-
-  const [weightLow, setWeightLow] = useState(0);
-  const [weightHigh, setWeighHigh] = useState(10);
-
-  const [heightLow, setHeightLow] = useState(0);
-  const [heightHigh, setHeightHigh] = useState(0);
 
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
@@ -283,20 +217,20 @@ const FilterScreen = ({navigation}) => {
 
   // Age slider
   const handleAgeValueChange = useCallback((low, high) => {
-    setAgeLow(low);
-    setAgeHigh(high);
+    setAgeFromValue(low);
+    setAgeToValue(high);
   }, []);
 
   // Weight slider
   const handleWeightValueChange = useCallback((low, high) => {
-    setWeightLow(low);
-    setWeighHigh(high);
+    setWeightFromValue(low);
+    setWeightToValue(high);
   }, []);
 
   // Height slider
   const handleHeightValueChange = useCallback((low, high) => {
-    setHeightLow(low);
-    setHeightHigh(high);
+    setHeightFromValue(low);
+    setHeightToValue(high);
   }, []);
   return (
     <ScrollView>
@@ -317,9 +251,10 @@ const FilterScreen = ({navigation}) => {
           {' '}
           Category
         </Text>
+
         <View style={{width: '100%', justifyContent: 'center'}}>
           <SectionedMultiSelect
-            items={industryNames}
+            items={categories}
             IconRenderer={Icon}
             uniqueKey="id"
             subKey="children"
@@ -435,13 +370,13 @@ const FilterScreen = ({navigation}) => {
             fontSize: 15,
             marginBottom: '3%',
           }}>
-          Height
+          Height(cm)
         </Text>
         <View>
           <RangeSlider
             style={styles.slider}
             min={0}
-            max={100}
+            max={200}
             step={1}
             floatingLabel
             renderThumb={renderThumb}
@@ -461,13 +396,13 @@ const FilterScreen = ({navigation}) => {
             fontSize: 15,
             marginBottom: '3%',
           }}>
-          Weight
+          Weight(Kg)
         </Text>
         <View>
           <RangeSlider
             style={styles.slider}
             min={0}
-            max={100}
+            max={250}
             step={1}
             floatingLabel
             renderThumb={renderThumb}
