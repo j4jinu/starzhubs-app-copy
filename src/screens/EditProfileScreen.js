@@ -10,13 +10,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import DropDownPicker from 'react-native-dropdown-picker';
 import {Formik} from 'formik';
 import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 const languages = [
   {
@@ -128,18 +129,19 @@ const countries = [
 
 const profileSchema = yup.object({
   name: yup.string().required('Enter your name'),
-  dob: yup.string().required('Enter Dob details'),
   bio: yup.string().required('Please fill this field'),
   phone: yup.string().required('Enter phone number'),
   email: yup.string().required('Enter email address'),
   state: yup.string().required('Enter state of residence'),
-  city: yup.string().required('Enter your city'),
+  place: yup.string().required('Enter your city'),
+  education: yup.string().required('Enter your Higher education'),
 });
 
 const EditProfileScreen = () => {
   const auth = React.useContext(AuthContext);
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
+  const [gender, setGender] = useState('Male');
   const [selectedItems, setSelectedItems] = useState([]);
   const [userInfo, setUserInfo] = useState({
     image: {},
@@ -171,7 +173,17 @@ const EditProfileScreen = () => {
     setSelectedItems(selectedItem);
   };
 
-  const saveUserInfo = async (values) => {
+  const saveUserInfo = async (values, {setSubmitting}) => {
+    if (dob === '') {
+      alert('Please enter your Date of Birth');
+      setSubmitting(false);
+      return;
+    }
+    values.dob = dob;
+    values.gender = gender;
+    values.country = country;
+    values.languages = selectedItems.toString();
+    console.log('Form data: ', values);
     const response = await fetch('http://13.232.190.226/api/user/update', {
       method: 'PUT',
       headers: {
@@ -197,6 +209,7 @@ const EditProfileScreen = () => {
               width: 180,
               borderRadius: 100,
               marginBottom: 20,
+              marginTop: 15,
               alignSelf: 'center',
               backgroundColor: 'gray',
             }}
@@ -206,16 +219,15 @@ const EditProfileScreen = () => {
           />
         )}
         {userInfo.image === undefined && <Icon />}
-        <Icon
-          name="photo-camera"
-          size={35}
-          color={theme.$primaryColor}
+        <TouchableOpacity
+          activeOpacity={0.7}
           style={{
             position: 'absolute',
-            top: 140,
-            left: 235,
-          }}
-        />
+            top: 159,
+            left: 240,
+          }}>
+          <Icon name="photo-camera" size={35} color={theme.$primaryColor} />
+        </TouchableOpacity>
         <Formik
           initialValues={{
             name: '',
@@ -224,10 +236,12 @@ const EditProfileScreen = () => {
             dob: '',
             country: country,
             state: '',
-            city: '',
+            place: '',
           }}
           validationSchema={profileSchema}
-          onSubmit={(values) => saveUserInfo(values)}>
+          onSubmit={(values, {setSubmitting}) =>
+            saveUserInfo(values, {setSubmitting})
+          }>
           {({
             handleChange,
             handleBlur,
@@ -279,7 +293,7 @@ const EditProfileScreen = () => {
                   marginTop: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  borderColor: errors.name ? 'red' : '#e6e6e6',
+                  borderColor: '#e6e6e6',
                 }}>
                 <DatePicker
                   style={{
@@ -287,6 +301,7 @@ const EditProfileScreen = () => {
                     borderRadius: 10,
                     width: '80%',
                     paddingVertical: 5,
+                    borderColor: '#e6e6e6',
                   }}
                   date={dob}
                   mode="date"
@@ -320,9 +335,32 @@ const EditProfileScreen = () => {
                   }}
                 />
               </View>
-              {touched.dob && dob === '' && (
-                <Text style={styles.errorText}>{errors.dob} </Text>
-              )}
+              {/* Gender */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: '#e6e6e6',
+                }}>
+                <Icon name="people-alt" size={20} color={theme.$primaryColor} />
+                <Picker
+                  selectedValue={gender}
+                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setGender(itemValue)
+                  }>
+                  <Picker.Item label="Female" value="female" />
+                  <Picker.Item label="Male" value="male" />
+                  <Picker.Item label="Transgender" value="transgender" />
+                </Picker>
+              </View>
               {/* 
               Email address
                */}
@@ -381,23 +419,35 @@ const EditProfileScreen = () => {
               </View>
 
               {/* Country */}
-              <DropDownPicker
-                items={countries}
-                defaultValue={country}
-                containerStyle={{
+              <View
+                style={{
                   alignSelf: 'center',
-                  marginTop: 12,
-                  height: 50,
-                  borderRadius: 8,
+                  borderWidth: 1,
+                  borderRadius: 10,
                   width: '90%',
-                }}
-                style={{backgroundColor: 'white', borderRadius: 8}}
-                itemStyle={{
-                  justifyContent: 'flex-start',
-                }}
-                dropDownStyle={{backgroundColor: 'white', borderRadius: 8}}
-                onChangeItem={(item) => setCountry(item.value)}
-              />
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: '#e6e6e6',
+                }}>
+                <Icon
+                  name="location-pin"
+                  size={20}
+                  color={theme.$primaryColor}
+                />
+                <Picker
+                  selectedValue={country}
+                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setCountry(itemValue)
+                  }>
+                  {countries.map((c) => (
+                    <Picker.Item label={c.label} value={c.value} />
+                  ))}
+                </Picker>
+              </View>
 
               {/* State City */}
               <View
@@ -445,21 +495,69 @@ const EditProfileScreen = () => {
                     marginHorizontal: 8,
                     marginTop: 12,
                     paddingHorizontal: 8,
-                    borderColor: errors.city ? 'red' : '#e6e6e6',
+                    borderColor: errors.place ? 'red' : '#e6e6e6',
                   }}>
                   <Icon
-                    name="home-city"
+                    name="location-pin"
                     size={20}
                     color={theme.$primaryColor}
                   />
                   <TextInput
                     style={styles.inputField}
                     placeholder={'City'}
-                    onChangeText={handleChange('city')}
-                    onBlur={handleBlur('city')}
-                    value={values.city}
+                    onChangeText={handleChange('place')}
+                    onBlur={handleBlur('place')}
+                    value={values.place}
                   />
                 </View>
+              </View>
+
+              {/* Higher education */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.education ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="book" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  style={styles.inputField}
+                  placeholder={'Higher Education'}
+                  onChangeText={handleChange('education')}
+                  onBlur={handleBlur('education')}
+                  value={values.education}
+                />
+              </View>
+
+              {/* Languages */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                }}>
+                <SectionedMultiSelect
+                  items={languages}
+                  IconRenderer={Icon}
+                  uniqueKey="id"
+                  subKey="children"
+                  selectText="Languages known"
+                  showDropDowns={true}
+                  readOnlyHeadings={true}
+                  onSelectedItemsChange={onSelectedItemsChange}
+                  selectedItems={selectedItems}
+                  style={{padding: 0}}
+                />
               </View>
 
               {/*
@@ -568,6 +666,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10,
     marginTop: 15,
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
