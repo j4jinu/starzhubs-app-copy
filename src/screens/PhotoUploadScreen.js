@@ -92,7 +92,7 @@ const PhotoUploadScreen = (props) => {
       setSubmitting(false);
       return;
     }
-    setisloading(true);
+    // setisloading(true);
     const image_uri = image;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     var formData = new FormData();

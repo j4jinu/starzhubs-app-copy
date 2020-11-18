@@ -23,6 +23,7 @@ import theme from '../config/theme';
 const FilterScreen = (props) => {
   const auth = useContext(AuthContext);
   const [ageToValue, setAgeToValue] = useState(0);
+  const [ageFromValue, setAgeFromValue] = useState(0);
   const [heightFromValue, setHeightFromValue] = useState(0);
   const [heightToValue, setHeightToValue] = useState(0);
   const [weightFromValue, setWeightFromValue] = useState(0);
@@ -56,6 +57,7 @@ const FilterScreen = (props) => {
   const [isSkinToneOn, setSkinToneOn] = useState(false);
 
   const [visible, setVisible] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     const getCategory = async () => {
