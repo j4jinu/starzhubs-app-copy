@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 8,

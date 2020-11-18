@@ -75,6 +75,7 @@ const industryNames = [
 
 const FilterScreen = ({navigation}) => {
   const auth = useContext(AuthContext);
+  const [categories, setCategories] = useState([])
 
   const [ageFromValue, setAgeFromValue] = useState(0);
   const [ageToValue, setAgeToValue] = useState(0);
@@ -100,7 +101,6 @@ const FilterScreen = ({navigation}) => {
   const [isMale, setMale] = useState(false);
   const [isOthers, setOthers] = useState(false);
 
-  const [categories, setCategories] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isActor, setActor] = useState(false);
   const [gender, setGender] = useState([]);
@@ -115,25 +115,25 @@ const FilterScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const getCategory = () => {
-      fetch('http://13.232.190.226/api/category', {
-        method: 'GET',
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          setCategories(response.categories);
-          console.log('filetr', response.categories);
-          // setIsLoading(false)
-          // setTalentId(response.categories[0]._id)
-        })
-        .catch((error) => {
-          // setIsLoading(false)
-        });
+    const getCategory = async () => {
+      try {
+        const res = await fetch('http://13.232.190.226/api/category/app')
+        const resData = await res.json()
+        if (resData.success) {
+          setCategories(resData.categories)
+        } else {
+          setCategories([])
+        }
+        console.log("Category array: ", categories);
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     };
     getCategory();
   }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
+    console.log(selectedItem);
     setSelectedItems(selectedItem);
     if (selectedItems === []) {
       setCategoryOn(true);
@@ -319,7 +319,7 @@ const FilterScreen = ({navigation}) => {
         </Text>
         <View style={{width: '100%', justifyContent: 'center'}}>
           <SectionedMultiSelect
-            items={industryNames}
+            items={categories}
             IconRenderer={Icon}
             uniqueKey="id"
             subKey="children"
