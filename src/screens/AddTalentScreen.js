@@ -270,7 +270,7 @@ export default function AddTalentScreen(props) {
     }
     const uri = imgurl;
     var formData = new FormData();
-    formData.append('imageType', imageType);
+    formData.append('imageType', imgType);
     let fileType = uri.substring(uri.lastIndexOf('.') + 1);
     formData.append('avatar', {
       uri,
@@ -357,7 +357,7 @@ export default function AddTalentScreen(props) {
     };
 
     var imgurl;
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
