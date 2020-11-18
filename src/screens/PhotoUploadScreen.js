@@ -24,7 +24,9 @@ const mediaSchema = yup.object({
 });
 
 const PhotoUploadScreen = (props) => {
+  const talentId = props.navigation.getParam('talentId');
   const auth = useContext(AuthContext);
+
   const [image, setImage] = useState('');
   const [isImage, setIsImage] = useState(false);
 
@@ -78,7 +80,8 @@ const PhotoUploadScreen = (props) => {
         setIsImage(true);
       } else {
         setIsImage(false);
-        setImage(response.data);
+        setImage(response.uri);
+        console.log('image uri: ', response.uri);
       }
     });
   };
@@ -89,7 +92,41 @@ const PhotoUploadScreen = (props) => {
       setSubmitting(false);
       return;
     }
-    alert(image);
+    setisloading(true);
+    const image_uri = image;
+    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
+    var formData = new FormData();
+    formData.append('talentId', talentId);
+    formData.append('description', values.description);
+    formData.append('caption', values.caption);
+    formData.append('media', {
+      image_uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`,
+    });
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    };
+    try {
+      const uploadRes = await fetch(
+        `http://13.232.190.226/api/talent/upload/media`,
+        requestOptions,
+      );
+      const uploadResData = await uploadRes.json();
+      if (!uploadResData.success) {
+        alert(uploadResData.message);
+        return;
+      }
+      alert(uploadResData.message);
+      setImage(null);
+    } catch (error) {
+      console.error('error', error);
+    }
   };
 
   return (
