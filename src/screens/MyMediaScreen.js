@@ -187,57 +187,62 @@ const MyMediaScreen = (props) => {
             </View>
             {t.media.map((m) => (
               <>
-                <TouchableOpacity
-                  style={styles.gridItem}
-                  activeOpacity={0.7}
-                  onPress={() =>
-                    props.navigation.navigate('MediaDetails', {
-                      mediaFile: m.file,
-                      mediaType: m.fileType,
-                      caption: m.caption,
-                      description: m.description,
-                    })
-                  }>
-                  {m.fileType === 'image' ? (
-                    <Image
-                      style={{width: '100%', height: 220, resizeMode: 'cover'}}
-                      source={{
-                        uri: `http://13.232.190.226/api/user/view/media/?${m.file}`,
-                      }}
-                    />
-                  ) : (
-                    <WebView
-                      javaScriptEnabled={true}
-                      domStorageEnabled={true}
-                      source={{
-                        uri:
-                          'https://www.youtube.com/embed/' +
-                          m.file.substring(m.file.lastIndexOf('=') + 1),
-                      }}
-                    />
-                  )}
-                </TouchableOpacity>
-                <View style={{flexDirection: 'row', width: '100%'}}>
-                  <View style={{width: '80%', flexDirection: 'column'}}>
-                    <Text style={styles.mediaTitle}>{m.caption}</Text>
-                    <Text style={styles.mediaDescription} numberOfLines={3}>
-                      {m.description}
-                    </Text>
-                  </View>
+                <View style={styles.gridItem}>
                   <TouchableOpacity
-                    onPress={() => confirmDelete(t._id, m._id)}
-                    style={{width: '20%'}}>
-                    <DIcon
-                      name="delete"
-                      size={20}
-                      color="orange"
-                      style={{
-                        marginTop: 4,
-                        marginRight: 20,
-                        alignSelf: 'flex-end',
-                      }}
-                    />
+                    activeOpacity={0.7}
+                    onPress={() =>
+                      props.navigation.navigate('MediaDetails', {
+                        mediaFile: m.file,
+                        mediaType: m.fileType,
+                        caption: m.caption,
+                        description: m.description,
+                      })
+                    }>
+                    {m.fileType === 'image' ? (
+                      <Image
+                        style={{
+                          width: '100%',
+                          height: 220,
+                          resizeMode: 'cover',
+                        }}
+                        source={{
+                          uri: `http://13.232.190.226/api/user/view/media/?${m.file}`,
+                        }}
+                      />
+                    ) : (
+                      <WebView
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        source={{
+                          uri:
+                            'https://www.youtube.com/embed/' +
+                            m.file.substring(m.file.lastIndexOf('=') + 1),
+                        }}
+                      />
+                    )}
                   </TouchableOpacity>
+                  <View style={{flexDirection: 'row', width: '100%'}}>
+                    <View style={{width: '80%', flexDirection: 'column'}}>
+                      <Text style={styles.mediaTitle}>{m.caption}</Text>
+                      <Text style={styles.mediaDescription} numberOfLines={3}>
+                        {m.description}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() => confirmDelete(t._id, m._id)}
+                      style={{width: '20%'}}>
+                      <DIcon
+                        name="delete"
+                        size={20}
+                        color="orange"
+                        style={{
+                          marginTop: 4,
+                          marginRight: 20,
+                          alignSelf: 'flex-end',
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </>
             ))}
