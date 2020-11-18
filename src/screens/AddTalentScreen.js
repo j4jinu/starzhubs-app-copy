@@ -21,6 +21,7 @@ import {Snackbar} from 'react-native-paper';
 import {AuthContext} from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import theme from '../config/theme';
 
 const industryNames = [
   {
@@ -494,6 +495,27 @@ export default function AddTalentScreen(props) {
                 }}>
                 Select Confidence Level
               </Text>
+
+              <AirbnbRating
+                count={11}
+                reviews={[
+                  'Terrible',
+                  'Bad',
+                  'Meh',
+                  'OK',
+                  'Good',
+                  'Hmm...',
+                  'Very Good',
+                  'Wow',
+                  'Amazing',
+                  'Unbelievable',
+                  'Jesus',
+                ]}
+                ratingColor={theme.$primaryColor}
+                ratingBackgroundColor={theme.$primaryColor}
+                defaultRating={11}
+                size={20}
+              />
 
               <Rating
                 type="custom"
