@@ -158,7 +158,11 @@ const AccountScreen = (props) => {
           <TouchableOpacity
             style={styles.section}
             activeOpacity={0.7}
-            onPress={() => props.navigation.navigate('Edit')}>
+            onPress={() =>
+              props.navigation.navigate('Edit', {
+                type: 'edit',
+              })
+            }>
             <View style={{flexDirection: 'row'}}>
               <Icon
                 name="shield-account"

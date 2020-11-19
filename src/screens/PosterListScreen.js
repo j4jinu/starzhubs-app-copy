@@ -36,6 +36,7 @@ const PosterListScreen = (props) => {
   return (
     <>
       <FlatList
+        style={{backgroundColor: '#e6e6e6'}}
         keyExtractor={(item) => item.id}
         data={posters}
         renderItem={({item}) => (

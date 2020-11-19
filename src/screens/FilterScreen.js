@@ -5,6 +5,7 @@ import React, {
   useContext,
   useCallback,
 } from 'react';
+import {Searchbar} from 'react-native-paper';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Snackbar} from 'react-native-paper';
@@ -28,6 +29,8 @@ const FilterScreen = (props) => {
   const [heightToValue, setHeightToValue] = useState(0);
   const [weightFromValue, setWeightFromValue] = useState(0);
   const [weightToValue, setWeightToValue] = useState(0);
+
+  const [search, setSearch] = useState('');
 
   const [isDark, setDark] = useState(false);
   const [isBrown, setBrown] = useState(false);
@@ -132,6 +135,16 @@ const FilterScreen = (props) => {
       setBodyTypeOn(true);
     } else {
       setBodyTypeOn(false);
+    }
+  };
+
+  const updateSearch = (search) => {
+    setSearch(search);
+  };
+
+  const doSearch = () => {
+    if (search === '') {
+      return alert('Enter a search query');
     }
   };
 
@@ -243,6 +256,12 @@ const FilterScreen = (props) => {
           No Users Found !
         </Snackbar>
         <View>
+          <Searchbar
+            placeholder="Type Here..."
+            onChangeText={updateSearch}
+            value={search}
+            onSubmitEditing={doSearch}
+          />
           <Text
             style={{
               color: 'gray',
