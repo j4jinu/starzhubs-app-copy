@@ -68,9 +68,9 @@ const PhotoUploadScreen = (props) => {
       },
       maxWidth: 500,
       maxHeight: 500,
-      quality: 0.2
+      quality: 0.2,
     };
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
       //console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -98,13 +98,13 @@ const PhotoUploadScreen = (props) => {
     console.log("imgstate",image);
     const image_uri = image;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
-    console.log("Type:", fileType);
+    console.log('Type:', fileType);
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('description', values.description);
     formData.append('caption', values.caption);
-    rmData.append('media', {
-      image_uri,
+    formData.append('media', {
+      uri: image_uri,
       name: `photo.${fileType}`,
       type: `image/${fileType}`,
     });
@@ -129,6 +129,7 @@ const PhotoUploadScreen = (props) => {
       }
       alert(uploadResData.message);
       setImage(null);
+      props.navigation.goBack();
     } catch (error) {
       console.error('error', error);
     }

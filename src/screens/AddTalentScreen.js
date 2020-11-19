@@ -342,7 +342,7 @@ export default function AddTalentScreen(props) {
     };
 
     var imgurl;
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchImageLibrary(options, (response) => {
       console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');

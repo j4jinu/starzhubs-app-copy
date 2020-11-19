@@ -55,7 +55,7 @@ const VideoUploadScreen = (props) => {
     const match = text.match(fullreg);
     if (match && match.length > 0) {
       values.talentId = talentId;
-      values.link = 'https://www.youtube.com/watch?v=' + ytLink
+      values.link = 'https://www.youtube.com/watch?v=' + ytLink;
       console.log('Values: ', values);
       try {
         const response = await fetch(
