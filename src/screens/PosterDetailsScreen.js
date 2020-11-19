@@ -171,9 +171,6 @@ const PosterDetailsScreen = (props) => {
                     </View>
                     {user._id === auth.userId ? null : (
                         <View style={styles.authorInfo}>
-                            {/* <View>
-
-                        </View> */}
                             <Image
                                 style={{
                                     width: 50,
