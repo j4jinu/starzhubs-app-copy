@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import WebView from 'react-native-webview';
 const MediaDetailsScreen = (props) => {
   const mediaFile = props.navigation.getParam('mediaFile');
-  console.log("mediafile",mediaFile);
+  console.log('mediafile', mediaFile);
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');
@@ -11,14 +11,14 @@ const MediaDetailsScreen = (props) => {
     <View>
       {mediaType === 'video' ? (
         <WebView
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        source={{
-          uri:
-            'https://www.youtube.com/embed/' +
-            mediaFile.substring(mediaFile.lastIndexOf('=') + 1),
-        }}
-      />
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          source={{
+            uri:
+              'https://www.youtube.com/embed/' +
+              mediaFile.substring(mediaFile.lastIndexOf('=') + 1),
+          }}
+        />
       ) : (
         <Image
           style={styles.media}
@@ -26,7 +26,6 @@ const MediaDetailsScreen = (props) => {
             uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
           }}
         />
-        
       )}
 
       <Text style={styles.title}>{caption}</Text>
