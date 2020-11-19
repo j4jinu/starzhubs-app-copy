@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -10,12 +10,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
+import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
@@ -121,10 +122,10 @@ const languages = [
 ];
 
 const countries = [
-  {label: 'Afganistan', value: 'afganistan'},
-  {label: 'India', value: 'india'},
-  {label: 'USA', value: 'usa'},
-  {label: 'UK', value: 'uk'},
+  { label: 'Afganistan', value: 'afganistan' },
+  { label: 'India', value: 'india' },
+  { label: 'USA', value: 'usa' },
+  { label: 'UK', value: 'uk' },
 ];
 
 const profileSchema = yup.object({
@@ -139,6 +140,8 @@ const profileSchema = yup.object({
 
 const EditProfileScreen = () => {
   const auth = React.useContext(AuthContext);
+  const [image, setImage] = useState('');
+
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
   const [gender, setGender] = useState('Male');
@@ -173,7 +176,7 @@ const EditProfileScreen = () => {
     setSelectedItems(selectedItem);
   };
 
-  const saveUserInfo = async (values, {setSubmitting}) => {
+  const saveUserInfo = async (values, { setSubmitting }) => {
     if (dob === '') {
       alert('Please enter your Date of Birth');
       setSubmitting(false);
@@ -197,6 +200,105 @@ const EditProfileScreen = () => {
       return alert(resData.message);
     }
     alert(resData.message);
+  };
+
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'starzhubs needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        chooseFile();
+        //console.log('You can use the camera');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const chooseFile = () => {
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.2
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      //console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else if (response.uri === '') {
+        setIsImage(true);
+      } else {
+        setImage(response.uri);
+        console.log('image uri: ', response.uri);
+        uploadMedia();
+      }
+    });
+  };
+
+  const uploadMedia = async () => {
+    if (image === '') {
+      alert('Please choose an Image');
+      setSubmitting(false);
+      return;
+    }
+    const image_uri = image;
+    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
+    console.log("Type:", fileType);
+    var formData = new FormData();
+    formData.append('imageType', 'avatar');
+    formData.append('avatar', {
+      image_uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`,
+    });
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    };
+    try {
+      const uploadRes = await fetch(
+        `http://13.232.190.226/api/user/avatar`,
+        requestOptions,
+      );
+      const uploadResData = await uploadRes.json();
+      if (!uploadResData.success) {
+        alert(uploadResData.message);
+        return;
+      }
+      alert(uploadResData.message);
+      setImage(null);
+    } catch (error) {
+      console.error('error', error);
+    }
   };
 
   return (
@@ -239,8 +341,8 @@ const EditProfileScreen = () => {
             place: '',
           }}
           validationSchema={profileSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            saveUserInfo(values, {setSubmitting})
+          onSubmit={(values, { setSubmitting }) =>
+            saveUserInfo(values, { setSubmitting })
           }>
           {({
             handleChange,
@@ -251,360 +353,360 @@ const EditProfileScreen = () => {
             errors,
             values,
           }) => (
-            <>
-              {/* 
+              <>
+                {/* 
               Full name 
               */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.name ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="person" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'default'}
-                  textContentType={'name'}
-                  style={styles.inputField}
-                  placeholder={'Full name'}
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
-                />
-              </View>
-              {/* 
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.name ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="person" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'default'}
+                    textContentType={'name'}
+                    style={styles.inputField}
+                    placeholder={'Full name'}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                  />
+                </View>
+                {/* 
               DoB
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: '#e6e6e6',
-                }}>
-                <DatePicker
+                <View
                   style={{
-                    backgroundColor: 'white',
+                    alignSelf: 'center',
+                    borderWidth: 1,
                     borderRadius: 10,
-                    width: '80%',
-                    paddingVertical: 5,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
                     borderColor: '#e6e6e6',
-                  }}
-                  date={dob}
-                  mode="date"
-                  placeholder="DOB"
-                  format="YYYY-MM-DD"
-                  // minDate="01-01-2016"
-                  // maxDate="01-01-2019"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  iconComponent={
-                    <Icon
-                      name="date-range"
-                      size={23}
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 8,
-                        color: '#fd9242',
-                      }}
-                    />
-                  }
-                  customStyles={{
-                    dateInput: {
-                      borderWidth: 0,
-                      marginLeft: '10%',
-                      alignItems: 'flex-start',
-                    },
-                  }}
-                  onDateChange={(date) => {
-                    setDob(date);
-                  }}
-                />
-              </View>
-              {/* Gender */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: '#e6e6e6',
-                }}>
-                <Icon name="people-alt" size={20} color={theme.$primaryColor} />
-                <Picker
-                  selectedValue={gender}
-                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setGender(itemValue)
-                  }>
-                  <Picker.Item label="Female" value="female" />
-                  <Picker.Item label="Male" value="male" />
-                  <Picker.Item label="Transgender" value="transgender" />
-                </Picker>
-              </View>
-              {/* 
+                  }}>
+                  <DatePicker
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: 10,
+                      width: '80%',
+                      paddingVertical: 5,
+                      borderColor: '#e6e6e6',
+                    }}
+                    date={dob}
+                    mode="date"
+                    placeholder="DOB"
+                    format="YYYY-MM-DD"
+                    // minDate="01-01-2016"
+                    // maxDate="01-01-2019"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    iconComponent={
+                      <Icon
+                        name="date-range"
+                        size={23}
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: 8,
+                          color: '#fd9242',
+                        }}
+                      />
+                    }
+                    customStyles={{
+                      dateInput: {
+                        borderWidth: 0,
+                        marginLeft: '10%',
+                        alignItems: 'flex-start',
+                      },
+                    }}
+                    onDateChange={(date) => {
+                      setDob(date);
+                    }}
+                  />
+                </View>
+                {/* Gender */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: '#e6e6e6',
+                  }}>
+                  <Icon name="people-alt" size={20} color={theme.$primaryColor} />
+                  <Picker
+                    selectedValue={gender}
+                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setGender(itemValue)
+                    }>
+                    <Picker.Item label="Female" value="female" />
+                    <Picker.Item label="Male" value="male" />
+                    <Picker.Item label="Transgender" value="transgender" />
+                  </Picker>
+                </View>
+                {/* 
               Email address
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.email ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'Email address'}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                />
-              </View>
-              {/*
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.email ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'Email address'}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                  />
+                </View>
+                {/*
               Phone number 
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.phone ? 'red' : '#e6e6e6',
-                }}>
-                <Icon
-                  name="phone-android"
-                  size={20}
-                  color={theme.$primaryColor}
-                />
-                <TextInput
-                  style={styles.inputField}
-                  placeholder={'Phone'}
-                  onChangeText={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  value={values.phone}
-                />
-              </View>
-
-              {/* Country */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: '#e6e6e6',
-                }}>
-                <Icon
-                  name="location-pin"
-                  size={20}
-                  color={theme.$primaryColor}
-                />
-                <Picker
-                  selectedValue={country}
-                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setCountry(itemValue)
-                  }>
-                  {countries.map((c) => (
-                    <Picker.Item label={c.label} value={c.value} />
-                  ))}
-                </Picker>
-              </View>
-
-              {/* State City */}
-              <View
-                style={{
-                  flex: 1,
-                  width: '95%',
-                  alignSelf: 'center',
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                }}>
                 <View
                   style={{
-                    flex: 1,
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
+                    borderColor: errors.phone ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon
+                    name="phone-android"
+                    size={20}
+                    color={theme.$primaryColor}
+                  />
+                  <TextInput
+                    style={styles.inputField}
+                    placeholder={'Phone'}
+                    onChangeText={handleChange('phone')}
+                    onBlur={handleBlur('phone')}
+                    value={values.phone}
+                  />
+                </View>
+
+                {/* Country */}
+                <View
+                  style={{
+                    alignSelf: 'center',
                     borderWidth: 1,
-                    borderColor: '#e6e6e6',
-                    borderRadius: 8,
-                    marginHorizontal: 8,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
                     marginTop: 12,
-                    paddingHorizontal: 8,
-                    borderColor: errors.state ? 'red' : '#e6e6e6',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: '#e6e6e6',
                   }}>
                   <Icon
                     name="location-pin"
                     size={20}
                     color={theme.$primaryColor}
                   />
-                  <TextInput
-                    style={styles.inputField}
-                    placeholder={'State'}
-                    onChangeText={handleChange('state')}
-                    onBlur={handleBlur('state')}
-                    value={values.state}
-                  />
+                  <Picker
+                    selectedValue={country}
+                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setCountry(itemValue)
+                    }>
+                    {countries.map((c) => (
+                      <Picker.Item label={c.label} value={c.value} />
+                    ))}
+                  </Picker>
                 </View>
+
+                {/* State City */}
                 <View
                   style={{
                     flex: 1,
+                    width: '95%',
+                    alignSelf: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      borderColor: '#e6e6e6',
+                      borderRadius: 8,
+                      marginHorizontal: 8,
+                      marginTop: 12,
+                      paddingHorizontal: 8,
+                      borderColor: errors.state ? 'red' : '#e6e6e6',
+                    }}>
+                    <Icon
+                      name="location-pin"
+                      size={20}
+                      color={theme.$primaryColor}
+                    />
+                    <TextInput
+                      style={styles.inputField}
+                      placeholder={'State'}
+                      onChangeText={handleChange('state')}
+                      onBlur={handleBlur('state')}
+                      value={values.state}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      borderColor: '#e6e6e6',
+                      borderRadius: 8,
+                      marginHorizontal: 8,
+                      marginTop: 12,
+                      paddingHorizontal: 8,
+                      borderColor: errors.place ? 'red' : '#e6e6e6',
+                    }}>
+                    <Icon
+                      name="location-pin"
+                      size={20}
+                      color={theme.$primaryColor}
+                    />
+                    <TextInput
+                      style={styles.inputField}
+                      placeholder={'City'}
+                      onChangeText={handleChange('place')}
+                      onBlur={handleBlur('place')}
+                      value={values.place}
+                    />
+                  </View>
+                </View>
+
+                {/* Higher education */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderWidth: 1,
-                    borderColor: '#e6e6e6',
-                    borderRadius: 8,
-                    marginHorizontal: 8,
-                    marginTop: 12,
-                    paddingHorizontal: 8,
-                    borderColor: errors.place ? 'red' : '#e6e6e6',
+                    borderColor: errors.education ? 'red' : '#e6e6e6',
                   }}>
-                  <Icon
-                    name="location-pin"
-                    size={20}
-                    color={theme.$primaryColor}
-                  />
+                  <Icon name="book" size={20} color={theme.$primaryColor} />
                   <TextInput
                     style={styles.inputField}
-                    placeholder={'City'}
-                    onChangeText={handleChange('place')}
-                    onBlur={handleBlur('place')}
-                    value={values.place}
+                    placeholder={'Higher Education'}
+                    onChangeText={handleChange('education')}
+                    onBlur={handleBlur('education')}
+                    value={values.education}
                   />
                 </View>
-              </View>
 
-              {/* Higher education */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.education ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="book" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  style={styles.inputField}
-                  placeholder={'Higher Education'}
-                  onChangeText={handleChange('education')}
-                  onBlur={handleBlur('education')}
-                  value={values.education}
-                />
-              </View>
+                {/* Languages */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                  }}>
+                  <SectionedMultiSelect
+                    items={languages}
+                    IconRenderer={Icon}
+                    uniqueKey="id"
+                    subKey="children"
+                    selectText="Languages known"
+                    showDropDowns={true}
+                    readOnlyHeadings={true}
+                    onSelectedItemsChange={onSelectedItemsChange}
+                    selectedItems={selectedItems}
+                    style={{ padding: 0 }}
+                  />
+                </View>
 
-              {/* Languages */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                }}>
-                <SectionedMultiSelect
-                  items={languages}
-                  IconRenderer={Icon}
-                  uniqueKey="id"
-                  subKey="children"
-                  selectText="Languages known"
-                  showDropDowns={true}
-                  readOnlyHeadings={true}
-                  onSelectedItemsChange={onSelectedItemsChange}
-                  selectedItems={selectedItems}
-                  style={{padding: 0}}
-                />
-              </View>
-
-              {/*
+                {/*
               About user 
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.bio ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="info" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'default'}
-                  multiline
-                  numberOfLines={4}
-                  style={styles.inputField}
-                  placeholder={'About yourself'}
-                  onChangeText={handleChange('bio')}
-                  onBlur={handleBlur('bio')}
-                  value={values.bio}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate('PasswordRecovery')
-                }></TouchableOpacity>
-              {!isSubmitting && (
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.bio ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="info" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'default'}
+                    multiline
+                    numberOfLines={4}
+                    style={styles.inputField}
+                    placeholder={'About yourself'}
+                    onChangeText={handleChange('bio')}
+                    onBlur={handleBlur('bio')}
+                    value={values.bio}
+                  />
+                </View>
                 <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.loginBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.loginBtnText}>SAVE</Text>
-                </TouchableOpacity>
-              )}
-              {isSubmitting && (
-                <ActivityIndicator size={'large'} color={theme.$primaryColor} />
-              )}
-            </>
-          )}
+                  onPress={() =>
+                    props.navigation.navigate('PasswordRecovery')
+                  }></TouchableOpacity>
+                {!isSubmitting && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.loginBtn}
+                    onPress={handleSubmit}>
+                    <Text style={styles.loginBtnText}>SAVE</Text>
+                  </TouchableOpacity>
+                )}
+                {isSubmitting && (
+                  <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+                )}
+              </>
+            )}
         </Formik>
       </ScrollView>
     </View>
