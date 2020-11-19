@@ -31,12 +31,12 @@ const PosterGridItem = (props) => {
             })
           }
           activeOpacity={0.7}>
-          <View style={styles.container}>
+          <View style={styles.posterContainer}>
             <Image
               style={{
                 width: '100%',
                 height: 200,
-                borderRadius: 10,
+                borderRadius: 3,
               }}
               resizeMode={'cover'}
               source={{
@@ -46,8 +46,8 @@ const PosterGridItem = (props) => {
             <View style={styles.owner}>
               <Image
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 25,
+                  height: 25,
                   borderRadius: 100,
                 }}
                 source={{
@@ -87,17 +87,19 @@ const PosterGridItem = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 8,
+    backgroundColor: 'white',
   },
   gridItem: {
     flex: 1,
-    width: '95%',
+    width: '100%',
     alignSelf: 'center',
-    borderRadius: 8,
+    borderRadius: 3,
     marginVertical: 10,
-    paddingBottom: 20,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#e6e6e6',
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 6},
+    shadowOpacity: 0.26,
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',
@@ -106,13 +108,20 @@ const styles = StyleSheet.create({
   owner: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     marginTop: 10,
     marginLeft: 15,
   },
   ownerDetails: {
     flexDirection: 'column',
     justifyContent: 'center',
-    marginLeft: 15,
+    marginLeft: 10,
+  },
+  posterContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingBottom: 15,
   },
   title: {
     alignSelf: 'flex-start',

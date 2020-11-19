@@ -1,9 +1,9 @@
 import React from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
-import { useAuth } from './src/context/authHook';
-import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux'
-import { AuthContext } from './src/context/authContext';
+import {useAuth} from './src/context/authHook';
+import {Provider} from 'react-redux';
+import {createStore, combineReducers} from 'redux';
+import {AuthContext} from './src/context/authContext';
 
 // const rootReducer = combineReducers({
 //   posters: posterReducer
@@ -11,10 +11,8 @@ import { AuthContext } from './src/context/authContext';
 
 // const store = createStore(rootReducer)
 
-
 const App = () => {
-  const { token, login, logout, userId, role, name, rating, avatar } = useAuth();
-  console.log("Login status: ", token);
+  const {token, userId, login, logout} = useAuth();
   return (
     <AuthContext.Provider
       value={{
@@ -22,12 +20,11 @@ const App = () => {
         token: token,
         userId: userId,
         login: login,
-        logout: logout
-      }}
-    >
+        logout: logout,
+      }}>
       <AppNavigator />
     </AuthContext.Provider>
-  )
+  );
 };
 
 export default App;

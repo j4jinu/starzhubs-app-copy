@@ -139,9 +139,10 @@ const profileSchema = yup.object({
   education: yup.string().required('Enter your Higher education'),
 });
 
-const EditProfileScreen = () => {
+const EditProfileScreen = (props) => {
   const auth = React.useContext(AuthContext);
   const [image, setImage] = useState('');
+  const type = props.navigation.getParam('type');
 
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
@@ -200,7 +201,11 @@ const EditProfileScreen = () => {
     if (!resData.success) {
       return alert(resData.message);
     }
-    alert(resData.message);
+    type === 'edit'
+      ? alert(resData.message)
+      : props.navigation.navigate('AddTalents', {
+          type: 'signup',
+        });
   };
 
   const requestCameraPermission = async () => {

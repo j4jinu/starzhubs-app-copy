@@ -124,7 +124,7 @@ const SignupScreen = (props) => {
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
-                  marginTop: 8,
+                  marginTop: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderColor: errors.email ? 'red' : 'gray',
@@ -153,7 +153,7 @@ const SignupScreen = (props) => {
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
-                  marginTop: 8,
+                  marginTop: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderColor: errors.phone ? 'red' : 'gray',
@@ -181,7 +181,7 @@ const SignupScreen = (props) => {
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
-                  marginTop: 8,
+                  marginTop: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderColor: errors.password ? 'red' : 'gray',
@@ -209,7 +209,7 @@ const SignupScreen = (props) => {
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
-                  marginTop: 8,
+                  marginTop: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderColor: errors.confPassword ? 'red' : 'gray',
@@ -247,6 +247,18 @@ const SignupScreen = (props) => {
             </>
           )}
         </Formik>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 20,
+          }}>
+          <Text>Already have an account?</Text>
+          <Text
+            style={{fontSize: 17, marginTop: 8, color: theme.$primaryColor}}>
+            Goto Login
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
@@ -292,7 +304,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 8,
+    marginVertical: 12,
   },
   registerBtnText: {
     fontSize: 18,
