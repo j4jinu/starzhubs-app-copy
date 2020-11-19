@@ -70,7 +70,7 @@ const PhotoUploadScreen = (props) => {
       maxHeight: 500,
       quality: 0.2
     };
-    ImagePicker.launchImageLibrary(options, (response) => {
+    ImagePicker.showImagePicker(options, (response) => {
       //console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -95,6 +95,7 @@ const PhotoUploadScreen = (props) => {
       setSubmitting(false);
       return;
     }
+    console.log("imgstate",image);
     const image_uri = image;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     console.log("Type:", fileType);
@@ -102,7 +103,7 @@ const PhotoUploadScreen = (props) => {
     formData.append('talentId', talentId);
     formData.append('description', values.description);
     formData.append('caption', values.caption);
-    formData.append('media', {
+    rmData.append('media', {
       image_uri,
       name: `photo.${fileType}`,
       type: `image/${fileType}`,
@@ -115,6 +116,7 @@ const PhotoUploadScreen = (props) => {
       },
       body: formData,
     };
+    console.log("form data",formData);
     try {
       const uploadRes = await fetch(
         `http://13.232.190.226/api/talent/upload/media`,

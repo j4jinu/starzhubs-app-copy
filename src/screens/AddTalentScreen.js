@@ -454,7 +454,6 @@ export default function AddTalentScreen(props) {
                     size={20}
                     style={{
                       color: '#fd9242',
-                      marginTop: '2%',
                     }}
                   />
                   <Picker
@@ -534,13 +533,13 @@ export default function AddTalentScreen(props) {
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
-                  marginTop: 8,
+                  marginTop: '6%',
                   flexDirection: 'row',
                   alignItems: 'center',
                   borderColor: errors.link ? 'red' : 'gray',
                 }}>
-                  <View style={{ width: '10%', marginTop: '6%' }}>
-                    <Gicon name="industry" size={15} style={{ color: '#fd9242' }} />
+                  <View style={{ width: '10%', }}>
+                    <Gicon name="industry" size={15} style={{ color: '#fd9242', marginTop:-10 }} />
                   </View>
 
                   <View style={{ width: '90%', justifyContent: 'center' }}>
@@ -763,7 +762,7 @@ export default function AddTalentScreen(props) {
                       <Picker
                         selectedValue={bodyTypeValue}
                         style={{
-                          height: 20,
+                          height: 50,
                           width: '100%',
                         }}
                         onValueChange={(itemValue, itemIndex) => {
@@ -784,7 +783,7 @@ export default function AddTalentScreen(props) {
                       <Picker
                         selectedValue={complexionValue}
                         style={{
-                          height: 30,
+                          height: 50,
                           width: '100%',
                         }}
                         onValueChange={(itemValue, itemIndex) => {
@@ -828,8 +827,9 @@ export default function AddTalentScreen(props) {
                   </Fragment>
                 )}
 
-                <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
-                  <Text style={styles.loginText}>
+
+                <TouchableOpacity style={styles.registerBtn} onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>
                     {loading ? (
                       <ActivityIndicator size="small" color="#fff" />
                     ) : (
@@ -908,6 +908,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginLeft: 15,
     marginBottom: 5,
+    marginTop:5
   },
   forgot: {
     color: 'white',
@@ -929,4 +930,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
+  registerBtn: {
+    alignSelf: 'center',
+    width: '90%',
+    backgroundColor: theme.$primaryColor,
+    padding: 5,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: '5%',
+  },
+  registerBtnText: {
+    fontSize: 18,
+    marginVertical: 5,
+    color: 'white',
+    fontFamily: 'montserrat-medium',
+    textTransform: 'uppercase',
+  },
+
 });
