@@ -113,6 +113,7 @@ const EditPosterScreen = (props) => {
         },
       );
   };
+
   const handleStartDate = (date) => {
     setSDate(date);
     if (date === '') {
@@ -122,6 +123,7 @@ const EditPosterScreen = (props) => {
       setIsStartDate(false);
     }
   };
+
   const handleEndDate = (date) => {
     setEDate(date);
     if (date === '') {

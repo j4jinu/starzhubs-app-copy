@@ -171,19 +171,23 @@ const FeedbackScreen = ({ navigation }) => {
                             isValid,
                         }) => (
                                 <>
-                                    <View style={styles.inputView}>
+                                    <View style={{
+                                        alignSelf: 'center',
+                                        borderWidth: 1,
+                                        borderRadius: 10,
+                                        width: '100%',
+                                        paddingLeft: 8,
+                                        paddingRight: 8,
+                                        marginTop: 12,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        borderColor: errors.name ? 'red' : '#e6e6e6',
+                                    }}>
                                         <Icon name="ios-person"
-                                            size={18}
-                                            color={theme.$primaryColor}
-                                            style={{
-
-                                                //marginTop: 11,
-                                                marginLeft:
-                                                    '3%',
-                                            }}
+                                            size={20} color={theme.$primaryColor}
                                         />
                                         <TextInput name="name"
-                                            style={styles.inputText}
+                                            style={styles.inputField}
                                             placeholder="Name"
                                             placeholderTextColor="#B1A9A4"
                                             onChangeText={handleChange('name')}
@@ -191,15 +195,20 @@ const FeedbackScreen = ({ navigation }) => {
                                             value={values.name} />
                                     </View>
                                     {errors.name && (<Text style={{ fontSize: 10, color: 'red' }}>{errors.name}</Text>)}
-                                    <View style={styles.inputView}>
-                                        <EIcon name="email" size={18}
-                                            color={theme.$primaryColor}
-                                            style={{
-
-                                                // marginTop: 11,
-                                                marginLeft: '3%',
-                                            }} />
-                                        <TextInput name="email" style={styles.inputText}
+                                    <View style={{
+                                        alignSelf: 'center',
+                                        borderWidth: 1,
+                                        borderRadius: 10,
+                                        width: '100%',
+                                        paddingLeft: 8,
+                                        paddingRight: 8,
+                                        marginTop: 12,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        borderColor: errors.email ? 'red' : '#e6e6e6',
+                                    }}>
+                                        <EIcon name="email" size={20} color={theme.$primaryColor} />
+                                        <TextInput name="email" style={styles.inputField}
                                             placeholder="Email"
                                             placeholderTextColor="#B1A9A4"
                                             onChangeText={handleChange('email')}
@@ -207,15 +216,20 @@ const FeedbackScreen = ({ navigation }) => {
                                             value={values.email}
                                             keyboardType="email-address" />
                                     </View>{errors.email && (<Text style={{ fontSize: 10, color: 'red' }}>{errors.email}</Text>)}
-                                    <View style={styles.inputView}>
+                                    <View style={{
+                                        alignSelf: 'center',
+                                        borderWidth: 1,
+                                        borderRadius: 10,
+                                        width: '100%',
+                                        paddingLeft: 8,
+                                        paddingRight: 8,
+                                        marginTop: 12,
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        borderColor: errors.message ? 'red' : '#e6e6e6',
+                                    }}>
                                         <MIcon name="message"
-                                            size={18}
-                                            color={theme.$primaryColor}
-                                            style={{
-
-                                                // marginTop: 20,
-                                                marginLeft: '3%',
-                                            }} />
+                                            size={20} color={theme.$primaryColor} />
                                         <TextInput name="message" style={styles.inputText1}
                                             placeholder="Message"
                                             numberOfLines={4}
@@ -249,30 +263,14 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 10,
     },
-
-    inputView: {
-        alignSelf: 'center',
-        borderColor: '#e6e6e6',
-        borderWidth: 1,
-        borderRadius: 10,
-        width: '90%',
-        marginVertical: 8,
-        paddingLeft: 8,
-        paddingRight: 8,
-        flexDirection: 'row',
-        alignItems: 'center',
-        shadowColor: "#000",
-    },
-
-
-    inputText: {
+    inputField: {
         alignSelf: 'center',
         width: '90%',
         textTransform: 'lowercase',
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 8,
-        fontFamily: 'montserrat-regular'
+        fontFamily: 'montserrat-regular',
     },
     inputText1: {
         alignSelf: 'center',

@@ -446,7 +446,7 @@ export default function AddTalentScreen(props) {
                   marginTop: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginBottom: 5,
+                  // marginBottom: 5,
                   borderColor: errors.link ? 'red' : 'gray',
                 }}>
                   <Cicon
@@ -460,7 +460,7 @@ export default function AddTalentScreen(props) {
                   <Picker
                     selectedValue={selectedValue}
                     style={{
-                      height: 20,
+                      height: 50,
                       width: '100%',
                     }}
                     onValueChange={(itemValue, itemIndex) => {
@@ -489,39 +489,29 @@ export default function AddTalentScreen(props) {
                     alignItems: 'center',
                     borderColor: errors.link ? 'red' : 'gray',
                     flexDirection: 'column',
-
-
-
+                    alignItems: 'flex-start',
+                    paddingLeft: '5%'
                   }}>
-                  <Text
-                    style={{
-                      marginLeft: '5%',
-                    }}>
-                    Select Confidence Level
-              </Text>
+                  <Text>Select Confidence Level</Text>
 
                   <AirbnbRating
-                    count={11}
                     reviews={[
-                      'Terrible',
-                      'Bad',
-                      'Meh',
-                      'OK',
+                      'Beginner',
+                      'Average',
                       'Good',
-                      'Hmm...',
-                      'Very Good',
-                      'Wow',
-                      'Amazing',
-                      'Unbelievable',
-                      'Jesus',
+                      'Excellent',
+                      'Experienced',
+
                     ]}
-                    ratingColor={theme.$primaryColor}
-                    ratingBackgroundColor={theme.$primaryColor}
-                    defaultRating={11}
+                    defaultRating={5}
                     size={20}
+                    count={5}
+                    showRating={false}
+                    onFinishRating={handleLevelChange}
+                    selectedColor={theme.$primaryColor}
                   />
 
-                  <Rating
+                  {/* <Rating
                     type="custom"
                     startingValue={level}
                     //tintColor="#f5f5f5"
@@ -534,17 +524,9 @@ export default function AddTalentScreen(props) {
                       marginTop: '1%',
                       marginBottom: '-3%',
                     }}
-                  />
-                  <Text
-                    style={{
-                      marginLeft: '5%',
-                      marginTop: '3%',
-                      fontSize: 12,
-                      color: 'grey',
-                    }}>
-                    Swipe left or right
-              </Text>
+                  /> */}
                 </View>
+                <Text style={styles.error}>{errors.talentId}</Text>
 
                 <View style={{
                   alignSelf: 'center',

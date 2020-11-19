@@ -1,6 +1,6 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -40,12 +40,13 @@ import HomeScreenSingle from '../screens/HomeScreenSingle';
 import PhotoUploadScreen from '../screens/PhotoUploadScreen';
 import VideoUploadScreen from '../screens/VideoUploadScreen.js';
 import FilterResultScreen from '../screens/FilterResultScreen';
+import PosterRequestScreen from '../screens/PosterRequestScreen';
 
 const HomeNavigator = createStackNavigator(
   {
     Portfolio: {
       screen: HomeScreenSingle,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         title: 'Explore',
         headerTitleStyle: {
           fontWeight: '100',
@@ -53,7 +54,7 @@ const HomeNavigator = createStackNavigator(
         },
         headerRight: () => (
           <MaterialIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="search"
             onPress={() => navigation.navigate('Filter')}
@@ -97,10 +98,10 @@ const UserNavigator = createStackNavigator(
   {
     Users: {
       screen: PortfolioListScreen,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         headerRight: () => (
           <MaterialCommunityIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="filter-outline"
             onPress={() => navigation.navigate('Filter')}
@@ -130,6 +131,9 @@ const PosterNavigator = createStackNavigator(
     Posters: PosterListScreen,
     PosterDetails: {
       screen: PosterDetailsScreen,
+    },
+    PosterRequest: {
+      screen: PosterRequestScreen,
     },
     EditPoster: {
       screen: EditPosterScreen,
@@ -331,9 +335,9 @@ const MainNavigator = createBottomTabNavigator(
     Profile: AccountNavigator,
   },
   {
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({focused, horizontal, tintColor}) => {
-        const {routeName} = navigation.state;
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {

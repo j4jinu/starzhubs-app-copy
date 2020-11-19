@@ -185,19 +185,12 @@ const MyMediaScreen = (props) => {
                 </TouchableOpacity>
               </View>
             </View>
+
+            <View style={{flex:1,flexDirection:'row',flexWrap:'wrap'}}>
             {t.media.map((m) => (
               <>
                 <View style={styles.gridItem}>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() =>
-                      props.navigation.navigate('MediaDetails', {
-                        mediaFile: m.file,
-                        mediaType: m.fileType,
-                        caption: m.caption,
-                        description: m.description,
-                      })
-                    }>
+                  
                     {m.fileType === 'image' ? (
                       <Image
                         style={{
@@ -210,6 +203,14 @@ const MyMediaScreen = (props) => {
                         }}
                       />
                     ) : (
+                    //   <WebView
+                    //   javaScriptEnabled={true}
+                    //   domStorageEnabled={true}
+                    //   source={{
+                    //     uri:  m.file,
+                    //   }}
+                    // />
+
                       <WebView
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
@@ -220,13 +221,24 @@ const MyMediaScreen = (props) => {
                         }}
                       />
                     )}
-                  </TouchableOpacity>
+                    
                   <View style={{flexDirection: 'row', width: '100%'}}>
                     <View style={{width: '80%', flexDirection: 'column'}}>
+                    <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() =>
+                      props.navigation.navigate('MediaDetails', {
+                        mediaFile: m.file,
+                        mediaType: m.fileType,
+                        caption: m.caption,
+                        description: m.description,
+                      })
+                    }>
                       <Text style={styles.mediaTitle}>{m.caption}</Text>
                       <Text style={styles.mediaDescription} numberOfLines={3}>
                         {m.description}
                       </Text>
+                      </TouchableOpacity>
                     </View>
                     <TouchableOpacity
                       onPress={() => confirmDelete(t._id, m._id)}
@@ -246,6 +258,7 @@ const MyMediaScreen = (props) => {
                 </View>
               </>
             ))}
+            </View>
           </>
         ))}
       </ScrollView>
@@ -260,9 +273,9 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
   },
   gridItem: {
-    flex: 1,
+    // flex: 1,
     alignSelf: 'center',
-    width: '95%',
+    width: '98%',
     height: 300,
     backgroundColor: '#f1f1f1',
     marginHorizontal: 3,
