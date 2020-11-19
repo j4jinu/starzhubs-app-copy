@@ -36,7 +36,7 @@ const PosterGridItem = (props) => {
               style={{
                 width: '100%',
                 height: 200,
-                borderRadius: 10,
+                borderRadius: 8,
               }}
               resizeMode={'cover'}
               source={{
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingBottom: 20,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#e6e6e6',
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',
