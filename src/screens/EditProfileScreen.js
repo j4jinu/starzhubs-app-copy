@@ -20,6 +20,7 @@ import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {Snackbar} from 'react-native-paper';
 
 const languages = [
   {
@@ -129,16 +130,6 @@ const countries = [
   {label: 'UK', value: 'uk'},
 ];
 
-const profileSchema = yup.object({
-  name: yup.string().required('Enter your name'),
-  bio: yup.string().required('Please fill this field'),
-  phone: yup.string().required('Enter phone number'),
-  email: yup.string().required('Enter email address'),
-  state: yup.string().required('Enter state of residence'),
-  place: yup.string().required('Enter your city'),
-  education: yup.string().required('Enter your Higher education'),
-});
-
 const EditProfileScreen = (props) => {
   const auth = React.useContext(AuthContext);
   const [image, setImage] = useState('');
@@ -147,12 +138,40 @@ const EditProfileScreen = (props) => {
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
   const [gender, setGender] = useState('Male');
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState();
   const [userInfo, setUserInfo] = useState({
     image: {},
     location: {},
   });
+  const [visible, setVisible] = useState(false);
+  const [msg, setMsg] = useState('');
 
+
+  const initialProfileValues = {
+    name: userInfo.name,
+    email: userInfo.email,
+    bio: userInfo.bio || '',
+    phone: userInfo.phone || '',
+    dob: '',
+    country:userInfo.location !== undefined? userInfo.location.country: 'India',
+    state: userInfo.location !== undefined ? userInfo.location.state : '',
+    place: userInfo.location !== undefined ? userInfo.location.place : '',
+    education: userInfo.education || '',
+    gender: userInfo.gender || '',
+  }
+
+  const profileSchema = yup.object({
+    name: yup.string().required('Enter your name'),
+    bio: yup.string().required('Please fill this field'),
+    phone: yup.string().required('Enter phone number'),
+    email: yup.string().required('Enter email address'),
+    state: yup.string().required('Enter state of residence'),
+    place: yup.string().required('Enter your city'),
+    education: yup.string().required('Enter your Higher education'),
+    gender: yup.string().required('Select Gender'),
+    country: yup.string().required('Country is Required'),
+  });
+    
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
@@ -166,9 +185,12 @@ const EditProfileScreen = (props) => {
       );
       const userData = await userResponse.json();
       if (!userData.success) {
-        return alert(userData.message);
+        setMsg("Something went wrong. Try again!")
+        setVisible(!visible);
       }
       setUserInfo(userData.data.user);
+      setDob(userData.data.user.dob)
+      // setSelectedItems(userData.data.user.languages)
     };
     getUserDetails();
   }, []);
@@ -179,6 +201,7 @@ const EditProfileScreen = (props) => {
   };
 
   const saveUserInfo = async (values, {setSubmitting}) => {
+    console.log("user info",values);
     if (dob === '') {
       alert('Please enter your Date of Birth');
       setSubmitting(false);
@@ -201,11 +224,8 @@ const EditProfileScreen = (props) => {
     if (!resData.success) {
       return alert(resData.message);
     }
-    type === 'edit'
-      ? alert(resData.message)
-      : props.navigation.navigate('AddTalents', {
-          type: 'signup',
-        });
+    setMsg("User details updated successfully")
+    setVisible(!visible);
   };
 
   const requestCameraPermission = async () => {
@@ -297,20 +317,29 @@ const EditProfileScreen = (props) => {
       );
       const uploadResData = await uploadRes.json();
       if (!uploadResData.success) {
-        alert(uploadResData.message);
+        setMsg("Something went wrong. Try again!")
+        setVisible(!visible);
         return;
       }
-      alert(uploadResData.message);
-      setImage(null);
+      setMsg("Profile image uploaded successfully")
+      setVisible(!visible);
+    
     } catch (error) {
       console.error('error', error);
     }
   };
 
+  const onDismissSnackBar = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+        {msg}
+      </Snackbar>
       <ScrollView>
-        {userInfo.image !== undefined && (
+        {userInfo.image !== undefined && image ==='' && (
           <Image
             style={{
               height: 180,
@@ -326,6 +355,22 @@ const EditProfileScreen = (props) => {
             }}
           />
         )}
+        {image !=='' && (
+          <Image
+            style={{
+              height: 180,
+              width: 180,
+              borderRadius: 100,
+              marginBottom: 20,
+              marginTop: 15,
+              alignSelf: 'center',
+              backgroundColor: 'gray',
+            }}
+            source={{
+              uri: image,
+            }}
+          />
+        )}
         {userInfo.image === undefined && <Icon />}
         <TouchableOpacity
           activeOpacity={0.7}
@@ -338,15 +383,8 @@ const EditProfileScreen = (props) => {
           <Icon name="photo-camera" size={35} color={theme.$primaryColor} />
         </TouchableOpacity>
         <Formik
-          initialValues={{
-            name: userInfo.name,
-            email: userInfo.email,
-            bio: userInfo.bio,
-            dob: '',
-            country: country,
-            state: '',
-            place: '',
-          }}
+          enableReinitialize={true}
+          initialValues={initialProfileValues}
           validationSchema={profileSchema}
           onSubmit={(values, {setSubmitting}) =>
             saveUserInfo(values, {setSubmitting})
@@ -385,7 +423,7 @@ const EditProfileScreen = (props) => {
                   placeholder={'Full name'}
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
-                  value={values.name}
+                  defaultValue={initialProfileValues.name}
                 />
               </View>
               {/* 
@@ -494,7 +532,7 @@ const EditProfileScreen = (props) => {
                   placeholder={'Email address'}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
-                  value={values.email}
+                  defaultValue={initialProfileValues.email}
                 />
               </View>
               {/*
@@ -520,10 +558,11 @@ const EditProfileScreen = (props) => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  keyboardType="numeric"
                   placeholder={'Phone'}
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
-                  value={values.phone}
+                  defaultValue={initialProfileValues.phone}
                 />
               </View>
 
@@ -590,7 +629,7 @@ const EditProfileScreen = (props) => {
                     placeholder={'State'}
                     onChangeText={handleChange('state')}
                     onBlur={handleBlur('state')}
-                    value={values.state}
+                    defaultValue={initialProfileValues.state}
                   />
                 </View>
                 <View
@@ -616,7 +655,7 @@ const EditProfileScreen = (props) => {
                     placeholder={'City'}
                     onChangeText={handleChange('place')}
                     onBlur={handleBlur('place')}
-                    value={values.place}
+                    defaultValue={initialProfileValues.place}
                   />
                 </View>
               </View>
@@ -641,7 +680,7 @@ const EditProfileScreen = (props) => {
                   placeholder={'Higher Education'}
                   onChangeText={handleChange('education')}
                   onBlur={handleBlur('education')}
-                  value={values.education}
+                  defaultValue={initialProfileValues.education}
                 />
               </View>
 
@@ -694,7 +733,7 @@ const EditProfileScreen = (props) => {
                   placeholder={'About yourself'}
                   onChangeText={handleChange('bio')}
                   onBlur={handleBlur('bio')}
-                  value={values.bio}
+                  defaultValue={initialProfileValues.bio}
                 />
               </View>
               <TouchableOpacity
@@ -762,7 +801,7 @@ const styles = StyleSheet.create({
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    textTransform: 'lowercase',
+    // textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 8,

@@ -173,7 +173,7 @@ const CreatePosterScreen = (props, {navigation}) => {
         setIsImage(true);
       } else {
         setIsImage(false);
-        setImage(response.data);
+        setImage(response.uri);
       }
     });
   };

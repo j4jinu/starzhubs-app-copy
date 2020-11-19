@@ -198,7 +198,7 @@ const FeedbackScreen = ({ navigation }) => {
                     />
                     <TextInput
                       name="name"
-                      style={styles.inputText}
+                      style={styles.inputField}
                       placeholder="Name"
                       placeholderTextColor="#B1A9A4"
                       onChangeText={handleChange('name')}
@@ -207,7 +207,10 @@ const FeedbackScreen = ({ navigation }) => {
                     />
                   </View>
                   {errors.name && (
-                    <Text style={{ fontSize: 10, color: 'red' }}>
+                    <Text style={{
+                      marginHorizontal: '8%',
+                      color: 'red',
+                    }}>
                       {errors.name}
                     </Text>
                   )}
@@ -234,7 +237,7 @@ const FeedbackScreen = ({ navigation }) => {
                     />
                     <TextInput
                       name="email"
-                      style={styles.inputText}
+                      style={styles.inputField}
                       placeholder="Email"
                       placeholderTextColor="#B1A9A4"
                       onChangeText={handleChange('email')}
@@ -244,7 +247,10 @@ const FeedbackScreen = ({ navigation }) => {
                     />
                   </View>
                   {errors.email && (
-                    <Text style={{ fontSize: 10, color: 'red' }}>
+                    <Text style={{
+                      marginHorizontal: '8%',
+                      color: 'red',
+                    }}>
                       {errors.email}
                     </Text>
                   )}
@@ -271,7 +277,7 @@ const FeedbackScreen = ({ navigation }) => {
                     />
                     <TextInput
                       name="message"
-                      style={styles.inputText1}
+                      style={styles.inputField}
                       placeholder="Message"
                       numberOfLines={4}
                       multiline={true}
@@ -283,7 +289,10 @@ const FeedbackScreen = ({ navigation }) => {
                     />
                   </View>
                   {errors.message && (
-                    <Text style={{ fontSize: 10, color: 'red' }}>
+                    <Text style={{
+                      marginHorizontal: '8%',
+                      color: 'red',
+                    }}>
                       {errors.message}
                     </Text>
                   )}
@@ -315,18 +324,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-
-
-  inputText: {
-    alignSelf: 'center',
-    width: '90%',
-    textTransform: 'lowercase',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 8,
-    fontFamily: 'montserrat-regular',
-  },
-  inputText1: {
+  inputField: {
     alignSelf: 'center',
     width: '90%',
     textTransform: 'lowercase',

@@ -95,6 +95,7 @@ const PhotoUploadScreen = (props) => {
       setSubmitting(false);
       return;
     }
+    console.log("imgstate",image);
     const image_uri = image;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     console.log('Type:', fileType);
@@ -115,6 +116,7 @@ const PhotoUploadScreen = (props) => {
       },
       body: formData,
     };
+    console.log("form data",formData);
     try {
       const uploadRes = await fetch(
         `http://13.232.190.226/api/talent/upload/media`,
@@ -127,6 +129,8 @@ const PhotoUploadScreen = (props) => {
       }
       setImage('');
       alert(uploadResData.message);
+      setImage('');
+      props.navigation.goBack();
     } catch (error) {
       console.error('error', error);
     }
