@@ -30,7 +30,7 @@ const AccountScreen = (props) => {
         });
         let userData = await response.json();
         setUser(userData.data.user);
-        console.log('user data', userData.data.user);
+        console.log('user data', response.json());
       } catch (error) {}
     };
     getUserDetails();

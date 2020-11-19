@@ -37,6 +37,7 @@ const LoginScreen = (props) => {
     }
     auth.login(loginData.data.userId, loginData.data.token);
     props.navigation.navigate('Home');
+    console.log("logintoken",loginData.data.token);
   };
   return (
     <ScrollView>
