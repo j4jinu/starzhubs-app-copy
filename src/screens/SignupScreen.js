@@ -13,13 +13,42 @@ import * as yup from 'yup';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
-
+const emailRegExp = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[ \t]$/;
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const passRegExp = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
 const profileSchema = yup.object({
   name: yup.string().required('Enter your name'),
   phone: yup.string().required('Enter phone number'),
-  email: yup.string().required('Enter email address'),
-  password: yup.string().required('Enter your password'),
-  confPassword: yup.string().required('Enter your password'),
+  email: yup.string()
+    .matches(emailRegExp, 'Invalid Email Address')
+    .required('Enter Your Email ID'),
+  phone: yup.string()
+    .min(
+      10,
+      ({ min }) =>
+        `Phone Number must be at least ${min} characters`
+    )
+    .max(
+      10,
+      ({ max }) =>
+        `Phone Number should not be  more ${max} characters`
+    )
+    .matches(phoneRegExp, 'Phone number is not valid')
+    .required('Enter Your Phone Number'),
+  password: yup.string()
+    .matches(
+      passRegExp,
+      'Atleast one uppercase one lowercase and  one digit:'
+    )
+    .max(
+      8,
+      ({ max }) =>
+        `Password should not be  more than ${max} `
+    )
+    .required('Enter Password'),
+  confPassword: yup.string().oneOf([yup.ref('newPassword'), null], "Passwords don't match")
+
+    .required("Enter Confirm Password"),
 });
 
 const SignupScreen = (props) => {
@@ -290,7 +319,6 @@ const styles = StyleSheet.create({
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 8,
