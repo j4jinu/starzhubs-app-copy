@@ -175,7 +175,18 @@ const FeedbackScreen = ({ navigation }) => {
               isValid,
             }) => (
                 <>
-                  <View style={styles.inputView}>
+                  <View style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '100%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.name ? 'red' : '#e6e6e6',
+                  }}>
                     <Icon
                       name="ios-person"
                       size={18}
@@ -200,7 +211,18 @@ const FeedbackScreen = ({ navigation }) => {
                       {errors.name}
                     </Text>
                   )}
-                  <View style={styles.inputView}>
+                  <View style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '100%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.email ? 'red' : '#e6e6e6',
+                  }}>
                     <EIcon
                       name="email"
                       size={18}
@@ -226,7 +248,18 @@ const FeedbackScreen = ({ navigation }) => {
                       {errors.email}
                     </Text>
                   )}
-                  <View style={styles.inputView}>
+                  <View style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '100%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.message ? 'red' : '#e6e6e6',
+                  }}>
                     <MIcon
                       name="message"
                       size={18}
@@ -281,26 +314,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 10,
   },
-  inputView: {
-    alignSelf: 'center',
-    borderColor: '#e6e6e6',
-    borderWidth: 1,
-    borderRadius: 10,
-    width: '90%',
-    marginVertical: 8,
-    paddingLeft: 8,
-    paddingRight: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3,
-  },
+
+
 
   inputText: {
     alignSelf: 'center',
