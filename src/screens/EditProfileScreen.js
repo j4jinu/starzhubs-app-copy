@@ -130,9 +130,10 @@ const countries = [
   {label: 'UK', value: 'uk'},
 ];
 
-const EditProfileScreen = () => {
+const EditProfileScreen = (props) => {
   const auth = React.useContext(AuthContext);
   const [image, setImage] = useState('');
+  const type = props.navigation.getParam('type');
 
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
