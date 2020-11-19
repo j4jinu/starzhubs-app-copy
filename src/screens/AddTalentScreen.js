@@ -477,7 +477,6 @@ export default function AddTalentScreen(props) {
 
                 <View
                   style={{
-
                     alignSelf: 'center',
                     borderWidth: 1,
                     borderRadius: 10,
@@ -574,7 +573,6 @@ export default function AddTalentScreen(props) {
                     size={15}
                     style={{
                       color: '#fd9242',
-
                     }}
                   />
                   <TextInput
@@ -595,7 +593,6 @@ export default function AddTalentScreen(props) {
                     size={15}
                     style={{
                       color: '#fd9242',
-
                     }}
                   />
                   <TextInput
@@ -627,7 +624,6 @@ export default function AddTalentScreen(props) {
                     size={15}
                     style={{
                       color: '#fd9242',
-
                     }}
                   />
                   <TextInput

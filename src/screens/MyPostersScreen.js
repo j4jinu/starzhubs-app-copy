@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import {ActivityIndicator} from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import PosterListActive from '../components/PosterListActive';
 import PosterListExpired from '../components/PosterListExpired';
 import PosterListPending from '../components/PosterListPending';
@@ -16,9 +16,9 @@ import UserPosterSection from '../components/UserPosterSection';
 import UserTalentSection from '../components/UserTalentSection';
 import PIcon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
-const MyPostersScreen = (props, {navigation}) => {
+const MyPostersScreen = (props, { navigation }) => {
   const auth = useContext(AuthContext);
   const [content, setContent] = useState('me');
   const [loading, setLoading] = useState(false);
@@ -151,7 +151,7 @@ const MyPostersScreen = (props, {navigation}) => {
         </View>
         {loading && (
           <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <ActivityIndicator size="small" color={theme.$primaryColor} />
           </View>
         )}
