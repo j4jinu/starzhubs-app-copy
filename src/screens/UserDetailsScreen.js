@@ -50,7 +50,7 @@ const UserDetailsScreen = (props) => {
           setUser(response.data.user);
           setTalents(response.data.talents);
           setUserLocation(response.data.user.location);
-          setPosters();
+          setPosters(response.data.posters);
         })
         .catch((error) => {});
     };
@@ -511,7 +511,7 @@ const UserDetailsScreen = (props) => {
             <UserMediaSection talents={talents} navigation={props.navigation} />
           )}
           {content === 'P' && (
-            <UserPosterSection navigation={props.navigation} />
+            <UserPosterSection user={user} posters={posters} navigation={props.navigation} />
           )}
         </View>
 

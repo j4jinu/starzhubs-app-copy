@@ -20,11 +20,19 @@ const PendingConnectionScreen = (props) => {
       .then((response) => {
         setRequests(response.data.requests);
         setUserImages(response.data.requests.fromUser.image);
+        console.log("rqs",response.data.requests)
       })
       .catch((error) => {
         alert(response.message);
       });
   };
+  if(requests===[]){
+    return(
+      <View style={{alignItems:'center', marginTop:'8%'}}>
+        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Requests</Text>
+      </View>
+    )
+  }
   return (
     <FlatList
       style={{backgroundColor: '#efefef'}}
