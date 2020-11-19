@@ -75,6 +75,7 @@ const EditTalentScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const category = props.navigation.getParam('category');
   const industry = props.navigation.getParam('industry');
+  console.log("industry",industry);
   const films = props.navigation.getParam('films');
   const years = props.navigation.getParam('years');
   const description = props.navigation.getParam('description');

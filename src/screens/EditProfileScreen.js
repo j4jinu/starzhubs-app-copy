@@ -20,6 +20,7 @@ import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import {Snackbar} from 'react-native-paper';
 
 const languages = [
   {
@@ -136,11 +137,14 @@ const EditProfileScreen = () => {
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
   const [gender, setGender] = useState('Male');
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState();
   const [userInfo, setUserInfo] = useState({
     image: {},
     location: {},
   });
+  const [visible, setVisible] = useState(false);
+  const [msg, setMsg] = useState('');
+
 
   const initialProfileValues = {
     name: userInfo.name,
@@ -152,6 +156,7 @@ const EditProfileScreen = () => {
     state: userInfo.location !== undefined ? userInfo.location.state : '',
     place: userInfo.location !== undefined ? userInfo.location.place : '',
     education: userInfo.education || '',
+    gender: userInfo.gender || '',
   }
 
   const profileSchema = yup.object({
@@ -164,8 +169,6 @@ const EditProfileScreen = () => {
     education: yup.string().required('Enter your Higher education'),
     gender: yup.string().required('Select Gender'),
     country: yup.string().required('Country is Required'),
-    state: yup.string().required('Enter your state'),
-		place: yup.string().required('Enter place'),
   });
     
   React.useEffect(() => {
@@ -181,7 +184,8 @@ const EditProfileScreen = () => {
       );
       const userData = await userResponse.json();
       if (!userData.success) {
-        return alert(userData.message);
+        setMsg("Something went wrong. Try again!")
+        setVisible(!visible);
       }
       setUserInfo(userData.data.user);
       setDob(userData.data.user.dob)
@@ -219,7 +223,8 @@ const EditProfileScreen = () => {
     if (!resData.success) {
       return alert(resData.message);
     }
-    alert(resData.message);
+    setMsg("User details updated successfully")
+    setVisible(!visible);
   };
 
   const requestCameraPermission = async () => {
@@ -311,20 +316,29 @@ const EditProfileScreen = () => {
       );
       const uploadResData = await uploadRes.json();
       if (!uploadResData.success) {
-        alert(uploadResData.message);
+        setMsg("Something went wrong. Try again!")
+        setVisible(!visible);
         return;
       }
-      alert(uploadResData.message);
-      setImage(null);
+      setMsg("Profile image uploaded successfully")
+      setVisible(!visible);
+    
     } catch (error) {
       console.error('error', error);
     }
   };
 
+  const onDismissSnackBar = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+        {msg}
+      </Snackbar>
       <ScrollView>
-        {userInfo.image !== undefined && (
+        {userInfo.image !== undefined && image ==='' && (
           <Image
             style={{
               height: 180,
@@ -337,6 +351,22 @@ const EditProfileScreen = () => {
             }}
             source={{
               uri: `http://13.232.190.226/api/user/avatar/${userInfo.image.avatar}`,
+            }}
+          />
+        )}
+        {image !=='' && (
+          <Image
+            style={{
+              height: 180,
+              width: 180,
+              borderRadius: 100,
+              marginBottom: 20,
+              marginTop: 15,
+              alignSelf: 'center',
+              backgroundColor: 'gray',
+            }}
+            source={{
+              uri: image,
             }}
           />
         )}
@@ -527,6 +557,7 @@ const EditProfileScreen = () => {
                 />
                 <TextInput
                   style={styles.inputField}
+                  keyboardType="numeric"
                   placeholder={'Phone'}
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
@@ -623,7 +654,7 @@ const EditProfileScreen = () => {
                     placeholder={'City'}
                     onChangeText={handleChange('place')}
                     onBlur={handleBlur('place')}
-                    value={initialProfileValues.place}
+                    defaultValue={initialProfileValues.place}
                   />
                 </View>
               </View>
