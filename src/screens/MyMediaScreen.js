@@ -186,11 +186,10 @@ const MyMediaScreen = (props) => {
               </View>
             </View>
 
-            <View style={{flex:1,flexDirection:'row',flexWrap:'wrap'}}>
-            {t.media.map((m) => (
-              <>
-                <View style={styles.gridItem}>
-                  
+            <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+              {t.media.map((m) => (
+                <>
+                  <View style={styles.gridItem}>
                     {m.fileType === 'image' ? (
                       <Image
                         style={{
@@ -203,13 +202,13 @@ const MyMediaScreen = (props) => {
                         }}
                       />
                     ) : (
-                    //   <WebView
-                    //   javaScriptEnabled={true}
-                    //   domStorageEnabled={true}
-                    //   source={{
-                    //     uri:  m.file,
-                    //   }}
-                    // />
+                      //   <WebView
+                      //   javaScriptEnabled={true}
+                      //   domStorageEnabled={true}
+                      //   source={{
+                      //     uri:  m.file,
+                      //   }}
+                      // />
 
                       <WebView
                         javaScriptEnabled={true}
@@ -221,43 +220,45 @@ const MyMediaScreen = (props) => {
                         }}
                       />
                     )}
-                    
-                  <View style={{flexDirection: 'row', width: '100%'}}>
-                    <View style={{width: '80%', flexDirection: 'column'}}>
-                    <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() =>
-                      props.navigation.navigate('MediaDetails', {
-                        mediaFile: m.file,
-                        mediaType: m.fileType,
-                        caption: m.caption,
-                        description: m.description,
-                      })
-                    }>
-                      <Text style={styles.mediaTitle}>{m.caption}</Text>
-                      <Text style={styles.mediaDescription} numberOfLines={3}>
-                        {m.description}
-                      </Text>
+
+                    <View style={{flexDirection: 'row', width: '100%'}}>
+                      <View style={{width: '80%', flexDirection: 'column'}}>
+                        <TouchableOpacity
+                          activeOpacity={0.7}
+                          onPress={() =>
+                            props.navigation.navigate('MediaDetails', {
+                              mediaFile: m.file,
+                              mediaType: m.fileType,
+                              caption: m.caption,
+                              description: m.description,
+                            })
+                          }>
+                          <Text style={styles.mediaTitle}>{m.caption}</Text>
+                          <Text
+                            style={styles.mediaDescription}
+                            numberOfLines={3}>
+                            {m.description}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                      <TouchableOpacity
+                        onPress={() => confirmDelete(t._id, m._id)}
+                        style={{width: '20%'}}>
+                        <DIcon
+                          name="delete"
+                          size={20}
+                          color="orange"
+                          style={{
+                            marginTop: 4,
+                            marginRight: 20,
+                            alignSelf: 'flex-end',
+                          }}
+                        />
                       </TouchableOpacity>
                     </View>
-                    <TouchableOpacity
-                      onPress={() => confirmDelete(t._id, m._id)}
-                      style={{width: '20%'}}>
-                      <DIcon
-                        name="delete"
-                        size={20}
-                        color="orange"
-                        style={{
-                          marginTop: 4,
-                          marginRight: 20,
-                          alignSelf: 'flex-end',
-                        }}
-                      />
-                    </TouchableOpacity>
                   </View>
-                </View>
-              </>
-            ))}
+                </>
+              ))}
             </View>
           </>
         ))}

@@ -41,6 +41,8 @@ import PhotoUploadScreen from '../screens/PhotoUploadScreen';
 import VideoUploadScreen from '../screens/VideoUploadScreen.js';
 import FilterResultScreen from '../screens/FilterResultScreen';
 import PosterRequestScreen from '../screens/PosterRequestScreen';
+import ServiceScreen from '../screens/ServiceScreen';
+import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 
 const HomeNavigator = createStackNavigator(
   {
@@ -176,6 +178,24 @@ const AccountNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileScreen,
+    },
+    OurServices: {
+      screen: ServiceScreen,
+      navigationOptions: {
+        title: 'Services',
+      },
+    },
+    ServiceDetails: {
+      screen: ServiceDetailsScreen,
+      navigationOptions: {
+        title: 'Services',
+      },
+      // navigationOptions: {
+      //   headerShown: false,
+      // },
+      // navigationOptions: {
+      //   title: navigation.getParam('serviceName'),
+      // },
     },
     Talents: {
       screen: TalentListScreen,
