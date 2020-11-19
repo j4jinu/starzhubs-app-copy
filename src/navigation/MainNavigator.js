@@ -1,6 +1,6 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -41,12 +41,14 @@ import PhotoUploadScreen from '../screens/PhotoUploadScreen';
 import VideoUploadScreen from '../screens/VideoUploadScreen.js';
 import FilterResultScreen from '../screens/FilterResultScreen';
 import PosterRequestScreen from '../screens/PosterRequestScreen';
+import ServiceScreen from '../screens/ServiceScreen';
+import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 
 const HomeNavigator = createStackNavigator(
   {
     Portfolio: {
       screen: HomeScreenSingle,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         title: 'Explore',
         headerTitleStyle: {
           fontWeight: '100',
@@ -54,7 +56,7 @@ const HomeNavigator = createStackNavigator(
         },
         headerRight: () => (
           <MaterialIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="search"
             onPress={() => navigation.navigate('Filter')}
@@ -98,10 +100,10 @@ const UserNavigator = createStackNavigator(
   {
     Users: {
       screen: PortfolioListScreen,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         headerRight: () => (
           <MaterialCommunityIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="filter-outline"
             onPress={() => navigation.navigate('Filter')}
@@ -176,6 +178,24 @@ const AccountNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileScreen,
+    },
+    OurServices: {
+      screen: ServiceScreen,
+      navigationOptions: {
+        title: 'Services',
+      },
+    },
+    ServiceDetails: {
+      screen: ServiceDetailsScreen,
+      navigationOptions: {
+        title: 'Services',
+      },
+      // navigationOptions: {
+      //   headerShown: false,
+      // },
+      // navigationOptions: {
+      //   title: navigation.getParam('serviceName'),
+      // },
     },
     Talents: {
       screen: TalentListScreen,
@@ -335,9 +355,9 @@ const MainNavigator = createBottomTabNavigator(
     Profile: AccountNavigator,
   },
   {
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({focused, horizontal, tintColor}) => {
-        const {routeName} = navigation.state;
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {
