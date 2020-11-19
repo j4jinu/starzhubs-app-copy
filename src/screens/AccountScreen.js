@@ -59,7 +59,7 @@ const AccountScreen = (props) => {
               bottom: 0,
               marginRight: 10,
             }}>
-            <Icon color={'white'} name="camera" size={30} />
+            {/* <Icon color={'white'} name="camera" size={30} /> */}
           </TouchableOpacity>
           <View style={styles.profileContainer}>
             <Text style={styles.profileTitle}>{user.name}</Text>
@@ -79,6 +79,27 @@ const AccountScreen = (props) => {
               <Text style={{flex: 1}}>0 Talents</Text>
             </View>
           </View>
+        </View>
+        <View style={styles.sectionContainer}>
+          <TouchableOpacity
+            style={styles.section}
+            activeOpacity={0.7}
+            onPress={() => props.navigation.navigate('Talents')}>
+            <View style={{flexDirection: 'row'}}>
+              <Icon
+                name="view-list-outline"
+                size={24}
+                color={theme.$primaryColor}
+              />
+              <View style={styles.sectionDetails}>
+                <Text style={styles.sectionDetailsTitle}>Our Services</Text>
+                <Text style={styles.sectionDetailsSubtitle}>
+                  Opt in our services
+                </Text>
+              </View>
+            </View>
+            <Icon name="chevron-right" size={24} color={theme.$primaryColor} />
+          </TouchableOpacity>
         </View>
         <View style={styles.sectionContainer}>
           <TouchableOpacity
