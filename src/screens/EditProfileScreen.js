@@ -129,16 +129,6 @@ const countries = [
   {label: 'UK', value: 'uk'},
 ];
 
-const profileSchema = yup.object({
-  name: yup.string().required('Enter your name'),
-  bio: yup.string().required('Please fill this field'),
-  phone: yup.string().required('Enter phone number'),
-  email: yup.string().required('Enter email address'),
-  state: yup.string().required('Enter state of residence'),
-  place: yup.string().required('Enter your city'),
-  education: yup.string().required('Enter your Higher education'),
-});
-
 const EditProfileScreen = () => {
   const auth = React.useContext(AuthContext);
   const [image, setImage] = useState('');
@@ -152,6 +142,32 @@ const EditProfileScreen = () => {
     location: {},
   });
 
+  const initialProfileValues = {
+    name: userInfo.name,
+    email: userInfo.email,
+    bio: userInfo.bio || '',
+    phone: userInfo.phone || '',
+    dob: '',
+    country:userInfo.location !== undefined? userInfo.location.country: 'India',
+    state: userInfo.location !== undefined ? userInfo.location.state : '',
+    place: userInfo.location !== undefined ? userInfo.location.place : '',
+    education: userInfo.education || '',
+  }
+
+  const profileSchema = yup.object({
+    name: yup.string().required('Enter your name'),
+    bio: yup.string().required('Please fill this field'),
+    phone: yup.string().required('Enter phone number'),
+    email: yup.string().required('Enter email address'),
+    state: yup.string().required('Enter state of residence'),
+    place: yup.string().required('Enter your city'),
+    education: yup.string().required('Enter your Higher education'),
+    gender: yup.string().required('Select Gender'),
+    country: yup.string().required('Country is Required'),
+    state: yup.string().required('Enter your state'),
+		place: yup.string().required('Enter place'),
+  });
+    
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
@@ -168,6 +184,8 @@ const EditProfileScreen = () => {
         return alert(userData.message);
       }
       setUserInfo(userData.data.user);
+      setDob(userData.data.user.dob)
+      // setSelectedItems(userData.data.user.languages)
     };
     getUserDetails();
   }, []);
@@ -178,6 +196,7 @@ const EditProfileScreen = () => {
   };
 
   const saveUserInfo = async (values, {setSubmitting}) => {
+    console.log("user info",values);
     if (dob === '') {
       alert('Please enter your Date of Birth');
       setSubmitting(false);
@@ -273,7 +292,7 @@ const EditProfileScreen = () => {
     var formData = new FormData();
     formData.append('imageType', 'avatar');
     formData.append('avatar', {
-      image_uri,
+      uri: image_uri,
       name: `photo.${fileType}`,
       type: `image/${fileType}`,
     });
@@ -333,15 +352,8 @@ const EditProfileScreen = () => {
           <Icon name="photo-camera" size={35} color={theme.$primaryColor} />
         </TouchableOpacity>
         <Formik
-          initialValues={{
-            name: '',
-            email: '',
-            bio: '',
-            dob: '',
-            country: country,
-            state: '',
-            place: '',
-          }}
+          enableReinitialize={true}
+          initialValues={initialProfileValues}
           validationSchema={profileSchema}
           onSubmit={(values, {setSubmitting}) =>
             saveUserInfo(values, {setSubmitting})
@@ -380,7 +392,7 @@ const EditProfileScreen = () => {
                   placeholder={'Full name'}
                   onChangeText={handleChange('name')}
                   onBlur={handleBlur('name')}
-                  value={values.name}
+                  defaultValue={initialProfileValues.name}
                 />
               </View>
               {/* 
@@ -489,7 +501,7 @@ const EditProfileScreen = () => {
                   placeholder={'Email address'}
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
-                  value={values.email}
+                  defaultValue={initialProfileValues.email}
                 />
               </View>
               {/*
@@ -518,7 +530,7 @@ const EditProfileScreen = () => {
                   placeholder={'Phone'}
                   onChangeText={handleChange('phone')}
                   onBlur={handleBlur('phone')}
-                  value={values.phone}
+                  defaultValue={initialProfileValues.phone}
                 />
               </View>
 
@@ -585,7 +597,7 @@ const EditProfileScreen = () => {
                     placeholder={'State'}
                     onChangeText={handleChange('state')}
                     onBlur={handleBlur('state')}
-                    value={values.state}
+                    defaultValue={initialProfileValues.state}
                   />
                 </View>
                 <View
@@ -611,7 +623,7 @@ const EditProfileScreen = () => {
                     placeholder={'City'}
                     onChangeText={handleChange('place')}
                     onBlur={handleBlur('place')}
-                    value={values.place}
+                    value={initialProfileValues.place}
                   />
                 </View>
               </View>
@@ -636,7 +648,7 @@ const EditProfileScreen = () => {
                   placeholder={'Higher Education'}
                   onChangeText={handleChange('education')}
                   onBlur={handleBlur('education')}
-                  value={values.education}
+                  defaultValue={initialProfileValues.education}
                 />
               </View>
 
@@ -689,7 +701,7 @@ const EditProfileScreen = () => {
                   placeholder={'About yourself'}
                   onChangeText={handleChange('bio')}
                   onBlur={handleBlur('bio')}
-                  value={values.bio}
+                  defaultValue={initialProfileValues.bio}
                 />
               </View>
               <TouchableOpacity
@@ -757,7 +769,7 @@ const styles = StyleSheet.create({
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    textTransform: 'lowercase',
+    // textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 8,
