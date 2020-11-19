@@ -17,7 +17,7 @@ const Divider = (
 
 const AccountScreen = (props) => {
   const auth = useContext(AuthContext);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({image: {}, location: {}});
 
   useEffect(() => {
     const getUserDetails = async () => {
@@ -62,9 +62,9 @@ const AccountScreen = (props) => {
             <Icon color={'white'} name="camera" size={30} />
           </TouchableOpacity>
           <View style={styles.profileContainer}>
-            <Text style={styles.profileTitle}>Test User</Text>
+            <Text style={styles.profileTitle}>{user.name}</Text>
             <Text style={{fontSize: 12, marginLeft: 10, color: 'gray'}}>
-              user@example.com
+              {user.email}
             </Text>
             <View
               style={{

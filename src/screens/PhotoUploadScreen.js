@@ -125,8 +125,8 @@ const PhotoUploadScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
+      setImage('');
       alert(uploadResData.message);
-      setImage(null);
     } catch (error) {
       console.error('error', error);
     }

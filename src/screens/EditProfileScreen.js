@@ -273,7 +273,7 @@ const EditProfileScreen = () => {
     var formData = new FormData();
     formData.append('imageType', 'avatar');
     formData.append('avatar', {
-      image_uri,
+      uri: image_uri,
       name: `photo.${fileType}`,
       type: `image/${fileType}`,
     });
@@ -334,9 +334,9 @@ const EditProfileScreen = () => {
         </TouchableOpacity>
         <Formik
           initialValues={{
-            name: '',
-            email: '',
-            bio: '',
+            name: userInfo.name,
+            email: userInfo.email,
+            bio: userInfo.bio,
             dob: '',
             country: country,
             state: '',
