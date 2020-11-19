@@ -46,7 +46,7 @@ const profileSchema = yup.object({
         `Password should not be  more than ${max} `
     )
     .required('Enter Password'),
-  confPassword: yup.string().oneOf([yup.ref('newPassword'), null], "Passwords don't match")
+  confPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords don't match")
 
     .required("Enter Confirm Password"),
 });
@@ -287,7 +287,7 @@ const SignupScreen = (props) => {
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('Login')}>
             <Text
-              style={{fontSize: 17, marginTop: 8, color: theme.$primaryColor}}>
+              style={{ fontSize: 17, marginTop: 8, color: theme.$primaryColor }}>
               Goto Login
             </Text>
           </TouchableOpacity>
