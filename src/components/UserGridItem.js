@@ -29,9 +29,9 @@ const UserGridItem = (props) => {
               {props.location !== undefined ? props.location.place : ''},{' '}
               {props.location !== undefined ? props.location.place : ''}
             </Text>
-            <Text style={{marginLeft: 10, marginTop: 1}}>
+            {/* <Text style={{marginLeft: 10, marginTop: 1}}>
               {'Actor, Singer'}
-            </Text>
+            </Text> */}
           </View>
         </TouchableOpacity>
       }
