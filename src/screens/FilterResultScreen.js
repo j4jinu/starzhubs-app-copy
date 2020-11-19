@@ -28,7 +28,7 @@ const FilterResultScreen = (props) => {
   }, []);
 
   return (
-    <View style={{flex: 1, paddingVertical: '6%'}}>
+    <View style={{flex: 1}}>
       {/* <View style={{height: 90}} >
              <ScrollView horizontal>
                 <View style={{flexDirection:"row"}}>
@@ -55,7 +55,7 @@ const FilterResultScreen = (props) => {
             <View style={styles.listItem}>
               <View
                 style={{
-                  borderRadius: 4,
+                  borderRadius: 3,
                   backgroundColor: 'gray',
                   borderWidth: 1,
                   borderColor: 'grey',
@@ -105,7 +105,6 @@ const FilterResultScreen = (props) => {
 };
 const styles = StyleSheet.create({
   actor: {
-    marginTop: 30,
     marginLeft: 10,
     height: 40,
     width: 150,
@@ -117,15 +116,13 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 13,
     backgroundColor: '#FFF',
-    width: '90%',
+    width: '96%',
+    marginHorizontal: 5,
     flex: 1,
     alignSelf: 'center',
     flexDirection: 'row',
     borderRadius: 3,
-    elevation: 7,
-    // borderWidth:1,
-
-    // borderColor:"orange",
+    elevation: 3,
   },
 });
 export default FilterResultScreen;

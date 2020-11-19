@@ -142,10 +142,24 @@ const FilterScreen = (props) => {
     setSearch(search);
   };
 
-  const doSearch = () => {
+  const doSearch = async () => {
     if (search === '') {
       return alert('Enter a search query');
     }
+    const searchRes = await fetch(
+      `http://13.232.190.226/api/user/search/u?key=${search}`,
+      {
+        method: 'PATCH',
+      },
+    );
+    const searchData = await searchRes.json();
+    if (!searchData.success) {
+      setVisible(!visible);
+      return;
+    }
+    props.navigation.navigate('FilterResult', {
+      filter: searchData.data.users,
+    });
   };
 
   const handleSubmit = () => {
@@ -247,14 +261,11 @@ const FilterScreen = (props) => {
   }, []);
   return (
     <View style={styles.container}>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+        {' '}
+        No Users Found !
+      </Snackbar>
       <ScrollView>
-        <Snackbar
-          visible={visible}
-          duration={5000}
-          onDismiss={onDismissSnackBar}>
-          {' '}
-          No Users Found !
-        </Snackbar>
         <View>
           <Searchbar
             placeholder="Type Here..."

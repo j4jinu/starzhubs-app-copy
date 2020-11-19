@@ -40,7 +40,9 @@ const OtpScreen = (props) => {
       return;
     }
     auth.login(resData.data.userId, resData.data.token);
-    props.navigation.navigate('Edit');
+    props.navigation.navigate('Edit', {
+      type: 'signup',
+    });
   };
 
   return (

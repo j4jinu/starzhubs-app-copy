@@ -254,10 +254,14 @@ const SignupScreen = (props) => {
             marginTop: 20,
           }}>
           <Text>Already have an account?</Text>
-          <Text
-            style={{fontSize: 17, marginTop: 8, color: theme.$primaryColor}}>
-            Goto Login
-          </Text>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => props.navigation.navigate('Login')}>
+            <Text
+              style={{fontSize: 17, marginTop: 8, color: theme.$primaryColor}}>
+              Goto Login
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
