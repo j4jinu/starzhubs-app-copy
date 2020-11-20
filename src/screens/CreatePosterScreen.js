@@ -18,7 +18,6 @@ import Moment from 'moment';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../context/authContext';
-import {Snackbar} from 'react-native-paper';
 
 const CreatePosterScreen = (props, {navigation}) => {
   const auth = useContext(AuthContext);
@@ -29,7 +28,6 @@ const CreatePosterScreen = (props, {navigation}) => {
   const [isStartDate, setIsStartDate] = useState(false);
   const [isEndDate, setIsEndDate] = useState(false);
   const [isImage, setIsImage] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [sDate, setSDate] = useState();
   const [eDate, setEDate] = useState();
 
@@ -42,34 +40,38 @@ const CreatePosterScreen = (props, {navigation}) => {
     description: Yup.string().required('Please provide poster description'),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, {setSubmitting}) => {
     if (startDate === '') {
       setIsStartDate(true);
+      setSubmitting(false);
+      return;
     } else {
-      setStartDate(false);
+      setIsStartDate(false);
     }
 
     if (endDate === '') {
       setIsEndDate(true);
+      setSubmitting(false);
+      return;
     } else {
-      setEndDate(false);
+      setIsEndDate(false);
     }
     if (image === undefined) {
       setIsImage(true);
+      setSubmitting(false);
+      return;
     } else {
       setIsImage(false);
     }
-    console.log('image', isImage);
     var formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('startDate', startDate);
     formData.append('endDate', endDate);
-    const uri = image;
-    console.log('posterimage', image);
-    let fileType = uri.substring(uri.lastIndexOf('.') + 1);
+    const image_uri = image;
+    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     formData.append('poster', {
-      uri,
+      uri: image_uri,
       name: `photo.${fileType}`,
       type: `image/${fileType}`,
     });
@@ -81,26 +83,47 @@ const CreatePosterScreen = (props, {navigation}) => {
       },
       body: formData,
     };
-    fetch(`http://13.232.190.226/api/poster`, requestOptions)
-      .then((response) => response.json())
-      .then(
-        (response) => {
-          if (response.success === true) {
-            const msg = 'New Poster created Successfully';
-            setMessage(msg);
-            setVisible(!visible);
-            setStartDate('');
-            setEndDate('');
-            setImage('');
-            props.navigation.navigate('MyPosters');
-          } else {
-            alert('Error: ', response);
-          }
-        },
-        (error) => {
-          alert('Poster upload failed: ' + error);
-        },
+    console.log("form",formData);
+
+    try {
+      const uploadRes = await fetch(
+        `http://13.232.190.226/api/poster`,
+        requestOptions,
       );
+      const uploadResData = await uploadRes.json();
+      if (!uploadResData.success) {
+        alert(uploadResData.message);
+        return;
+      }
+      // setImage('');
+      alert(uploadResData.message);
+      // setImage('');
+      props.navigation.navigate('MyPosters' );
+    } catch (error) {
+      console.error('error', error);
+    }
+
+    // fetch(`http://13.232.190.226/api/poster`, requestOptions)
+    //   .then((response) => response.json())
+    //   .then(
+    //     (response) => {
+    //       if (response.success === true) {
+    //         const msg = 'New Poster created Successfully';
+    //         setMessage(msg);
+    //         // setStartDate('');
+    //         // setEndDate('');
+    //         // setImage('');
+    //         props.navigation.navigate('MyPosters',
+    //         {msg:msg,visible:true,content:'pending'}
+    //         );
+    //       } else {
+    //         alert('Error: ', response);
+    //       }
+    //     },
+    //     (error) => {
+    //       alert('Poster upload failed: ' + error);
+    //     },
+    //   );
   };
   const handleStartDate = (date) => {
     setSDate(date);
@@ -119,9 +142,6 @@ const CreatePosterScreen = (props, {navigation}) => {
       setEndDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
       setIsEndDate(false);
     }
-  };
-  const onDismissSnackBar = () => {
-    setVisible(false);
   };
   const requestCameraPermission = async () => {
     try {
@@ -159,6 +179,9 @@ const CreatePosterScreen = (props, {navigation}) => {
         skipBackup: true,
         path: 'images',
       },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.2,
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       //console.log('Response = ', response);
@@ -170,9 +193,7 @@ const CreatePosterScreen = (props, {navigation}) => {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else if (response.uri === '') {
-        setIsImage(true);
       } else {
-        setIsImage(false);
         setImage(response.uri);
       }
     });
@@ -181,21 +202,16 @@ const CreatePosterScreen = (props, {navigation}) => {
     <>
       <ScrollView>
         <View style={styles.container}>
-          <Snackbar
-            visible={visible}
-            duration={7000}
-            onDismiss={onDismissSnackBar}>
-            {message}
-          </Snackbar>
-
+          
           <View style={{justifyContent: 'center'}}>
             <View>
               <Formik
                 initialValues={posterInitValues}
                 validationSchema={posterValidation}
-                onSubmit={(values) => {
-                  handleSubmit(values);
-                }}>
+                onSubmit={(values, {setSubmitting}) =>
+                handleSubmit(values, {setSubmitting})
+          }
+               >
                 {({
                   values,
                   handleChange,

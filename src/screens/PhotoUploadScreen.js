@@ -84,7 +84,6 @@ const PhotoUploadScreen = (props) => {
       } else {
         setIsImage(false);
         setImage(response.uri);
-        console.log('image uri: ', response.uri);
       }
     });
   };

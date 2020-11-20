@@ -26,10 +26,10 @@ const PendingConnectionScreen = (props) => {
         alert(response.message);
       });
   };
-  if(requests===[]){
+  if(requests.length===0){
     return(
       <View style={{alignItems:'center', marginTop:'8%'}}>
-        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Requests</Text>
+        <Text style={{color:'#F98644', fontWeight:'bold'}}>No Requests</Text>
       </View>
     )
   }

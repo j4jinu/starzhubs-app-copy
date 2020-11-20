@@ -47,7 +47,7 @@ const MyPosterGridItem = (props) => {
         (response) => {
           if (response.success === true) {
             setVisible(!visible);
-            props.getPosters('me');
+            props.getPosters();
           } else {
             alert(error);
           }
@@ -183,7 +183,7 @@ const MyPosterGridItem = (props) => {
 const styles = StyleSheet.create({
   containerSnackbar: {
     flex: 1,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   container: {
     flex: 1,

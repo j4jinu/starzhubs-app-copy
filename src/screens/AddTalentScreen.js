@@ -296,6 +296,7 @@ export default function AddTalentScreen(props) {
           console.warn('Avatar upload: ', response);
           if (response.success === true) {
             alert(response.message);
+            props.navigation.goback();
           } else {
             alert(response.message);
           }

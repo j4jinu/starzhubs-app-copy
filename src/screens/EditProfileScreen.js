@@ -281,18 +281,18 @@ const EditProfileScreen = (props) => {
       } else {
         setImage(response.uri);
         console.log('image uri: ', response.uri);
-        uploadAvatar();
+        uploadAvatar(response.uri);
       }
     });
   };
 
-  const uploadAvatar = async () => {
-    if (image === '') {
+  const uploadAvatar = async (imgurl) => {
+    if (imgurl === '') {
       alert('Please choose an Image');
       setSubmitting(false);
       return;
     }
-    const image_uri = image;
+    const image_uri = imgurl;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     console.log('Type:', fileType);
     var formData = new FormData();
@@ -321,6 +321,7 @@ const EditProfileScreen = (props) => {
         setVisible(!visible);
         return;
       }
+      alert(uploadResData.message)
       setMsg("Profile image uploaded successfully")
       setVisible(!visible);
     

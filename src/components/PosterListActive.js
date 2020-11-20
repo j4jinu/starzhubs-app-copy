@@ -1,8 +1,37 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
+import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
-    const { getPosters, posters } = props
+    const auth = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
+    const [posters, setPosters] = useState([]);
+  
+    useEffect(() => {
+        getPosters();
+      }, []);
+      const getPosters = async (status) => {
+        // setLoading(true);
+        setPosters([]);
+        try {
+          const response = await fetch(
+            `http://13.232.190.226/api/poster/me`,
+            {
+              method: 'GET',
+              headers: {
+                Authorization: 'Bearer ' + auth.token,
+              },
+            },
+          );
+          const posterData = await response.json();
+          posterData.success ? (setPosters(posterData.data.posters)) : null;
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          alert('Something went wrong.');
+        }
+      };
+
     if (posters.length === 0) {
         return (
             <Text

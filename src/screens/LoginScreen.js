@@ -139,11 +139,11 @@ const LoginScreen = (props) => {
           )}
         </Formik>
         <View style={styles.registerLayout}>
-          <Text style={styles.registerLayoutText1}>New to Starzhubs?</Text>
+          <Text style={styles.registerLayoutText1}>Don't have an account?</Text>
           <TouchableOpacity
             activeOpacity={0.8}
             onPress={() => props.navigation.navigate('Signup')}>
-            <Text style={styles.registerLayoutText2}>Create an Account</Text>
+            <Text style={styles.registerLayoutText2}>Register</Text>
           </TouchableOpacity>
         </View>
       </View>
