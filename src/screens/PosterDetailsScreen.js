@@ -22,6 +22,7 @@ import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
+  console.log("token", auth.token)
   const posterId = props.navigation.getParam('posterId');
   const title = props.navigation.getParam('title');
   const image = props.navigation.getParam('image');
@@ -56,19 +57,30 @@ const PosterDetailsScreen = (props) => {
       })
       .catch((error) => { });
   };
-  const onSubmitRequest = (values) => {
-    alert('Form data: ', values);
+  const onSubmitRequest = () => {
+
     fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
         'Content-type': 'Application/json',
         Authorization: 'Bearer ' + auth.token,
       },
-      body: JSON.stringify(values),
+      body: JSON.stringify({ notes: 'hai' }),
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(response.message);
+        if (response.success === false) {
+
+          alert(response.message);
+        }
+        else {
+          props.navigation.navigate('PosterRequest', {
+            posterId: posterId, image: image, description: description
+
+          })
+        }
+
+
       })
       .catch((error) => {
         alert(error);
@@ -145,6 +157,7 @@ const PosterDetailsScreen = (props) => {
         {msg}
       </Snackbar>
       <ScrollView>
+
         <View style={styles.container}>
           <Image
             style={{
@@ -187,9 +200,7 @@ const PosterDetailsScreen = (props) => {
           </View>
           {user._id === auth.userId ? null : (
             <View style={styles.authorInfo}>
-              {/* <View>
 
-                        </View> */}
               <Image
                 style={{
                   width: 50,
@@ -235,9 +246,9 @@ const PosterDetailsScreen = (props) => {
                   Requests:
                 </Text>
               </View>
-              {selectedPoster === [] ? (
+              {selectedPoster.length === 0 ? (
                 <View style={{ width: '100%' }}>
-                  <Text style={{ color: 'black', fontSize: 20 }}>
+                  <Text style={{ color: '', fontSize: 15, textAlign: "center" }}>
                     No Request to this poster
                   </Text>
                 </View>
@@ -481,7 +492,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     borderRadius: theme.$borderRadius,
-    // width: '100%'
   },
   requestBtn: {
     backgroundColor: theme.$primaryColor,
