@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   PermissionsAndroid,
+  Alert
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import ImagePicker from 'react-native-image-picker';
@@ -137,7 +138,7 @@ const EditProfileScreen = (props) => {
 
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
-  const [gender, setGender] = useState('Male');
+  const [gender, setGender] = useState('');
   const [selectedItems, setSelectedItems] = useState();
   const [userInfo, setUserInfo] = useState({
     image: {},
@@ -152,12 +153,12 @@ const EditProfileScreen = (props) => {
     email: userInfo.email,
     bio: userInfo.bio || '',
     phone: userInfo.phone || '',
-    dob: '',
+    // dob: '',
     country: userInfo.location !== undefined ? userInfo.location.country : 'India',
     state: userInfo.location !== undefined ? userInfo.location.state : '',
     place: userInfo.location !== undefined ? userInfo.location.place : '',
     education: userInfo.education || '',
-    gender: userInfo.gender || '',
+    // gender: userInfo.gender || '',
   }
 
   const profileSchema = yup.object({
@@ -168,7 +169,7 @@ const EditProfileScreen = (props) => {
     state: yup.string().required('Enter state of residence'),
     place: yup.string().required('Enter your city'),
     education: yup.string().required('Enter your Higher education'),
-    gender: yup.string().required('Select Gender'),
+    // gender: yup.string().required('Select Gender'),
     country: yup.string().required('Country is Required'),
   });
 
@@ -190,19 +191,67 @@ const EditProfileScreen = (props) => {
       }
       setUserInfo(userData.data.user);
       setDob(userData.data.user.dob)
+      setGender(userData.data.user.gender)
+      if(userData.data.user.languages !==''){
+        var myString = userData.data.user.languages;
+        const lng = myString.split(',')
+        setSelectedItems(lng)
+      }
+      
     };
     getUserDetails();
   }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
-    console.log(selectedItem);
     setSelectedItems(selectedItem);
   };
 
   const saveUserInfo = async (values, { setSubmitting }) => {
-    console.log("user info", values);
-    if (dob === '') {
-      alert('Please enter your Date of Birth');
+    if (dob === undefined) {
+      Alert.alert(
+        '',
+        'Enter your Date of Birth',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Please enter your Date of Birth');
+      setSubmitting(false);
+      return;
+    }
+    if (gender === '') {
+      Alert.alert(
+        '',
+        'Enter your gender',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Enter your gender');
+      setSubmitting(false);
+      return;
+    }
+    if (selectedItems === undefined || selectedItems.length === 0) {
+      Alert.alert(
+        '',
+        'Choose the languages you known',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Please choose the languages you known');
       setSubmitting(false);
       return;
     }
@@ -320,7 +369,6 @@ const EditProfileScreen = (props) => {
         setVisible(!visible);
         return;
       }
-      alert(uploadResData.message)
       setMsg("Profile image uploaded successfully")
       setVisible(!visible);
 
@@ -503,9 +551,10 @@ const EditProfileScreen = (props) => {
                     onValueChange={(itemValue, itemIndex) =>
                       setGender(itemValue)
                     }>
-                    <Picker.Item label="Female" value="female" />
-                    <Picker.Item label="Male" value="male" />
-                    <Picker.Item label="Transgender" value="transgender" />
+                    <Picker.Item label="Select Gender" value="" />
+                    <Picker.Item label="Female" value="Female" />
+                    <Picker.Item label="Male" value="Male" />
+                    <Picker.Item label="Transgender" value="Transgender" />
                   </Picker>
                 </View>
                 {/* 

@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import BuddyItem from '../components/BuddyItem';
 import {AuthContext} from '../context/authContext';
+import theme from '../config/theme';
 
 const MyConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -63,8 +64,8 @@ const MyConnectionScreen = (props) => {
     );
   } else {
     return (
-      <View>
-        <Text>No Connections</Text>
+      <View style={{alignItems:'center', marginTop:'8%'}}>
+        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Connections</Text>
       </View>
     );
   }

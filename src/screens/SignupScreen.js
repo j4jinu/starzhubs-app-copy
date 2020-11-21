@@ -38,7 +38,7 @@ const profileSchema = yup.object({
   password: yup.string()
     .matches(
       passRegExp,
-      'Atleast one uppercase one lowercase and  one digit:'
+      'Atleast one uppercase one lowercase and  one digit'
     )
     .max(
       8,

@@ -92,7 +92,7 @@ export default function AddTalentScreen(props) {
   const [leftimg, setLeftImage] = useState();
   const [fullsizeimg, setFullImage] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
-  const [level, setLevel] = useState('');
+  const [level, setLevel] = useState(2);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
 
@@ -199,6 +199,7 @@ export default function AddTalentScreen(props) {
   };
 
   const handleSubmit = (values) => {
+    console.log("talent form",values);
     setLoading(true);
     // console.warn(JSON.stringify(values));
     // if (industries.length === 0) {
@@ -239,7 +240,7 @@ export default function AddTalentScreen(props) {
               'New Talent added successfully. Check your profile page and add medias.';
             setMessage(msg);
             setVisible(!visible);
-            // navigation.navigate('Account');
+            // props.navigation.navigate('Talents');
           } else {
             // alert(response.message);
             setMessage(response.message);
@@ -258,8 +259,8 @@ export default function AddTalentScreen(props) {
     setVisible(false);
   };
 
-  const uploadAvatar = (imgType, imgurl) => {
-    console.warn('URL', imgurl);
+  const uploadAvatar = async (imgType, imgurl) => {
+
     let image;
     if (imgType === 'head_shot') {
       image = headimg;
@@ -270,41 +271,42 @@ export default function AddTalentScreen(props) {
     } else {
       image = fullsizeimg;
     }
-    const uri = imgurl;
+    const image_uri = imgurl;
+    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     var formData = new FormData();
     formData.append('imageType', imgType);
-    let fileType = uri.substring(uri.lastIndexOf('.') + 1);
     formData.append('avatar', {
-      uri,
+      uri: image_uri,
       name: `photo.${fileType}`,
       type: `image/${fileType}`,
     });
-
-    const config = {
+    const requestOptions = {
       method: 'POST',
-      body: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
         Authorization: 'Bearer ' + auth.token,
+        'Content-Type': 'multipart/form-data',
       },
+      body: formData,
     };
-
-    fetch(`http://13.232.190.226/api/user/avatar`, config)
-      .then((response) => response.json())
-      .then(
-        (response) => {
-          console.warn('Avatar upload: ', response);
-          if (response.success === true) {
-            alert(response.message);
-            props.navigation.goback();
-          } else {
-            alert(response.message);
-          }
-        },
-        (error) => {
-          alert('Upload failed: ' + error);
-        },
+    try {
+      const uploadRes = await fetch(
+        `http://13.232.190.226/api/user/avatar`,
+        requestOptions,
       );
+      const uploadResData = await uploadRes.json();
+      if (!uploadResData.success) {
+        setMsg("Something went wrong. Try again!")
+        setVisible(!visible);
+        return;
+      }
+      alert(uploadResData.message);
+      setMessage("Image uploaded successfully")
+      setVisible(!visible);
+
+    } catch (error) {
+      console.error('error', error);
+    }
+
   };
 
   const requestCameraPermission = async (imgType) => {
@@ -322,7 +324,8 @@ export default function AddTalentScreen(props) {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        pickImage(imgType);
+        chooseFile(imgType);
+        //console.log('You can use the camera');
       } else {
         console.log('Camera permission denied');
       }
@@ -330,21 +333,22 @@ export default function AddTalentScreen(props) {
       console.warn(err);
     }
   };
-  const pickImage = async (imgType) => {
+  const chooseFile = async (imgType) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
       ],
       storageOptions: {
         skipBackup: true,
         path: 'images',
       },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.2,
     };
-
-    var imgurl;
     ImagePicker.launchImageLibrary(options, (response) => {
-      console.log('Response = ', response);
+      //console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -352,40 +356,21 @@ export default function AddTalentScreen(props) {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
+      } else if (response.uri === '') {
       } else {
-        if (imgType == 'head_shot') {
-          console.warn(response.uri);
+        if (imgType === 'head_shot') {
           setHeadImage(response.uri);
-        } else if (imgType == 'left_profile') {
+        } else if (imgType === 'left_profile') {
           setLeftImage(response.uri);
-        } else if (imgType == 'right_profile') {
+        } else if (imgType === 'right_profile') {
           setRightImage(response.uri);
         } else {
           setFullImage(response.uri);
         }
-        imgurl = response.uri;
-        uploadAvatar(imgType, imgurl);
+        // imgurl = response.uri;
+        uploadAvatar(imgType, response.uri);
       }
     });
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    // mediaTypes: ImagePicker.MediaTypeOptions.All,
-    // allowsEditing: true,
-    // aspect: [4, 3],
-    // quality: 1,
-    // });
-    // var imgurl;
-    //     if (imgType == 'head_shot') {
-    // console.warn(result.uri);
-    //         setHeadImage(result.uri);
-    //     } else if (imgType == 'left_profile') {
-    //         setLeftImage(result.uri);
-    //     } else if (imgType == 'right_profile') {
-    //         setRightImage(result.uri);
-    //     } else {
-    //         setFullImage(result.uri);
-    //     }
-    // imgurl = result.uri;
-    //     uploadAvatar(imgType, imgurl);
   };
 
   const handleLevelChange = (rating) => {
@@ -406,12 +391,7 @@ export default function AddTalentScreen(props) {
           visible={visible}
           duration={7000}
           onDismiss={onDismissSnackBar}
-          action={
-            {
-              // label: 'Undo',
-              // onPress = () => onDismissSnackBar()
-            }
-          }>
+        >
           {message}
         </Snackbar>
 
@@ -502,7 +482,7 @@ export default function AddTalentScreen(props) {
                   'Experienced',
                  
                 ]}
-                defaultRating={5}
+                defaultRating={2}
                 size={20}
                 count={5}
                 showRating={false}
@@ -510,20 +490,6 @@ export default function AddTalentScreen(props) {
                 selectedColor={theme.$primaryColor}
               />
 
-                  {/* <Rating
-                    type="custom"
-                    startingValue={level}
-                    //tintColor="#f5f5f5"
-                    //tintColor="grey"
-                    ratingColor="orange"
-                    //ratingBackgroundColor='black'
-                    onFinishRating={handleLevelChange}
-                    style={{
-                      marginLeft: '-25%',
-                      marginTop: '1%',
-                      marginBottom: '-3%',
-                    }}
-                  /> */}
                 </View>
 
                 <View style={{
@@ -880,7 +846,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 5
-
+    
   },
   inputText: {
 

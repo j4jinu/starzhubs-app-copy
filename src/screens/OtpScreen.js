@@ -90,6 +90,7 @@ const OtpScreen = (props) => {
               <Icon name="user" size={20} color={theme.$primaryColor} />
               <TextInput
                 style={styles.inputField}
+                keyboardType={'number-pad'}
                 placeholder={'OTP'}
                 onChangeText={handleChange('otp')}
                 onBlur={handleBlur('otp')}

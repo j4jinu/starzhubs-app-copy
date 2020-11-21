@@ -25,7 +25,9 @@ const ForgotPasswordScreen = ({ navigation }) => {
   };
 
   const forgotPwdValidation = yup.object({
-    email: yup.string().matches(emailRegExp, 'Invalid Email Address'),
+    email: yup.string()
+            .matches(emailRegExp, 'Invalid Email Address')
+            .required('Enter Your Email ID'),
   });
 
   const initialValuesReset = {
@@ -40,7 +42,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       .string()
       .matches(
         passRegExp,
-        'Atleast one uppercase one lowercase and  one digit:',
+        'Atleast one uppercase one lowercase and  one digit',
       )
       .max(8, ({ max }) => `Password should not be  more than ${max} `)
       .required('Enter Password'),
