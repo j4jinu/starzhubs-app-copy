@@ -53,7 +53,6 @@ const PosterDetailsScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         setSelectedPoster(response.data.poster.requests);
-        console.log('SelectedPoster', response.data.poster.requests);
       })
       .catch((error) => { });
   };
@@ -70,8 +69,20 @@ const PosterDetailsScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.success === false) {
-
-          alert(response.message);
+          //Alert.alert('Alert', 'You have already  sent Request');
+          //alert(response.message);
+          Alert.alert('Alert',
+            'You have already  sent Request',
+            [
+              {
+                text: 'OK',
+                onPress: () =>
+                  //props.navigation.navigate('Posters')
+                  props.navigation.goBack()
+              },
+            ],
+            { cancelable: false }
+          );
         }
         else {
           props.navigation.navigate('PosterRequest', {
@@ -147,13 +158,7 @@ const PosterDetailsScreen = (props) => {
       <Snackbar
         visible={visible}
         duration={7000}
-        onDismiss={onDismissSnackBar}
-        action={
-          {
-            // label: 'Undo',
-            // onPress = () => onDismissSnackBar()
-          }
-        }>
+        onDismiss={onDismissSnackBar}>
         {msg}
       </Snackbar>
       <ScrollView>
@@ -321,12 +326,7 @@ const PosterDetailsScreen = (props) => {
           ) : null}
           {user._id === auth.userId ? null : (
             <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate('PosterRequest', {
-                  posterId: posterId, image: image, description: description
-
-                })
-              }
+              onPress={onSubmitRequest}
               activeOpacity={0.7}
               style={styles.requestBtn}>
               <Text style={{ fontSize: 17, color: 'white' }}>
@@ -335,118 +335,7 @@ const PosterDetailsScreen = (props) => {
             </TouchableOpacity>
           )}
         </View>
-        <Modal
-          transparent={true}
-          visible={isRequestModal}
-          animationType="fade"
-          onOrientationChange="fullScreen">
-          <View
-            style={{
-              backgroundColor: '#000000aa',
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              top: 0,
-            }}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                top: 10,
-                padding: 20,
-                borderRadius: 4,
-                height: '97%',
-              }}>
-              <View style={{ flexDirection: 'row-reverse', marginBottom: 40 }}>
-                <TouchableOpacity onPress={() => setRequestModal(false)}>
-                  <Icon name="close-circle" size={35} color={'black'} />
-                </TouchableOpacity>
-              </View>
-              <View style={{ justifyContent: 'center' }}>
-                <View
-                  style={{
-                    alignItems: 'center',
-                    width: '100%',
-                    marginTop: '-5%',
-                  }}>
-                  <View>
-                    <Image
-                      style={{ width: 375, height: 250 }}
-                      source={{
-                        uri: `http://13.232.190.226/api/poster/view/${image}`,
-                      }}
-                    />
-                  </View>
-                </View>
-                <View>
-                  <Formik
-                    initialValues={initialValues}
-                    validationSchema={validation}
-                    onSubmit={(values) => {
-                      onSubmitRequest(values);
-                    }}>
-                    {({
-                      values,
-                      handleChange,
-                      handleBlur,
-                      errors,
-                      setFieldTouched,
-                      touched,
-                      isValid,
-                      handleSubmit,
-                    }) => (
-                        <View style={{ marginTop: 10 }}>
-                          <TextInput
-                            style={{
-                              alignSelf: 'center',
-                              borderColor: '#e6e6e6',
-                              borderWidth: 1,
-                              borderRadius: 10,
-                              width: '95%',
-                              marginVertical: 8,
-                              paddingLeft: 8,
-                              paddingRight: 8,
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                            }}
-                            underlineColorAndroid="transparent"
-                            placeholder="Message"
-                            numberOfLines={3}
-                            multiline={true}
-                            defaultValue={initialValues.notes}
-                            onChangeText={handleChange('notes')}
-                            onBlur={handleBlur('notes')}
-                          />
-                          <Text style={styles.error}>{errors.notes}</Text>
-                          <View
-                            style={{
-                              marginTop: 20,
-                              width: '100%',
-                              alignItems: 'center',
-                            }}>
-                            <TouchableOpacity
-                              style={{
-                                borderRadius: 20,
-                                backgroundColor: 'tomato',
-                                padding: 10,
-                                width: '50%',
-                                alignItems: 'center',
-                                marginVertical: '-5%',
-                              }}
-                              onPress={handleSubmit}>
-                              <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                                Send Request
-                            </Text>
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      )}
-                  </Formik>
-                </View>
-              </View>
-            </View>
-          </View>
-        </Modal>
+
       </ScrollView>
     </>
   );

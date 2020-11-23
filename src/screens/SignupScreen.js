@@ -43,7 +43,7 @@ const profileSchema = yup.object({
     .max(
       8,
       ({ max }) =>
-        `Password should not be  more than ${max} `
+        `Password should not be  more than ${max}`
     )
     .required('Enter Password'),
   confPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords don't match")
@@ -80,6 +80,7 @@ const SignupScreen = (props) => {
         props.navigation.navigate('otp', {
           userId: responseData.data.userId,
         });
+        console.log("sign up page", responseData)
       } else {
         alert(responseData.message);
       }

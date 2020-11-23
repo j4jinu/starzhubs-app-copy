@@ -70,6 +70,7 @@ const HomeNavigator = createStackNavigator(
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
+
     },
     EditPoster: {
       screen: EditPosterScreen,
@@ -134,6 +135,7 @@ const PosterNavigator = createStackNavigator(
     Posters: PosterListScreen,
     PosterDetails: {
       screen: PosterDetailsScreen,
+
     },
     PosterRequest: {
       screen: PosterRequestScreen,
@@ -237,6 +239,7 @@ const AccountNavigator = createStackNavigator(
         title: 'Your media',
       },
     },
+
     Photo: {
       screen: PhotoUploadScreen,
       navigationOptions: {

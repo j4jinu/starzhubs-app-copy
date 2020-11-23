@@ -39,7 +39,14 @@ const PosterRequestScreen = (props) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        Alert.alert('Success', 'Request Sent Successfully ')
+        Alert.alert('Success', 'Request Sent Successfully ',
+          [
+            {
+              Text: 'OK',
+              onPress: () => props.navigation.navigate('Posters')
+            }
+
+          ])
       })
       .catch((error) => {
         alert(error);
