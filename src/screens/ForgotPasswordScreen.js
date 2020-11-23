@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../config/theme';
 const ForgotPasswordScreen = ({ navigation }) => {
+  const [email, setEmail] = useState('')
   const [isEmailMode, setIsEmailMode] = useState(true);
   const [isSuccessMode, setIsSuccessMode] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
       .required('Enter Confirm Password'),
   });
 
-  const onResetSubmit = (values) => {
+  const onResetSubmit = async (values) => {
+    setEmail(values.email)
     const options = {
       method: 'POST',
       headers: {
@@ -61,23 +63,21 @@ const ForgotPasswordScreen = ({ navigation }) => {
       },
       body: JSON.stringify(values),
     };
-    fetch('http://13.232.190.226/api/auth/reset', options)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result.success) {
-            setIsEmailMode((prevMode) => !prevMode);
-          } else {
-            alert(result.message);
-          }
-        },
-        (error) => {
-          alert(error);
-        },
-      );
+    try {
+      const otpRes = await fetch('http://13.232.190.226/api/auth/reset', options)
+      const otpData = await otpRes.json()
+      if (otpData.success) {
+        setIsEmailMode((prevMode) => !prevMode);
+      } else {
+        alert("Failed: "+otpData.message);
+      }
+    } catch (error) {
+      alert('Something went wrong')
+    }
   };
 
-  const onRecoverySubmit = (values) => {
+  const onRecoverySubmit = async (values) => {
+    values.email = email
     const options = {
       method: 'PUT',
       headers: {
@@ -85,20 +85,17 @@ const ForgotPasswordScreen = ({ navigation }) => {
       },
       body: JSON.stringify(values),
     };
-    fetch('http://13.232.190.226/api/auth/reset', options)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          if (result.success) {
-            setIsSuccessMode((prevMode) => !prevMode);
-          } else {
-            Alert.alert('Invalid OTP', 'Enter Valid OTP');
-          }
-        },
-        (error) => {
-          alert(error);
-        },
-      );
+    try {
+      const resetRes = await fetch('http://13.232.190.226/api/auth/reset', options)
+      const resetData = await resetRes.json()
+      if (resetData.success) {
+        setIsSuccessMode((prevMode) => !prevMode);
+      } else {
+        alert("Failed: "+resetData.message);
+      }
+    } catch (error) {
+      alert('Something went wrong')
+    }
   };
   return (
     <ScrollView>
@@ -359,6 +356,10 @@ const ForgotPasswordScreen = ({ navigation }) => {
         )}
         {isSuccessMode && (
           <React.Fragment>
+            <Image
+              source={require('../assets/tick.jpg')}
+              style={{ height: 60, width: '15%', marginBottom: '10%' }}
+            />
             <Text>Your password has been changed</Text>
             <TouchableOpacity
               style={styles.forgotBtn}

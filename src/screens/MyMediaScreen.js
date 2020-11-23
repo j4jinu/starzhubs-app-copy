@@ -246,17 +246,13 @@ const MyMediaScreen = (props) => {
                         onPress={() =>
                           props.navigation.navigate('EditMedia', {
                             talentId: t._id,
+                            mediaFile: m.file,
+                            mediaType: m.fileType,
+                            caption: m.caption,
+                            description: m.description,
+                            mediaId:m._id
                           })
                         }
-                          // onPress={() =>
-                          //   props.navigation.navigate('EditMedia', {
-                          //     talentId: t._id,
-                          //     mediaFile: m.file,
-                          //     mediaType: m.fileType,
-                          //     caption: m.caption,
-                          //     description: m.description,
-                          //   })
-                          // }
                           >
                           <DIcon
                             name="edit"

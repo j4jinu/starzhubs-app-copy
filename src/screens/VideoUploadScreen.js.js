@@ -13,10 +13,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
 import { Formik } from 'formik';
-import ImagePicker from 'react-native-image-picker';
 import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
 import WebView from 'react-native-webview';
+import {Snackbar} from 'react-native-paper';
 
 const mediaSchema = yup.object({
   link: yup.string().required('Enter your YouTube video link'),
@@ -28,12 +28,12 @@ const VideoUploadScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const auth = useContext(AuthContext);
   const [ytLink, setYtLink] = useState('');
-  const [image, setImage] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState();
 
   const transformYoutubeLinks = (text) => {
     const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
-
     const match = text.match(fullreg);
     if (match && match.length > 0) {
       for (var i = 0; i < match.length; i++) {
@@ -47,16 +47,14 @@ const VideoUploadScreen = (props) => {
     }
   };
 
-  const uploadMedia = async (values) => {
+  const uploadMedia = async (values, {resetForm}) => {
     let text = values.link;
     const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
-
     const match = text.match(fullreg);
     if (match && match.length > 0) {
       values.talentId = talentId;
       values.link = 'https://www.youtube.com/watch?v=' + ytLink;
-      console.log('Values: ', values);
       try {
         const response = await fetch(
           'http://13.232.190.226/api/talent/upload/media',
@@ -71,11 +69,15 @@ const VideoUploadScreen = (props) => {
         );
         const resData = await response.json();
         if (resData.success) {
-          alert(resData.message);
-          props.navigation.goBack();
-          // props.navigation.navigate('MyMedia')
+          const msg ="Video Uploaded Successfully. Check Your Media Screen."
+          setMessage(msg)
+          setVisible(!visible);
+          setYtLink('')
+          resetForm({ values: '' });
         } else {
-          alert(resData.message);
+          const msg ="Something went wrong. Try again!"
+          setMessage(msg)
+          setVisible(!visible);
         }
       } catch (error) { }
     } else {
@@ -83,8 +85,15 @@ const VideoUploadScreen = (props) => {
     }
   };
 
+  const onDismissSnackBar = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+      {message}  
+      </Snackbar>
       <ScrollView>
         <Formik
           initialValues={{
@@ -92,7 +101,10 @@ const VideoUploadScreen = (props) => {
             description: '',
           }}
           validationSchema={mediaSchema}
-          onSubmit={(values) => uploadMedia(values)}>
+          onSubmit={(values, {setSubmitting, resetForm}) =>
+            uploadMedia(values, {setSubmitting, resetForm})
+          }
+          >
           {({
             handleChange,
             handleBlur,

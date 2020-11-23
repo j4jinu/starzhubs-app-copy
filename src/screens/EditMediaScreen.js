@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -9,14 +9,14 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  PermissionsAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import ImagePicker from 'react-native-image-picker';
-import {AuthContext} from '../context/authContext';
+import { Formik } from 'formik';
+import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
+import WebView from 'react-native-webview';
+import {Snackbar} from 'react-native-paper';
 
 const mediaSchema = yup.object({
   caption: yup.string().required('Enter caption about this media'),
@@ -25,100 +25,31 @@ const mediaSchema = yup.object({
 
 const EditMediaScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
+  const mediaId = props.navigation.getParam('mediaId');
+  const mediaFile = props.navigation.getParam('mediaFile')
+  const caption = props.navigation.getParam('caption')
+  const description = props.navigation.getParam('description')
+  const mediaType = props.navigation.getParam('mediaType')
   const auth = useContext(AuthContext);
+  const [visible, setVisible] = useState(false);
 
-  const [image, setImage] = useState('');
-  const [isImage, setIsImage] = useState(false);
-
-  const requestCameraPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'Cool Photo App Camera Permission',
-          message:
-            'starzhubs needs access to your camera ' +
-            'so you can take awesome pictures.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        chooseFile();
-        //console.log('You can use the camera');
-      } else {
-        console.log('Camera permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-
-  const chooseFile = () => {
-    //console.log('choose file');
-    var options = {
-      title: 'Select Image',
-      customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-      maxWidth: 500,
-      maxHeight: 500,
-      quality: 0.2,
-    };
-    ImagePicker.launchImageLibrary(options, (response) => {
-      //console.log('Response = ', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
-      } else if (response.uri === '') {
-        setIsImage(true);
-      } else {
-        setIsImage(false);
-        setImage(response.uri);
-      }
-    });
-  };
-
-  const uploadMedia = async (values, {setSubmitting}) => {
-    if (image === '') {
-      alert('Please choose an Image');
-      setSubmitting(false);
-      return;
-    }
-    console.log("imgstate",image);
-    const image_uri = image;
-    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
-    console.log('Type:', fileType);
+  const editMedia = async (values, { setSubmitting }) => {
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('description', values.description);
-    formData.append('caption', values.caption);
-    formData.append('media', {
-      uri: image_uri,
-      name: `photo.${fileType}`,
-      type: `image/${fileType}`,
-    });
+    formData.append('title', values.caption);
     const requestOptions = {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + auth.token,
         'Content-Type': 'multipart/form-data',
       },
       body: formData,
     };
-    console.log("form data",formData);
+    console.log("form data", formData);
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/talent/upload/media`,
+        `http://13.232.190.226/api/talent/media/${mediaId}`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -126,26 +57,30 @@ const EditMediaScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
-      setImage('');
-      alert(uploadResData.message);
-      setImage('');
-      props.navigation.goBack();
+      setVisible(!visible);
     } catch (error) {
       console.error('error', error);
     }
   };
 
+  const onDismissSnackBar = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+        Media Details Updated Successfully. Check Your Media Screen.
+      </Snackbar>
       <ScrollView>
         <Formik
           initialValues={{
-            caption: '',
-            description: '',
+            caption: caption,
+            description: description,
           }}
           validationSchema={mediaSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            uploadMedia(values, {setSubmitting})
+          onSubmit={(values, { setSubmitting }) =>
+            editMedia(values, { setSubmitting })
           }>
           {({
             handleChange,
@@ -156,106 +91,144 @@ const EditMediaScreen = (props) => {
             errors,
             values,
           }) => (
-            <>
-              {image !== '' && (
-                <Image
-                  source={{uri: image}}
-                  style={{width: '100%', height: 200, marginBottom: 10}}
-                />
-              )}
-              <TouchableOpacity
-                style={styles.imageBtn}
-                onPress={requestCameraPermission}>
-                <Text style={{color: theme.$primaryColor}}> Choose Image</Text>
-              </TouchableOpacity>
-              {isImage && (
-                <Text
+              <>
+                {mediaType === 'image' ? (
+                  <Image
+                    style={{
+                      width: '100%',
+                      height: 220,
+                      resizeMode: 'cover',
+                    }}
+                    source={{
+                      uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+                    }}
+                  />
+                ) : (
+                <View
                   style={{
-                    fontSize: 13,
-                    color: 'red',
+                    lex: 1,
                     alignSelf: 'center',
-                    marginTop: 1,
+                    width: '90%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: 200,
+                    marginHorizontal: 3,
+                    marginVertical: 3,
+                    marginTop: 10,
                   }}>
-                  Choose a Poster image
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.caption ? 'red' : 'gray',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'Caption'}
-                  onChangeText={handleChange('caption')}
-                  onBlur={handleBlur('caption')}
-                  value={values.caption}
-                />
-              </View>
-              {touched.caption && errors.caption && (
-                <Text style={styles.errorText}>
-                  {touched.caption && errors.caption}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.description ? 'red' : 'gray',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  multiline
-                  numberOfLines={4}
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'description'}
-                  onChangeText={handleChange('description')}
-                  onBlur={handleBlur('description')}
-                  value={values.description}
-                />
-              </View>
-              {touched.description && errors.description && (
-                <Text style={styles.errorText}>
-                  {touched.description && errors.description}
-                </Text>
-              )}
-              {!isSubmitting && (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.registerBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.registerBtnText}>UPLOAD</Text>
-                </TouchableOpacity>
-              )}
-              {isSubmitting && (
-                <ActivityIndicator
-                  style={{marginTop: 10}}
-                  size={'large'}
-                  color={theme.$primaryColor}
-                />
-              )}
-            </>
-          )}
+                    <View
+                      style={{
+                        lex: 1,
+                        alignSelf: 'center',
+                        width: '100%',
+                        height: 200,
+                        marginHorizontal: 3,
+                        marginVertical: 3,
+                        marginTop: 10,
+                      }}>
+                      <WebView
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        source={{
+                          uri:'https://www.youtube.com/embed/' +
+                          mediaFile.substring(mediaFile.lastIndexOf('=') + 1)
+                        }}
+                      />
+                    </View>
+                </View>                  
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: '5%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }} 
+                >
+                  <Text style={{color:'red'}}>You can update only the caption and description , not the media file!</Text>
+                </View>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: '5%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.caption ? 'red' : 'gray',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'Caption'}
+                    defaultValue={caption}
+                    onChangeText={handleChange('caption')}
+                    onBlur={handleBlur('caption')}
+                    value={values.caption}
+                  />
+                </View>
+                {touched.caption && errors.caption && (
+                  <Text style={styles.errorText}>
+                    {touched.caption && errors.caption}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.description ? 'red' : 'gray',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    multiline
+                    numberOfLines={4}
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    defaultValue={description}
+                    placeholder={'description'}
+                    onChangeText={handleChange('description')}
+                    onBlur={handleBlur('description')}
+                    value={values.description}
+                  />
+                </View>
+                {touched.description && errors.description && (
+                  <Text style={styles.errorText}>
+                    {touched.description && errors.description}
+                  </Text>
+                )}
+                {!isSubmitting && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.registerBtn}
+                    onPress={handleSubmit}>
+                    <Text style={styles.registerBtnText}>UPLOAD</Text>
+                  </TouchableOpacity>
+                )}
+                {isSubmitting && (
+                  <ActivityIndicator
+                    style={{ marginTop: 10 }}
+                    size={'large'}
+                    color={theme.$primaryColor}
+                  />
+                )}
+              </>
+            )}
         </Formik>
       </ScrollView>
     </View>

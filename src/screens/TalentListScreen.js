@@ -163,7 +163,9 @@ const TalentListScreen = (props) => {
                   </View>
                   <View style={styles.fieldDiv}>
                     <Text style={styles.fieldTitle}>Industries</Text>
-                    <Text style={styles.fieldText}>{t.chars.industry}</Text>
+                    <Text style={styles.fieldText}>
+                      {t.chars.industry.toString()}
+                    </Text>
                   </View>
                   <View style={styles.fieldDiv}>
                     <Text style={styles.fieldTitle}>Projects</Text>

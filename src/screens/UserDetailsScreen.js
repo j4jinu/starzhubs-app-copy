@@ -36,6 +36,8 @@ const UserDetailsScreen = (props) => {
   const [isFriends, setIsFriends] = useState({details: {}});
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
+  const [categoryId, setCategoryId] = useState('');
+
 
   useEffect(() => {
     const getUserDetails = () => {
@@ -171,6 +173,22 @@ const UserDetailsScreen = (props) => {
       );
   };
 
+  const handleMultiple = (value) => {
+    const newValue = [...checked]
+    checked.forEach(c => {
+      if (c === value) {
+        newValue.splice(value)
+      } else {
+        newValue.push(value)
+      }
+      setChecked(newValue)
+    });
+  }
+
+  const handleCheck = (val) => {
+    return checked(item => val === item);
+}
+
   const handleToggle = (value) => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -180,6 +198,7 @@ const UserDetailsScreen = (props) => {
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
+    console.log("newcheck",checked);
   };
 
   const cancelRequest = () => {
@@ -575,15 +594,16 @@ const UserDetailsScreen = (props) => {
                     {talents.map((item) => (
                       <TouchableOpacity
                         key={item._id}
-                        style={
-                          checked === item._id
+                        
+                        onPress={() => {
+                          // setChecked(item._id);
+                          handleMultiple(item._id);
+                        }}
+                        style={checked.indexOf(item._id) > -1 
                             ? styles.categoryItemActive
                             : styles.categoryItem
                         }
-                        onPress={() => {
-                          setChecked(item._id);
-                          handleToggle(item._id);
-                        }}>
+                        >
                         <Text>{item.category.title}</Text>
                       </TouchableOpacity>
                     ))}

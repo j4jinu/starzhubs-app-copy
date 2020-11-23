@@ -17,6 +17,7 @@ import {Formik} from 'formik';
 import ImagePicker from 'react-native-image-picker';
 import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
+import {Snackbar} from 'react-native-paper';
 
 const mediaSchema = yup.object({
   caption: yup.string().required('Enter caption about this media'),
@@ -26,9 +27,9 @@ const mediaSchema = yup.object({
 const PhotoUploadScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const auth = useContext(AuthContext);
-
   const [image, setImage] = useState('');
   const [isImage, setIsImage] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const requestCameraPermission = async () => {
     try {
@@ -46,7 +47,6 @@ const PhotoUploadScreen = (props) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         chooseFile();
-        //console.log('You can use the camera');
       } else {
         console.log('Camera permission denied');
       }
@@ -56,7 +56,6 @@ const PhotoUploadScreen = (props) => {
   };
 
   const chooseFile = () => {
-    //console.log('choose file');
     var options = {
       title: 'Select Image',
       customButtons: [
@@ -71,7 +70,6 @@ const PhotoUploadScreen = (props) => {
       quality: 0.2,
     };
     ImagePicker.launchImageLibrary(options, (response) => {
-      //console.log('Response = ', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -88,16 +86,14 @@ const PhotoUploadScreen = (props) => {
     });
   };
 
-  const uploadMedia = async (values, {setSubmitting}) => {
+  const uploadMedia = async (values, {setSubmitting, resetForm}) => {
     if (image === '') {
       alert('Please choose an Image');
       setSubmitting(false);
       return;
     }
-    console.log("imgstate",image);
     const image_uri = image;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
-    console.log('Type:', fileType);
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('description', values.description);
@@ -115,7 +111,6 @@ const PhotoUploadScreen = (props) => {
       },
       body: formData,
     };
-    console.log("form data",formData);
     try {
       const uploadRes = await fetch(
         `http://13.232.190.226/api/talent/upload/media`,
@@ -126,17 +121,24 @@ const PhotoUploadScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
+      setVisible(!visible);
       setImage('');
-      alert(uploadResData.message);
-      setImage('');
-      props.navigation.goBack();
+      resetForm({ values: '' });
+      // props.navigation.goBack();
     } catch (error) {
       console.error('error', error);
     }
   };
 
+  const onDismissSnackBar = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+        Image Uploaded Successfully. Check Your Media Screen.
+      </Snackbar>
       <ScrollView>
         <Formik
           initialValues={{
@@ -144,8 +146,8 @@ const PhotoUploadScreen = (props) => {
             description: '',
           }}
           validationSchema={mediaSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            uploadMedia(values, {setSubmitting})
+          onSubmit={(values, {setSubmitting, resetForm}) =>
+            uploadMedia(values, {setSubmitting, resetForm})
           }>
           {({
             handleChange,

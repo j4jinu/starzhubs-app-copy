@@ -68,17 +68,16 @@ const EditPosterScreen = (props) => {
     } else {
       setIsImage(false);
     }
+    const ed = Moment(endDate, 'DD-MM-YYYY').format('yyyy-MM-DD')
+    setEndDate(ed);
+    console.log("end date", ed);
+
+
     var formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
-    formData.append(
-      'startDate',
-      Moment(startDate, 'DD-MM-YYYY').format('yyyy-MM-DD'),
-    );
-    formData.append(
-      'endDate',
-      Moment(endDate, 'DD-MM-YYYY').format('yyyy-MM-DD'),
-    );
+    formData.append('startDate',startDate);
+    formData.append('endDate',endDate );
     console.log('formdata', formData);
     // const uri = image;
     // let fileType = uri.substring(uri.lastIndexOf('.') + 1);
@@ -95,6 +94,7 @@ const EditPosterScreen = (props) => {
       },
       body: formData,
     };
+    console.log("form data",formData);
 
     fetch(`http://13.232.190.226/api/poster/${posterId}`, requestOptions)
       .then((response) => response.json())
@@ -119,14 +119,12 @@ const EditPosterScreen = (props) => {
   };
 
   const handleStartDate = (date) => {
-    console.log("start",date);
     setSDate(date);
     setStartDate(date)
-    console.log("s",sDate);
     if (date === '') {
       setIsStartDate(true);
     } else {
-      setStartDate(Moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD'));
+      setStartDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
       console.log("startdate",startDate);
 
       setIsStartDate(false);
@@ -138,8 +136,7 @@ const EditPosterScreen = (props) => {
     if (date === '') {
       setIsStarDate(true);
     } else {
-      const endDateFormat = Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD');
-      setEndDate(endDateFormat);
+      setEndDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
       setIsEndDate(false);
     }
   };
