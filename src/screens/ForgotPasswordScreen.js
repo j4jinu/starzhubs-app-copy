@@ -27,8 +27,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
 
   const forgotPwdValidation = yup.object({
     email: yup.string()
-            .matches(emailRegExp, 'Invalid Email Address')
-            .required('Enter Your Email ID'),
+      .matches(emailRegExp, 'Invalid Email Address')
+      .required('Enter Your Email ID'),
   });
 
   const initialValuesReset = {
@@ -69,7 +69,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       if (otpData.success) {
         setIsEmailMode((prevMode) => !prevMode);
       } else {
-        alert("Failed: "+otpData.message);
+        alert("Failed: " + otpData.message);
       }
     } catch (error) {
       alert('Something went wrong')
@@ -91,7 +91,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       if (resetData.success) {
         setIsSuccessMode((prevMode) => !prevMode);
       } else {
-        alert("Failed: "+resetData.message);
+        alert("Failed: " + resetData.message);
       }
     } catch (error) {
       alert('Something went wrong')
@@ -263,6 +263,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                         autoCapitalize="sentences"
                         autoCorrect
                         onChangeText={handleChange('otp')}
+                        keyboardType={'number-pad'}
                         onBlur={handleBlur('otp')}
                         value={values.otp}
                       />
@@ -357,16 +358,16 @@ const ForgotPasswordScreen = ({ navigation }) => {
         {isSuccessMode && (
           <React.Fragment>
             <Image
-              source={require('../assets/tick.jpg')}
-              style={{ height: 60, width: '15%', marginBottom: '10%' }}
+              source={require('../assets/checked.png')}
+              style={{ height: 70, width: '20%', marginBottom: '10%', tintColor: "green", marginTop: "40%" }}
             />
-            <Text>Your password has been changed</Text>
+
             <TouchableOpacity
-              style={styles.forgotBtn}
+
               onPress={() => {
                 navigation.navigate('Login');
               }}>
-              <Text style={styles.forgotText}>Login</Text>
+              <Text>Your password has been changed</Text>
             </TouchableOpacity>
           </React.Fragment>
         )}

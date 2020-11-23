@@ -6,14 +6,16 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import {color} from 'react-native-reanimated';
+import MediaItem from '../components/MediaItem';
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 
-const PortfolioListScreen = (props) => {
+const MediaListSceen = (props) => {
   const auth = useContext(AuthContext);
   const [category, setCategory] = useState([]);
   const [users, setUsers] = useState([]);
+  const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoryId, setCategoryId] = useState('');
 
@@ -55,12 +57,13 @@ const PortfolioListScreen = (props) => {
         );
         const userData = await userResponse.json();
         if (userData.success) {
-          setUsers(userData.data.users);
+          setMedia(userData.data.medias);
           return;
         }
         // alert(userData.message);
-        setUsers([]);
+        setMedia([]);
       } catch (error) {
+        console.log(error);
         alert('Something went wrong. Try again later.');
       }
     };
@@ -77,8 +80,11 @@ const PortfolioListScreen = (props) => {
     );
   }
   return (
-    <View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+    <View style={{backgroundColor: 'white'}}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{marginTop: 10}}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
@@ -96,33 +102,28 @@ const PortfolioListScreen = (props) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {users.length > 0 && (
+      {media.length > 0 && (
         <FlatList
-          style={{backgroundColor: '#fafafa', marginTop: 20}}
+          style={{backgroundColor: 'white', marginTop: 15}}
           keyExtractor={(item, index) => item.id}
-          data={users}
+          data={media}
           renderItem={({item}) => (
-            <UserGridItem
-              userId={item._id}
-              name={item.name}
-              locaton={item.locaton}
-              image={item.image}
+            <MediaItem
+              media={item.media}
+              user={item.userId}
               navigation={props.navigation}
             />
           )}
-          numColumns={2}
         />
       )}
-      {users.length === 0 && (
+      {media.length === 0 && (
         <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
             paddingVertical: 25,
           }}>
-          <Text style={{fontSize: 18, color: 'tomato'}}>
-            Sorry, No users available.
-          </Text>
+          <Text style={{fontSize: 18, color: 'tomato'}}>Sorry, No media.</Text>
         </View>
       )}
     </View>
@@ -164,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PortfolioListScreen;
+export default MediaListSceen;

@@ -192,12 +192,12 @@ const EditProfileScreen = (props) => {
       setUserInfo(userData.data.user);
       setDob(userData.data.user.dob)
       setGender(userData.data.user.gender)
-      if(userData.data.user.languages !==''){
+      if (userData.data.user.languages !== '') {
         var myString = userData.data.user.languages;
         const lng = myString.split(',')
         setSelectedItems(lng)
       }
-      
+
     };
     getUserDetails();
   }, []);

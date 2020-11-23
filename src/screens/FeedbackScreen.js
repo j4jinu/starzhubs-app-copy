@@ -192,7 +192,6 @@ const FeedbackScreen = ({ navigation }) => {
                       size={18}
                       color={theme.$primaryColor}
                       style={{
-                        //marginTop: 11,
                         marginLeft: '3%',
                       }}
                     />

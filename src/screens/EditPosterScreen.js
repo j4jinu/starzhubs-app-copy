@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   Alert,
@@ -11,14 +11,14 @@ import {
   TextInput,
 } from 'react-native';
 import * as Yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import ImagePicker from 'react-native-image-picker';
 import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {AuthContext} from '../context/authContext';
-import {Snackbar} from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+import { Snackbar } from 'react-native-paper';
 
 const EditPosterScreen = (props) => {
   const posterId = props.navigation.getParam('posterId');
@@ -33,9 +33,9 @@ const EditPosterScreen = (props) => {
     `http://13.232.190.226/api/poster/view/${img}`,
   );
   const [startDate, setStartDate] = useState(
-    Moment(stDate).format('DD/MM/YYYY'),
+    Moment(stDate).format('YYYY/MM/DD'),
   );
-  const [endDate, setEndDate] = useState(Moment(edDate).format('DD/MM/YYYY'));
+  const [endDate, setEndDate] = useState(Moment(edDate).format('YYYY/MM/DD'));
   const [isStartDate, setIsStartDate] = useState(false);
   const [isEndDate, setIsEndDate] = useState(false);
   const [isImage, setIsImage] = useState(false);
@@ -76,8 +76,8 @@ const EditPosterScreen = (props) => {
     var formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
-    formData.append('startDate',startDate);
-    formData.append('endDate',endDate );
+    formData.append('startDate', startDate);
+    formData.append('endDate', endDate);
     console.log('formdata', formData);
     // const uri = image;
     // let fileType = uri.substring(uri.lastIndexOf('.') + 1);
@@ -94,7 +94,7 @@ const EditPosterScreen = (props) => {
       },
       body: formData,
     };
-    console.log("form data",formData);
+    console.log("form data", formData);
 
     fetch(`http://13.232.190.226/api/poster/${posterId}`, requestOptions)
       .then((response) => response.json())
@@ -104,7 +104,6 @@ const EditPosterScreen = (props) => {
             const msg = 'Poster Edited Successfully.....';
             setMessage(msg);
             setVisible(!visible);
-            // props.navigation.navigate('MyPosters');
             setStartDate('');
             setEndDate('');
             setImage(null);
@@ -125,7 +124,7 @@ const EditPosterScreen = (props) => {
       setIsStartDate(true);
     } else {
       setStartDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
-      console.log("startdate",startDate);
+      console.log("startdate", startDate);
 
       setIsStartDate(false);
     }
@@ -173,7 +172,7 @@ const EditPosterScreen = (props) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -196,16 +195,16 @@ const EditPosterScreen = (props) => {
 
   return (
     <>
-      <ScrollView>
-        <View style={styles.container}>
-          <Snackbar
-            visible={visible}
-            duration={7000}
-            onDismiss={onDismissSnackBar}>
-            {message}
-          </Snackbar>
-
-          <View style={{justifyContent: 'center'}}>
+      <View style={styles.container}>
+        <Snackbar
+          style={{ marginBottom: 10 }}
+          visible={visible}
+          duration={7000}
+          onDismiss={onDismissSnackBar}>
+          {message}
+        </Snackbar>
+        <ScrollView>
+          <View style={{ justifyContent: 'center' }}>
             <View>
               <Formik
                 initialValues={posterInitValues}
@@ -221,246 +220,247 @@ const EditPosterScreen = (props) => {
                   handleSubmit,
                   touched,
                 }) => (
-                  <View
-                    style={{marginLeft: 25, marginRight: 25, marginTop: 10}}>
-                    {image && (
-                      <Image
-                        source={{uri: image}}
-                        style={{width: '100%', height: 200, marginBottom: 10}}
-                      />
-                    )}
-                    <TouchableOpacity
-                      style={styles.imageBtn}
-                      onPress={requestCameraPermission}>
-                      <Text style={{color: 'white'}}> Choose Image</Text>
-                    </TouchableOpacity>
-                    {isImage && (
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          color: 'red',
-                          alignSelf: 'center',
-                          marginTop: 1,
-                        }}>
-                        Choose a poster image
-                      </Text>
-                    )}
                     <View
-                      style={{
-                        borderWidth: 1,
-                        borderColor: 'gray',
-                        borderRadius: 8,
-                        paddingLeft: 2,
-                        marginTop: 5,
-                        marginBottom: 5,
-                        width: '100%',
-                        paddingHorizontal: '7%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <Cicon
-                        name="subtitles"
-                        size={25}
-                        style={{color: 'tomato', marginRight: '2%'}}
-                      />
-                      <TextInput
-                        style={{paddingVertical: 5}}
-                        underlineColorAndroid="transparent"
-                        defaultValue={title}
-                        placeholder="Title"
-                        onChangeText={handleChange('title')}
-                        onBlur={handleBlur('title')}
-                      />
-                    </View>
-                    {touched.title && errors.title && (
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          color: 'red',
-                          alignSelf: 'center',
-                          marginTop: -10,
-                        }}>
-                        {errors.title}
-                      </Text>
-                    )}
-                    <View
-                      style={{
-                        borderWidth: 1,
-                        borderColor: 'gray',
-                        borderRadius: 8,
-                        paddingLeft: 2,
-                        marginTop: 5,
-                        marginBottom: 5,
-                        width: '100%',
-                        paddingHorizontal: '8%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}>
-                      <Icon
-                        name="ios-information-circle"
-                        size={25}
-                        style={{color: 'tomato', marginRight: '2%'}}
-                      />
-                      <TextInput
-                        underlineColorAndroid="transparent"
-                        placeholder="Description"
-                        defaultValue={description}
-                        numberOfLines={6}
-                        multiline={true}
-                        onChangeText={handleChange('description')}
-                        onBlur={handleBlur('description')}
-                      />
-                    </View>
-
-                    {touched.description && errors.description && (
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          color: 'red',
-                          alignSelf: 'center',
-                          marginTop: -1,
-                        }}>
-                        {errors.description}
-                      </Text>
-                    )}
-                    <DatePicker
-                      style={{
-                        borderWidth: 1,
-                        borderColor: 'gray',
-                        borderRadius: 8,
-                        paddingLeft: 3,
-                        width: '100%',
-                        marginTop: 5,
-                        marginBottom: 5,
-                      }}
-                      date={sDate}
-                      mode="date"
-                      placeholder="Start Date"
-                      format="DD/MM/YYYY"
-                      minDate={Moment().format('DD/MM/YYYY')}
-                      // maxDate="01-01-2019"
-                      confirmBtnText="Confirm"
-                      cancelBtnText="Cancel"
-                      iconComponent={
-                        <Cicon
-                          name="date-range"
-                          size={23}
-                          style={{
-                            position: 'absolute',
-                            left: 0,
-                            top: 8,
-                            color: 'tomato',
-                          }}
+                      style={{ marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+                      {image && (
+                        <Image
+                          source={{ uri: image }}
+                          style={{ width: '100%', height: 200, marginBottom: 10 }}
                         />
-                      }
-                      customStyles={{
-                        dateInput: {
-                          borderWidth: 0,
-                          marginLeft: '10%',
-                          alignItems: 'flex-start',
-                        },
-                      }}
-                      onDateChange={(date) => {
-                        handleStartDate(date);
-                      }}
-                    />
-                    {isStartDate && (
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          color: 'red',
-                          alignSelf: 'center',
-                          marginTop: 1,
-                        }}>
-                        Choose Start Date
-                      </Text>
-                    )}
-
-                    <DatePicker
-                      style={{
-                        borderWidth: 1,
-                        borderColor: 'gray',
-                        borderRadius: 8,
-                        paddingLeft: 3,
-                        width: '100%',
-                        marginTop: 5,
-                        marginBottom: 5,
-                      }}
-                      date={eDate}
-                      mode="date"
-                      placeholder="End Date"
-                      format="DD/MM/YYYY"
-                      minDate={sDate}
-                      // maxDate="01-01-2019"
-                      confirmBtnText="Confirm"
-                      cancelBtnText="Cancel"
-                      iconComponent={
-                        <Cicon
-                          name="date-range"
-                          size={23}
-                          style={{
-                            position: 'absolute',
-                            left: 0,
-                            top: 8,
-                            color: 'tomato',
-                          }}
-                        />
-                      }
-                      customStyles={{
-                        dateInput: {
-                          borderWidth: 0,
-                          marginLeft: '10%',
-                          alignItems: 'flex-start',
-                        },
-                      }}
-                      onDateChange={(date) => {
-                        handleEndDate(date);
-                      }}
-                    />
-                    {isEndDate && (
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          color: 'red',
-                          alignSelf: 'center',
-                          marginTop: 1,
-                        }}>
-                        Choose End Date
-                      </Text>
-                    )}
-
-                    <View
-                      style={{
-                        marginTop: 10,
-                        width: '100%',
-                        alignItems: 'center',
-                      }}>
+                      )}
                       <TouchableOpacity
-                        style={{
-                          borderRadius: 2,
-                          backgroundColor: 'tomato',
-                          padding: 10,
-                          width: '50%',
-                          alignItems: 'center',
-                          borderRadius: 20,
-                        }}
-                        onPress={handleSubmit}>
+                        style={styles.imageBtn}
+                        onPress={requestCameraPermission}>
+                        <Text style={{ color: 'white' }}> Choose Image</Text>
+                      </TouchableOpacity>
+                      {isImage && (
                         <Text
                           style={{
-                            color: 'white',
-                            fontWeight: 'bold',
+                            fontSize: 13,
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginTop: 1,
                           }}>
-                          Update Poster
+                          Choose a poster image
                         </Text>
-                      </TouchableOpacity>
+                      )}
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderColor: 'gray',
+                          borderRadius: 8,
+                          paddingLeft: 2,
+                          marginTop: 5,
+                          marginBottom: 5,
+                          width: '100%',
+                          paddingHorizontal: '7%',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Cicon
+                          name="subtitles"
+                          size={25}
+                          style={{ color: 'tomato', marginRight: '2%' }}
+                        />
+                        <TextInput
+                          style={{ paddingVertical: 5 }}
+                          underlineColorAndroid="transparent"
+                          defaultValue={title}
+                          placeholder="Title"
+                          onChangeText={handleChange('title')}
+                          onBlur={handleBlur('title')}
+                        />
+                      </View>
+                      {touched.title && errors.title && (
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginTop: -10,
+                          }}>
+                          {errors.title}
+                        </Text>
+                      )}
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          borderColor: 'gray',
+                          borderRadius: 8,
+                          paddingLeft: 2,
+                          marginTop: 5,
+                          marginBottom: 5,
+                          width: '100%',
+                          paddingHorizontal: '8%',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        <Icon
+                          name="ios-information-circle"
+                          size={25}
+                          style={{ color: 'tomato', marginRight: '2%' }}
+                        />
+                        <TextInput
+                          underlineColorAndroid="transparent"
+                          placeholder="Description"
+                          defaultValue={description}
+                          numberOfLines={6}
+                          multiline={true}
+                          onChangeText={handleChange('description')}
+                          onBlur={handleBlur('description')}
+                        />
+                      </View>
+
+                      {touched.description && errors.description && (
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginTop: -1,
+                          }}>
+                          {errors.description}
+                        </Text>
+                      )}
+                      <DatePicker
+                        style={{
+                          borderWidth: 1,
+                          borderColor: 'gray',
+                          borderRadius: 8,
+                          paddingLeft: 3,
+                          width: '100%',
+                          marginTop: 5,
+                          marginBottom: 5,
+                        }}
+                        date={sDate}
+                        mode="date"
+                        placeholder="Start Date"
+                        format="DD/MM/YYYY"
+                        minDate={Moment().format('DD/MM/YYYY')}
+                        // maxDate="01-01-2019"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        iconComponent={
+                          <Cicon
+                            name="date-range"
+                            size={23}
+                            style={{
+                              position: 'absolute',
+                              left: 0,
+                              top: 8,
+                              color: 'tomato',
+                            }}
+                          />
+                        }
+                        customStyles={{
+                          dateInput: {
+                            borderWidth: 0,
+                            marginLeft: '10%',
+                            alignItems: 'flex-start',
+                          },
+                        }}
+                        onDateChange={(date) => {
+                          handleStartDate(date);
+                        }}
+                      />
+                      {isStartDate && (
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginTop: 1,
+                          }}>
+                          Choose Start Date
+                        </Text>
+                      )}
+
+                      <DatePicker
+                        style={{
+                          borderWidth: 1,
+                          borderColor: 'gray',
+                          borderRadius: 8,
+                          paddingLeft: 3,
+                          width: '100%',
+                          marginTop: 5,
+                          marginBottom: 5,
+                        }}
+                        date={eDate}
+                        mode="date"
+                        placeholder="End Date"
+                        format="DD/MM/YYYY"
+                        minDate={sDate}
+                        // maxDate="01-01-2019"
+                        confirmBtnText="Confirm"
+                        cancelBtnText="Cancel"
+                        iconComponent={
+                          <Cicon
+                            name="date-range"
+                            size={23}
+                            style={{
+                              position: 'absolute',
+                              left: 0,
+                              top: 8,
+                              color: 'tomato',
+                            }}
+                          />
+                        }
+                        customStyles={{
+                          dateInput: {
+                            borderWidth: 0,
+                            marginLeft: '10%',
+                            alignItems: 'flex-start',
+                          },
+                        }}
+                        onDateChange={(date) => {
+                          handleEndDate(date);
+                        }}
+                      />
+                      {isEndDate && (
+                        <Text
+                          style={{
+                            fontSize: 13,
+                            color: 'red',
+                            alignSelf: 'center',
+                            marginTop: 1,
+                          }}>
+                          Choose End Date
+                        </Text>
+                      )}
+
+                      <View
+                        style={{
+                          marginTop: 10,
+                          width: '100%',
+                          alignItems: 'center',
+                        }}>
+                        <TouchableOpacity
+                          style={{
+                            borderRadius: 2,
+                            backgroundColor: 'tomato',
+                            padding: 10,
+                            width: '50%',
+                            alignItems: 'center',
+                            borderRadius: 20,
+                          }}
+                          onPress={handleSubmit}>
+                          <Text
+                            style={{
+                              color: 'white',
+                              fontWeight: 'bold',
+                            }}>
+                            Update Poster
+                        </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>
-                )}
+                  )}
               </Formik>
             </View>
           </View>
-        </View>
-      </ScrollView>
+
+        </ScrollView>
+      </View>
     </>
   );
 };
