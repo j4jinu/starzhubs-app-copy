@@ -25,7 +25,9 @@ const ForgotPasswordScreen = ({ navigation }) => {
   };
 
   const forgotPwdValidation = yup.object({
-    email: yup.string().matches(emailRegExp, 'Invalid Email Address'),
+    email: yup.string()
+            .matches(emailRegExp, 'Invalid Email Address')
+            .required('Enter Your Email ID'),
   });
 
   const initialValuesReset = {
@@ -40,7 +42,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
       .string()
       .matches(
         passRegExp,
-        'Atleast one uppercase one lowercase and  one digit:',
+        'Atleast one uppercase one lowercase and  one digit',
       )
       .max(8, ({ max }) => `Password should not be  more than ${max} `)
       .required('Enter Password'),
@@ -129,8 +131,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                       fontFamily: 'montserrat-medium',
                       fontSize: 22,
                     }}>
-                    {' '}
-                  Forgot Password?
+                    Forgot Password?
                 </Text>
                   <Text
                     style={{
@@ -139,7 +140,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                       marginBottom: 10,
                     }}>
                     Please provide your registered email address so that we can
-                  help you reset your password.{' '}
+                    help you reset your password.
                   </Text>
                   <View
                     style={{
@@ -290,6 +291,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
                       }}>
                       <Icon name="lock" size={20} color={theme.$primaryColor} />
                       <TextInput
+                        secureTextEntry
                         style={styles.inputField}
                         placeholder={'Password'}
                         placeholderTextColor="grey"

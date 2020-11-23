@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -11,42 +11,12 @@ import PosterListActive from '../components/PosterListActive';
 import PosterListExpired from '../components/PosterListExpired';
 import PosterListPending from '../components/PosterListPending';
 import PosterListRejected from '../components/PosterListRejected';
-import UserMediaSection from '../components/UserMediaSection';
-import UserPosterSection from '../components/UserPosterSection';
-import UserTalentSection from '../components/UserTalentSection';
 import PIcon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
 
-const MyPostersScreen = (props, { navigation }) => {
-  const auth = useContext(AuthContext);
+const MyPostersScreen = (props) => {
   const [content, setContent] = useState('me');
   const [loading, setLoading] = useState(false);
-  const [posters, setPosters] = useState([]);
-  useEffect(() => {
-    getPosters();
-  }, [content]);
-  const getPosters = async (status) => {
-    setLoading(true);
-    setPosters([]);
-    try {
-      const response = await fetch(
-        `http://13.232.190.226/api/poster/${content}`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + auth.token,
-          },
-        },
-      );
-      const posterData = await response.json();
-      posterData.success ? setPosters(posterData.data.posters) : null;
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      alert('Something went wrong.');
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -54,7 +24,6 @@ const MyPostersScreen = (props, { navigation }) => {
         <View style={styles.row}>
           <TouchableOpacity
             onPress={() => {
-              setLoading(true);
               setContent('me');
             }}
             activeOpacity={0.7}
@@ -78,7 +47,6 @@ const MyPostersScreen = (props, { navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setLoading(true);
               setContent('pending');
             }}
             activeOpacity={0.7}
@@ -102,7 +70,6 @@ const MyPostersScreen = (props, { navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setLoading(true);
               setContent('expired');
             }}
             activeOpacity={0.7}
@@ -126,7 +93,6 @@ const MyPostersScreen = (props, { navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setLoading(true);
               setContent('denied');
             }}
             activeOpacity={0.7}
@@ -157,29 +123,21 @@ const MyPostersScreen = (props, { navigation }) => {
         )}
         {content === 'me' && !loading && (
           <PosterListActive
-            posters={posters}
-            getPoster={getPosters}
             navigation={props.navigation}
           />
         )}
         {content === 'pending' && !loading && (
           <PosterListPending
-            posters={posters}
-            getPoster={getPosters}
             navigation={props.navigation}
           />
         )}
         {content === 'expired' && !loading && (
           <PosterListExpired
-            posters={posters}
-            getPoster={getPosters}
             navigation={props.navigation}
           />
         )}
         {content === 'denied' && !loading && (
           <PosterListRejected
-            posters={posters}
-            getPoster={getPosters}
             navigation={props.navigation}
           />
         )}

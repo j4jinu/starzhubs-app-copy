@@ -7,8 +7,7 @@ import {
   TextInput,
   ActivityIndicator,
   Picker,
-  Image,
-  PermissionsAndroid,
+  Alert
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -22,6 +21,8 @@ import {Snackbar} from 'react-native-paper';
 import {AuthContext} from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import theme from '../config/theme';
+
 const industryNames = [
   {
     name: 'Industry',
@@ -75,7 +76,6 @@ const EditTalentScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const category = props.navigation.getParam('category');
   const industry = props.navigation.getParam('industry');
-  console.log("industry",industry);
   const films = props.navigation.getParam('films');
   const years = props.navigation.getParam('years');
   const description = props.navigation.getParam('description');
@@ -89,16 +89,8 @@ const EditTalentScreen = (props) => {
   const [isProfileImageMode, setIsProfileImageMode] = useState(false);
   const [industries, setIndustries] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [bodyTypeValue, setbodyTypeValue] = useState();
-  const [labels, setlabels] = useState();
-  const [complexionValue, setcomplexionValue] = useState();
-  const [imageType, setImageType] = useState();
-  const [headimg, setHeadImage] = useState();
-  const [rightimg, setRightImage] = useState();
-  const [leftimg, setLeftImage] = useState();
-  const [fullsizeimg, setFullImage] = useState();
   const [selectedItems, setSelectedItems] = useState(industry);
-  const [level, setLevel] = useState('');
+  const [level, setLevel] = useState(levels);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
 
@@ -116,16 +108,12 @@ const EditTalentScreen = (props) => {
     talentId: Yup.string().required('Select one category'),
     level: Yup.string().required('Select your level'),
     industry: Yup.string().required('Select one industry'),
-    //complexion: Yup.string().required('Select one complexion'),
-    //bodyType: Yup.string().required('Please choose one'),
     experience: Yup.string()
       .matches(phoneRegExp, 'Invalid input')
       .required('Enter experience details'),
     films: Yup.string()
       .matches(phoneRegExp, 'Invalid input')
       .required('Enter no. of projects'),
-    //height: Yup.string().required('Enter height'),
-    //weight: Yup.string().required('Enter weight'),
     description: Yup.string().required('Enter talent  details'),
   });
 
@@ -143,22 +131,18 @@ const EditTalentScreen = (props) => {
           (response) => {
             if (response.success === true) {
               setTalent(response.data.talents);
-              // setIsLoading(false)
             } else {
               alert('Error: ', response.message);
             }
-            // setIsLoading(false)
           },
           (error) => {
             alert('Talent fetching failed: ' + error);
-            // setIsLoading(false)
           },
         );
     };
-
     getUserTalents();
-    // getUserTalents()
   }, []);
+
   useEffect(() => {
     const getCategory = () => {
       fetch('http://13.232.190.226/api/category', {
@@ -167,33 +151,33 @@ const EditTalentScreen = (props) => {
         .then((response) => response.json())
         .then((response) => {
           setCategories(response.categories);
-          // handleBackdropClose()
         })
         .catch((error) => {
-          // handleBackdropClose()
         });
     };
     getCategory();
   }, []);
 
-  const isProfileImageModeHandler = (tid) => {
-    // var index = e.nativeEvent.target.selectedIndex;
-    // const cat = e.nativeEvent.target[itemIndex].text.toLowerCase();
-    if (tid === '5f5b2b8e96b2173a30948ac6' || tid === '') {
-      setIsProfileImageMode(true);
-      setTalent(tid);
-      return;
-    } else {
-      setIsProfileImageMode(false);
-      setTalent(tid);
+  const handleSubmit = (values,{ setSubmitting }) => {
+    values.level = level;
+    values.industry = selectedItems;
+    if (selectedItems === undefined || selectedItems.length === 0) {
+      Alert.alert(
+        '',
+        'Choose the languages you known',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Please choose the languages you known');
+      setSubmitting(false);
       return;
     }
-  };
-  const handleSubmit = (values) => {
-    values.level = levels || level;
-    values.industry = industry || selectedItems;
-    console.warn('Form data: ', values);
-
+    console.log("hjjj",values.industry);
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -204,7 +188,7 @@ const EditTalentScreen = (props) => {
         chars: {
           industry: values.industry,
           films: values.films,
-          years: values.years,
+          years: values.experience,
         },
         description: values.description || '',
         level: values.level,
@@ -226,92 +210,6 @@ const EditTalentScreen = (props) => {
       );
   };
 
-  const uploadAvatar = (imgType, imgurl) => {
-    console.warn('URL', imgurl);
-    let image;
-    if (imgType === 'head_shot') {
-      image = headimg;
-    } else if (imgType === 'left_profile') {
-      image = leftimg;
-    } else if (imgType === 'right_profile') {
-      image = rightimg;
-    } else {
-      image = fullsizeimg;
-    }
-    const uri = imgurl;
-    var formData = new FormData();
-    formData.append('imageType', imageType);
-    let fileType = uri.substring(uri.lastIndexOf('.') + 1);
-    formData.append('avatar', {
-      uri,
-      name: `photo.${fileType}`,
-      type: `image/${fileType}`,
-    });
-
-    const config = {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: 'Bearer ' + auth.token,
-      },
-    };
-
-    fetch(`http://13.232.190.226/api/user/avatar`, config)
-      .then((response) => response.json())
-      .then(
-        (response) => {
-          console.warn('Avatar upload: ', response);
-          if (response.success === true) {
-            alert(response.message);
-          } else {
-            alert(response.message);
-          }
-        },
-        (error) => {
-          alert('Upload failed: ' + error);
-        },
-      );
-  };
-
-  const requestCameraPermission = async (imgType) => {
-    console.warn(imgType);
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        pickImage(imgType);
-      } else {
-        console.warn('Camera permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  };
-
-  const pickImage = async (imgType) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    var imgurl;
-    if (imgType == 'head_shot') {
-      console.warn(result.uri);
-      setHeadImage(result.uri);
-    } else if (imgType == 'left_profile') {
-      setLeftImage(result.uri);
-    } else if (imgType == 'right_profile') {
-      setRightImage(result.uri);
-    } else {
-      setFullImage(result.uri);
-    }
-    imgurl = result.uri;
-    uploadAvatar(imgType, imgurl);
-  };
-
   const handleLevelChange = (rating) => {
     setLevel(rating);
   };
@@ -330,9 +228,10 @@ const EditTalentScreen = (props) => {
         enableReinitialize={true}
         initialValues={initialTalentValues}
         validationSchema={talentValidationSchema}
-        onSubmit={(values) => {
-          handleSubmit(values);
-        }}>
+        onSubmit={(values, { setSubmitting }) =>
+          handleSubmit(values, { setSubmitting })
+        }
+        >
         {({
           handleChange,
           handleBlur,
@@ -343,460 +242,198 @@ const EditTalentScreen = (props) => {
           errors,
         }) => (
           <React.Fragment>
-            <View style={styles.inputView}>
-              <Cicon name="merge-type" size={20} style={{color: '#fd9242'}} />
-              <Text style={{color: 'black'}}>{category}</Text>
+            <View style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  // marginTop: '6%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
+                }}>
+                  <Cicon name="merge-type"
+                    size={20}
+                    style={{color: '#fd9242',}}
+                  />
+              <Text style={{color: 'black', paddingVertical:15, marginLeft:15}}>{category}</Text>
             </View>
             <Text style={styles.error}>{errors.talentId}</Text>
 
             <View
-              style={{
-                flexDirection: 'column',
-                marginTop: '3%',
-                marginLeft: '0%',
-                paddingBottom: '2%',
-                backgroundColor: 'white',
-                width: '80%',
-                borderRadius: 10,
-              }}>
-              <Text style={{marginLeft: '5%'}}>Select Confidence Level</Text>
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: '3%',
+                    alignItems: 'center',
+                    borderColor: errors.link ? 'red' : 'gray',
+                    flexDirection: 'column',
+                    alignItems:'flex-start',
+                    paddingLeft:'5%'
+                  }}>
+                  <Text>Select Confidence Level</Text>
 
-              <Rating
-                type="custom"
-                startingValue={levels}
-                defaultRating={levels}
-                //tintColor="#f5f5f5"
-                //tintColor="grey"
-                ratingColor="orange"
-                //ratingBackgroundColor='black'
+              <AirbnbRating
+                reviews={[
+                  'Beginner',
+                  'Average',
+                  'Good',
+                  'Excellent',
+                  'Experienced',
+                 
+                ]}
+                defaultRating={level}
+                size={20}
+                count={5}
+                showRating={false}
                 onFinishRating={handleLevelChange}
-                style={{
-                  marginLeft: '-25%',
-                  marginTop: '1%',
-                  marginBottom: '-3%',
-                }}
+                selectedColor={theme.$primaryColor}
               />
-              <Text
-                style={{
-                  marginLeft: '5%',
+
+            </View>
+
+            <View style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
                   marginTop: '3%',
-                  fontSize: 12,
-                  color: 'grey',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
                 }}>
-                Swipe left or right
-              </Text>
-            </View>
+                  <View style={{ width: '10%', }}>
+                    <Gicon name="industry" size={15} style={{ color: '#fd9242', marginTop:-10 }} />
+                  </View>
 
-            <View style={styles.inputView}>
-              <View style={{width: '10%', marginTop: '6%'}}>
-                <Gicon name="industry" size={15} style={{color: '#fd9242'}} />
-              </View>
+                  <View style={{ width: '90%', justifyContent: 'center' }}>
+                    <SectionedMultiSelect
+                      items={industryNames}
+                      IconRenderer={Icon}
+                      uniqueKey="id"
+                      subKey="children"
+                      selectText="Select Industry"
+                      showDropDowns={true}
+                      readOnlyHeadings={true}
+                      onSelectedItemsChange={onSelectedItemsChange}
+                      selectedItems={selectedItems}
+                    />
+                  </View>
+                </View>
 
-              <View style={{width: '90%', justifyContent: 'center'}}>
-                <SectionedMultiSelect
-                  items={industryNames}
-                  IconRenderer={Icon}
-                  uniqueKey="id"
-                  subKey="children"
-                  selectText="Select Industry"
-                  showDropDowns={true}
-                  readOnlyHeadings={true}
-                  onSelectedItemsChange={onSelectedItemsChange}
-                  selectedItems={selectedItems}
-                />
-              </View>
-            </View>
+            
             <Text style={styles.error}>{errors.industry}</Text>
 
-            <View style={styles.inputView}>
-              <Eicon
-                name="envelope-open-text"
-                size={15}
-                style={{
-                  color: '#fd9242',
-                  marginTop: '4%',
-                }}
-              />
-              <TextInput
-                style={styles.inputText}
-                defaultValue={String(years)}
-                placeholder="Experience"
-                placeholderTextColor="#003f5c"
-                keyboardType="numeric"
-                autoCapitalize="sentences"
-                // defaultValue={user.email}
-                onChangeText={handleChange('experience')}
-                onBlur={handleBlur('experience')}
-              />
-            </View>
+            <View style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: '3%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
+                }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={String(years)}
+                    placeholder="Experience"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="numeric"
+                    autoCapitalize="sentences"
+                    // defaultValue={user.email}
+                    onChangeText={handleChange('experience')}
+                    onBlur={handleBlur('experience')}
+                  />
+                </View>
+
+
             <Text style={styles.error}>{errors.years}</Text>
-            <View style={styles.inputView}>
-              <Eicon
-                name="envelope-open-text"
-                size={15}
-                style={{
-                  color: '#fd9242',
-                  marginTop: '4%',
-                }}
-              />
-              <TextInput
-                style={styles.inputText}
-                defaultValue={String(films)}
-                placeholder="No.of Projects"
-                placeholderTextColor="#003f5c"
-                keyboardType="numeric"
-                autoCapitalize="sentences"
-                // defaultValue={user.email}
-                onChangeText={handleChange('films')}
-                onBlur={handleBlur('films')}
-              />
-            </View>
+
+            <View style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: '3%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
+                }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={String(films)}
+                    placeholder="No. of Projects"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="numeric"
+                    autoCapitalize="sentences"
+                    // defaultValue={user.email}
+                    onChangeText={handleChange('experience')}
+                    onBlur={handleBlur('experience')}
+                  />
+                </View>
             <Text style={styles.error}>{errors.films}</Text>
-            <View style={styles.inputViewDes}>
-              <Cicon
-                name="class"
-                size={15}
-                style={{color: '#fd9242', marginTop: '8%', marginLeft: 5}}
-              />
-              <TextInput
-                style={styles.inputTextDes}
-                defaultValue={description}
-                placeholder="Description"
-                placeholderTextColor="#003f5c"
-                keyboardType="email-address"
-                autoCapitalize="sentences"
-                numberOfLines={3}
-                multiline={true}
-                // defaultValue={user.email}
-                onChangeText={handleChange('description')}
-                onBlur={handleBlur('description')}
-              />
-            </View>
-
-            {/* {isProfileImageMode && (
-							<Fragment>
-								<View
-									style={{
-										flexDirection:
-											'row',
-										marginTop: 20,
-										marginBottom: 10,
-									}}
-								>
-									<View
-										style={{
-											paddingLeft: 30,
-											marginTop: 10,
-										}}
-									>
-										<TouchableOpacity
-											onPress={() => {
-												requestCameraPermission(
-													'head_shot'
-												);
-											}}
-										>
-											<Image
-												source={
-													!headimg
-														? require('../../assets/headshot.jpg')
-														: {
-																uri: headimg,
-														  }
-												}
-												style={{
-													borderRadius: 50,
-													height: 140,
-													width: 140,
-												}}
-											/>
-										</TouchableOpacity>
-									</View>
-									<View
-										style={{
-											paddingLeft: 30,
-											marginTop: 10,
-										}}
-									>
-										<TouchableOpacity
-											onPress={() =>
-												requestCameraPermission(
-													'left_profile'
-												)
-											}
-										>
-											<Image
-												source={
-													!leftimg
-														? require('../../assets/left_profile.jpg')
-														: {
-																uri: leftimg,
-														  }
-												}
-												style={{
-													borderRadius: 50,
-													height: 140,
-													width: 140,
-												}}
-											/>
-										</TouchableOpacity>
-									</View>
-								</View>
-
-								<View
-									style={{
-										flexDirection:
-											'row',
-									}}
-								>
-									<View
-										style={{
-											paddingLeft: 30,
-											marginTop: 10,
-											marginBottom: 20,
-										}}
-									>
-										<TouchableOpacity
-											onPress={() =>
-												requestCameraPermission(
-													'right_profile'
-												)
-											}
-										>
-											<Image
-												source={
-													!rightimg
-														? require('../../assets/right_profile.jpg')
-														: {
-																uri: rightimg,
-														  }
-												}
-												//  {{uri:rightimg ===null ?`../../assets/right_profile.jpg`
-												//  :rightimg}}
-												//  source={require("../../assets/right_profile.jpg")}
-												style={{
-													borderRadius: 50,
-													height: 140,
-													width: 140,
-												}}
-											/>
-										</TouchableOpacity>
-									</View>
-									<View
-										style={{
-											paddingLeft: 30,
-											marginTop: 10,
-										}}
-									>
-										<TouchableOpacity
-											onPress={() =>
-												requestCameraPermission(
-													'fullsize'
-												)
-											}
-										>
-											<Image
-												source={
-													!fullsizeimg
-														? require('../../assets/fullsize.jpg')
-														: {
-																uri: fullsizeimg,
-														  }
-												}
-												//  source={require("../../assets/fullsize.jpg")}
-												style={{
-													borderRadius: 50,
-													height: 140,
-													width: 140,
-												}}
-											/>
-										</TouchableOpacity>
-									</View>
-								</View>
-								<View
-									style={
-										styles.inputView
-									}
-								>
-									<Picker
-										selectedValue={
-											bodyTypeValue
-										}
-										style={{
-											height: 20,
-											width:
-												'100%',
-										}}
-										onValueChange={(
-											itemValue,
-											itemIndex
-										) => {
-											setbodyTypeValue(
-												itemValue
-											);
-											setFieldValue(
-												'bodyType',
-												itemValue
-											);
-										}}
-									>
-										<Picker.Item
-											label="Select BodyType"
-											value="0"
-										/>
-										<Picker.Item
-											label="Athletic"
-											value="Athletic"
-										/>
-										<Picker.Item
-											label="Average built"
-											value="Average built"
-										/>
-										<Picker.Item
-											label="Fat"
-											value="Fat"
-										/>
-										<Picker.Item
-											label="Hourglass"
-											value="Hourglass"
-										/>
-										<Picker.Item
-											label="Slim"
-											value="Slim"
-										/>
-									</Picker>
-								</View>
-
-								<Text
-									style={
-										styles.error
-									}
-								>
-									{
-										errors.bodyType
-									}
-								</Text>
-								<View
-									style={
-										styles.inputView
-									}
-								>
-									<Picker
-										selectedValue={
-											complexionValue
-										}
-										style={{
-											height: 30,
-											width:
-												'100%',
-										}}
-										onValueChange={(
-											itemValue,
-											itemIndex
-										) => {
-											setcomplexionValue(
-												itemValue
-											);
-											setFieldValue(
-												'complexion',
-												itemValue
-											);
-										}}
-									>
-										<Picker.Item
-											label="Select Complexion"
-											value="0"
-										/>
-										<Picker.Item
-											label="Brown"
-											value="Brown"
-										/>
-										<Picker.Item
-											label="Dark"
-											value="Dark"
-										/>
-										<Picker.Item
-											label="Fair"
-											value="Fair"
-										/>
-										<Picker.Item
-											label="Wheatish"
-											value="Wheatish"
-										/>
-									</Picker>
-								</View>
-								<Text
-									style={
-										styles.error
-									}
-								>
-									{
-										errors.complexion
-									}
-								</Text>
-								<View
-									style={
-										styles.inputView
-									}
-								>
-									<TextInput
-										// style={styles.inputText}
-										placeholder="Height (CMs)"
-										placeholderTextColor="#003f5c"
-										keyboardType="numeric"
-										autoCapitalize="sentences"
-										// defaultValue={user.email}
-										onChangeText={handleChange(
-											'height'
-										)}
-										onBlur={handleBlur(
-											'height'
-										)}
-									/>
-								</View>
-								<Text
-									style={
-										styles.error
-									}
-								>
-									{
-										errors.height
-									}
-								</Text>
-								<View
-									style={
-										styles.inputView
-									}
-								>
-									<TextInput
-										// style={styles.inputText}
-										placeholder="Weight (KGs)"
-										placeholderTextColor="#003f5c"
-										keyboardType="numeric"
-										autoCapitalize="sentences"
-										// defaultValue={user.email}
-										onChangeText={handleChange(
-											'weight'
-										)}
-										onBlur={handleBlur(
-											'weight'
-										)}
-									/>
-								</View>
-								<Text
-									style={
-										styles.error
-									}
-								>
-									{
-										errors.weight
-									}
-								</Text>
-							</Fragment>
-						)} */}
-
-            <TouchableOpacity style={styles.loginBtn} onPress={handleSubmit}>
-              <Text style={styles.loginText}>
+            <View style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: '3%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
+                }}>
+                  <Cicon
+                    name="class"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputTextDes}
+                    defaultValue={description}
+                    placeholder="Description"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="email-address"
+                    autoCapitalize="sentences"
+                    numberOfLines={3}
+                    multiline={true}
+                    // defaultValue={user.email}
+                    onChangeText={handleChange('description')}
+                    onBlur={handleBlur('description')}
+                  />
+                </View>
+            <TouchableOpacity style={styles.registerBtn} onPress={handleSubmit}>
+              <Text style={styles.registerBtnText}>
                 {loading ? (
                   <ActivityIndicator size="small" color="#fff" />
                 ) : (
@@ -815,7 +452,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
   },
   radio: {
     flexDirection: 'row',
@@ -872,16 +508,23 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 11,
   },
-  loginBtn: {
-    width: '50%',
-    backgroundColor: '#fd9242',
-    borderRadius: 25,
+  registerBtn: {
+    alignSelf: 'center',
+    width: '90%',
+    backgroundColor: theme.$primaryColor,
+    padding: 5,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
-    marginBottom: 10,
-    paddingBottom: 15,
-    paddingTop: 15,
+    marginVertical: '5%',
+  },
+
+  registerBtnText: {
+    fontSize: 18,
+    marginVertical: 5,
+    color: 'white',
+    fontFamily: 'montserrat-medium',
+    textTransform: 'uppercase',
   },
   loginText: {
     color: 'white',

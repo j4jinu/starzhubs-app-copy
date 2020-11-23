@@ -24,7 +24,6 @@ import HomePosterList from '../components/HomePosterList';
 import MyConnectionScreen from '../screens/MyConnectionScreen';
 import PendingConnectionScreen from '../screens/PendingConnectionScreen';
 import SentConnectionScreen from '../screens/SentConnectionScreen';
-import BuddyTopNavigator from './BuddyTopNavigator';
 import MediaDetailsScreen from '../screens/MediaDetailsScreen';
 import HelpScreen from '../screens/HelpScreen';
 import PoliciesScreen from '../screens/PoliciesScreen';
@@ -43,6 +42,8 @@ import FilterResultScreen from '../screens/FilterResultScreen';
 import PosterRequestScreen from '../screens/PosterRequestScreen';
 import ServiceScreen from '../screens/ServiceScreen';
 import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
+import BuddyTopNavigator from './BuddyTopNavigator';
+import EditMediaScreen from '../screens/EditMediaScreen';
 
 const HomeNavigator = createStackNavigator(
   {
@@ -256,6 +257,12 @@ const AccountNavigator = createStackNavigator(
     },
     EditPoster: {
       screen: EditPosterScreen,
+    },
+    EditMedia: {
+      screen: EditMediaScreen,
+      navigationOptions: {
+        title: 'Upload a video',
+      },
     },
     CreatePosters: {
       screen: CreatePosterScreen,

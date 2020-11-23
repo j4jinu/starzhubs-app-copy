@@ -31,12 +31,12 @@ const profileSchema = yup.object({
     .required('Enter Your Phone Number'),
   password: yup
     .string()
-    .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit:')
+    .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
     .max(8, ({max}) => `Password should not be  more than ${max} `)
     .required('Enter Password'),
   confPassword: yup
     .string()
-    .oneOf([yup.ref('newPassword'), null], "Passwords don't match")
+    .oneOf([yup.ref('password'), null], "Passwords don't match")
 
     .required('Enter Confirm Password'),
 });

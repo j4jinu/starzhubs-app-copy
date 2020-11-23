@@ -104,7 +104,7 @@ const EditPosterScreen = (props) => {
             const msg = 'Poster Edited Successfully.....';
             setMessage(msg);
             setVisible(!visible);
-            props.navigation.navigate('MyPosters');
+            // props.navigation.navigate('MyPosters');
             setStartDate('');
             setEndDate('');
             setImage(null);
@@ -119,11 +119,16 @@ const EditPosterScreen = (props) => {
   };
 
   const handleStartDate = (date) => {
+    console.log("start",date);
     setSDate(date);
+    setStartDate(date)
+    console.log("s",sDate);
     if (date === '') {
       setIsStartDate(true);
     } else {
-      setStartDate(Moment(date, 'DD-MM-YYYY').format('yyyy-MM-DD'));
+      setStartDate(Moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD'));
+      console.log("startdate",startDate);
+
       setIsStartDate(false);
     }
   };

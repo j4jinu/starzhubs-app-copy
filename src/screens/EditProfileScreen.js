@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -10,17 +10,18 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   PermissionsAndroid,
+  Alert
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import {Snackbar} from 'react-native-paper';
+import { Snackbar } from 'react-native-paper';
 
 const languages = [
   {
@@ -124,10 +125,10 @@ const languages = [
 ];
 
 const countries = [
-  {label: 'Afganistan', value: 'afganistan'},
-  {label: 'India', value: 'india'},
-  {label: 'USA', value: 'usa'},
-  {label: 'UK', value: 'uk'},
+  { label: 'Afganistan', value: 'afganistan' },
+  { label: 'India', value: 'india' },
+  { label: 'USA', value: 'usa' },
+  { label: 'UK', value: 'uk' },
 ];
 
 const EditProfileScreen = (props) => {
@@ -137,7 +138,7 @@ const EditProfileScreen = (props) => {
 
   const [dob, setDob] = useState('');
   const [country, setCountry] = useState('india');
-  const [gender, setGender] = useState('Male');
+  const [gender, setGender] = useState('');
   const [selectedItems, setSelectedItems] = useState();
   const [userInfo, setUserInfo] = useState({
     image: {},
@@ -152,12 +153,12 @@ const EditProfileScreen = (props) => {
     email: userInfo.email,
     bio: userInfo.bio || '',
     phone: userInfo.phone || '',
-    dob: '',
-    country:userInfo.location !== undefined? userInfo.location.country: 'India',
+    // dob: '',
+    country: userInfo.location !== undefined ? userInfo.location.country : 'India',
     state: userInfo.location !== undefined ? userInfo.location.state : '',
     place: userInfo.location !== undefined ? userInfo.location.place : '',
     education: userInfo.education || '',
-    gender: userInfo.gender || '',
+    // gender: userInfo.gender || '',
   }
 
   const profileSchema = yup.object({
@@ -168,10 +169,10 @@ const EditProfileScreen = (props) => {
     state: yup.string().required('Enter state of residence'),
     place: yup.string().required('Enter your city'),
     education: yup.string().required('Enter your Higher education'),
-    gender: yup.string().required('Select Gender'),
+    // gender: yup.string().required('Select Gender'),
     country: yup.string().required('Country is Required'),
   });
-    
+
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
@@ -190,20 +191,67 @@ const EditProfileScreen = (props) => {
       }
       setUserInfo(userData.data.user);
       setDob(userData.data.user.dob)
-      // setSelectedItems(userData.data.user.languages)
+      setGender(userData.data.user.gender)
+      if(userData.data.user.languages !==''){
+        var myString = userData.data.user.languages;
+        const lng = myString.split(',')
+        setSelectedItems(lng)
+      }
+      
     };
     getUserDetails();
   }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
-    console.log(selectedItem);
     setSelectedItems(selectedItem);
   };
 
-  const saveUserInfo = async (values, {setSubmitting}) => {
-    console.log("user info",values);
-    if (dob === '') {
-      alert('Please enter your Date of Birth');
+  const saveUserInfo = async (values, { setSubmitting }) => {
+    if (dob === undefined) {
+      Alert.alert(
+        '',
+        'Enter your Date of Birth',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Please enter your Date of Birth');
+      setSubmitting(false);
+      return;
+    }
+    if (gender === '') {
+      Alert.alert(
+        '',
+        'Enter your gender',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Enter your gender');
+      setSubmitting(false);
+      return;
+    }
+    if (selectedItems === undefined || selectedItems.length === 0) {
+      Alert.alert(
+        '',
+        'Choose the languages you known',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      // alert('Please choose the languages you known');
       setSubmitting(false);
       return;
     }
@@ -257,7 +305,7 @@ const EditProfileScreen = (props) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -281,18 +329,18 @@ const EditProfileScreen = (props) => {
       } else {
         setImage(response.uri);
         console.log('image uri: ', response.uri);
-        uploadAvatar();
+        uploadAvatar(response.uri);
       }
     });
   };
 
-  const uploadAvatar = async () => {
-    if (image === '') {
+  const uploadAvatar = async (imgurl) => {
+    if (imgurl === '') {
       alert('Please choose an Image');
       setSubmitting(false);
       return;
     }
-    const image_uri = image;
+    const image_uri = imgurl;
     let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
     console.log('Type:', fileType);
     var formData = new FormData();
@@ -323,7 +371,7 @@ const EditProfileScreen = (props) => {
       }
       setMsg("Profile image uploaded successfully")
       setVisible(!visible);
-    
+
     } catch (error) {
       console.error('error', error);
     }
@@ -339,7 +387,7 @@ const EditProfileScreen = (props) => {
         {msg}
       </Snackbar>
       <ScrollView>
-        {userInfo.image !== undefined && image ==='' && (
+        {userInfo.image !== undefined && image === '' && (
           <Image
             style={{
               height: 180,
@@ -355,7 +403,7 @@ const EditProfileScreen = (props) => {
             }}
           />
         )}
-        {image !=='' && (
+        {image !== '' && (
           <Image
             style={{
               height: 180,
@@ -386,8 +434,8 @@ const EditProfileScreen = (props) => {
           enableReinitialize={true}
           initialValues={initialProfileValues}
           validationSchema={profileSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            saveUserInfo(values, {setSubmitting})
+          onSubmit={(values, { setSubmitting }) =>
+            saveUserInfo(values, { setSubmitting })
           }>
           {({
             handleChange,
@@ -398,361 +446,362 @@ const EditProfileScreen = (props) => {
             errors,
             values,
           }) => (
-            <>
-              {/* 
+              <>
+                {/* 
               Full name 
               */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.name ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="person" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'default'}
-                  textContentType={'name'}
-                  style={styles.inputField}
-                  placeholder={'Full name'}
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  defaultValue={initialProfileValues.name}
-                />
-              </View>
-              {/* 
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.name ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="person" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'default'}
+                    textContentType={'name'}
+                    style={styles.inputField}
+                    placeholder={'Full name'}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    defaultValue={initialProfileValues.name}
+                  />
+                </View>
+                {/* 
               DoB
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: '#e6e6e6',
-                }}>
-                <DatePicker
+                <View
                   style={{
-                    backgroundColor: 'white',
+                    alignSelf: 'center',
+                    borderWidth: 1,
                     borderRadius: 10,
-                    width: '80%',
-                    paddingVertical: 5,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
                     borderColor: '#e6e6e6',
-                  }}
-                  date={dob}
-                  mode="date"
-                  placeholder="DOB"
-                  format="YYYY-MM-DD"
-                  // minDate="01-01-2016"
-                  // maxDate="01-01-2019"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  iconComponent={
-                    <Icon
-                      name="date-range"
-                      size={23}
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 8,
-                        color: '#fd9242',
-                      }}
-                    />
-                  }
-                  customStyles={{
-                    dateInput: {
-                      borderWidth: 0,
-                      marginLeft: '10%',
-                      alignItems: 'flex-start',
-                    },
-                  }}
-                  onDateChange={(date) => {
-                    setDob(date);
-                  }}
-                />
-              </View>
-              {/* Gender */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: '#e6e6e6',
-                }}>
-                <Icon name="people-alt" size={20} color={theme.$primaryColor} />
-                <Picker
-                  selectedValue={gender}
-                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setGender(itemValue)
-                  }>
-                  <Picker.Item label="Female" value="female" />
-                  <Picker.Item label="Male" value="male" />
-                  <Picker.Item label="Transgender" value="transgender" />
-                </Picker>
-              </View>
-              {/* 
+                  }}>
+                  <DatePicker
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: 10,
+                      width: '80%',
+                      paddingVertical: 5,
+                      borderColor: '#e6e6e6',
+                    }}
+                    date={dob}
+                    mode="date"
+                    placeholder="DOB"
+                    format="YYYY-MM-DD"
+                    // minDate="01-01-2016"
+                    // maxDate="01-01-2019"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    iconComponent={
+                      <Icon
+                        name="date-range"
+                        size={23}
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          top: 8,
+                          color: '#fd9242',
+                        }}
+                      />
+                    }
+                    customStyles={{
+                      dateInput: {
+                        borderWidth: 0,
+                        marginLeft: '10%',
+                        alignItems: 'flex-start',
+                      },
+                    }}
+                    onDateChange={(date) => {
+                      setDob(date);
+                    }}
+                  />
+                </View>
+                {/* Gender */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: '#e6e6e6',
+                  }}>
+                  <Icon name="people-alt" size={20} color={theme.$primaryColor} />
+                  <Picker
+                    selectedValue={gender}
+                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setGender(itemValue)
+                    }>
+                    <Picker.Item label="Select Gender" value="" />
+                    <Picker.Item label="Female" value="Female" />
+                    <Picker.Item label="Male" value="Male" />
+                    <Picker.Item label="Transgender" value="Transgender" />
+                  </Picker>
+                </View>
+                {/* 
               Email address
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.email ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'Email address'}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  defaultValue={initialProfileValues.email}
-                />
-              </View>
-              {/*
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.email ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'Email address'}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    defaultValue={initialProfileValues.email}
+                  />
+                </View>
+                {/*
               Phone number 
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.phone ? 'red' : '#e6e6e6',
-                }}>
-                <Icon
-                  name="phone-android"
-                  size={20}
-                  color={theme.$primaryColor}
-                />
-                <TextInput
-                  style={styles.inputField}
-                  keyboardType="numeric"
-                  placeholder={'Phone'}
-                  onChangeText={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  defaultValue={initialProfileValues.phone}
-                />
-              </View>
-
-              {/* Country */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: '#e6e6e6',
-                }}>
-                <Icon
-                  name="location-pin"
-                  size={20}
-                  color={theme.$primaryColor}
-                />
-                <Picker
-                  selectedValue={country}
-                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setCountry(itemValue)
-                  }>
-                  {countries.map((c) => (
-                    <Picker.Item label={c.label} value={c.value} />
-                  ))}
-                </Picker>
-              </View>
-
-              {/* State City */}
-              <View
-                style={{
-                  flex: 1,
-                  width: '95%',
-                  alignSelf: 'center',
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                }}>
                 <View
                   style={{
-                    flex: 1,
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
+                    borderColor: errors.phone ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon
+                    name="phone-android"
+                    size={20}
+                    color={theme.$primaryColor}
+                  />
+                  <TextInput
+                    style={styles.inputField}
+                    keyboardType="numeric"
+                    placeholder={'Phone'}
+                    onChangeText={handleChange('phone')}
+                    onBlur={handleBlur('phone')}
+                    defaultValue={initialProfileValues.phone}
+                  />
+                </View>
+
+                {/* Country */}
+                <View
+                  style={{
+                    alignSelf: 'center',
                     borderWidth: 1,
-                    borderColor: '#e6e6e6',
-                    borderRadius: 8,
-                    marginHorizontal: 8,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
                     marginTop: 12,
-                    paddingHorizontal: 8,
-                    borderColor: errors.state ? 'red' : '#e6e6e6',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: '#e6e6e6',
                   }}>
                   <Icon
                     name="location-pin"
                     size={20}
                     color={theme.$primaryColor}
                   />
-                  <TextInput
-                    style={styles.inputField}
-                    placeholder={'State'}
-                    onChangeText={handleChange('state')}
-                    onBlur={handleBlur('state')}
-                    defaultValue={initialProfileValues.state}
-                  />
+                  <Picker
+                    selectedValue={country}
+                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      setCountry(itemValue)
+                    }>
+                    {countries.map((c) => (
+                      <Picker.Item label={c.label} value={c.value} />
+                    ))}
+                  </Picker>
                 </View>
+
+                {/* State City */}
                 <View
                   style={{
                     flex: 1,
+                    width: '95%',
+                    alignSelf: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                  }}>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      borderColor: '#e6e6e6',
+                      borderRadius: 8,
+                      marginHorizontal: 8,
+                      marginTop: 12,
+                      paddingHorizontal: 8,
+                      borderColor: errors.state ? 'red' : '#e6e6e6',
+                    }}>
+                    <Icon
+                      name="location-pin"
+                      size={20}
+                      color={theme.$primaryColor}
+                    />
+                    <TextInput
+                      style={styles.inputField}
+                      placeholder={'State'}
+                      onChangeText={handleChange('state')}
+                      onBlur={handleBlur('state')}
+                      defaultValue={initialProfileValues.state}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderWidth: 1,
+                      borderColor: '#e6e6e6',
+                      borderRadius: 8,
+                      marginHorizontal: 8,
+                      marginTop: 12,
+                      paddingHorizontal: 8,
+                      borderColor: errors.place ? 'red' : '#e6e6e6',
+                    }}>
+                    <Icon
+                      name="location-pin"
+                      size={20}
+                      color={theme.$primaryColor}
+                    />
+                    <TextInput
+                      style={styles.inputField}
+                      placeholder={'City'}
+                      onChangeText={handleChange('place')}
+                      onBlur={handleBlur('place')}
+                      defaultValue={initialProfileValues.place}
+                    />
+                  </View>
+                </View>
+
+                {/* Higher education */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderWidth: 1,
-                    borderColor: '#e6e6e6',
-                    borderRadius: 8,
-                    marginHorizontal: 8,
-                    marginTop: 12,
-                    paddingHorizontal: 8,
-                    borderColor: errors.place ? 'red' : '#e6e6e6',
+                    borderColor: errors.education ? 'red' : '#e6e6e6',
                   }}>
-                  <Icon
-                    name="location-pin"
-                    size={20}
-                    color={theme.$primaryColor}
-                  />
+                  <Icon name="book" size={20} color={theme.$primaryColor} />
                   <TextInput
                     style={styles.inputField}
-                    placeholder={'City'}
-                    onChangeText={handleChange('place')}
-                    onBlur={handleBlur('place')}
-                    defaultValue={initialProfileValues.place}
+                    placeholder={'Higher Education'}
+                    onChangeText={handleChange('education')}
+                    onBlur={handleBlur('education')}
+                    defaultValue={initialProfileValues.education}
                   />
                 </View>
-              </View>
 
-              {/* Higher education */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.education ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="book" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  style={styles.inputField}
-                  placeholder={'Higher Education'}
-                  onChangeText={handleChange('education')}
-                  onBlur={handleBlur('education')}
-                  defaultValue={initialProfileValues.education}
-                />
-              </View>
+                {/* Languages */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                  }}>
+                  <SectionedMultiSelect
+                    items={languages}
+                    IconRenderer={Icon}
+                    uniqueKey="id"
+                    subKey="children"
+                    selectText="Languages known"
+                    showDropDowns={true}
+                    readOnlyHeadings={true}
+                    onSelectedItemsChange={onSelectedItemsChange}
+                    selectedItems={selectedItems}
+                    style={{ padding: 0 }}
+                  />
+                </View>
 
-              {/* Languages */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                }}>
-                <SectionedMultiSelect
-                  items={languages}
-                  IconRenderer={Icon}
-                  uniqueKey="id"
-                  subKey="children"
-                  selectText="Languages known"
-                  showDropDowns={true}
-                  readOnlyHeadings={true}
-                  onSelectedItemsChange={onSelectedItemsChange}
-                  selectedItems={selectedItems}
-                  style={{padding: 0}}
-                />
-              </View>
-
-              {/*
+                {/*
               About user 
                */}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.bio ? 'red' : '#e6e6e6',
-                }}>
-                <Icon name="info" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'default'}
-                  multiline
-                  numberOfLines={4}
-                  style={styles.inputField}
-                  placeholder={'About yourself'}
-                  onChangeText={handleChange('bio')}
-                  onBlur={handleBlur('bio')}
-                  defaultValue={initialProfileValues.bio}
-                />
-              </View>
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate('PasswordRecovery')
-                }></TouchableOpacity>
-              {!isSubmitting && (
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.bio ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="info" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'default'}
+                    multiline
+                    numberOfLines={4}
+                    style={styles.inputField}
+                    placeholder={'About yourself'}
+                    onChangeText={handleChange('bio')}
+                    onBlur={handleBlur('bio')}
+                    defaultValue={initialProfileValues.bio}
+                  />
+                </View>
                 <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.loginBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.loginBtnText}>SAVE</Text>
-                </TouchableOpacity>
-              )}
-              {isSubmitting && (
-                <ActivityIndicator size={'large'} color={theme.$primaryColor} />
-              )}
-            </>
-          )}
+                  onPress={() =>
+                    props.navigation.navigate('PasswordRecovery')
+                  }></TouchableOpacity>
+                {!isSubmitting && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.loginBtn}
+                    onPress={handleSubmit}>
+                    <Text style={styles.loginBtnText}>SAVE</Text>
+                  </TouchableOpacity>
+                )}
+                {isSubmitting && (
+                  <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+                )}
+              </>
+            )}
         </Formik>
       </ScrollView>
     </View>

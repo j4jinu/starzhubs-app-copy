@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {FlatList, Text, View} from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
+import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 
 const SentConnectionScreen = () => {
@@ -10,7 +11,7 @@ const SentConnectionScreen = () => {
     getConnectionRequests();
   });
   const getConnectionRequests = () => {
-    fetch(`http://13.232.190.226/api/talent/req/approved`, {
+    fetch(`http://13.232.190.226/api/talent/req/sent`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -24,6 +25,15 @@ const SentConnectionScreen = () => {
         alert(error);
       });
   };
+
+  if(isFriends===undefined){
+    return(
+      <View style={{alignItems:'center', marginTop:'8%'}}>
+        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Requests</Text>
+      </View>
+    )
+  }
+
   return (
     <FlatList
       style={{backgroundColor: '#efefef'}}

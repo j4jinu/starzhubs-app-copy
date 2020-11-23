@@ -9,7 +9,11 @@ const PosterGrid = (props) => {
                     onPress={() => props.navigation.navigate('PosterDetails', {
                         posterId: props.id,
                         title: props.poster,
-                        image: props.image
+                        image: props.image,
+                        description:props.description,
+                        startDate:props.startDate,
+                        endDate:props.endDate,
+                        user:props.user
                     })}
                     style={styles.gridItem}
                     activeOpacity={0.7}
@@ -18,7 +22,7 @@ const PosterGrid = (props) => {
                         <Image
                             style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{
-                                uri: props.image
+                                uri: `http://13.232.190.226/api/poster/view/${props.image}`
                             }}
                         />
                     </View>

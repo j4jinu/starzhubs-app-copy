@@ -23,7 +23,7 @@ const mediaSchema = yup.object({
   description: yup.string().required('Enter description'),
 });
 
-const PhotoUploadScreen = (props) => {
+const EditMediaScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const auth = useContext(AuthContext);
 
@@ -319,4 +319,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhotoUploadScreen;
+export default EditMediaScreen;

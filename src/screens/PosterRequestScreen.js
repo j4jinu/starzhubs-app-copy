@@ -15,7 +15,10 @@ import * as Yup from 'yup';
 import { AuthContext } from '../context/authContext';
 const PosterRequestScreen = (props) => {
   const auth = useContext(AuthContext);
+  console.log("token", auth.token);
+
   const posterId = props.navigation.getParam('posterId');
+  console.log("posterid", posterId)
   const image = props.navigation.getParam('image');
   const initialValues = {
     notes: `I'm very much inetersted in your post`,
@@ -31,11 +34,12 @@ const PosterRequestScreen = (props) => {
         'Content-type': 'Application/json',
         Authorization: 'Bearer ' + auth.token,
       },
+
       body: JSON.stringify(values),
     })
       .then((response) => response.json())
       .then((response) => {
-        alert(response.message);
+        Alert.alert('Success', 'Request Sent Successfully ')
       })
       .catch((error) => {
         alert(error);

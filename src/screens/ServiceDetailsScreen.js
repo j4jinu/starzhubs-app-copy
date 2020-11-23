@@ -77,14 +77,9 @@ const ServiceDetailsScreen = (props) => {
   return (
     <View style={styles.container}>
       <Snackbar style={{ marginBottom: 10 }} visible={visible}
-        duration={7000}
+        duration={4000}
         onDismiss={onDismissSnackBar}
-        action={{
-          label: 'Back',
-          onPress: () => {
-            props.navigation.navigate('OurServices')
-          },
-        }}>
+      >
         Thanks for your feedback</Snackbar>
       <ScrollView>
         <View style={{ alignItems: "center", flexDirection: 'column', width: '100%', }}>
