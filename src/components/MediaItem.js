@@ -52,7 +52,12 @@ const MediaItem = (props) => {
         </Text>
         <Text style={{color: theme.$primaryColorText, marginLeft: 10}}>
           Posted by:{' '}
-          <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
+          {props.user[0] !== undefined && (
+            <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
+          )}
+          {props.user !== undefined && (
+            <Text style={styles.mediaAuthor}>{props.user.name}</Text>
+          )}
         </Text>
       </TouchableOpacity>
     </>
@@ -69,7 +74,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '95%',
     height: 300,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: 'white',
     marginHorizontal: 3,
     marginVertical: 3,
     shadowColor: 'black',

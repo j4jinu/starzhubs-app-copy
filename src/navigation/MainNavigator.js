@@ -1,13 +1,12 @@
 import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import HomeTopTabNavigator from './HomeTopTabNavigator';
 import PortfolioListScreen from '../screens/PortfolioListScreen';
 import PosterListScreen from '../screens/PosterListScreen';
@@ -44,12 +43,13 @@ import ServiceScreen from '../screens/ServiceScreen';
 import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
+import MediaListSceen from '../screens/MediaListScreen';
 
 const HomeNavigator = createStackNavigator(
   {
     Portfolio: {
       screen: HomeScreenSingle,
-      navigationOptions: ({ navigate, navigation }) => ({
+      navigationOptions: ({navigate, navigation}) => ({
         title: 'Explore',
         headerTitleStyle: {
           fontWeight: '100',
@@ -57,7 +57,7 @@ const HomeNavigator = createStackNavigator(
         },
         headerRight: () => (
           <MaterialIcons
-            style={{ marginRight: 15 }}
+            style={{marginRight: 15}}
             size={25}
             name="search"
             onPress={() => navigation.navigate('Filter')}
@@ -67,24 +67,35 @@ const HomeNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
+      title: '',
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
+      title: '',
     },
     EditPoster: {
       screen: EditPosterScreen,
+      title: '',
     },
     Filter: {
       screen: FilterScreen,
+      title: '',
     },
     FilterResult: {
       screen: FilterResultScreen,
+      title: '',
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
+      title: '',
     },
     UsersList: {
       screen: PortfolioListScreen,
+      title: '',
+    },
+    MediaList: {
+      screen: MediaListSceen,
+      title: '',
     },
   },
   {
@@ -101,10 +112,10 @@ const UserNavigator = createStackNavigator(
   {
     Users: {
       screen: PortfolioListScreen,
-      navigationOptions: ({ navigate, navigation }) => ({
+      navigationOptions: ({navigate, navigation}) => ({
         headerRight: () => (
           <MaterialCommunityIcons
-            style={{ marginRight: 15 }}
+            style={{marginRight: 15}}
             size={25}
             name="filter-outline"
             onPress={() => navigation.navigate('Filter')}
@@ -114,9 +125,11 @@ const UserNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
+      title: '',
     },
     Filter: {
       screen: FilterScreen,
+      title: '',
     },
   },
   {
@@ -134,15 +147,19 @@ const PosterNavigator = createStackNavigator(
     Posters: PosterListScreen,
     PosterDetails: {
       screen: PosterDetailsScreen,
+      title: '',
     },
     PosterRequest: {
       screen: PosterRequestScreen,
+      title: '',
     },
     EditPoster: {
       screen: EditPosterScreen,
+      title: '',
     },
     CreatePosters: {
       screen: CreatePosterScreen,
+      title: '',
     },
   },
   {
@@ -179,6 +196,7 @@ const AccountNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileScreen,
+      title: '',
     },
     OurServices: {
       screen: ServiceScreen,
@@ -200,12 +218,15 @@ const AccountNavigator = createStackNavigator(
     },
     Talents: {
       screen: TalentListScreen,
+      title: '',
     },
     EditTalents: {
       screen: EditTalentScreen,
+      title: '',
     },
     AddTalents: {
       screen: AddTalentScreen,
+      title: '',
     },
     Help: {
       screen: HelpScreen,
@@ -362,9 +383,9 @@ const MainNavigator = createBottomTabNavigator(
     Profile: AccountNavigator,
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const {routeName} = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {
