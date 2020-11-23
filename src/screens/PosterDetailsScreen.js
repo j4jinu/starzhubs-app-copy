@@ -22,7 +22,7 @@ import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
-  console.log("token", auth.token)
+  console.log('token', auth.token);
   const posterId = props.navigation.getParam('posterId');
   const title = props.navigation.getParam('title');
   const image = props.navigation.getParam('image');
@@ -57,7 +57,6 @@ const PosterDetailsScreen = (props) => {
       .catch((error) => { });
   };
   const onSubmitRequest = () => {
-
     fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
@@ -69,6 +68,7 @@ const PosterDetailsScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.success === false) {
+<<<<<<< HEAD
           //Alert.alert('Alert', 'You have already  sent Request');
           //alert(response.message);
           Alert.alert('Alert',
@@ -85,13 +85,16 @@ const PosterDetailsScreen = (props) => {
           );
         }
         else {
+=======
+          alert(response.message);
+        } else {
+>>>>>>> e83e30a2ae4650f8928a892dabd1c4f80d7b7b3c
           props.navigation.navigate('PosterRequest', {
-            posterId: posterId, image: image, description: description
-
-          })
+            posterId: posterId,
+            image: image,
+            description: description,
+          });
         }
-
-
       })
       .catch((error) => {
         alert(error);
@@ -162,7 +165,6 @@ const PosterDetailsScreen = (props) => {
         {msg}
       </Snackbar>
       <ScrollView>
-
         <View style={styles.container}>
           <Image
             style={{
@@ -205,7 +207,6 @@ const PosterDetailsScreen = (props) => {
           </View>
           {user._id === auth.userId ? null : (
             <View style={styles.authorInfo}>
-
               <Image
                 style={{
                   width: 50,
@@ -243,17 +244,35 @@ const PosterDetailsScreen = (props) => {
               <View>
                 <Text
                   style={{
-                    color: 'orange',
-                    fontSize: 25,
+                    color: theme.$primaryColorText,
+                    fontSize: 17,
                     fontWeight: 'bold',
-                    marginLeft: '5%',
+                    marginLeft: 15,
+                    marginTop: 20,
                   }}>
                   Requests:
                 </Text>
               </View>
               {selectedPoster.length === 0 ? (
-                <View style={{ width: '100%' }}>
-                  <Text style={{ color: '', fontSize: 15, textAlign: "center" }}>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    marginHorizontal: 15,
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
+                    marginHorizontal: 10,
+                    marginTop: 10,
+                    paddingVertical: 15,
+                    paddingHorizontal: 10,
+                    borderRadius: theme.$borderRadius,
+                  }}>
+                  <Text style={{ color: '', fontSize: 15 }}>
                     No Request to this poster
                   </Text>
                 </View>
@@ -335,7 +354,6 @@ const PosterDetailsScreen = (props) => {
             </TouchableOpacity>
           )}
         </View>
-
       </ScrollView>
     </>
   );

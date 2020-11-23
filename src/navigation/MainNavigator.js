@@ -7,7 +7,6 @@ import {
 } from 'react-navigation-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import HomeTopTabNavigator from './HomeTopTabNavigator';
 import PortfolioListScreen from '../screens/PortfolioListScreen';
 import PosterListScreen from '../screens/PosterListScreen';
@@ -44,6 +43,7 @@ import ServiceScreen from '../screens/ServiceScreen';
 import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
+import MediaListSceen from '../screens/MediaListScreen';
 
 const HomeNavigator = createStackNavigator(
   {
@@ -67,25 +67,35 @@ const HomeNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
+      title: '',
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
-
+      title: '',
     },
     EditPoster: {
       screen: EditPosterScreen,
+      title: '',
     },
     Filter: {
       screen: FilterScreen,
+      title: '',
     },
     FilterResult: {
       screen: FilterResultScreen,
+      title: '',
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
+      title: '',
     },
     UsersList: {
       screen: PortfolioListScreen,
+      title: '',
+    },
+    MediaList: {
+      screen: MediaListSceen,
+      title: '',
     },
   },
   {
@@ -115,9 +125,11 @@ const UserNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
+      title: '',
     },
     Filter: {
       screen: FilterScreen,
+      title: '',
     },
   },
   {
@@ -135,16 +147,19 @@ const PosterNavigator = createStackNavigator(
     Posters: PosterListScreen,
     PosterDetails: {
       screen: PosterDetailsScreen,
-
+      title: '',
     },
     PosterRequest: {
       screen: PosterRequestScreen,
+      title: '',
     },
     EditPoster: {
       screen: EditPosterScreen,
+      title: '',
     },
     CreatePosters: {
       screen: CreatePosterScreen,
+      title: '',
     },
   },
   {
@@ -181,6 +196,7 @@ const AccountNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileScreen,
+      title: '',
     },
     OurServices: {
       screen: ServiceScreen,
@@ -202,12 +218,15 @@ const AccountNavigator = createStackNavigator(
     },
     Talents: {
       screen: TalentListScreen,
+      title: '',
     },
     EditTalents: {
       screen: EditTalentScreen,
+      title: '',
     },
     AddTalents: {
       screen: AddTalentScreen,
+      title: '',
     },
     Help: {
       screen: HelpScreen,
