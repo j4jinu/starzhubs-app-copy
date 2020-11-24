@@ -68,27 +68,8 @@ const PosterDetailsScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.success === false) {
-<<<<<<< HEAD
-          //Alert.alert('Alert', 'You have already  sent Request');
-          //alert(response.message);
-          Alert.alert('Alert',
-            'You have already  sent Request',
-            [
-              {
-                text: 'OK',
-                onPress: () =>
-                  //props.navigation.navigate('Posters')
-                  props.navigation.goBack()
-              },
-            ],
-            { cancelable: false }
-          );
-        }
-        else {
-=======
           alert(response.message);
         } else {
->>>>>>> e83e30a2ae4650f8928a892dabd1c4f80d7b7b3c
           props.navigation.navigate('PosterRequest', {
             posterId: posterId,
             image: image,

@@ -30,7 +30,6 @@ const profileSchema = yup.object({
     .max(10, ({max}) => `Phone Number should not be  more ${max} characters`)
     .matches(phoneRegExp, 'Phone number is not valid')
     .required('Enter Your Phone Number'),
-<<<<<<< HEAD
   password: yup.string()
     .matches(
       passRegExp,
@@ -41,12 +40,6 @@ const profileSchema = yup.object({
       ({ max }) =>
         `Password should not be  more than ${max}`
     )
-=======
-  password: yup
-    .string()
-    .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
-    .max(8, ({max}) => `Password should not be  more than ${max} `)
->>>>>>> e83e30a2ae4650f8928a892dabd1c4f80d7b7b3c
     .required('Enter Password'),
   confPassword: yup
     .string()
