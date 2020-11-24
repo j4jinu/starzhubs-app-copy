@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import theme from '../config/theme';
 import Moment from 'moment';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const PosterGridItem = (props) => {
-  const { userId } = props;
+  const {userId} = props;
   const auth = useContext(AuthContext);
   return (
     <>
@@ -40,7 +40,7 @@ const PosterGridItem = (props) => {
               }}
               resizeMode={'cover'}
               source={{
-                uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+                uri: `https://api.starzhubs.com/api/poster/view/${props.image}`,
               }}
             />
             <View style={styles.owner}>
@@ -55,13 +55,13 @@ const PosterGridItem = (props) => {
                     userId.image === undefined
                       ? `https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVI
                                     D19_SECVPF.gif`
-                      : `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`,
+                      : `https://api.starzhubs.com/api/user/avatar/${userId.image.avatar}`,
                 }}
               />
 
               <View style={styles.ownerDetails}>
-                <Text style={{ fontSize: 13 }}>{userId.name}</Text>
-                <Text style={{ fontSize: 10, color: 'gray' }}>
+                <Text style={{fontSize: 13}}>{userId.name}</Text>
+                <Text style={{fontSize: 10, color: 'gray'}}>
                   {Moment(props.endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e6e6e6',
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 6 },
+    shadowOffset: {width: 0, height: 6},
     shadowOpacity: 0.26,
   },
   gridItemText: {

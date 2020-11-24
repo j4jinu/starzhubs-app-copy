@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   Image,
   ScrollView,
@@ -10,15 +10,15 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 const PosterRequestScreen = (props) => {
   const auth = useContext(AuthContext);
-  console.log("token", auth.token);
+  console.log('token', auth.token);
 
   const posterId = props.navigation.getParam('posterId');
-  console.log("posterid", posterId)
+  console.log('posterid', posterId);
   const image = props.navigation.getParam('image');
   const initialValues = {
     notes: `I'm very much inetersted in your post`,
@@ -28,7 +28,7 @@ const PosterRequestScreen = (props) => {
   });
 
   const onSubmitRequest = (values) => {
-    fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
+    fetch(`https://api.starzhubs.com/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
         'Content-type': 'Application/json',
@@ -39,14 +39,12 @@ const PosterRequestScreen = (props) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        Alert.alert('Success', 'Request Sent Successfully ',
-          [
-            {
-              Text: 'OK',
-              onPress: () => props.navigation.navigate('Posters')
-            }
-
-          ])
+        Alert.alert('Success', 'Request Sent Successfully ', [
+          {
+            Text: 'OK',
+            onPress: () => props.navigation.navigate('Posters'),
+          },
+        ]);
       })
       .catch((error) => {
         alert(error);
@@ -54,7 +52,6 @@ const PosterRequestScreen = (props) => {
   };
   return (
     <View style={styles.container}>
-
       <View
         style={{
           alignItems: 'center',
@@ -62,9 +59,9 @@ const PosterRequestScreen = (props) => {
         }}>
         <View>
           <Image
-            style={{ width: 375, height: 250 }}
+            style={{width: 375, height: 250}}
             source={{
-              uri: `http://13.232.190.226/api/poster/view/${image}`,
+              uri: `https://api.starzhubs.com/api/poster/view/${image}`,
             }}
           />
         </View>
@@ -86,8 +83,9 @@ const PosterRequestScreen = (props) => {
             isValid,
             handleSubmit,
           }) => (
-              <>
-                <View style={{
+            <>
+              <View
+                style={{
                   alignSelf: 'center',
                   borderWidth: 1,
                   borderRadius: 10,
@@ -99,47 +97,46 @@ const PosterRequestScreen = (props) => {
                   alignItems: 'center',
                   borderColor: errors.notes ? 'red' : '#e6e6e6',
                 }}>
-                  <TextInput
-                    style={{
-                      alignItems: 'center'
-                    }}
-                    underlineColorAndroid="transparent"
-                    placeholder="Message"
-                    numberOfLines={3}
-                    multiline={true}
-                    defaultValue={initialValues.notes}
-                    onChangeText={handleChange('notes')}
-                    onBlur={handleBlur('notes')}
-                  />
-                </View>
-                <Text style={styles.error}>{errors.notes}</Text>
-
-                <View
+                <TextInput
                   style={{
-                    marginTop: 50,
-                    width: '100%',
                     alignItems: 'center',
-                  }}>
-                  <TouchableOpacity
-                    style={{
-                      borderRadius: 20,
-                      backgroundColor: 'tomato',
-                      padding: 10,
-                      width: '50%',
-                      alignItems: 'center',
-                      marginVertical: '-5%',
-                    }}
-                    onPress={handleSubmit}>
-                    <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                      Send Request
-                            </Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            )}
+                  }}
+                  underlineColorAndroid="transparent"
+                  placeholder="Message"
+                  numberOfLines={3}
+                  multiline={true}
+                  defaultValue={initialValues.notes}
+                  onChangeText={handleChange('notes')}
+                  onBlur={handleBlur('notes')}
+                />
+              </View>
+              <Text style={styles.error}>{errors.notes}</Text>
+
+              <View
+                style={{
+                  marginTop: 50,
+                  width: '100%',
+                  alignItems: 'center',
+                }}>
+                <TouchableOpacity
+                  style={{
+                    borderRadius: 20,
+                    backgroundColor: 'tomato',
+                    padding: 10,
+                    width: '50%',
+                    alignItems: 'center',
+                    marginVertical: '-5%',
+                  }}
+                  onPress={handleSubmit}>
+                  <Text style={{color: 'white', fontWeight: 'bold'}}>
+                    Send Request
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </Formik>
       </View>
-
     </View>
   );
 };
@@ -148,11 +145,11 @@ export default PosterRequestScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   error: {
     color: 'red',
     fontSize: 12,
     marginHorizontal: '20%',
   },
-})
+});

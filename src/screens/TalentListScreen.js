@@ -32,13 +32,13 @@ const TalentListScreen = (props) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
           if (response.success === true) {
             setTalents(response.data.talents);
-            console.log("talents",talents);
+            console.log('talents', talents);
           } else {
             console.log('gggg', response.message);
           }
@@ -79,7 +79,7 @@ const TalentListScreen = (props) => {
       }),
     };
     fetch(
-      `http://13.232.190.226/api/user/remove/talent/${talentId}`,
+      `https://api.starzhubs.com/api/user/remove/talent/${talentId}`,
       requestOptions,
     )
       .then((response) => response.json())
@@ -112,10 +112,17 @@ const TalentListScreen = (props) => {
           Deleted Successfully
         </Snackbar>
         <View>
-          {talents.length===0 && (
-            <View style={{alignItems:'center', marginTop:'50%'}}>
-            <Text style={{color:theme.$primaryColor,fontWeight:'bold', fontSize:18}}>No talents you added yet</Text>
-          </View>
+          {talents.length === 0 && (
+            <View style={{alignItems: 'center', marginTop: '50%'}}>
+              <Text
+                style={{
+                  color: theme.$primaryColor,
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                No talents you added yet
+              </Text>
+            </View>
           )}
           {talents.map((t, key) => (
             <View style={styles.card}>
@@ -163,7 +170,9 @@ const TalentListScreen = (props) => {
                   </View>
                   <View style={styles.fieldDiv}>
                     <Text style={styles.fieldTitle}>Industries</Text>
-                    <Text style={styles.fieldText}>{t.chars.industry}</Text>
+                    <Text style={styles.fieldText}>
+                      {t.chars.industry.toString()}
+                    </Text>
                   </View>
                   <View style={styles.fieldDiv}>
                     <Text style={styles.fieldTitle}>Projects</Text>

@@ -29,9 +29,7 @@ export const useAuth = () => {
         if (storedData && storedData.token) {
           login(storedData.userId, storedData.token);
         }
-      } catch (error) {
-        console.log('Error: ', error);
-      }
+      } catch (error) {}
     }
     fetchUserData();
   }, [login]);

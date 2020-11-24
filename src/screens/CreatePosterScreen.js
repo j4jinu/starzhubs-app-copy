@@ -83,11 +83,10 @@ const CreatePosterScreen = (props, {navigation}) => {
       },
       body: formData,
     };
-    console.log("form",formData);
 
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/poster`,
+        `https://api.starzhubs.com/api/poster`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -98,12 +97,12 @@ const CreatePosterScreen = (props, {navigation}) => {
       // setImage('');
       alert(uploadResData.message);
       // setImage('');
-      props.navigation.navigate('MyPosters' );
+      props.navigation.navigate('MyPosters');
     } catch (error) {
       console.error('error', error);
     }
 
-    // fetch(`http://13.232.190.226/api/poster`, requestOptions)
+    // fetch(`https://api.starzhubs.com/api/poster`, requestOptions)
     //   .then((response) => response.json())
     //   .then(
     //     (response) => {
@@ -159,9 +158,7 @@ const CreatePosterScreen = (props, {navigation}) => {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         chooseFile();
-        //console.log('You can use the camera');
       } else {
-        console.log('Camera permission denied');
       }
     } catch (err) {
       console.warn(err);
@@ -169,7 +166,6 @@ const CreatePosterScreen = (props, {navigation}) => {
   };
 
   const chooseFile = () => {
-    //console.log('choose file');
     var options = {
       title: 'Select Image',
       customButtons: [
@@ -184,13 +180,9 @@ const CreatePosterScreen = (props, {navigation}) => {
       quality: 0.2,
     };
     ImagePicker.launchImageLibrary(options, (response) => {
-      //console.log('Response = ', response);
       if (response.didCancel) {
-        console.log('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
         alert(response.customButton);
       } else if (response.uri === '') {
       } else {
@@ -202,16 +194,14 @@ const CreatePosterScreen = (props, {navigation}) => {
     <>
       <ScrollView>
         <View style={styles.container}>
-          
           <View style={{justifyContent: 'center'}}>
             <View>
               <Formik
                 initialValues={posterInitValues}
                 validationSchema={posterValidation}
                 onSubmit={(values, {setSubmitting}) =>
-                handleSubmit(values, {setSubmitting})
-          }
-               >
+                  handleSubmit(values, {setSubmitting})
+                }>
                 {({
                   values,
                   handleChange,

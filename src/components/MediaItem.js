@@ -4,8 +4,6 @@ import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
 const MediaItem = (props) => {
-  console.log('User details: ', props.media);
-
   if (props.media.length === 0) {
     return null;
   }
@@ -24,7 +22,7 @@ const MediaItem = (props) => {
           <Image
             style={{width: '100%', height: '60%', resizeMode: 'cover'}}
             source={{
-              uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
+              uri: `https://api.starzhubs.com/api/user/view/media/?${props.media[0].file}`,
             }}
           />
         ) : (

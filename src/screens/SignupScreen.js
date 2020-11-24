@@ -63,7 +63,7 @@ const SignupScreen = (props) => {
     };
     try {
       const response = await fetch(
-        `http://13.232.190.226/api/user/otp`,
+        `https://api.starzhubs.com/api/user/otp`,
         requestOptions,
       );
       const responseData = await response.json();
@@ -71,7 +71,7 @@ const SignupScreen = (props) => {
         props.navigation.navigate('otp', {
           userId: responseData.data.userId,
         });
-        console.log("sign up page", responseData)
+        console.log('sign up page', responseData);
       } else {
         alert(responseData.message);
       }
