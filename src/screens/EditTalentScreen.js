@@ -7,7 +7,7 @@ import {
   TextInput,
   ActivityIndicator,
   Picker,
-  Alert
+  Alert,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -76,7 +76,7 @@ const EditTalentScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const category = props.navigation.getParam('category');
   const industry = props.navigation.getParam('industry');
-console.log("edit industry",industry);
+  console.log('edit industry', industry);
   // const inds = industry.split(',')
   const films = props.navigation.getParam('films');
   const years = props.navigation.getParam('years');
@@ -127,7 +127,7 @@ console.log("edit industry",industry);
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -147,20 +147,19 @@ console.log("edit industry",industry);
 
   useEffect(() => {
     const getCategory = () => {
-      fetch('http://13.232.190.226/api/category', {
+      fetch('https://api.starzhubs.com/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
         .then((response) => {
           setCategories(response.categories);
         })
-        .catch((error) => {
-        });
+        .catch((error) => {});
     };
     getCategory();
   }, []);
 
-  const handleSubmit = (values,{ setSubmitting }) => {
+  const handleSubmit = (values, {setSubmitting}) => {
     values.level = level;
     values.industry = selectedItems;
     if (selectedItems === undefined || selectedItems.length === 0) {
@@ -173,13 +172,13 @@ console.log("edit industry",industry);
             style: 'cancel',
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
       // alert('Please choose the languages you known');
       setSubmitting(false);
       return;
     }
-    console.log("hjjj",values.industry);
+    console.log('hjjj', values.industry);
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -196,7 +195,10 @@ console.log("edit industry",industry);
         level: values.level,
       }),
     };
-    fetch(`http://13.232.190.226/api/talent/user/${talentId}`, requestOptions)
+    fetch(
+      `https://api.starzhubs.com/api/talent/user/${talentId}`,
+      requestOptions,
+    )
       .then((response) => response.json())
       .then(
         (response) => {
@@ -230,10 +232,9 @@ console.log("edit industry",industry);
         enableReinitialize={true}
         initialValues={initialTalentValues}
         validationSchema={talentValidationSchema}
-        onSubmit={(values, { setSubmitting }) =>
-          handleSubmit(values, { setSubmitting })
-        }
-        >
+        onSubmit={(values, {setSubmitting}) =>
+          handleSubmit(values, {setSubmitting})
+        }>
         {({
           handleChange,
           handleBlur,
@@ -244,42 +245,43 @@ console.log("edit industry",industry);
           errors,
         }) => (
           <React.Fragment>
-            <View style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  // marginTop: '6%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : 'gray',
-                }}>
-                  <Cicon name="merge-type"
-                    size={20}
-                    style={{color: '#fd9242',}}
-                  />
-              <Text style={{color: 'black', paddingVertical:15, marginLeft:15}}>{category}</Text>
+            <View
+              style={{
+                alignSelf: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                width: '90%',
+                paddingLeft: 8,
+                paddingRight: 8,
+                // marginTop: '6%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: errors.link ? 'red' : 'gray',
+              }}>
+              <Cicon name="merge-type" size={20} style={{color: '#fd9242'}} />
+              <Text
+                style={{color: 'black', paddingVertical: 15, marginLeft: 15}}>
+                {category}
+              </Text>
             </View>
             <Text style={styles.error}>{errors.talentId}</Text>
 
             <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: '3%',
-                    alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
-                    flexDirection: 'column',
-                    alignItems:'flex-start',
-                    paddingLeft:'5%'
-                  }}>
-                  <Text>Select Confidence Level</Text>
+              style={{
+                alignSelf: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                width: '90%',
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginTop: '3%',
+                alignItems: 'center',
+                borderColor: errors.link ? 'red' : 'gray',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                paddingLeft: '5%',
+              }}>
+              <Text>Select Confidence Level</Text>
 
               <AirbnbRating
                 reviews={[
@@ -288,7 +290,6 @@ console.log("edit industry",industry);
                   'Good',
                   'Excellent',
                   'Experienced',
-                 
                 ]}
                 defaultRating={level}
                 size={20}
@@ -297,143 +298,148 @@ console.log("edit industry",industry);
                 onFinishRating={handleLevelChange}
                 selectedColor={theme.$primaryColor}
               />
-
             </View>
 
-            <View style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: '3%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : 'gray',
-                }}>
-                  <View style={{ width: '10%', }}>
-                    <Gicon name="industry" size={15} style={{ color: '#fd9242', marginTop:-10 }} />
-                  </View>
+            <View
+              style={{
+                alignSelf: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                width: '90%',
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginTop: '3%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: errors.link ? 'red' : 'gray',
+              }}>
+              <View style={{width: '10%'}}>
+                <Gicon
+                  name="industry"
+                  size={15}
+                  style={{color: '#fd9242', marginTop: -10}}
+                />
+              </View>
 
-                  <View style={{ width: '90%', justifyContent: 'center' }}>
-                    <SectionedMultiSelect
-                      items={industryNames}
-                      IconRenderer={Icon}
-                      uniqueKey="id"
-                      subKey="children"
-                      selectText="Select Industry"
-                      showDropDowns={true}
-                      readOnlyHeadings={true}
-                      onSelectedItemsChange={onSelectedItemsChange}
-                      selectedItems={selectedItems}
-                    />
-                  </View>
-                </View>
+              <View style={{width: '90%', justifyContent: 'center'}}>
+                <SectionedMultiSelect
+                  items={industryNames}
+                  IconRenderer={Icon}
+                  uniqueKey="id"
+                  subKey="children"
+                  selectText="Select Industry"
+                  showDropDowns={true}
+                  readOnlyHeadings={true}
+                  onSelectedItemsChange={onSelectedItemsChange}
+                  selectedItems={selectedItems}
+                />
+              </View>
+            </View>
 
-            
             <Text style={styles.error}>{errors.industry}</Text>
 
-            <View style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: '3%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : 'gray',
-                }}>
-                  <Eicon
-                    name="envelope-open-text"
-                    size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
-                  />
-                  <TextInput
-                    style={styles.inputText}
-                    defaultValue={String(years)}
-                    placeholder="Experience"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="numeric"
-                    autoCapitalize="sentences"
-                    // defaultValue={user.email}
-                    onChangeText={handleChange('experience')}
-                    onBlur={handleBlur('experience')}
-                  />
-                </View>
-
+            <View
+              style={{
+                alignSelf: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                width: '90%',
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginTop: '3%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: errors.link ? 'red' : 'gray',
+              }}>
+              <Eicon
+                name="envelope-open-text"
+                size={15}
+                style={{
+                  color: '#fd9242',
+                }}
+              />
+              <TextInput
+                style={styles.inputText}
+                defaultValue={String(years)}
+                placeholder="Experience"
+                placeholderTextColor="#003f5c"
+                keyboardType="numeric"
+                autoCapitalize="sentences"
+                // defaultValue={user.email}
+                onChangeText={handleChange('experience')}
+                onBlur={handleBlur('experience')}
+              />
+            </View>
 
             <Text style={styles.error}>{errors.years}</Text>
 
-            <View style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: '3%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : 'gray',
-                }}>
-                  <Eicon
-                    name="envelope-open-text"
-                    size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
-                  />
-                  <TextInput
-                    style={styles.inputText}
-                    defaultValue={String(films)}
-                    placeholder="No. of Projects"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="numeric"
-                    autoCapitalize="sentences"
-                    // defaultValue={user.email}
-                    onChangeText={handleChange('experience')}
-                    onBlur={handleBlur('experience')}
-                  />
-                </View>
+            <View
+              style={{
+                alignSelf: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                width: '90%',
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginTop: '3%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: errors.link ? 'red' : 'gray',
+              }}>
+              <Eicon
+                name="envelope-open-text"
+                size={15}
+                style={{
+                  color: '#fd9242',
+                }}
+              />
+              <TextInput
+                style={styles.inputText}
+                defaultValue={String(films)}
+                placeholder="No. of Projects"
+                placeholderTextColor="#003f5c"
+                keyboardType="numeric"
+                autoCapitalize="sentences"
+                // defaultValue={user.email}
+                onChangeText={handleChange('experience')}
+                onBlur={handleBlur('experience')}
+              />
+            </View>
             <Text style={styles.error}>{errors.films}</Text>
-            <View style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: '3%',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : 'gray',
-                }}>
-                  <Cicon
-                    name="class"
-                    size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
-                  />
-                  <TextInput
-                    style={styles.inputTextDes}
-                    defaultValue={description}
-                    placeholder="Description"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="email-address"
-                    autoCapitalize="sentences"
-                    numberOfLines={3}
-                    multiline={true}
-                    // defaultValue={user.email}
-                    onChangeText={handleChange('description')}
-                    onBlur={handleBlur('description')}
-                  />
-                </View>
+            <View
+              style={{
+                alignSelf: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                width: '90%',
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginTop: '3%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderColor: errors.link ? 'red' : 'gray',
+              }}>
+              <Cicon
+                name="class"
+                size={15}
+                style={{
+                  color: '#fd9242',
+                }}
+              />
+              <TextInput
+                style={styles.inputTextDes}
+                defaultValue={description}
+                placeholder="Description"
+                placeholderTextColor="#003f5c"
+                keyboardType="email-address"
+                autoCapitalize="sentences"
+                numberOfLines={3}
+                multiline={true}
+                // defaultValue={user.email}
+                onChangeText={handleChange('description')}
+                onBlur={handleBlur('description')}
+              />
+            </View>
             <TouchableOpacity style={styles.registerBtn} onPress={handleSubmit}>
               <Text style={styles.registerBtnText}>
                 {loading ? (

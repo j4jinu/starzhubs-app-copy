@@ -30,23 +30,10 @@ const profileSchema = yup.object({
     .max(10, ({max}) => `Phone Number should not be  more ${max} characters`)
     .matches(phoneRegExp, 'Phone number is not valid')
     .required('Enter Your Phone Number'),
-<<<<<<< HEAD
-  password: yup.string()
-    .matches(
-      passRegExp,
-      'Atleast one uppercase one lowercase and  one digit'
-    )
-    .max(
-      8,
-      ({ max }) =>
-        `Password should not be  more than ${max}`
-    )
-=======
   password: yup
     .string()
     .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
     .max(8, ({max}) => `Password should not be  more than ${max} `)
->>>>>>> e83e30a2ae4650f8928a892dabd1c4f80d7b7b3c
     .required('Enter Password'),
   confPassword: yup
     .string()
@@ -76,7 +63,7 @@ const SignupScreen = (props) => {
     };
     try {
       const response = await fetch(
-        `http://13.232.190.226/api/user/otp`,
+        `https://api.starzhubs.com/api/user/otp`,
         requestOptions,
       );
       const responseData = await response.json();
@@ -84,7 +71,7 @@ const SignupScreen = (props) => {
         props.navigation.navigate('otp', {
           userId: responseData.data.userId,
         });
-        console.log("sign up page", responseData)
+        console.log('sign up page', responseData);
       } else {
         alert(responseData.message);
       }

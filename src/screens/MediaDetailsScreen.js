@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 const MediaDetailsScreen = (props) => {
   const mediaFile = props.navigation.getParam('mediaFile');
@@ -11,7 +11,6 @@ const MediaDetailsScreen = (props) => {
   return (
     // <View>
     <>
-    
       {mediaType === 'video' ? (
         <WebView
           javaScriptEnabled={true}
@@ -26,15 +25,15 @@ const MediaDetailsScreen = (props) => {
         <Image
           style={styles.media}
           source={{
-            uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+            uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
           }}
         />
       )}
-  <ScrollView>
-      <Text style={styles.title}>{caption}</Text>
-      <Text style={styles.content}>{description}</Text>
-     {/* </View> */}
-    </ScrollView>
+      <ScrollView>
+        <Text style={styles.title}>{caption}</Text>
+        <Text style={styles.content}>{description}</Text>
+        {/* </View> */}
+      </ScrollView>
     </>
   );
 };

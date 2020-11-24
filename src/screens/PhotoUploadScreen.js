@@ -113,7 +113,7 @@ const PhotoUploadScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/talent/upload/media`,
+        `https://api.starzhubs.com/api/talent/upload/media`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -123,7 +123,7 @@ const PhotoUploadScreen = (props) => {
       }
       setVisible(!visible);
       setImage('');
-      resetForm({ values: '' });
+      resetForm({values: ''});
       // props.navigation.goBack();
     } catch (error) {
       console.error('error', error);

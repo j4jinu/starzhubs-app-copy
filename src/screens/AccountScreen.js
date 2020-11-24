@@ -19,23 +19,26 @@ const AccountScreen = (props) => {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState({image: {}, location: {}});
 
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+  });
   useEffect(() => {
-    const getUserDetails = async () => {
-      try {
-        let response = await fetch(`http://13.232.190.226/api/user/profile`, {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + auth.token,
-          },
-        });
-        let userData = await response.json();
-        setUser(userData.data.user);
-        console.log('user data', userData.data.user);
-      } catch (error) {}
-    };
     getUserDetails();
   }, []);
 
+  const getUserDetails = async () => {
+    try {
+      let response = await fetch(`https://api.starzhubs.com/api/user/profile`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
+      });
+      let userData = await response.json();
+      setUser(userData.data.user);
+    } catch (error) {}
+  };
+  unsubscribe;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container}>
@@ -44,7 +47,7 @@ const AccountScreen = (props) => {
             <Image
               style={{width: '100%', height: 250, resizeMode: 'stretch'}}
               source={{
-                uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
               }}
             />
           )}

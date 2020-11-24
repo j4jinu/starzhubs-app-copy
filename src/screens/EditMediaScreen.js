@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { AuthContext } from '../context/authContext';
+import {Formik} from 'formik';
+import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
 import WebView from 'react-native-webview';
 import {Snackbar} from 'react-native-paper';
@@ -26,14 +26,14 @@ const mediaSchema = yup.object({
 const EditMediaScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const mediaId = props.navigation.getParam('mediaId');
-  const mediaFile = props.navigation.getParam('mediaFile')
-  const caption = props.navigation.getParam('caption')
-  const description = props.navigation.getParam('description')
-  const mediaType = props.navigation.getParam('mediaType')
+  const mediaFile = props.navigation.getParam('mediaFile');
+  const caption = props.navigation.getParam('caption');
+  const description = props.navigation.getParam('description');
+  const mediaType = props.navigation.getParam('mediaType');
   const auth = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
 
-  const editMedia = async (values, { setSubmitting }) => {
+  const editMedia = async (values, {setSubmitting}) => {
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('description', values.description);
@@ -46,10 +46,9 @@ const EditMediaScreen = (props) => {
       },
       body: formData,
     };
-    console.log("form data", formData);
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/talent/media/${mediaId}`,
+        `https://api.starzhubs.com/api/talent/media/${mediaId}`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -79,8 +78,8 @@ const EditMediaScreen = (props) => {
             description: description,
           }}
           validationSchema={mediaSchema}
-          onSubmit={(values, { setSubmitting }) =>
-            editMedia(values, { setSubmitting })
+          onSubmit={(values, {setSubmitting}) =>
+            editMedia(values, {setSubmitting})
           }>
           {({
             handleChange,
@@ -91,19 +90,19 @@ const EditMediaScreen = (props) => {
             errors,
             values,
           }) => (
-              <>
-                {mediaType === 'image' ? (
-                  <Image
-                    style={{
-                      width: '100%',
-                      height: 220,
-                      resizeMode: 'cover',
-                    }}
-                    source={{
-                      uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
-                    }}
-                  />
-                ) : (
+            <>
+              {mediaType === 'image' ? (
+                <Image
+                  style={{
+                    width: '100%',
+                    height: 220,
+                    resizeMode: 'cover',
+                  }}
+                  source={{
+                    uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
+                  }}
+                />
+              ) : (
                 <View
                   style={{
                     lex: 1,
@@ -116,119 +115,122 @@ const EditMediaScreen = (props) => {
                     marginVertical: 3,
                     marginTop: 10,
                   }}>
-                    <View
-                      style={{
-                        lex: 1,
-                        alignSelf: 'center',
-                        width: '100%',
-                        height: 200,
-                        marginHorizontal: 3,
-                        marginVertical: 3,
-                        marginTop: 10,
-                      }}>
-                      <WebView
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        source={{
-                          uri:'https://www.youtube.com/embed/' +
-                          mediaFile.substring(mediaFile.lastIndexOf('=') + 1)
-                        }}
-                      />
-                    </View>
-                </View>                  
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: '5%',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }} 
-                >
-                  <Text style={{color:'red'}}>You can update only the caption and description , not the media file!</Text>
+                  <View
+                    style={{
+                      lex: 1,
+                      alignSelf: 'center',
+                      width: '100%',
+                      height: 200,
+                      marginHorizontal: 3,
+                      marginVertical: 3,
+                      marginTop: 10,
+                    }}>
+                    <WebView
+                      javaScriptEnabled={true}
+                      domStorageEnabled={true}
+                      source={{
+                        uri:
+                          'https://www.youtube.com/embed/' +
+                          mediaFile.substring(mediaFile.lastIndexOf('=') + 1),
+                      }}
+                    />
+                  </View>
                 </View>
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: '5%',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.caption ? 'red' : 'gray',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    style={styles.inputField}
-                    placeholder={'Caption'}
-                    defaultValue={caption}
-                    onChangeText={handleChange('caption')}
-                    onBlur={handleBlur('caption')}
-                    value={values.caption}
-                  />
-                </View>
-                {touched.caption && errors.caption && (
-                  <Text style={styles.errorText}>
-                    {touched.caption && errors.caption}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.description ? 'red' : 'gray',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    multiline
-                    numberOfLines={4}
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    style={styles.inputField}
-                    defaultValue={description}
-                    placeholder={'description'}
-                    onChangeText={handleChange('description')}
-                    onBlur={handleBlur('description')}
-                    value={values.description}
-                  />
-                </View>
-                {touched.description && errors.description && (
-                  <Text style={styles.errorText}>
-                    {touched.description && errors.description}
-                  </Text>
-                )}
-                {!isSubmitting && (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.registerBtn}
-                    onPress={handleSubmit}>
-                    <Text style={styles.registerBtnText}>UPLOAD</Text>
-                  </TouchableOpacity>
-                )}
-                {isSubmitting && (
-                  <ActivityIndicator
-                    style={{ marginTop: 10 }}
-                    size={'large'}
-                    color={theme.$primaryColor}
-                  />
-                )}
-              </>
-            )}
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: '5%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Text style={{color: 'red'}}>
+                  You can update only the caption and description , not the
+                  media file!
+                </Text>
+              </View>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: '5%',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.caption ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  style={styles.inputField}
+                  placeholder={'Caption'}
+                  defaultValue={caption}
+                  onChangeText={handleChange('caption')}
+                  onBlur={handleBlur('caption')}
+                  value={values.caption}
+                />
+              </View>
+              {touched.caption && errors.caption && (
+                <Text style={styles.errorText}>
+                  {touched.caption && errors.caption}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.description ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  multiline
+                  numberOfLines={4}
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  style={styles.inputField}
+                  defaultValue={description}
+                  placeholder={'description'}
+                  onChangeText={handleChange('description')}
+                  onBlur={handleBlur('description')}
+                  value={values.description}
+                />
+              </View>
+              {touched.description && errors.description && (
+                <Text style={styles.errorText}>
+                  {touched.description && errors.description}
+                </Text>
+              )}
+              {!isSubmitting && (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.registerBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>UPLOAD</Text>
+                </TouchableOpacity>
+              )}
+              {isSubmitting && (
+                <ActivityIndicator
+                  style={{marginTop: 10}}
+                  size={'large'}
+                  color={theme.$primaryColor}
+                />
+              )}
+            </>
+          )}
         </Formik>
       </ScrollView>
     </View>

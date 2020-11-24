@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import { Formik } from 'formik';
-import { AuthContext } from '../context/authContext';
+import {Formik} from 'formik';
+import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
 import WebView from 'react-native-webview';
 import {Snackbar} from 'react-native-paper';
@@ -57,7 +57,7 @@ const VideoUploadScreen = (props) => {
       values.link = 'https://www.youtube.com/watch?v=' + ytLink;
       try {
         const response = await fetch(
-          'http://13.232.190.226/api/talent/upload/media',
+          'https://api.starzhubs.com/api/talent/upload/media',
           {
             method: 'POST',
             headers: {
@@ -69,17 +69,17 @@ const VideoUploadScreen = (props) => {
         );
         const resData = await response.json();
         if (resData.success) {
-          const msg ="Video Uploaded Successfully. Check Your Media Screen."
-          setMessage(msg)
+          const msg = 'Video Uploaded Successfully. Check Your Media Screen.';
+          setMessage(msg);
           setVisible(!visible);
-          setYtLink('')
-          resetForm({ values: '' });
+          setYtLink('');
+          resetForm({values: ''});
         } else {
-          const msg ="Something went wrong. Try again!"
-          setMessage(msg)
+          const msg = 'Something went wrong. Try again!';
+          setMessage(msg);
           setVisible(!visible);
         }
-      } catch (error) { }
+      } catch (error) {}
     } else {
       alert('Invalid youtube Link');
     }
@@ -92,7 +92,7 @@ const VideoUploadScreen = (props) => {
   return (
     <View style={styles.container}>
       <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
-      {message}  
+        {message}
       </Snackbar>
       <ScrollView>
         <Formik
@@ -103,8 +103,7 @@ const VideoUploadScreen = (props) => {
           validationSchema={mediaSchema}
           onSubmit={(values, {setSubmitting, resetForm}) =>
             uploadMedia(values, {setSubmitting, resetForm})
-          }
-          >
+          }>
           {({
             handleChange,
             handleBlur,
@@ -114,155 +113,155 @@ const VideoUploadScreen = (props) => {
             errors,
             values,
           }) => (
-              <>
-                <View
-                  style={{
-                    lex: 1,
-                    alignSelf: 'center',
-                    width: '90%',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    height: 200,
-                    marginHorizontal: 3,
-                    marginVertical: 3,
-                    marginTop: 10,
-                  }}>
-                  {ytLink !== '' ? (
-                    <View
-                      style={{
-                        lex: 1,
-                        alignSelf: 'center',
-                        width: '100%',
-                        height: 200,
-                        marginHorizontal: 3,
-                        marginVertical: 3,
-                        marginTop: 10,
-                      }}>
-                      <WebView
-                        javaScriptEnabled={true}
-                        domStorageEnabled={true}
-                        source={{
-                          uri: 'https://www.youtube.com/embed/' + ytLink,
-                        }}
-                      />
-                    </View>
-                  ) : (
-                      <Text
-                        style={{
-                          fontWeight: 'bold',
-                          color: 'black',
-                          fontSize: 20,
-                        }}>
-                        Preview not available
-                      </Text>
-                    )}
-                </View>
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'default'}
-                    style={styles.inputField}
-                    placeholder={'Link'}
-                    onChangeText={handleChange('link')}
-                    onBlur={handleBlur('link')}
-                    value={values.link}
-                    onEndEditing={(e) =>
-                      transformYoutubeLinks(e.nativeEvent.text)
-                    }
-                  />
-                </View>
-                {touched.link && errors.link && (
-                  <Text style={styles.errorText}>
-                    {touched.link && errors.link}
+            <>
+              <View
+                style={{
+                  lex: 1,
+                  alignSelf: 'center',
+                  width: '90%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 200,
+                  marginHorizontal: 3,
+                  marginVertical: 3,
+                  marginTop: 10,
+                }}>
+                {ytLink !== '' ? (
+                  <View
+                    style={{
+                      lex: 1,
+                      alignSelf: 'center',
+                      width: '100%',
+                      height: 200,
+                      marginHorizontal: 3,
+                      marginVertical: 3,
+                      marginTop: 10,
+                    }}>
+                    <WebView
+                      javaScriptEnabled={true}
+                      domStorageEnabled={true}
+                      source={{
+                        uri: 'https://www.youtube.com/embed/' + ytLink,
+                      }}
+                    />
+                  </View>
+                ) : (
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      color: 'black',
+                      fontSize: 20,
+                    }}>
+                    Preview not available
                   </Text>
                 )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.caption ? 'red' : 'gray',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    style={styles.inputField}
-                    placeholder={'Caption'}
-                    onChangeText={handleChange('caption')}
-                    onBlur={handleBlur('caption')}
-                    value={values.caption}
-                  />
-                </View>
-                {touched.caption && errors.caption && (
-                  <Text style={styles.errorText}>
-                    {touched.caption && errors.caption}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.description ? 'red' : 'gray',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    multiline
-                    numberOfLines={4}
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    style={styles.inputField}
-                    placeholder={'Description'}
-                    onChangeText={handleChange('description')}
-                    onBlur={handleBlur('description')}
-                    value={values.description}
-                  />
-                </View>
-                {touched.description && errors.description && (
-                  <Text style={styles.errorText}>
-                    {touched.description && errors.description}
-                  </Text>
-                )}
-                {!isSubmitting && (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.registerBtn}
-                    onPress={handleSubmit}>
-                    <Text style={styles.registerBtnText}>Upload</Text>
-                  </TouchableOpacity>
-                )}
-                {isSubmitting && (
-                  <ActivityIndicator
-                    style={{ marginTop: 10 }}
-                    size={'large'}
-                    color={theme.$primaryColor}
-                  />
-                )}
-              </>
-            )}
+              </View>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'default'}
+                  style={styles.inputField}
+                  placeholder={'Link'}
+                  onChangeText={handleChange('link')}
+                  onBlur={handleBlur('link')}
+                  value={values.link}
+                  onEndEditing={(e) =>
+                    transformYoutubeLinks(e.nativeEvent.text)
+                  }
+                />
+              </View>
+              {touched.link && errors.link && (
+                <Text style={styles.errorText}>
+                  {touched.link && errors.link}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.caption ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  style={styles.inputField}
+                  placeholder={'Caption'}
+                  onChangeText={handleChange('caption')}
+                  onBlur={handleBlur('caption')}
+                  value={values.caption}
+                />
+              </View>
+              {touched.caption && errors.caption && (
+                <Text style={styles.errorText}>
+                  {touched.caption && errors.caption}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.description ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  multiline
+                  numberOfLines={4}
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  style={styles.inputField}
+                  placeholder={'Description'}
+                  onChangeText={handleChange('description')}
+                  onBlur={handleBlur('description')}
+                  value={values.description}
+                />
+              </View>
+              {touched.description && errors.description && (
+                <Text style={styles.errorText}>
+                  {touched.description && errors.description}
+                </Text>
+              )}
+              {!isSubmitting && (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.registerBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>Upload</Text>
+                </TouchableOpacity>
+              )}
+              {isSubmitting && (
+                <ActivityIndicator
+                  style={{marginTop: 10}}
+                  size={'large'}
+                  color={theme.$primaryColor}
+                />
+              )}
+            </>
+          )}
         </Formik>
       </ScrollView>
     </View>

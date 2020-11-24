@@ -11,7 +11,7 @@ const MyConnectionScreen = (props) => {
     getConnectionRequests();
   });
   const getConnectionRequests = () => {
-    fetch(`http://13.232.190.226/api/talent/req/approved`, {
+    fetch(`https://api.starzhubs.com/api/talent/req/approved`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -64,8 +64,10 @@ const MyConnectionScreen = (props) => {
     );
   } else {
     return (
-      <View style={{alignItems:'center', marginTop:'8%'}}>
-        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Connections</Text>
+      <View style={{alignItems: 'center', marginTop: '8%'}}>
+        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+          No Connections
+        </Text>
       </View>
     );
   }
