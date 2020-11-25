@@ -38,7 +38,7 @@ const TalentListScreen = (props) => {
         (response) => {
           if (response.success === true) {
             setTalents(response.data.talents);
-            console.log("talents",talents);
+            console.log('talents', talents);
           } else {
             console.log('gggg', response.message);
           }
@@ -112,10 +112,17 @@ const TalentListScreen = (props) => {
           Deleted Successfully
         </Snackbar>
         <View>
-          {talents.length===0 && (
-            <View style={{alignItems:'center', marginTop:'50%'}}>
-            <Text style={{color:theme.$primaryColor,fontWeight:'bold', fontSize:18}}>No talents you added yet</Text>
-          </View>
+          {talents.length === 0 && (
+            <View style={{alignItems: 'center', marginTop: '50%'}}>
+              <Text
+                style={{
+                  color: theme.$primaryColor,
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                }}>
+                No talents you added yet
+              </Text>
+            </View>
           )}
           {talents.map((t, key) => (
             <View style={styles.card}>

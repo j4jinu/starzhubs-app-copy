@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -11,13 +11,13 @@ import {
 import theme from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Moment from 'moment';
-import { AuthContext } from '../context/authContext';
-import { Snackbar } from 'react-native-paper';
+import {AuthContext} from '../context/authContext';
+import {Snackbar} from 'react-native-paper';
 const MyPosterGridItem = (props) => {
-  const { userId } = props;
+  const {userId} = props;
   const auth = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState({ image: {} });
+  const [user, setUser] = useState({image: {}});
   const confirmDelete = (pid) =>
     Alert.alert(
       'Delete poster',
@@ -32,7 +32,7 @@ const MyPosterGridItem = (props) => {
           onPress: () => posterDeleteHandler(pid),
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
   const posterDeleteHandler = (id) => {
     const requestOptions = {
@@ -123,12 +123,12 @@ const MyPosterGridItem = (props) => {
                   //paddingHorizontal: 15,
                 }}>
                 <View style={styles.ownerDetails}>
-                  <Text style={{ fontSize: 13 }}>{userId.name}</Text>
-                  <Text style={{ fontSize: 10, color: 'gray' }}>
+                  <Text style={{fontSize: 13}}>{userId.name}</Text>
+                  <Text style={{fontSize: 10, color: 'gray'}}>
                     {Moment(props.endDate).format('DD/MM/YYYY')}
                   </Text>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row'}}>
                   <TouchableOpacity
                     style={{
                       padding: 10,
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     marginLeft: 15,
-    marginTop: "-6%"
+    marginTop: '-6%',
   },
   title: {
     alignSelf: 'flex-start',

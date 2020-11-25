@@ -64,8 +64,10 @@ const MyConnectionScreen = (props) => {
     );
   } else {
     return (
-      <View style={{alignItems:'center', marginTop:'8%'}}>
-        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Connections</Text>
+      <View style={{alignItems: 'center', marginTop: '8%'}}>
+        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+          No Connections
+        </Text>
       </View>
     );
   }

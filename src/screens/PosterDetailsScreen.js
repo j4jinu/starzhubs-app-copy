@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   Image,
   ScrollView,
@@ -10,16 +10,16 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import theme from '../config/theme';
 import Moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
 import AIcon from 'react-native-vector-icons/AntDesign';
 import * as Yup from 'yup';
-import { Formik } from 'formik';
-import { AuthContext } from '../context/authContext';
-import { Snackbar } from 'react-native-paper';
+import {Formik} from 'formik';
+import {AuthContext} from '../context/authContext';
+import {Snackbar} from 'react-native-paper';
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
   console.log('token', auth.token);
@@ -54,7 +54,7 @@ const PosterDetailsScreen = (props) => {
       .then((response) => {
         setSelectedPoster(response.data.poster.requests);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   };
   const onSubmitRequest = () => {
     fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
@@ -63,12 +63,17 @@ const PosterDetailsScreen = (props) => {
         'Content-type': 'Application/json',
         Authorization: 'Bearer ' + auth.token,
       },
-      body: JSON.stringify({ notes: 'hai' }),
+      body: JSON.stringify({notes: 'hai'}),
     })
       .then((response) => response.json())
       .then((response) => {
         if (response.success === false) {
-          alert(response.message);
+          Alert.alert('Alert', 'You have already sent a request', [
+            {
+              Text: 'OK',
+              onPress: () => props.navigation.navigate('Posters'),
+            },
+          ]);
         } else {
           props.navigation.navigate('PosterRequest', {
             posterId: posterId,
@@ -96,7 +101,7 @@ const PosterDetailsScreen = (props) => {
           onPress: () => posterRequestHandler(id, status),
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
   };
 
@@ -139,10 +144,7 @@ const PosterDetailsScreen = (props) => {
   };
   return (
     <>
-      <Snackbar
-        visible={visible}
-        duration={7000}
-        onDismiss={onDismissSnackBar}>
+      <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
         {msg}
       </Snackbar>
       <ScrollView>
@@ -171,17 +173,17 @@ const PosterDetailsScreen = (props) => {
                 marginVertical: 15,
               }}>
               <View>
-                <Text style={{ fontSize: 12 }}>
+                <Text style={{fontSize: 12}}>
                   Starts : {Moment(startDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
               <View>
-                <Text style={{ fontSize: 12 }}>
+                <Text style={{fontSize: 12}}>
                   Ends: {Moment(endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
             </View>
-            <Text style={{ fontWeight: 'bold', marginHorizontal: 5 }}>
+            <Text style={{fontWeight: 'bold', marginHorizontal: 5}}>
               {'Description'}
             </Text>
             <Text style={styles.description}>{description}</Text>
@@ -212,8 +214,8 @@ const PosterDetailsScreen = (props) => {
                     justifyContent: 'center',
                     marginLeft: 10,
                   }}>
-                  <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                  <Text style={{fontSize: 13}}>{'Posted By'}</Text>
+                  <Text style={{fontSize: 18, fontWeight: 'bold'}}>
                     {user.name}
                   </Text>
                 </View>
@@ -253,75 +255,75 @@ const PosterDetailsScreen = (props) => {
                     paddingHorizontal: 10,
                     borderRadius: theme.$borderRadius,
                   }}>
-                  <Text style={{ color: '', fontSize: 15 }}>
+                  <Text style={{color: '', fontSize: 15}}>
                     No Request to this poster
                   </Text>
                 </View>
               ) : (
-                  selectedPoster.map((s) => (
-                    <View style={styles.authorInfo}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          props.navigation.navigate('UserDetails', {
-                            userId: s.requestBy._id,
-                          })
-                        }
-                        style={{ flexDirection: 'row', width: '70%' }}>
-                        <Image
-                          style={{
-                            width: 50,
-                            height: 50,
-                            borderRadius: 100,
-                          }}
-                          source={{
-                            uri: `http://13.232.190.226/api/user/avatar/${s.requestBy.image.avatar}`,
-                            // uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
-                          }}
-                        />
+                selectedPoster.map((s) => (
+                  <View style={styles.authorInfo}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate('UserDetails', {
+                          userId: s.requestBy._id,
+                        })
+                      }
+                      style={{flexDirection: 'row', width: '70%'}}>
+                      <Image
+                        style={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: 100,
+                        }}
+                        source={{
+                          uri: `http://13.232.190.226/api/user/avatar/${s.requestBy.image.avatar}`,
+                          // uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                        }}
+                      />
 
-                        <View
-                          style={{
-                            flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            marginLeft: 10,
-                          }}>
-                          <Text style={{ fontSize: 13 }}>{'Requested By'}</Text>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                            {s.requestBy.name}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
                       <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'flex-end',
-                          width: '30%',
+                          flex: 1,
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          marginLeft: 10,
                         }}>
-                        <TouchableOpacity
-                          style={{
-                            padding: 10,
-                            backgroundColor: '#f2f2f2',
-                            borderRadius: 100,
-                            marginHorizontal: 5,
-                          }}
-                          onPress={() => updatePosterReq(s._id, 1)}>
-                          <AIcon name="check" size={25} color="green" />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          style={{
-                            padding: 10,
-                            backgroundColor: '#f2f2f2',
-                            borderRadius: 100,
-                            marginHorizontal: 5,
-                          }}
-                          onPress={() => updatePosterReq(s._id, 2)}>
-                          <DIcon name="delete" size={25} color="red" />
-                        </TouchableOpacity>
+                        <Text style={{fontSize: 13}}>{'Requested By'}</Text>
+                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                          {s.requestBy.name}
+                        </Text>
                       </View>
+                    </TouchableOpacity>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'flex-end',
+                        width: '30%',
+                      }}>
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          backgroundColor: '#f2f2f2',
+                          borderRadius: 100,
+                          marginHorizontal: 5,
+                        }}
+                        onPress={() => updatePosterReq(s._id, 1)}>
+                        <AIcon name="check" size={25} color="green" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          padding: 10,
+                          backgroundColor: '#f2f2f2',
+                          borderRadius: 100,
+                          marginHorizontal: 5,
+                        }}
+                        onPress={() => updatePosterReq(s._id, 2)}>
+                        <DIcon name="delete" size={25} color="red" />
+                      </TouchableOpacity>
                     </View>
-                  ))
-                )}
+                  </View>
+                ))
+              )}
             </>
           ) : null}
           {user._id === auth.userId ? null : (
@@ -329,7 +331,7 @@ const PosterDetailsScreen = (props) => {
               onPress={onSubmitRequest}
               activeOpacity={0.7}
               style={styles.requestBtn}>
-              <Text style={{ fontSize: 17, color: 'white' }}>
+              <Text style={{fontSize: 17, color: 'white'}}>
                 {'Show Interest'}
               </Text>
             </TouchableOpacity>

@@ -123,8 +123,8 @@ const PhotoUploadScreen = (props) => {
       }
       setVisible(!visible);
       setImage('');
-      resetForm({ values: '' });
-      // props.navigation.goBack();
+      resetForm({values: ''});
+      props.navigation.navigate('Account');
     } catch (error) {
       console.error('error', error);
     }

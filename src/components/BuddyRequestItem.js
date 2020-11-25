@@ -71,12 +71,15 @@ const BuddyRequestItem = (props) => {
   };
   const requestHandler = () => {
     // console.warn(status)
-    fetch(`http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`, {
-      method: 'PUT',
-      headers: {
-        Authorization: 'Bearer ' + auth.token,
+    fetch(
+      `http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
       },
-    })
+    )
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);

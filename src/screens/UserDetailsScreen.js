@@ -38,7 +38,6 @@ const UserDetailsScreen = (props) => {
   const [message, setMessage] = useState();
   const [categoryId, setCategoryId] = useState('');
 
-
   useEffect(() => {
     const getUserDetails = () => {
       fetch(`http://13.232.190.226/api/user/${userId}`, {
@@ -173,32 +172,15 @@ const UserDetailsScreen = (props) => {
       );
   };
 
-  const handleMultiple = (value) => {
-    const newValue = [...checked]
-    checked.forEach(c => {
-      if (c === value) {
-        newValue.splice(value)
-      } else {
-        newValue.push(value)
-      }
-      setChecked(newValue)
-    });
-  }
-
-  const handleCheck = (val) => {
-    return checked(item => val === item);
-}
-
   const handleToggle = (value) => {
-    const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
+    const currentIndex = checked.indexOf(value);
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
-    console.log("newcheck",checked);
   };
 
   const cancelRequest = () => {
@@ -350,9 +332,11 @@ const UserDetailsScreen = (props) => {
           <Swiper style={styles.wrapper} showsButtons={false}>
             {user.image && user.image.avatar !== undefined && (
               <Image
+                key={user.image.avatar}
                 style={{width: '100%', height: 300, resizeMode: 'cover'}}
                 source={{
                   uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  cache:'reload'
                 }}
               />
             )}
@@ -530,44 +514,85 @@ const UserDetailsScreen = (props) => {
             <UserMediaSection talents={talents} navigation={props.navigation} />
           )}
           {content === 'P' && (
-            <UserPosterSection user={user} posters={posters} navigation={props.navigation} />
+            <UserPosterSection
+              user={user}
+              posters={posters}
+              navigation={props.navigation}
+            />
           )}
         </View>
 
         {/* Request Modal */}
 
-        <Modal
-          transparent={true}
-          visible={isRequestModal}
-          animationType="fade"
-          onOrientationChange="fullScreen">
+        <Modal transparent visible={isRequestModal} animationType="slide">
           <View
             style={{
-              backgroundColor: '#000000aa',
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              top: 0,
-            }}>
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 22,
+            }}
+            onPress={() => setVisible(false)}>
             <View
               style={{
-                backgroundColor: '#fff',
-                top: 10,
-                padding: 20,
-                borderRadius: 4,
-                height: '100%',
+                margin: 5,
+                backgroundColor: 'white',
+                borderRadius: 3,
+                width: '95%',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
               }}>
-              <View style={{flexDirection: 'row-reverse', marginBottom: 40}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  borderBottomWidth: 1,
+                  paddingVertical: 12,
+                  backgroundColor: '#f5f5f5',
+                  borderColor: 'gray',
+                }}>
+                <Text
+                  style={{
+                    color: theme.$primaryColorText,
+                    marginLeft: 15,
+                    color: theme.$primaryColorText,
+                    fontSize: 17,
+                  }}>
+                  Request Talents
+                </Text>
+                <TouchableOpacity onPress={() => setRequestModal(false)}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginRight: 12,
+                    }}>
+                    X
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              {/* <View style={{flexDirection: 'row-reverse', marginBottom: 40}}>
                 <TouchableOpacity
                   onPress={() => setRequestModal(false)}
                   activeOpacity={0.7}>
                   <Icon name="close-circle" size={35} color={'black'} />
                 </TouchableOpacity>
-              </View>
-              <View style={{justifyContent: 'center'}}>
-                <View style={{alignItems: 'center', width: '100%'}}>
-                  <View style={{width: '100%', height: 'auto'}}>
+              </View> */}
+              <View
+                style={{
+                  justifyContent: 'center',
+                  paddingHorizontal: 15,
+                  paddingVertical: 15,
+                }}>
+                {/* <View style={{alignItems: 'center', width: '100%'}}>
+                  {/* <View style={{width: '100%', height: 'auto'}}>
                     <Image
                       style={{width: '100%', height: 200}}
                       source={{
@@ -577,39 +602,43 @@ const UserDetailsScreen = (props) => {
                             : 'https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVID19_SECVPF.gif',
                       }}
                     />
-                  </View>
+                  </View> 
                   <View style={{margin: 10}}>
                     <Text style={{fontSize: 15, fontWeight: 'bold'}}>
                       {user.name}
                     </Text>
                   </View>
-                </View>
-                <View style={{marginTop: 10}}>
+                </View> */}
+                <View style={{marginBottom: 5}}>
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginLeft: 20,
-                      marginRight: 20,
                     }}>
                     {talents.map((item) => (
                       <TouchableOpacity
                         key={item._id}
-                        
                         onPress={() => {
                           // setChecked(item._id);
-                          handleMultiple(item._id);
+                          handleToggle(item._id);
                         }}
-                        style={checked.indexOf(item._id) > -1 
-                            ? styles.categoryItemActive
-                            : styles.categoryItem
-                        }
-                        >
-                        <Text>{item.category.title}</Text>
+                        style={
+                          checked.indexOf(item._id) === -1
+                            ? styles.categoryItem
+                            : styles.categoryItemActive
+                        }>
+                        <Text
+                          style={
+                            checked.indexOf(item._id) === -1
+                              ? {color: theme.$primaryColorText}
+                              : {color: 'white'}
+                          }>
+                          {item.category.title}
+                        </Text>
                       </TouchableOpacity>
                     ))}
                   </View>
                 </View>
-                <View>
+                <View style={{width: '100%'}}>
                   <Formik
                     initialValues={initValues}
                     validationSchema={validation}
@@ -627,9 +656,8 @@ const UserDetailsScreen = (props) => {
                     }) => (
                       <View
                         style={{
-                          marginLeft: 25,
-                          marginRight: 25,
                           marginTop: 10,
+                          width: '100%',
                         }}>
                         <TextInput
                           style={{
@@ -637,6 +665,7 @@ const UserDetailsScreen = (props) => {
                             borderColor: 'orange',
                             borderRadius: 4,
                             paddingLeft: 10,
+                            width: '100%',
                           }}
                           underlineColorAndroid="transparent"
                           placeholder="Message"
@@ -650,7 +679,7 @@ const UserDetailsScreen = (props) => {
                           <Text
                             style={{
                               fontSize: 14,
-                              color: 'firebrick',
+                              color: 'tomato',
                               alignSelf: 'flex-start',
                               marginTop: 5,
                             }}>
@@ -665,10 +694,11 @@ const UserDetailsScreen = (props) => {
                           }}>
                           <TouchableOpacity
                             style={{
-                              borderRadius: 2,
-                              backgroundColor: 'orange',
-                              padding: 10,
-                              width: '50%',
+                              borderRadius: 8,
+                              paddingHorizontal: 12,
+                              paddingVertical: 12,
+                              width: '100%',
+                              backgroundColor: theme.$primaryColor,
                               alignItems: 'center',
                             }}
                             onPress={handleSubmit}>
@@ -756,22 +786,20 @@ const styles = StyleSheet.create({
   categoryItem: {
     backgroundColor: 'white',
     borderRadius: 50,
-    borderColor: 'gray',
+    borderColor: theme.$primaryColorText,
     borderWidth: 1,
     marginHorizontal: 5,
-    marginVertical: 5,
-    padding: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
   categoryItemActive: {
-    backgroundColor: 'orange',
+    backgroundColor: theme.$primaryColor,
     borderRadius: 50,
-    borderColor: 'gray',
-    borderWidth: 1,
     marginHorizontal: 5,
-    marginVertical: 5,
-    padding: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },

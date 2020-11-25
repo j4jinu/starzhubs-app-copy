@@ -20,18 +20,18 @@ const PendingConnectionScreen = (props) => {
       .then((response) => {
         setRequests(response.data.requests);
         setUserImages(response.data.requests.fromUser.image);
-        console.log("rqs",response.data.requests)
+        console.log('rqs', response.data.requests);
       })
       .catch((error) => {
         alert(response.message);
       });
   };
-  if(requests.length===0){
-    return(
-      <View style={{alignItems:'center', marginTop:'8%'}}>
-        <Text style={{color:'#F98644', fontWeight:'bold'}}>No Requests</Text>
+  if (requests.length === 0) {
+    return (
+      <View style={{alignItems: 'center', marginTop: '8%'}}>
+        <Text style={{color: '#F98644', fontWeight: 'bold'}}>No Requests</Text>
       </View>
-    )
+    );
   }
   return (
     <FlatList

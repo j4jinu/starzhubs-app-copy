@@ -4,8 +4,6 @@ import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
 const MediaItem = (props) => {
-  console.log('User details: ', props.media);
-
   if (props.media.length === 0) {
     return null;
   }
@@ -17,7 +15,10 @@ const MediaItem = (props) => {
         activeOpacity={0.7}
         onPress={() =>
           props.navigation.navigate('MediaDetails', {
-            media: props.media[0].file,
+            mediaFile: props.media[0].file,
+            mediaType: props.media[0].fileType,
+            caption: props.media[0].caption,
+            description: props.media[0].description,
           })
         }>
         {props.media[0].fileType === 'image' ? (
@@ -48,7 +49,7 @@ const MediaItem = (props) => {
                         /> */}
         <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
         <Text style={styles.mediaDescription} numberOfLines={3}>
-          {props.media[0].caption}
+          {props.media[0].description}
         </Text>
         <Text style={{color: theme.$primaryColorText, marginLeft: 10}}>
           Posted by:{' '}

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import theme from '../config/theme';
 import Moment from 'moment';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const PosterGridItem = (props) => {
-  const { userId } = props;
+  const {userId} = props;
   const auth = useContext(AuthContext);
   return (
     <>
@@ -60,8 +60,8 @@ const PosterGridItem = (props) => {
               />
 
               <View style={styles.ownerDetails}>
-                <Text style={{ fontSize: 13 }}>{userId.name}</Text>
-                <Text style={{ fontSize: 10, color: 'gray' }}>
+                <Text style={{fontSize: 13}}>{userId.name}</Text>
+                <Text style={{fontSize: 10, color: 'gray'}}>
                   {Moment(props.endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e6e6e6',
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 6 },
+    shadowOffset: {width: 0, height: 6},
     shadowOpacity: 0.26,
   },
   gridItemText: {

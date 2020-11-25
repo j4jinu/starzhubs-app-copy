@@ -26,12 +26,14 @@ const SentConnectionScreen = () => {
       });
   };
 
-  if(isFriends===undefined){
-    return(
-      <View style={{alignItems:'center', marginTop:'8%'}}>
-        <Text style={{color:theme.$primaryColor, fontWeight:'bold'}}>No Requests</Text>
+  if (isFriends === undefined) {
+    return (
+      <View style={{alignItems: 'center', marginTop: '8%'}}>
+        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+          No Requests
+        </Text>
       </View>
-    )
+    );
   }
 
   return (
