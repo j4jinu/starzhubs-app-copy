@@ -239,6 +239,7 @@ const EditProfileScreen = (props) => {
   });
   const [visible, setVisible] = useState(false);
   const [msg, setMsg] = useState('');
+  const [actorMode, setActorMode] = useState(false)
 
   const initialProfileValues = {
     name: userInfo.name,
@@ -288,11 +289,25 @@ const EditProfileScreen = (props) => {
       if (userData.data.user.languages !== '') {
         var myString = userData.data.user.languages;
         const lng = myString.split(',');
-        setSelectedItems(lng);
+      setSelectedItems(lng);
       }
+      checkActorMode(userData.data.talents)
     };
     getUserDetails();
   }, []);
+
+  const checkActorMode = (talents) => {
+    talents.forEach(talent => {
+        const category = talent.category
+        console.log(category);
+        category.forEach(c => {
+            if (c.title === 'Actor' || c.title === 'Model') {
+                setActorMode(true)
+                return
+            }
+        })
+    });
+}
 
   const onSelectedItemsChange = (selectedItem) => {
     setSelectedItems(selectedItem);
@@ -365,6 +380,7 @@ const EditProfileScreen = (props) => {
     }
     setMsg('User details updated successfully');
     setVisible(!visible);
+    props.navigation.navigate('Account')
   };
 
   const requestCameraPermission = async () => {
@@ -372,7 +388,7 @@ const EditProfileScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'starzhubs needs access to your camera ' +
             'so you can take awesome pictures.',
@@ -581,7 +597,7 @@ const EditProfileScreen = (props) => {
                   style={{
                     backgroundColor: 'white',
                     borderRadius: 10,
-                    width: '80%',
+                    width: '100%',
                     paddingVertical: 5,
                     borderColor: '#e6e6e6',
                   }}
@@ -638,10 +654,10 @@ const EditProfileScreen = (props) => {
                   onValueChange={(itemValue, itemIndex) =>
                     setGender(itemValue)
                   }>
-                  <Picker.Item label="Select Gender" value="" />
+                  <Picker.Item label="Select Gender" value="" style={{backgroundColor:'orange'}} />
                   <Picker.Item label="Female" value="Female" />
                   <Picker.Item label="Male" value="Male" />
-                  <Picker.Item label="Transgender" value="Transgender" />
+                  <Picker.Item label="Others" value="Others" />
                 </Picker>
               </View>
               {/* 
@@ -669,6 +685,7 @@ const EditProfileScreen = (props) => {
                   onChangeText={handleChange('email')}
                   onBlur={handleBlur('email')}
                   defaultValue={initialProfileValues.email}
+                  editable={false}
                 />
               </View>
               {/*
@@ -843,6 +860,11 @@ const EditProfileScreen = (props) => {
                   style={{padding: 0}}
                 />
               </View>
+
+              {/* {actorMode && (
+
+              )} */}
+
 
               {/*
               About user 

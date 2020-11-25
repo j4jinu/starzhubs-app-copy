@@ -7,8 +7,9 @@ import theme from '../config/theme';
 
 const RouteConfigs = {
     Connections: MyConnectionScreen,
-    Pending: PendingConnectionScreen,
+    Requests: PendingConnectionScreen,
     Sent: SentConnectionScreen,
+    PendingApproval:SentConnectionScreen
 }
 
 const TabNavigatorConfig = {
@@ -20,12 +21,12 @@ const TabNavigatorConfig = {
         activeTintColor: theme.$primaryColor
     },
     labelStyle: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: 'bold'
     },
     tabBarOptions: {
         labelStyle: {
-            fontSize: 14,
+            fontSize: 13,
             textTransform: 'capitalize',
             fontWeight: "bold"
         },
@@ -35,7 +36,7 @@ const TabNavigatorConfig = {
         style: {
             backgroundColor: 'white',
             elevation: 0,
-            width: '90%'
+            width: '100%'
         },
         indicatorStyle: {
             backgroundColor: theme.$primaryColor

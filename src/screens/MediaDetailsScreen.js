@@ -1,16 +1,94 @@
-import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import {Image, StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView} from 'react-native';
 import WebView from 'react-native-webview';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import theme from '../config/theme';
+
 const MediaDetailsScreen = (props) => {
   const mediaFile = props.navigation.getParam('mediaFile');
-  console.log('mediafile', mediaFile);
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');
+  const [enlargeModal,setEnlargeModal] = useState(false)
+
+
   return (
     // <View>
     <>
+      <Modal transparent visible={enlargeModal} animationType="slide">
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 22,
+            }}
+            // onPress={() => setVisible(false)}
+          >
+            <View
+              style={{
+                margin: 5,
+                backgroundColor: 'white',
+                borderRadius: 3,
+                width: '95%',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  // borderBottomWidth: 1,
+                  paddingVertical: 12,
+                  // backgroundColor: '#f5f5f5',
+                  // borderColor: 'gray',
+                }}>
+                <Text
+                  style={{
+                    color: theme.$primaryColorText,
+                    marginLeft: 15,
+                    color: theme.$primaryColorText,
+                    fontSize: 17,
+                  }}>
+                  
+                </Text>
+                <TouchableOpacity onPress={() => setEnlargeModal(false)}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginRight: 12,
+                    }}>
+                    X
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  paddingHorizontal: 15,
+                  paddingVertical: 15,
+                }}>
+                <Image
+          style={styles.media}
+          source={{
+            uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+          }}
+        />
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+
+
       {mediaType === 'video' ? (
         <WebView
           javaScriptEnabled={true}
@@ -22,18 +100,25 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
+        <TouchableOpacity onPress={()=>setEnlargeModal(true)}>
         <Image
           style={styles.media}
           source={{
             uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
           }}
         />
+        </TouchableOpacity>
       )}
       <ScrollView>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
-        {/* </View> */}
       </ScrollView>
+
+
+
+{/* Enlarge Modal */}
+
+
     </>
   );
 };

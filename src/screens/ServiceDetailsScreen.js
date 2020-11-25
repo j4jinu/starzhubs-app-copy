@@ -61,7 +61,7 @@ const ServiceDetailsScreen = (props) => {
             setLoading(false);
             setVisible(!visible);
             // props.navigation.navigate('OurServices')
-            // props.navigation.goBack()
+            props.navigation.goBack()
           } else {
             setVisible(!visible);
           }
@@ -143,7 +143,7 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-              <View style={{width: '80%', marginLeft: '7%'}}>
+              <View style={{width: '90%', marginLeft: 0}}>
                 <View style={styles.inputView}>
                   <EIcon
                     name="pen"

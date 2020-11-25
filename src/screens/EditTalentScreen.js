@@ -9,7 +9,8 @@ import {
   Picker,
   Alert,
   Image,
-  PermissionsAndroid
+  PermissionsAndroid,
+  ScrollView
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -78,8 +79,7 @@ const EditTalentScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const category = props.navigation.getParam('category');
   const industry = props.navigation.getParam('industry');
-  console.log('edit industry', talentId);
-  // const inds = industry.split(',')
+  const userId = props.navigation.getParam('userId');
   const films = props.navigation.getParam('films');
   const years = props.navigation.getParam('years');
   const description = props.navigation.getParam('description');
@@ -105,6 +105,7 @@ const EditTalentScreen = (props) => {
   const [rightimg, setRightImage] = useState();
   const [leftimg, setLeftImage] = useState();
   const [fullsizeimg, setFullImage] = useState();
+  const [user, setUser] = useState({image: {}});
 
   const initialTalentValues = {
     talentId: talentId,
@@ -113,6 +114,7 @@ const EditTalentScreen = (props) => {
     industry: industry,
     films: films,
     description: description,
+    // height:''
   };
 
   const phoneRegExp = /^[0-9]*$/;
@@ -130,16 +132,35 @@ const EditTalentScreen = (props) => {
   });
 
   useEffect(()=> {
-    if (talentId === '5fbd408388613013dcef63c4') {
-      setIsProfileImageMode(true);
-      // setTalent(tid);
-      // return;
-    } else {
-      setIsProfileImageMode(false);
-      // setTalent(tid);
-      // return;
-    }
-  })
+    userInfo();
+})
+
+const userInfo = ()=>{
+  if (talentId === '5fbd408388613013dcef63c4') {
+    fetch(`http://13.232.190.226/api/user/${userId}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setUser(response.data.user);
+        setbodyTypeValue(response.data.user.bodyType)
+        setcomplexionValue(response.data.user.complexion)
+        // setHeadImage(user.image && user.image.head_shot !== undefined?user.image.head_shot:null)
+        console.log("userdetail",headimg);
+      })
+    .catch((error) => {});
+    setIsProfileImageMode(true);
+    // setTalent(tid);
+    // return;
+  } else {
+    setIsProfileImageMode(false);
+    // setTalent(tid);
+    // return;
+  }
+}    
 
   useEffect(() => {
     const getUserTalents = () => {
@@ -351,6 +372,7 @@ const EditTalentScreen = (props) => {
     setSelectedItems(selectedItems);
   };
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
         {message}
@@ -380,7 +402,7 @@ const EditTalentScreen = (props) => {
                 width: '90%',
                 paddingLeft: 8,
                 paddingRight: 8,
-                // marginTop: '6%',
+                marginTop: '6%',
                 flexDirection: 'row',
                 alignItems: 'center',
                 borderColor: errors.link ? 'red' : 'gray',
@@ -584,6 +606,16 @@ const EditTalentScreen = (props) => {
                         onPress={() => {
                           requestCameraPermission('head_shot');
                         }}>
+{/* {user.image && user.image.head_shot !== undefined && (
+              <Image
+                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                source={{
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+                }}
+              />
+            )} */}
+
+
                         <Image
                           source={
                             !headimg
@@ -731,9 +763,9 @@ const EditTalentScreen = (props) => {
                       // style={styles.inputText}
                       placeholder="Height (CMs)"
                       placeholderTextColor="#003f5c"
-                      keyboardType="numeric"
+                      keyboardType="text"
                       autoCapitalize="sentences"
-                      // defaultValue={user.email}
+                      defaultValue={user.height}
                       onChangeText={handleChange('height')}
                       onBlur={handleBlur('height')}
                     />
@@ -744,9 +776,9 @@ const EditTalentScreen = (props) => {
                       // style={styles.inputText}
                       placeholder="Weight (KGs)"
                       placeholderTextColor="#003f5c"
-                      keyboardType="numeric"
+                      keyboardType="text"
                       autoCapitalize="sentences"
-                      // defaultValue={user.email}
+                      defaultValue={user.weight}
                       onChangeText={handleChange('weight')}
                       onBlur={handleBlur('weight')}
                     />
@@ -767,6 +799,7 @@ const EditTalentScreen = (props) => {
         )}
       </Formik>
     </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -795,17 +828,18 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   inputView: {
-    flexDirection: 'row',
-    width: '80%',
-    marginBottom: '1%',
-    justifyContent: 'flex-start',
-    padding: 5,
-    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderWidth: 1,
     borderRadius: 10,
-    marginTop: '5%',
+    width: '90%',
+    paddingLeft: 8,
+    paddingRight: 8,
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
   },
   inputText: {
-    // height: 50,
     width: '100%',
     color: '#000000',
     marginLeft: 15,

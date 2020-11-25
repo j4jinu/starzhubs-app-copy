@@ -102,6 +102,8 @@ const TalentListScreen = (props) => {
     setVisible(false);
   };
 
+  
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -142,6 +144,7 @@ const TalentListScreen = (props) => {
                         years: t.chars.years,
                         description: t.description,
                         levels: t.level,
+                        userId:t.userId
                       })
                     }>
                     <EIcon
