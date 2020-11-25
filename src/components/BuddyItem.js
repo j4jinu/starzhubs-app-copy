@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme';
 
 const BuddyItem = (props) => {
@@ -15,7 +15,7 @@ const BuddyItem = (props) => {
           borderRadius: 100,
         }}
         source={{
-          uri: `https://api.starzhubs.com/api/user/avatar/${props.image.avatar}`,
+          uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
         }}
       />
       <View style={styles.details}>
@@ -27,7 +27,7 @@ const BuddyItem = (props) => {
           }}>
           {props.name}
         </Text>
-        <Text style={{fontSize: 13, color: 'gray'}}>
+        <Text style={{ fontSize: 13, color: 'gray' }}>
           {props.location.place}, {props.location.state}
         </Text>
       </View>

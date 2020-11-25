@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,9 @@ import {
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
 import EIcon from 'react-native-vector-icons/FontAwesome5';
-import {Snackbar} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Snackbar } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import GIcon from 'react-native-vector-icons/FontAwesome';
 
 const TalentListScreen = (props) => {
@@ -32,7 +32,7 @@ const TalentListScreen = (props) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
+    fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -63,7 +63,7 @@ const TalentListScreen = (props) => {
           onPress: () => onDelteMedia(tid),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -79,7 +79,7 @@ const TalentListScreen = (props) => {
       }),
     };
     fetch(
-      `https://api.starzhubs.com/api/user/remove/talent/${talentId}`,
+      `http://13.232.190.226/api/user/remove/talent/${talentId}`,
       requestOptions,
     )
       .then((response) => response.json())
@@ -113,7 +113,7 @@ const TalentListScreen = (props) => {
         </Snackbar>
         <View>
           {talents.length === 0 && (
-            <View style={{alignItems: 'center', marginTop: '50%'}}>
+            <View style={{ alignItems: 'center', marginTop: '50%' }}>
               <Text
                 style={{
                   color: theme.$primaryColor,
@@ -127,10 +127,10 @@ const TalentListScreen = (props) => {
           {talents.map((t, key) => (
             <View style={styles.card}>
               <View style={styles.subHeadDiv2}>
-                <View style={{width: '70%'}}>
+                <View style={{ width: '70%' }}>
                   <Text style={styles.subHead}>{t.category.title}</Text>
                 </View>
-                <View style={{width: '20%', flexDirection: 'row'}}>
+                <View style={{ width: '20%', flexDirection: 'row' }}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate('EditTalents', {
@@ -148,7 +148,7 @@ const TalentListScreen = (props) => {
                       name="user-edit"
                       size={15}
                       color="orange"
-                      style={{marginLeft: '35%', alignSelf: 'flex-end'}}
+                      style={{ marginLeft: '35%', alignSelf: 'flex-end' }}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => confirmDelete(t._id)}>
@@ -156,14 +156,14 @@ const TalentListScreen = (props) => {
                       name="delete"
                       size={18}
                       color="orange"
-                      style={{marginLeft: 20, alignSelf: 'flex-end'}}
+                      style={{ marginLeft: 20, alignSelf: 'flex-end' }}
                     />
                   </TouchableOpacity>
                 </View>
               </View>
 
               <View style={styles.infoDiv}>
-                <View style={{marginTop: 10}}>
+                <View style={{ marginTop: 10 }}>
                   <View style={styles.fieldDiv}>
                     <Text style={styles.fieldTitle}>Type</Text>
                     <Text style={styles.fieldText}>{t.chars.type}</Text>
@@ -188,12 +188,12 @@ const TalentListScreen = (props) => {
                       {t.level == '1'
                         ? 'Beginner'
                         : t.level == '2'
-                        ? 'Average'
-                        : t.level == '3'
-                        ? 'Good'
-                        : t.level == '4'
-                        ? 'Excellent'
-                        : 'Experienced'}
+                          ? 'Average'
+                          : t.level == '3'
+                            ? 'Good'
+                            : t.level == '4'
+                              ? 'Excellent'
+                              : 'Experienced'}
                     </Text>
                   </View>
                 </View>

@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {AuthContext} from '../context/authContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListRejected = (props) => {
   const auth = useContext(AuthContext);
@@ -16,7 +16,7 @@ const PosterListRejected = (props) => {
     setPosters([]);
     try {
       const response = await fetch(
-        `https://api.starzhubs.com/api/poster/denied`,
+        `http://13.232.190.226/api/poster/denied`,
         {
           method: 'GET',
           headers: {
@@ -52,7 +52,7 @@ const PosterListRejected = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MyPosterGridItem
             id={item._id}
             poster={item.title}

@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
-import {AuthContext} from '../context/authContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
   const auth = useContext(AuthContext);
@@ -14,7 +14,7 @@ const PosterListActive = (props) => {
     // setLoading(true);
     setPosters([]);
     try {
-      const response = await fetch(`https://api.starzhubs.com/api/poster/me`, {
+      const response = await fetch(`http://13.232.190.226/api/poster/me`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -49,7 +49,7 @@ const PosterListActive = (props) => {
         keyExtractor={(item) => item.id}
         data={posters}
         extraData={posters}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MyPosterGridItem
             id={item._id}
             poster={item.title}

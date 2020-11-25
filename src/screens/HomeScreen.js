@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   FlatList,
@@ -12,20 +12,20 @@ import UserGridItem from '../components/UserGridItem';
 import Axios from 'axios';
 
 const users = [
-  {name: 'A', id: 1},
-  {name: 'B', id: 2},
-  {name: 'C', id: 3},
-  {name: 'D', id: 4},
-  {name: 'E', id: 5},
-  {name: 'F', id: 6},
-  {name: 'G', id: 7},
-  {name: 'H', id: 8},
+  { name: 'A', id: 1 },
+  { name: 'B', id: 2 },
+  { name: 'C', id: 3 },
+  { name: 'D', id: 4 },
+  { name: 'E', id: 5 },
+  { name: 'F', id: 6 },
+  { name: 'G', id: 7 },
+  { name: 'H', id: 8 },
 ];
 
 const category = [
-  {id: 1, title: 'Actor'},
-  {id: 2, title: 'Model'},
-  {id: 3, title: 'Singer'},
+  { id: 1, title: 'Actor' },
+  { id: 2, title: 'Model' },
+  { id: 3, title: 'Singer' },
 ];
 
 const HomeScreen = (props) => {
@@ -35,7 +35,7 @@ const HomeScreen = (props) => {
 
   const getRandomUsers = async () => {
     axios
-      .get('https://api.starzhubs.com/api/talent/random')
+      .get('http://13.232.190.226/api/talent/random')
       .then((response) => {
         // handle success
         console.warn(response);
@@ -67,7 +67,7 @@ const HomeScreen = (props) => {
 
   return (
     <ScrollView>
-      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={{ flex: 1, flexDirection: 'column' }}>
         <ScrollView horizontal>
           {category.map((cat) => (
             <TouchableOpacity style={styles.categoryGrid}>

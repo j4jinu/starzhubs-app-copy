@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,15 +17,15 @@ import UserTalentSection from '../components/UserTalentSection';
 import UserMediaSection from '../components/UserMediaSection';
 import UserPosterSection from '../components/UserPosterSection';
 import Moment from 'moment';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import * as yup from 'yup';
-import {Formik} from 'formik';
-import {Snackbar} from 'react-native-paper';
+import { Formik } from 'formik';
+import { Snackbar } from 'react-native-paper';
 
 const UserDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
   const userId = props.navigation.getParam('userId');
-  const [user, setUser] = useState({image: {}});
+  const [user, setUser] = useState({ image: {} });
   const [talents, setTalents] = useState([]);
   const [posters, setPosters] = useState([]);
   const [userLocation, setUserLocation] = useState({});
@@ -33,14 +33,14 @@ const UserDetailsScreen = (props) => {
   const [isRequestModal, setRequestModal] = useState(false);
   const [loggedUser, setLoggedUser] = useState([]);
   const [checked, setChecked] = useState([]);
-  const [isFriends, setIsFriends] = useState({details: {}});
+  const [isFriends, setIsFriends] = useState({ details: {} });
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
   const [categoryId, setCategoryId] = useState('');
 
   useEffect(() => {
     const getUserDetails = () => {
-      fetch(`https://api.starzhubs.com/api/user/${userId}`, {
+      fetch(`http://13.232.190.226/api/user/${userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -53,7 +53,7 @@ const UserDetailsScreen = (props) => {
           setUserLocation(response.data.user.location);
           setPosters(response.data.posters);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     };
     getUserDetails();
   }, []);
@@ -67,7 +67,7 @@ const UserDetailsScreen = (props) => {
   }, []);
 
   const getLoggedUser = () => {
-    fetch(`https://api.starzhubs.com/api/user/profile`, {
+    fetch(`http://13.232.190.226/api/user/profile`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -77,7 +77,7 @@ const UserDetailsScreen = (props) => {
       .then((response) => {
         setLoggedUser(response.data.user);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   const calculateAge = (dob) => {
@@ -97,7 +97,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const checkFriendship = () => {
-    fetch(`https://api.starzhubs.com/api/user/connection/status/${userId}`, {
+    fetch(`http://13.232.190.226/api/user/connection/status/${userId}`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -108,7 +108,7 @@ const UserDetailsScreen = (props) => {
         setIsFriends(response.data);
         console.log('friends', isFriends);
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   const handleRequest = () => {
@@ -122,7 +122,7 @@ const UserDetailsScreen = (props) => {
             style: 'cancel',
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     } else {
       setRequestModal(true);
@@ -150,7 +150,7 @@ const UserDetailsScreen = (props) => {
         userId: userId,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/req/user`, requestOptions)
+    fetch(`http://13.232.190.226/api/talent/req/user`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -197,12 +197,12 @@ const UserDetailsScreen = (props) => {
           onPress: () => requestDeleteHandler(isFriends.details._id),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
   const requestDeleteHandler = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${requestId}`, {
+    fetch(`http://13.232.190.226/api/talent/req/reject/${requestId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -237,9 +237,9 @@ const UserDetailsScreen = (props) => {
           text: 'No',
           style: 'cancel',
         },
-        {text: 'Yes', onPress: () => unfriendRequest(isFriends.details._id)},
+        { text: 'Yes', onPress: () => unfriendRequest(isFriends.details._id) },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -257,14 +257,14 @@ const UserDetailsScreen = (props) => {
           onPress: () => unfriendRequest(isFriends.details._id),
           style: 'cancel',
         },
-        {text: 'Accept', onPress: () => approveRequest(isFriends.details._id)},
+        { text: 'Accept', onPress: () => approveRequest(isFriends.details._id) },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
   const approveRequest = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/user/approve/${requestId}/1`, {
+    fetch(`http://13.232.190.226/api/talent/user/approve/${requestId}/1`, {
       method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -291,7 +291,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const unfriendRequest = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${requestId}`, {
+    fetch(`http://13.232.190.226/api/talent/req/reject/${requestId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -327,46 +327,46 @@ const UserDetailsScreen = (props) => {
         {message}
       </Snackbar>
 
-      <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={styles.container}>
           <Swiper style={styles.wrapper} showsButtons={false}>
             {user.image && user.image.avatar !== undefined && (
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                 }}
               />
             )}
             {user.image && user.image.head_shot !== undefined && (
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
                 }}
               />
             )}
             {user.image && user.image.left_profile !== undefined && (
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
                 }}
               />
             )}
             {user.image && user.image.right_profile !== undefined && (
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
                 }}
               />
             )}
             {user.image && user.image.fullsize !== undefined && (
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
                 }}
               />
             )}
@@ -469,7 +469,7 @@ const UserDetailsScreen = (props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontWeight: 'bold'}}>Talents</Text>
+              <Text style={{ fontWeight: 'bold' }}>Talents</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setContent('M')}
@@ -484,7 +484,7 @@ const UserDetailsScreen = (props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontWeight: 'bold'}}>Media</Text>
+              <Text style={{ fontWeight: 'bold' }}>Media</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => setContent('P')}
@@ -499,7 +499,7 @@ const UserDetailsScreen = (props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{fontWeight: 'bold'}}>Posters</Text>
+              <Text style={{ fontWeight: 'bold' }}>Posters</Text>
             </TouchableOpacity>
           </View>
           {content === 'T' && (
@@ -596,7 +596,7 @@ const UserDetailsScreen = (props) => {
                       source={{
                         uri:
                           user.image !== undefined
-                            ? `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`
+                            ? `http://13.232.190.226/api/user/avatar/${user.image.avatar}`
                             : 'https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVID19_SECVPF.gif',
                       }}
                     />
@@ -607,7 +607,7 @@ const UserDetailsScreen = (props) => {
                     </Text>
                   </View>
                 </View> */}
-                <View style={{marginBottom: 5}}>
+                <View style={{ marginBottom: 5 }}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -627,8 +627,8 @@ const UserDetailsScreen = (props) => {
                         <Text
                           style={
                             checked.indexOf(item._id) === -1
-                              ? {color: theme.$primaryColorText}
-                              : {color: 'white'}
+                              ? { color: theme.$primaryColorText }
+                              : { color: 'white' }
                           }>
                           {item.category.title}
                         </Text>
@@ -636,7 +636,7 @@ const UserDetailsScreen = (props) => {
                     ))}
                   </View>
                 </View>
-                <View style={{width: '100%'}}>
+                <View style={{ width: '100%' }}>
                   <Formik
                     initialValues={initValues}
                     validationSchema={validation}
@@ -652,61 +652,61 @@ const UserDetailsScreen = (props) => {
                       isValid,
                       handleSubmit,
                     }) => (
-                      <View
-                        style={{
-                          marginTop: 10,
-                          width: '100%',
-                        }}>
-                        <TextInput
-                          style={{
-                            borderWidth: 1,
-                            borderColor: 'orange',
-                            borderRadius: 4,
-                            paddingLeft: 10,
-                            width: '100%',
-                          }}
-                          underlineColorAndroid="transparent"
-                          placeholder="Message"
-                          numberOfLines={6}
-                          multiline={true}
-                          // value={values.notes}
-                          onChangeText={handleChange('notes')}
-                          onBlur={() => setFieldTouched('notes')}
-                        />
-                        {touched.notes && errors.notes && (
-                          <Text
-                            style={{
-                              fontSize: 14,
-                              color: 'tomato',
-                              alignSelf: 'flex-start',
-                              marginTop: 5,
-                            }}>
-                            {errors.notes}
-                          </Text>
-                        )}
                         <View
                           style={{
-                            marginTop: 20,
+                            marginTop: 10,
                             width: '100%',
-                            alignItems: 'center',
                           }}>
-                          <TouchableOpacity
+                          <TextInput
                             style={{
-                              borderRadius: 8,
-                              paddingHorizontal: 12,
-                              paddingVertical: 12,
+                              borderWidth: 1,
+                              borderColor: 'orange',
+                              borderRadius: 4,
+                              paddingLeft: 10,
                               width: '100%',
-                              backgroundColor: theme.$primaryColor,
-                              alignItems: 'center',
                             }}
-                            onPress={handleSubmit}>
-                            <Text style={{color: 'white', fontWeight: 'bold'}}>
-                              Send Request
+                            underlineColorAndroid="transparent"
+                            placeholder="Message"
+                            numberOfLines={6}
+                            multiline={true}
+                            // value={values.notes}
+                            onChangeText={handleChange('notes')}
+                            onBlur={() => setFieldTouched('notes')}
+                          />
+                          {touched.notes && errors.notes && (
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                color: 'tomato',
+                                alignSelf: 'flex-start',
+                                marginTop: 5,
+                              }}>
+                              {errors.notes}
                             </Text>
-                          </TouchableOpacity>
+                          )}
+                          <View
+                            style={{
+                              marginTop: 20,
+                              width: '100%',
+                              alignItems: 'center',
+                            }}>
+                            <TouchableOpacity
+                              style={{
+                                borderRadius: 8,
+                                paddingHorizontal: 12,
+                                paddingVertical: 12,
+                                width: '100%',
+                                backgroundColor: theme.$primaryColor,
+                                alignItems: 'center',
+                              }}
+                              onPress={handleSubmit}>
+                              <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                                Send Request
+                            </Text>
+                            </TouchableOpacity>
+                          </View>
                         </View>
-                      </View>
-                    )}
+                      )}
                   </Formik>
                 </View>
               </View>
@@ -775,7 +775,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: theme.$primaryColorText,
   },
-  wrapper: {height: 300},
+  wrapper: { height: 300 },
   text: {
     color: '#fff',
     fontSize: 30,

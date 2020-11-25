@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   Image,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const BuddyRequestItem = (props) => {
   const auth = useContext(AuthContext);
@@ -28,7 +28,7 @@ const BuddyRequestItem = (props) => {
           onPress: () => requestHandler(),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
 
   const confirmDelete = () =>
@@ -46,10 +46,10 @@ const BuddyRequestItem = (props) => {
           onPress: () => unfriendRequest(),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   const unfriendRequest = () => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${props.reqId}`, {
+    fetch(`http://13.232.190.226/api/talent/req/reject/${props.reqId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -72,7 +72,7 @@ const BuddyRequestItem = (props) => {
   const requestHandler = () => {
     // console.warn(status)
     fetch(
-      `https://api.starzhubs.com/api/talent/user/approve/${props.reqId}/1`,
+      `http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`,
       {
         method: 'PUT',
         headers: {
@@ -97,7 +97,7 @@ const BuddyRequestItem = (props) => {
       {/* <TouchableOpacity onSelect={() => props.navigation.navigate('UserDetails',{
                         userId: item.fromUser._id
                     })}> */}
-      <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
         <Image
           style={{
             width: 75,
@@ -105,7 +105,7 @@ const BuddyRequestItem = (props) => {
             borderRadius: 100,
           }}
           source={{
-            uri: `https://api.starzhubs.com/api/user/avatar/${props.image.avatar}`,
+            uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
           }}
         />
         <View style={styles.details}>
@@ -118,10 +118,10 @@ const BuddyRequestItem = (props) => {
             }}>
             {props.name}
           </Text>
-          <Text style={{fontSize: 13, color: 'gray', marginTop: 10}}>
+          <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>
             {'Talent(s) Requested'}
           </Text>
-          <Text style={{fontSize: 15, color: theme.$primaryColorText}}>
+          <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>
             {props.talents}
           </Text>
         </View>
@@ -148,7 +148,7 @@ const BuddyRequestItem = (props) => {
                 marginRight: 8,
                 borderRadius: theme.$borderRadius,
               }}>
-              <Text style={{color: theme.$primaryColorText}}>Delete</Text>
+              <Text style={{ color: theme.$primaryColorText }}>Delete</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
@@ -160,23 +160,23 @@ const BuddyRequestItem = (props) => {
                 borderRadius: theme.$borderRadius,
               }}
               onPress={confirmApprove}>
-              <Text style={{color: 'white'}}>Accept</Text>
+              <Text style={{ color: 'white' }}>Accept</Text>
             </TouchableOpacity>
           </>
         ) : (
-          <TouchableOpacity
-            activeOpacity={0.7}
-            style={{
-              alignItems: 'center',
-              backgroundColor: theme.$primaryColor,
-              paddingVertical: 5,
-              paddingHorizontal: 20,
-              borderRadius: theme.$borderRadius,
-            }}
-            onPress={confirmDelete}>
-            <Text style={{color: 'white'}}>Cancel</Text>
-          </TouchableOpacity>
-        )}
+            <TouchableOpacity
+              activeOpacity={0.7}
+              style={{
+                alignItems: 'center',
+                backgroundColor: theme.$primaryColor,
+                paddingVertical: 5,
+                paddingHorizontal: 20,
+                borderRadius: theme.$borderRadius,
+              }}
+              onPress={confirmDelete}>
+              <Text style={{ color: 'white' }}>Cancel</Text>
+            </TouchableOpacity>
+          )}
       </View>
     </View>
   );

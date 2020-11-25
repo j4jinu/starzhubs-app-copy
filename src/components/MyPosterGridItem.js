@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -11,13 +11,13 @@ import {
 import theme from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Moment from 'moment';
-import {AuthContext} from '../context/authContext';
-import {Snackbar} from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+import { Snackbar } from 'react-native-paper';
 const MyPosterGridItem = (props) => {
-  const {userId} = props;
+  const { userId } = props;
   const auth = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState({image: {}});
+  const [user, setUser] = useState({ image: {} });
   const confirmDelete = (pid) =>
     Alert.alert(
       'Delete poster',
@@ -32,7 +32,7 @@ const MyPosterGridItem = (props) => {
           onPress: () => posterDeleteHandler(pid),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   const posterDeleteHandler = (id) => {
     const requestOptions = {
@@ -41,7 +41,7 @@ const MyPosterGridItem = (props) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`https://api.starzhubs.com/api/poster/${id}`, requestOptions)
+    fetch(`http://13.232.190.226/api/poster/${id}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -96,7 +96,7 @@ const MyPosterGridItem = (props) => {
               }}
               resizeMode={'cover'}
               source={{
-                uri: `https://api.starzhubs.com/api/poster/view/${props.image}`,
+                uri: `http://13.232.190.226/api/poster/view/${props.image}`,
               }}
             />
             <View style={styles.owner}>
@@ -111,7 +111,7 @@ const MyPosterGridItem = (props) => {
                     userId.image === undefined
                       ? `https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVI
                                     D19_SECVPF.gif`
-                      : `https://api.starzhubs.com/api/user/avatar/${userId.image.avatar}`,
+                      : `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`,
                 }}
               />
 
@@ -123,12 +123,12 @@ const MyPosterGridItem = (props) => {
                   //paddingHorizontal: 15,
                 }}>
                 <View style={styles.ownerDetails}>
-                  <Text style={{fontSize: 13}}>{userId.name}</Text>
-                  <Text style={{fontSize: 10, color: 'gray'}}>
+                  <Text style={{ fontSize: 13 }}>{userId.name}</Text>
+                  <Text style={{ fontSize: 10, color: 'gray' }}>
                     {Moment(props.endDate).format('DD/MM/YYYY')}
                   </Text>
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     style={{
                       padding: 10,

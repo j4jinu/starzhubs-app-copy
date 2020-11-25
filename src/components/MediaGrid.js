@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import WebView from 'react-native-webview';
 
 const MediaGrid = (props) => {
@@ -20,22 +20,22 @@ const MediaGrid = (props) => {
           <View style={styles.container}>
             {media.fileType === 'image' ? (
               <Image
-                style={{width: '100%', height: '100%', resizeMode: 'cover'}}
+                style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/view/media/?${media.file}`,
+                  uri: `http://13.232.190.226/api/user/view/media/?${media.file}`,
                 }}
               />
             ) : (
-              <WebView
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                source={{
-                  uri:
-                    'https://www.youtube.com/embed/' +
-                    media.file.substring(media.file.lastIndexOf('=') + 1),
-                }}
-              />
-            )}
+                <WebView
+                  javaScriptEnabled={true}
+                  domStorageEnabled={true}
+                  source={{
+                    uri:
+                      'https://www.youtube.com/embed/' +
+                      media.file.substring(media.file.lastIndexOf('=') + 1),
+                  }}
+                />
+              )}
             {/* <Image
                             style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{

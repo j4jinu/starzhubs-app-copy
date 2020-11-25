@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const SentConnectionScreen = () => {
   const auth = useContext(AuthContext);
@@ -11,7 +11,7 @@ const SentConnectionScreen = () => {
     getConnectionRequests();
   });
   const getConnectionRequests = () => {
-    fetch(`https://api.starzhubs.com/api/talent/req/sent`, {
+    fetch(`http://13.232.190.226/api/talent/req/sent`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -28,8 +28,8 @@ const SentConnectionScreen = () => {
 
   if (isFriends === undefined) {
     return (
-      <View style={{alignItems: 'center', marginTop: '8%'}}>
-        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+      <View style={{ alignItems: 'center', marginTop: '8%' }}>
+        <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
           No Requests
         </Text>
       </View>
@@ -38,11 +38,11 @@ const SentConnectionScreen = () => {
 
   return (
     <FlatList
-      style={{backgroundColor: '#efefef'}}
+      style={{ backgroundColor: '#efefef' }}
       keyExtractor={(item) => item.id}
       data={isFriends}
       extraData={getConnectionRequests}
-      renderItem={({item}) =>
+      renderItem={({ item }) =>
         item.fromUser._id === auth.userId ? (
           <BuddyRequestItem
             id={item._id}

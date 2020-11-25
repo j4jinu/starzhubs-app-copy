@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import {
   FlatList,
   ScrollView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import {color} from 'react-native-reanimated';
+import { color } from 'react-native-reanimated';
 import MediaItem from '../components/MediaItem';
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const MediaListSceen = (props) => {
   const auth = useContext(AuthContext);
@@ -22,7 +22,7 @@ const MediaListSceen = (props) => {
   useEffect(() => {
     const getCategoiries = async () => {
       try {
-        const response = await fetch('https://api.starzhubs.com/api/category');
+        const response = await fetch('http://13.232.190.226/api/category');
         const categoryData = await response.json();
         console.log(categoryData);
         if (categoryData.success) {
@@ -47,7 +47,7 @@ const MediaListSceen = (props) => {
       }
       try {
         const userResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/${categoryId}`,
+          `http://13.232.190.226/api/talent/filter/${categoryId}`,
           {
             method: 'PATCH',
             headers: {
@@ -73,18 +73,18 @@ const MediaListSceen = (props) => {
   if (loading) {
     return (
       <ActivityIndicator
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
         color={theme.$primaryColor}
         size={'large'}
       />
     );
   }
   return (
-    <View style={{backgroundColor: 'white'}}>
+    <View style={{ backgroundColor: 'white' }}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{marginTop: 10}}>
+        style={{ marginTop: 10 }}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
@@ -94,8 +94,8 @@ const MediaListSceen = (props) => {
             <Text
               style={
                 c._id === categoryId
-                  ? {color: 'white', fontSize: 12}
-                  : {color: 'black', fontSize: 12}
+                  ? { color: 'white', fontSize: 12 }
+                  : { color: 'black', fontSize: 12 }
               }>
               {c.title}
             </Text>
@@ -104,10 +104,10 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          style={{backgroundColor: 'white', marginTop: 15}}
+          style={{ backgroundColor: 'white', marginTop: 15 }}
           keyExtractor={(item, index) => item.id}
           data={media}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <MediaItem
               media={item.media}
               user={item.userId}
@@ -123,7 +123,7 @@ const MediaListSceen = (props) => {
             alignItems: 'center',
             paddingVertical: 25,
           }}>
-          <Text style={{fontSize: 18, color: 'tomato'}}>Sorry, No media.</Text>
+          <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
         </View>
       )}
     </View>

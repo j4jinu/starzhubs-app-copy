@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
 import BuddyItem from '../components/BuddyItem';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
 
 const MyConnectionScreen = (props) => {
@@ -11,7 +11,7 @@ const MyConnectionScreen = (props) => {
     getConnectionRequests();
   });
   const getConnectionRequests = () => {
-    fetch(`https://api.starzhubs.com/api/talent/req/approved`, {
+    fetch(`http://13.232.190.226/api/talent/req/approved`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -29,10 +29,10 @@ const MyConnectionScreen = (props) => {
   if (!isFriends === undefined || isFriends.length !== 0) {
     return (
       <FlatList
-        style={{backgroundColor: '#efefef'}}
+        style={{ backgroundColor: '#efefef' }}
         keyExtractor={(item) => item.id}
         data={isFriends}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <BuddyItem
             id={item._id}
             name={
@@ -64,8 +64,8 @@ const MyConnectionScreen = (props) => {
     );
   } else {
     return (
-      <View style={{alignItems: 'center', marginTop: '8%'}}>
-        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+      <View style={{ alignItems: 'center', marginTop: '8%' }}>
+        <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
           No Connections
         </Text>
       </View>

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   FlatList,
@@ -8,9 +8,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import PosterGridItem from '../components/PosterGridItem';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const PosterListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -20,7 +20,7 @@ const PosterListScreen = (props) => {
   }, []);
   const getPosters = async (status) => {
     try {
-      const response = await fetch(`https://api.starzhubs.com/api/poster`, {
+      const response = await fetch(`http://13.232.190.226/api/poster`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -36,10 +36,10 @@ const PosterListScreen = (props) => {
   return (
     <>
       <FlatList
-        style={{backgroundColor: '#e6e6e6'}}
+        style={{ backgroundColor: '#e6e6e6' }}
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <PosterGridItem
             id={item._id}
             poster={item.title}

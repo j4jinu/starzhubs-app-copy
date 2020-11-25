@@ -5,14 +5,14 @@ import React, {
   useContext,
   useCallback,
 } from 'react';
-import {Searchbar} from 'react-native-paper';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Snackbar} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
+import { Searchbar } from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Snackbar } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Checkbox} from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import RangeSlider from 'rn-range-slider';
 import Thumb from '../components/slider/Thumb';
 import Rail from '../components/slider/Rail';
@@ -65,7 +65,7 @@ const FilterScreen = (props) => {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const res = await fetch('https://api.starzhubs.com/api/category/app');
+        const res = await fetch('http://13.232.190.226/api/category/app');
         const resData = await res.json();
         if (resData.success) {
           setCategories(resData.categories);
@@ -147,7 +147,7 @@ const FilterScreen = (props) => {
       return alert('Enter a search query');
     }
     const searchRes = await fetch(
-      `https://api.starzhubs.com/api/user/search/u?key=${search}`,
+      `http://13.232.190.226/api/user/search/u?key=${search}`,
       {
         method: 'PATCH',
       },
@@ -215,7 +215,7 @@ const FilterScreen = (props) => {
         bodyType: bodyType,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/filter`, requestOptions)
+    fetch(`http://13.232.190.226/api/talent/filter`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -228,7 +228,7 @@ const FilterScreen = (props) => {
             setVisible(!visible);
           }
         },
-        (error) => {},
+        (error) => { },
       );
   };
 
@@ -465,9 +465,9 @@ const FilterScreen = (props) => {
             }}>
             Skin Tone
           </Text>
-          <View style={{flexDirection: 'row', width: '100%', marginLeft: '5%'}}>
-            <View style={{width: '50%'}}>
-              <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row', width: '100%', marginLeft: '5%' }}>
+            <View style={{ width: '50%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isDark ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -486,7 +486,7 @@ const FilterScreen = (props) => {
                   Dark
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isBrown ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -505,8 +505,8 @@ const FilterScreen = (props) => {
                 </Text>
               </View>
             </View>
-            <View style={{width: '50%', marginLeft: '8%'}}>
-              <View style={{flexDirection: 'row'}}>
+            <View style={{ width: '50%', marginLeft: '8%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isWheatish ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -524,7 +524,7 @@ const FilterScreen = (props) => {
                   Wheatish
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isFair ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -566,9 +566,9 @@ const FilterScreen = (props) => {
             }}>
             Body Type
           </Text>
-          <View style={{flexDirection: 'row', width: '100%', marginLeft: '5%'}}>
-            <View style={{width: '50%'}}>
-              <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row', width: '100%', marginLeft: '5%' }}>
+            <View style={{ width: '50%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isFit ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -587,7 +587,7 @@ const FilterScreen = (props) => {
                   Fit
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isHourglass ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -605,7 +605,7 @@ const FilterScreen = (props) => {
                   Hourglass
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isAverageBuild ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -625,8 +625,8 @@ const FilterScreen = (props) => {
                 </Text>
               </View>
             </View>
-            <View style={{width: '50%', marginLeft: '8%'}}>
-              <View style={{flexDirection: 'row'}}>
+            <View style={{ width: '50%', marginLeft: '8%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isSlim ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -644,7 +644,7 @@ const FilterScreen = (props) => {
                   Slim
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isFatty ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -662,7 +662,7 @@ const FilterScreen = (props) => {
                   Fatty
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isAthletic ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -694,11 +694,11 @@ const FilterScreen = (props) => {
               Select bodytype
             </Text>
           )}
-          <View style={{width: '100%', alignItems: 'center', marginTop: '5%'}}>
+          <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
             <TouchableOpacity
               style={styles.filterbutton}
               onPress={handleSubmit}>
-              <Text style={{color: 'white', fontWeight: 'bold'}}>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>
                 Apply Filter
               </Text>
             </TouchableOpacity>

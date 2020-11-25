@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {Card} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
-const ServiceScreen = ({navigation}) => {
+import { Card } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+const ServiceScreen = ({ navigation }) => {
   const auth = useContext(AuthContext);
   const [service, setService] = useState([]);
 
@@ -24,7 +24,7 @@ const ServiceScreen = ({navigation}) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`https://api.starzhubs.com/api/services/`, requestOptions)
+    fetch(`http://13.232.190.226/api/services/`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -43,7 +43,7 @@ const ServiceScreen = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={{width: '100%', flexWrap: 'wrap', flexDirection: 'row'}}>
+        <View style={{ width: '100%', flexWrap: 'wrap', flexDirection: 'row' }}>
           {service.map((s) => (
             <Card style={styles.cardleft}>
               <TouchableOpacity
@@ -56,7 +56,7 @@ const ServiceScreen = ({navigation}) => {
                 <View style={styles.img}>
                   <Image
                     source={{
-                      uri: `https://api.starzhubs.com/api/services/view/${s.image}`,
+                      uri: `http://13.232.190.226/api/services/view/${s.image}`,
                     }}
                     style={{
                       borderRadius: 50,
@@ -72,7 +72,7 @@ const ServiceScreen = ({navigation}) => {
                     marginBottom: '5%',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'brown'}}>{s.title}</Text>
+                  <Text style={{ color: 'brown' }}>{s.title}</Text>
                 </View>
               </TouchableOpacity>
             </Card>

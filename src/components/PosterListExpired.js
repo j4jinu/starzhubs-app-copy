@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {AuthContext} from '../context/authContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 
 const PosterListExpired = (props) => {
@@ -17,7 +17,7 @@ const PosterListExpired = (props) => {
     setPosters([]);
     try {
       const response = await fetch(
-        `https://api.starzhubs.com/api/poster/expired`,
+        `http://13.232.190.226/api/poster/expired`,
         {
           method: 'GET',
           headers: {
@@ -53,7 +53,7 @@ const PosterListExpired = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MyPosterGridItem
             id={item.id}
             poster={item.name}
