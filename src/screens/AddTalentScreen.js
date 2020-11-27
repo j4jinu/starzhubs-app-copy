@@ -9,7 +9,7 @@ import {
   Picker,
   Image,
   PermissionsAndroid,
-  ToastAndroid
+  Alert,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -197,7 +197,7 @@ export default function AddTalentScreen(props) {
 
 
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     setLoading(true);
     // console.warn(JSON.stringify(values));
     // if (industries.length === 0) {
@@ -205,6 +205,23 @@ export default function AddTalentScreen(props) {
     //     return
     // }
     // setOpenBackdrop(true)
+    if (selectedValue === undefined || selectedValue === '') {
+      Alert.alert(
+        '',
+        'Select anyone of the category',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      setLoading(false)
+      setSubmitting(false);
+      return;
+    }
+
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -325,9 +342,9 @@ export default function AddTalentScreen(props) {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
-            'Cool Photo App needs access to your camera ' +
+            'Starzhubs App needs access to your camera ' +
             'so you can take awesome pictures.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
@@ -403,14 +420,9 @@ export default function AddTalentScreen(props) {
           enableReinitialize={true}
           initialValues={initialTalentValues}
           validationSchema={talentValidationSchema}
-          onSubmit={(values, actions) => {
-            handleSubmit(values),
-              actions.resetForm({
-                values: {
-                  experience: '',
-                },
-              });
-          }}>
+          onSubmit={(values, { setSubmitting }) =>
+            handleSubmit(values, { setSubmitting })
+          }>
           {({
             handleChange,
             handleBlur,

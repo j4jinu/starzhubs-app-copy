@@ -87,7 +87,9 @@ const HomeNavigator = createStackNavigator(
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Media Details',
+      },
     },
     UsersList: {
       screen: PortfolioListScreen,
@@ -196,7 +198,9 @@ const AccountNavigator = createStackNavigator(
     },
     Edit: {
       screen: EditProfileScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Edit Profile',
+      },
     },
     OurServices: {
       screen: ServiceScreen,
@@ -228,7 +232,9 @@ const AccountNavigator = createStackNavigator(
     },
     AddTalents: {
       screen: AddTalentScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Add Talents',
+      },
     },
     Help: {
       screen: HelpScreen,

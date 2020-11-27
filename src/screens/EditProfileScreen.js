@@ -291,9 +291,23 @@ const EditProfileScreen = (props) => {
         const lng = myString.split(',');
         setSelectedItems(lng);
       }
+      checkActorMode(userData.data.talents)
     };
     getUserDetails();
   }, []);
+
+  const checkActorMode = (talents) => {
+    talents.forEach(talent => {
+      const category = talent.category
+      console.log(category);
+      category.forEach(c => {
+        if (c.title === 'Actor' || c.title === 'Model') {
+          setActorMode(true)
+          return
+        }
+      })
+    });
+  }
 
   const onSelectedItemsChange = (selectedItem) => {
     setSelectedItems(selectedItem);
@@ -374,7 +388,7 @@ const EditProfileScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'starzhubs needs access to your camera ' +
             'so you can take awesome pictures.',

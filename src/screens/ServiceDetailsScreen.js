@@ -154,9 +154,14 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-                <View style={{ width: '85%' }}>
+                <View style={{ width: '90%', marginLeft: 0 }}>
                   <View style={styles.inputView}>
-
+                    <EIcon
+                      name="pen"
+                      size={20}
+                      color={theme.$primaryColor}
+                      style={{ marginTop: '-6%', marginLeft: '3%' }}
+                    />
                     <TextInput
                       style={styles.inputText}
                       placeholder="Send Your Feedback"

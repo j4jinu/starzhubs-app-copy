@@ -32,8 +32,9 @@ const profileSchema = yup.object({
     .required('Enter Your Phone Number'),
   password: yup
     .string()
+    .min(8, ({ min }) => `Password must be atleast ${min} characters`)
     .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
-    .max(8, ({ max }) => `Password should not be  more than ${max} `)
+    .max(20, ({ max }) => `Password should not be  more than ${max} `)
     .required('Enter Password'),
   confPassword: yup
     .string()
@@ -280,7 +281,7 @@ const SignupScreen = (props) => {
             onPress={() => props.navigation.navigate('Login')}>
             <Text
               style={{ fontSize: 17, marginTop: 8, color: theme.$primaryColor }}>
-              Goto Login
+              Login
             </Text>
           </TouchableOpacity>
         </View>

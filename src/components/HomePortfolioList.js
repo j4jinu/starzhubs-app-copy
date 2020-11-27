@@ -34,7 +34,7 @@ const renderGridItem = (user) => {
 const HomePortfolioList = (props) => {
   return (
     <FlatList
-      style={{ backgroundColor: '#fafafa' }}
+      style={{ backgroundColor: '#fafafa', marginTop: 0 }}
       keyExtractor={(item, index) => item.id}
       data={props.users}
       renderItem={({ item }) => (
