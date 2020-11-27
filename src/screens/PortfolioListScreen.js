@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, Image } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {
   FlatList,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native-gesture-handler';
 import { color } from 'react-native-reanimated';
 import UserGridItem from '../components/UserGridItem';
@@ -97,7 +96,7 @@ const PortfolioListScreen = (props) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {users.length > 0 ? (
+      {users.length > 0 && 
         <FlatList
           style={{ backgroundColor: '#fafafa', marginTop: 20 }}
           keyExtractor={(item, index) => item.id}
@@ -113,17 +112,20 @@ const PortfolioListScreen = (props) => {
           )}
           numColumns={2}
         />
-      ) : (
-          // {users.length === 0 && (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingVertical: 25,
-              marginTop: "35%"
-            }}>
-            <Text style={{ fontSize: 18, color: 'tomato' }}>
-              Sorry, No users available.
+      }
+      {users.length === 0 && (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: '35%',
+          }}>
+            <Image
+                source={ require('../assets/noresult1.png')}
+                  style={{  height: 140, width: 140, }}
+            ></Image>
+          <Text style={{fontSize: 18, color: 'tomato', marginTop:10}}>
+            Sorry, No users available.
           </Text>
             <Image
               source={require('../assets/broke.png')}

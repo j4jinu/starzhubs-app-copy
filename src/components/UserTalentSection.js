@@ -1,11 +1,33 @@
 import React from 'react'
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import theme from '../config/theme';
 
 const UserTalentSection = (props) => {
+    const {talents} = props
+
+    if(talents.length === 0 || talents === undefined){
+        return(
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: '5%',
+          }}>
+            <Image
+                source={ require('../assets/noresult1.png')}
+                  style={{  height: 50, width: 50, }}
+            ></Image>
+          <Text style={{fontSize: 18, color: 'tomato', marginTop:10}}>
+            No Talents Added
+          </Text>
+        </View>
+        )
+    }
+
+
     return (
         <View style={styles.container}>
-            {props.talents.map((t, key) => (
+            {talents.map((t, key) => (
                 <>
                     <Text
                         style={styles.title}

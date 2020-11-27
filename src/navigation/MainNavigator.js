@@ -67,11 +67,15 @@ const HomeNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
-      title: '',
+      navigationOptions: {
+        title: 'User Details',
+      },
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Poster Details',
+      },
     },
     EditPoster: {
       screen: EditPosterScreen,
@@ -127,7 +131,9 @@ const UserNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
-      title: '',
+      navigationOptions: {
+        title: 'User Details',
+      },
     },
     Filter: {
       screen: FilterScreen,
@@ -149,7 +155,9 @@ const PosterNavigator = createStackNavigator(
     Posters: PosterListScreen,
     PosterDetails: {
       screen: PosterDetailsScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Poster Details',
+      },
     },
     PosterRequest: {
       screen: PosterRequestScreen,
@@ -291,7 +299,7 @@ const AccountNavigator = createStackNavigator(
     EditMedia: {
       screen: EditMediaScreen,
       navigationOptions: {
-        title: 'Upload a video',
+        title: 'Update Media',
       },
     },
     CreatePosters: {
@@ -322,6 +330,9 @@ const BuddyNavigator = createStackNavigator(
     },
     UserDetails: {
       screen: UserDetailsScreen,
+      navigationOptions: {
+        title: 'User Details',
+      },
     },
   },
   {

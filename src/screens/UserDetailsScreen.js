@@ -429,7 +429,7 @@ const UserDetailsScreen = (props) => {
           </Text>
 
           <Text style={styles.otherText}>
-            {userLocation.place}, {userLocation.state}
+            {userLocation === undefined ? null : (userLocation.place, userLocation.state)}
           </Text>
           <Text style={styles.otherText}>{user.bio}</Text>
           <View
@@ -530,7 +530,8 @@ const UserDetailsScreen = (props) => {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              marginTop: 22,
+              // marginTop: 22,
+              backgroundColor:'#000000aa'
             }}
             onPress={() => setVisible(false)}>
             <View

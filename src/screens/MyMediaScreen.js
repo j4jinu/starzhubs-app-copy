@@ -42,6 +42,7 @@ const MyMediaScreen = (props) => {
         return;
       } else {
         setTalents(resData.data.talents);
+        console.log("talents",resData.data.talents);
         setLoading(false);
       }
     } catch (error) {
@@ -231,6 +232,8 @@ const MyMediaScreen = (props) => {
                               mediaType: m.fileType,
                               caption: m.caption,
                               description: m.description,
+                              user:t._id,
+                              status:0
                             })
                           }>
                           <Text style={styles.mediaTitle}>{m.caption}</Text>

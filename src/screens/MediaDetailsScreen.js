@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useState} from 'react';
 import {
   Image,
@@ -8,16 +9,29 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+=======
+import React, { useContext, useState } from 'react';
+import {Image, StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView} from 'react-native';
+>>>>>>> ebffbf666e6f6d1cc75f6d2fb53ff1125a7ebfa5
 import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
+import { AuthContext } from '../context/authContext';
 
 const MediaDetailsScreen = (props) => {
+  const auth = useContext(AuthContext);
   const mediaFile = props.navigation.getParam('mediaFile');
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');
+<<<<<<< HEAD
   const [enlargeModal, setEnlargeModal] = useState(false);
+=======
+  const status = props.navigation.getParam('status');
+  const user = props.navigation.getParam('user');
+  const [enlargeModal, setEnlargeModal] = useState(false)
+
+>>>>>>> ebffbf666e6f6d1cc75f6d2fb53ff1125a7ebfa5
 
   return (
     // <View>
@@ -34,6 +48,14 @@ const MediaDetailsScreen = (props) => {
         >
           <View
             style={{
+          //     flex: 1,
+          //     justifyContent: 'center',
+          //     alignItems: 'center',
+          //     // marginTop: 22,
+          //     backgroundColor:'#000000aa'
+          //   }}
+          //   onPress={() => setEnlargeModal(false)}
+          // >
               margin: 5,
               backgroundColor: 'white',
               borderRadius: 3,
@@ -47,6 +69,7 @@ const MediaDetailsScreen = (props) => {
               shadowRadius: 3.84,
               elevation: 5,
             }}>
+
             <View
               style={{
                 flexDirection: 'row',
@@ -115,6 +138,44 @@ const MediaDetailsScreen = (props) => {
       <ScrollView>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
+        {status===1?
+          user._id !== auth.userId  && (
+            <View style={styles.authorInfo}>
+              <Image
+                style={{
+                  width: 50,
+                  height: 50,
+                  borderRadius: 100,
+                }}
+                source={{
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                }}
+              />
+
+              <TouchableOpacity
+                onPress={() =>
+                  props.navigation.navigate('UserDetails', {
+                    userId: user._id,
+                  })
+                }>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginLeft: 10,
+                  }}>
+                  <Text style={{fontSize: 13}}>{'Posted By'}</Text>
+                  <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                    {user.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          )
+          :null
+          }
+
       </ScrollView>
 
       {/* Enlarge Modal */}
@@ -141,6 +202,23 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginHorizontal: 15,
   },
+  authorInfo: {
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginHorizontal: 10,
+    padding: 8,
+    marginTop: 10,
+    flexDirection: 'row',
+    borderRadius: theme.$borderRadius,
+  },
+
 });
 
 export default MediaDetailsScreen;

@@ -14,7 +14,6 @@ import PosterGridItem from './PosterGridItem';
 // ]
 
 const UserMediaSection = (props) => {
-    // console.warn("talents",props.talents);
     const {talents} = props
     if (talents === undefined || talents.length === 0) {
         return <Text>No media files</Text>
