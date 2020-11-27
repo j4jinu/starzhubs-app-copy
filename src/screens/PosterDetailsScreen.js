@@ -68,7 +68,12 @@ const PosterDetailsScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.success === false) {
-          alert(response.message);
+          Alert.alert('Alert', 'You have already sent a request', [
+            {
+              Text: 'OK',
+              onPress: () => props.navigation.navigate('Posters'),
+            },
+          ]);
         } else {
           props.navigation.navigate('PosterRequest', {
             posterId: posterId,

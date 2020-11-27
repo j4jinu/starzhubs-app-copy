@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, Image } from 'react-native';
 import BuddyItem from '../components/BuddyItem';
 import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
@@ -64,10 +64,14 @@ const MyConnectionScreen = (props) => {
     );
   } else {
     return (
-      <View style={{ alignItems: 'center', marginTop: '8%' }}>
+      <View style={{ alignItems: 'center', marginTop: '35%' }}>
         <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
           No Connections
         </Text>
+        <Image
+          source={require('../assets/broke.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
       </View>
     );
   }

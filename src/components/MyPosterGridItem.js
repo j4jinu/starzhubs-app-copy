@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  ToastAndroid
 } from 'react-native';
 import theme from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -46,7 +47,7 @@ const MyPosterGridItem = (props) => {
       .then(
         (response) => {
           if (response.success === true) {
-            setVisible(!visible);
+            showToastWithGravityAndOffset()
             props.getPosters();
           } else {
             alert(error);
@@ -57,18 +58,18 @@ const MyPosterGridItem = (props) => {
         },
       );
   };
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      " Poster Deleted successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
   return (
     <>
       <View style={styles.containerSnackbar}>
-        <Snackbar
-          visible={visible}
-          duration={5000}
-          onDismiss={onDismissSnackBar}>
-          Poster Deleted Successfully
-        </Snackbar>
       </View>
 
       {

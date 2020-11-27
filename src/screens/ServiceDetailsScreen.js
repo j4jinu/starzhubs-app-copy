@@ -61,7 +61,7 @@ const ServiceDetailsScreen = (props) => {
           if (response.success === true) {
             setLoading(false);
             setVisible(!visible);
-            showToast()
+            showToastWithGravityAndOffset()
             props.navigation.navigate('OurServices')
 
             // props.navigation.goBack()
@@ -80,10 +80,15 @@ const ServiceDetailsScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-  const showToast = () => {
-    ToastAndroid.show("A pikachu appeared nearby !", ToastAndroid.SHORT);
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "  Thanks for your feedback!",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
-
   return (
     <View style={styles.container}>
       <Snackbar
@@ -149,7 +154,7 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-                <View style={{ width: '80%', marginLeft: '7%' }}>
+                <View style={{ width: '85%' }}>
                   <View style={styles.inputView}>
 
                     <TextInput
@@ -198,7 +203,7 @@ const ServiceDetailsScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //   margin:'5%',
+    zIndex: 1,
   },
   posterTitle: {
     fontSize: 18,

@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
@@ -56,21 +57,27 @@ const EditMediaScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
-      setVisible(!visible);
+
+      props.navigation.navigate('Account')
+      showToastWithGravityAndOffset()
     } catch (error) {
       console.error('error', error);
     }
   };
 
-  const onDismissSnackBar = () => {
-    setVisible(false);
-  };
 
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      " Media Details Updated Successfully.Check Your Media Screen.",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   return (
     <View style={styles.container}>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
-        Media Details Updated Successfully. Check Your Media Screen.
-      </Snackbar>
+
       <ScrollView>
         <Formik
           initialValues={{

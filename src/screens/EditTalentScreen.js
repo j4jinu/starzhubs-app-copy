@@ -8,6 +8,9 @@ import {
   ActivityIndicator,
   Picker,
   Alert,
+  Image,
+  ToastAndroid,
+  PermissionsAndroid
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -76,7 +79,7 @@ const EditTalentScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const category = props.navigation.getParam('category');
   const industry = props.navigation.getParam('industry');
-  console.log('edit industry', industry);
+  console.log('edit industry', talentId);
   // const inds = industry.split(',')
   const films = props.navigation.getParam('films');
   const years = props.navigation.getParam('years');
@@ -95,6 +98,14 @@ const EditTalentScreen = (props) => {
   const [level, setLevel] = useState(levels);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
+  const [bodyTypeValue, setbodyTypeValue] = useState();
+  const [labels, setlabels] = useState();
+  const [complexionValue, setcomplexionValue] = useState();
+  const [imageType, setImageType] = useState();
+  const [headimg, setHeadImage] = useState();
+  const [rightimg, setRightImage] = useState();
+  const [leftimg, setLeftImage] = useState();
+  const [fullsizeimg, setFullImage] = useState();
 
   const initialTalentValues = {
     talentId: talentId,
@@ -118,6 +129,18 @@ const EditTalentScreen = (props) => {
       .required('Enter no. of projects'),
     description: Yup.string().required('Enter talent  details'),
   });
+
+  useEffect(() => {
+    if (talentId === '5fbd408388613013dcef63c4') {
+      setIsProfileImageMode(true);
+      // setTalent(tid);
+      // return;
+    } else {
+      setIsProfileImageMode(false);
+      // setTalent(tid);
+      // return;
+    }
+  })
 
   useEffect(() => {
     const getUserTalents = () => {
@@ -178,7 +201,6 @@ const EditTalentScreen = (props) => {
       setSubmitting(false);
       return;
     }
-    console.log('hjjj', values.industry);
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -205,6 +227,8 @@ const EditTalentScreen = (props) => {
           if (response.success === true) {
             setMessage('Data updated successfully');
             setVisible(true);
+            props.navigation.navigate('Account')
+            showToastWithGravityAndOffset()
           } else {
             setMessage('Something went wrong. Try again !');
             setVisible(true);
@@ -212,6 +236,111 @@ const EditTalentScreen = (props) => {
         },
         (error) => { },
       );
+  };
+
+  const requestCameraPermission = async (imgType) => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'Cool Photo App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        chooseFile(imgType);
+      } else {
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+  const chooseFile = async (imgType) => {
+    var options = {
+      title: 'Select Image',
+      customButtons: [
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 0.2,
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+      } else if (response.customButton) {
+        alert(response.customButton);
+      } else if (response.uri === '') {
+      } else {
+        if (imgType === 'head_shot') {
+          setHeadImage(response.uri);
+        } else if (imgType === 'left_profile') {
+          setLeftImage(response.uri);
+        } else if (imgType === 'right_profile') {
+          setRightImage(response.uri);
+        } else {
+          setFullImage(response.uri);
+        }
+        // imgurl = response.uri;
+        uploadAvatar(imgType, response.uri);
+      }
+    });
+  };
+
+  const uploadAvatar = async (imgType, imgurl) => {
+    let image;
+    if (imgType === 'head_shot') {
+      image = headimg;
+    } else if (imgType === 'left_profile') {
+      image = leftimg;
+    } else if (imgType === 'right_profile') {
+      image = rightimg;
+    } else {
+      image = fullsizeimg;
+    }
+    const image_uri = imgurl;
+    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
+    var formData = new FormData();
+    formData.append('imageType', imgType);
+    formData.append('avatar', {
+      uri: image_uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`,
+    });
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    };
+    try {
+      const uploadRes = await fetch(
+        `http://13.232.190.226/api/user/avatar`,
+        requestOptions,
+      );
+      const uploadResData = await uploadRes.json();
+      if (!uploadResData.success) {
+        setMsg('Something went wrong. Try again!');
+        setVisible(!visible);
+        return;
+      }
+      alert(uploadResData.message);
+      setMessage('Image uploaded successfully');
+      setVisible(!visible);
+    } catch (error) {
+      console.error('error', error);
+    }
   };
 
   const handleLevelChange = (rating) => {
@@ -222,6 +351,15 @@ const EditTalentScreen = (props) => {
   };
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
+  };
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      " Data updated successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
   return (
     <View style={styles.container}>

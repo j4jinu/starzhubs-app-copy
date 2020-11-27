@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   PermissionsAndroid,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
@@ -36,7 +37,7 @@ const PhotoUploadScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'starzhubs needs access to your camera ' +
             'so you can take awesome pictures.',
@@ -121,24 +122,28 @@ const PhotoUploadScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
-      setVisible(!visible);
+
       setImage('');
+      showToastWithGravityAndOffset()
       resetForm({ values: '' });
-      // props.navigation.goBack();
+      props.navigation.navigate('Account');
     } catch (error) {
       console.error('error', error);
     }
   };
 
-  const onDismissSnackBar = () => {
-    setVisible(false);
-  };
 
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Image Uploaded Successfully. Check Your Media Screen.",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   return (
     <View style={styles.container}>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
-        Image Uploaded Successfully. Check Your Media Screen.
-      </Snackbar>
       <ScrollView>
         <Formik
           initialValues={{

@@ -78,8 +78,8 @@ const AccountScreen = (props) => {
                 paddingHorizontal: 10,
                 marginTop: 10,
               }}>
-              <Text style={{ flex: 1 }}>0 Connections</Text>
-              <Text style={{ flex: 1 }}>0 Talents</Text>
+              {/* <Text style={{flex: 1}}>0 Connections</Text>
+              <Text style={{flex: 1}}>0 Talents</Text> */}
             </View>
           </View>
         </View>

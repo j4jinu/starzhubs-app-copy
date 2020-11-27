@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   TextInput,
+  ToastAndroid
 } from 'react-native';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -94,10 +95,10 @@ const CreatePosterScreen = (props, { navigation }) => {
         alert(uploadResData.message);
         return;
       }
-      // setImage('');
-      alert(uploadResData.message);
-      // setImage('');
-      props.navigation.navigate('MyPosters');
+
+      props.navigation.navigate('Account');
+      showToastWithGravityAndOffset()
+
     } catch (error) {
       console.error('error', error);
     }
@@ -124,6 +125,15 @@ const CreatePosterScreen = (props, { navigation }) => {
     //     },
     //   );
   };
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "New Poster created successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   const handleStartDate = (date) => {
     setSDate(date);
     if (date === '') {
@@ -147,7 +157,7 @@ const CreatePosterScreen = (props, { navigation }) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'Cool Photo App needs access to your camera ' +
             'so you can take awesome pictures.',

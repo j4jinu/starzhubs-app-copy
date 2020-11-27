@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
@@ -69,11 +70,14 @@ const VideoUploadScreen = (props) => {
         );
         const resData = await response.json();
         if (resData.success) {
-          const msg = 'Video Uploaded Successfully. Check Your Media Screen.';
-          setMessage(msg);
-          setVisible(!visible);
+          // const msg = 'Video Uploaded Successfully. Check Your Media Screen.';
+          // setMessage(msg);
+          // setVisible(!visible);
           setYtLink('');
           resetForm({ values: '' });
+          props.navigation.navigate('Account')
+          showToastWithGravityAndOffset()
+
         } else {
           const msg = 'Something went wrong. Try again!';
           setMessage(msg);
@@ -88,7 +92,15 @@ const VideoUploadScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      " Video Updated Successfully.Check Your Media Screen.",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   return (
     <View style={styles.container}>
       <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>

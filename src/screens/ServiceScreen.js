@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: '3%',
     paddingRight: '3%',
+    backgroundColor: "#f1f1f1"
   },
   cardleft: {
     elevation: 5,
@@ -95,12 +96,13 @@ const styles = StyleSheet.create({
     width: '47%',
     marginLeft: 5,
     marginRight: 5,
-    marginBottom: '3%',
+    marginBottom: '-2%',
     alignItems: 'center',
+
   },
   img: {
     marginTop: '8%',
-    // marginLeft:"3%",
+
     marginBottom: '8%',
   },
 });

@@ -208,6 +208,8 @@ const AccountNavigator = createStackNavigator(
       screen: ServiceDetailsScreen,
       navigationOptions: {
         title: 'Services',
+
+
       },
       // navigationOptions: {
       //   headerShown: false,

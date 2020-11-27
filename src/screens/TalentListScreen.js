@@ -7,6 +7,8 @@ import {
   Button,
   StyleSheet,
   Alert,
+  Image,
+  ToastAndroid
 } from 'react-native';
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
@@ -87,7 +89,8 @@ const TalentListScreen = (props) => {
         (response) => {
           if (response.success === true) {
             getUserTalents();
-            setVisible(!visible);
+            // setVisible(!visible);
+            showToastWithGravityAndOffset()
           } else {
             alert(response.message);
           }
@@ -97,126 +100,155 @@ const TalentListScreen = (props) => {
         },
       );
   };
-
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Deleted Successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
 
-  return (
-    <>
-      <ScrollView style={styles.container}>
-        <Snackbar
-          visible={visible}
-          duration={5000}
-          onDismiss={onDismissSnackBar}>
-          Deleted Successfully
-        </Snackbar>
-        <View>
-          {talents.length === 0 && (
-            <View style={{ alignItems: 'center', marginTop: '50%' }}>
-              <Text
-                style={{
-                  color: theme.$primaryColor,
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                }}>
-                No talents you added yet
+  // const onDismissSnackBar = () => {
+  //   setVisible(false);
+  // };
+  if (talents.length === 0) {
+    return (
+      <>
+        <View style={{ alignItems: 'center', marginTop: '50%' }}>
+          <Text
+            style={{
+              color: theme.$primaryColor,
+              fontWeight: 'bold',
+              fontSize: 18,
+              textAlign: 'center',
+              marginBottom: 10
+            }}>
+            No talents added yet
               </Text>
-            </View>
-          )}
-          {talents.map((t, key) => (
-            <View style={styles.card}>
-              <View style={styles.subHeadDiv2}>
-                <View style={{ width: '70%' }}>
-                  <Text style={styles.subHead}>{t.category.title}</Text>
-                </View>
-                <View style={{ width: '20%', flexDirection: 'row' }}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      props.navigation.navigate('EditTalents', {
-                        talentId: t._id,
-                        category: t.category.title,
-                        type: t.chars.type,
-                        industry: t.chars.industry,
-                        films: t.chars.films,
-                        years: t.chars.years,
-                        description: t.description,
-                        levels: t.level,
-                      })
-                    }>
-                    <EIcon
-                      name="user-edit"
-                      size={15}
-                      color="orange"
-                      style={{ marginLeft: '35%', alignSelf: 'flex-end' }}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => confirmDelete(t._id)}>
-                    <DIcon
-                      name="delete"
-                      size={18}
-                      color="orange"
-                      style={{ marginLeft: 20, alignSelf: 'flex-end' }}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.infoDiv}>
-                <View style={{ marginTop: 10 }}>
-                  <View style={styles.fieldDiv}>
-                    <Text style={styles.fieldTitle}>Type</Text>
-                    <Text style={styles.fieldText}>{t.chars.type}</Text>
-                  </View>
-                  <View style={styles.fieldDiv}>
-                    <Text style={styles.fieldTitle}>Industries</Text>
-                    <Text style={styles.fieldText}>
-                      {t.chars.industry.toString()}
-                    </Text>
-                  </View>
-                  <View style={styles.fieldDiv}>
-                    <Text style={styles.fieldTitle}>Projects</Text>
-                    <Text style={styles.fieldText}>{t.chars.films}</Text>
-                  </View>
-                  <View style={styles.fieldDiv}>
-                    <Text style={styles.fieldTitle}>Experience</Text>
-                    <Text style={styles.fieldText}>{t.chars.years} Years</Text>
-                  </View>
-                  <View style={styles.fieldDiv}>
-                    <Text style={styles.fieldTitle}>Level</Text>
-                    <Text style={styles.fieldText}>
-                      {t.level == '1'
-                        ? 'Beginner'
-                        : t.level == '2'
-                          ? 'Average'
-                          : t.level == '3'
-                            ? 'Good'
-                            : t.level == '4'
-                              ? 'Excellent'
-                              : 'Experienced'}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          ))}
         </View>
-      </ScrollView>
-      <View
-        style={{
-          borderWidth: 0,
-          bottom: 10,
-          right: 10,
-          alignSelf: 'flex-end',
-        }}>
+
+
         <TouchableOpacity
-          style={styles.createBtn}
+
           onPress={() => props.navigation.navigate('AddTalents')}>
-          <GIcon name="plus" size={25} color="white" />
+          <Image
+            source={require('../assets/add.png')}
+            style={{ width: "41%", height: 160, marginHorizontal: 100 }}
+          />
         </TouchableOpacity>
-      </View>
-    </>
-  );
+
+      </>
+    )
+  }
+  if (talents.length > 0) {
+
+
+    return (
+      <>
+        <ScrollView style={styles.container}>
+          {/* <Snackbar
+            visible={visible}
+            duration={5000}
+            onDismiss={onDismissSnackBar}>
+            Deleted Successfully
+        </Snackbar> */}
+          <View>
+            {talents.map((t, key) => (
+              <View style={styles.card}>
+                <View style={styles.subHeadDiv2}>
+                  <View style={{ width: '70%' }}>
+                    <Text style={styles.subHead}>{t.category.title}</Text>
+                  </View>
+                  <View style={{ width: '20%', flexDirection: 'row' }}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate('EditTalents', {
+                          talentId: t._id,
+                          category: t.category.title,
+                          type: t.chars.type,
+                          industry: t.chars.industry,
+                          films: t.chars.films,
+                          years: t.chars.years,
+                          description: t.description,
+                          levels: t.level,
+                        })
+                      }>
+                      <EIcon
+                        name="user-edit"
+                        size={15}
+                        color="orange"
+                        style={{ marginLeft: '35%', alignSelf: 'flex-end' }}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => confirmDelete(t._id)}>
+                      <DIcon
+                        name="delete"
+                        size={18}
+                        color="orange"
+                        style={{ marginLeft: 20, alignSelf: 'flex-end' }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.infoDiv}>
+                  <View style={{ marginTop: 10 }}>
+                    <View style={styles.fieldDiv}>
+                      <Text style={styles.fieldTitle}>Type</Text>
+                      <Text style={styles.fieldText}>{t.chars.type}</Text>
+                    </View>
+                    <View style={styles.fieldDiv}>
+                      <Text style={styles.fieldTitle}>Industries</Text>
+                      <Text style={styles.fieldText}>
+                        {t.chars.industry.toString()}
+                      </Text>
+                    </View>
+                    <View style={styles.fieldDiv}>
+                      <Text style={styles.fieldTitle}>Projects</Text>
+                      <Text style={styles.fieldText}>{t.chars.films}</Text>
+                    </View>
+                    <View style={styles.fieldDiv}>
+                      <Text style={styles.fieldTitle}>Experience</Text>
+                      <Text style={styles.fieldText}>{t.chars.years} Years</Text>
+                    </View>
+                    <View style={styles.fieldDiv}>
+                      <Text style={styles.fieldTitle}>Level</Text>
+                      <Text style={styles.fieldText}>
+                        {t.level == '1'
+                          ? 'Beginner'
+                          : t.level == '2'
+                            ? 'Average'
+                            : t.level == '3'
+                              ? 'Good'
+                              : t.level == '4'
+                                ? 'Excellent'
+                                : 'Experienced'}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+        <View
+          style={{
+            borderWidth: 0,
+            bottom: 10,
+            right: 10,
+            alignSelf: 'flex-end',
+          }}>
+          <TouchableOpacity
+            style={styles.createBtn}
+            onPress={() => props.navigation.navigate('AddTalents')}>
+            <GIcon name="plus" size={25} color="white" />
+          </TouchableOpacity>
+        </View>
+      </>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

@@ -9,6 +9,7 @@ import {
   Picker,
   Image,
   PermissionsAndroid,
+  ToastAndroid
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -107,7 +108,7 @@ export default function AddTalentScreen(props) {
     bodyType: 'Athletic',
     height: 0,
     weight: 0,
-    description: 'description',
+    description: '',
   };
 
   const phoneRegExp = /^[0-9]*$/;
@@ -194,9 +195,7 @@ export default function AddTalentScreen(props) {
     }
   };
 
-  const resetForm = (values) => {
-    values: '';
-  };
+
 
   const handleSubmit = (values) => {
     setLoading(true);
@@ -235,15 +234,19 @@ export default function AddTalentScreen(props) {
         (response) => {
           if (response.success === true) {
             setLoading(false);
-            const msg =
-              'New Talent added successfully. Check your profile page and add medias.';
-            setMessage(msg);
-            setVisible(!visible);
-            // props.navigation.navigate('Talents');
+            // const msg =
+            //   'New Talent added successfully. Check your profile page and add medias.';
+            // setMessage(msg);
+            // setVisible(!visible);
+
+            props.navigation.navigate('Account');
+            showToastWithGravityAndOffset()
           } else {
             // alert(response.message);
-            setMessage(response.message);
-            setVisible(!visible);
+            props.navigation.navigate('Account');
+            showToast()
+
+
           }
           setLoading(false);
         },
@@ -257,7 +260,19 @@ export default function AddTalentScreen(props) {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+  const showToast = () => {
+    ToastAndroid.show("Talent already added by the user", ToastAndroid.SHORT);
+  };
 
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "New Talent added successfully.",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   const uploadAvatar = async (imgType, imgurl) => {
     let image;
     if (imgType === 'head_shot') {
@@ -601,7 +616,7 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('description')}
                   />
                 </View>
-
+                <Text style={styles.error}>{errors.description}</Text>
                 {isProfileImageMode && (
                   <Fragment>
                     <View

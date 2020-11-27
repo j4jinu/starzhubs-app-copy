@@ -332,9 +332,11 @@ const UserDetailsScreen = (props) => {
           <Swiper style={styles.wrapper} showsButtons={false}>
             {user.image && user.image.avatar !== undefined && (
               <Image
+                key={user.image.avatar}
                 style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
                   uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  cache: 'reload'
                 }}
               />
             )}

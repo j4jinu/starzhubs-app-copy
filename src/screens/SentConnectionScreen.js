@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, Image } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
@@ -28,10 +28,14 @@ const SentConnectionScreen = () => {
 
   if (isFriends === undefined) {
     return (
-      <View style={{ alignItems: 'center', marginTop: '8%' }}>
+      <View style={{ alignItems: 'center', marginTop: '35%' }}>
         <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
           No Requests
-        </Text>
+          </Text>
+        <Image
+          source={require('../assets/broke.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
       </View>
     );
   }

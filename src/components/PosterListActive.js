@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, Text, View, Image } from 'react-native';
 import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
@@ -11,7 +11,7 @@ const PosterListActive = (props) => {
     getPosters();
   }, []);
   const getPosters = async (status) => {
-    // setLoading(true);
+    setLoading(true);
     setPosters([]);
     try {
       const response = await fetch(`http://13.232.190.226/api/poster/me`, {
@@ -31,17 +31,23 @@ const PosterListActive = (props) => {
 
   if (posters.length === 0) {
     return (
-      <Text
+
+      <View
         style={{
-          fontSize: 16,
-          marginTop: 20,
-          fontWeight: 'bold',
-          color: 'tomato',
-          textAlign: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 25,
+          marginTop: "35%"
         }}>
-        No Active Posters
-      </Text>
-    );
+        <Text style={{ fontSize: 18, color: 'tomato' }}>
+          No Active Posters.
+    </Text>
+        <Image
+          source={require('../assets/box.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
+      </View>
+    )
   }
   return (
     <View>

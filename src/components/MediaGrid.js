@@ -14,8 +14,10 @@ const MediaGrid = (props) => {
           activeOpacity={0.7}
           onPress={() =>
             props.navigation.navigate('MediaDetails', {
-              media: media.file,
-            })
+              mediaFile: media.file,
+              mediaType: media.fileType,
+              caption: media.caption,
+              description: media.description,            })
           }>
           <View style={styles.container}>
             {media.fileType === 'image' ? (

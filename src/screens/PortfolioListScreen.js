@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, Image } from 'react-native';
 import {
   FlatList,
   ScrollView,
@@ -84,6 +84,7 @@ const PortfolioListScreen = (props) => {
             style={c._id === categoryId ? styles.chipActive : styles.chips}
             onPress={() => {
               setCategoryId(c._id);
+
             }}>
             <Text
               style={
@@ -119,10 +120,15 @@ const PortfolioListScreen = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
               paddingVertical: 25,
+              marginTop: "35%"
             }}>
             <Text style={{ fontSize: 18, color: 'tomato' }}>
               Sorry, No users available.
           </Text>
+            <Image
+              source={require('../assets/broke.png')}
+              style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+            />
           </View>
         )}
     </View>
