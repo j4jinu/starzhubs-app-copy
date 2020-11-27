@@ -110,7 +110,6 @@ const TalentListScreen = (props) => {
     );
   };
 
-<<<<<<< HEAD
   // const onDismissSnackBar = () => {
   //   setVisible(false);
   // };
@@ -129,70 +128,6 @@ const TalentListScreen = (props) => {
             No talents added yet
               </Text>
         </View>
-=======
-  
-
-  return (
-    <>
-      <ScrollView style={styles.container}>
-        <Snackbar
-          visible={visible}
-          duration={5000}
-          onDismiss={onDismissSnackBar}>
-          Deleted Successfully
-        </Snackbar>
-        <View>
-          {talents.length === 0 && (
-            <View style={{alignItems: 'center', marginTop: '50%'}}>
-              <Text
-                style={{
-                  color: theme.$primaryColor,
-                  fontWeight: 'bold',
-                  fontSize: 18,
-                }}>
-                No talents you added yet
-              </Text>
-            </View>
-          )}
-          {talents.map((t, key) => (
-            <View style={styles.card}>
-              <View style={styles.subHeadDiv2}>
-                <View style={{width: '70%'}}>
-                  <Text style={styles.subHead}>{t.category.title}</Text>
-                </View>
-                <View style={{width: '20%', flexDirection: 'row'}}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      props.navigation.navigate('EditTalents', {
-                        talentId: t._id,
-                        category: t.category.title,
-                        type: t.chars.type,
-                        industry: t.chars.industry,
-                        films: t.chars.films,
-                        years: t.chars.years,
-                        description: t.description,
-                        levels: t.level,
-                        userId:t.userId
-                      })
-                    }>
-                    <EIcon
-                      name="user-edit"
-                      size={15}
-                      color="orange"
-                      style={{marginLeft: '35%', alignSelf: 'flex-end'}}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => confirmDelete(t._id)}>
-                    <DIcon
-                      name="delete"
-                      size={18}
-                      color="orange"
-                      style={{marginLeft: 20, alignSelf: 'flex-end'}}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
->>>>>>> 04a02729812ab0f657065c176779cdf5b30f4324
 
 
         <TouchableOpacity

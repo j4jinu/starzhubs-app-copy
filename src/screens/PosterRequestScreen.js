@@ -42,7 +42,7 @@ const PosterRequestScreen = (props) => {
         Alert.alert('Success', 'Request Sent Successfully ', [
           {
             Text: 'OK',
-            onPress: () => props.navigation.navigate('Posters'),
+            onPress: () => props.navigation.navigate('PosterDetails'),
           },
         ]);
       })

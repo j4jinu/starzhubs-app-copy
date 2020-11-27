@@ -75,7 +75,8 @@ const HomeScreenSingle = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Swiper height={200} showsButtons={false}>
+        <Swiper height={200}
+          loop={false} showsPagination={true}>
           {poster.map((p) => (
             <TouchableOpacity
               activeOpacity={0.7}

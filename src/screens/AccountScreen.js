@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Alert
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../config/theme';
@@ -39,6 +40,26 @@ const AccountScreen = (props) => {
     } catch (error) { }
   };
   unsubscribe;
+  const handlelogout = () => {
+    Alert.alert(
+      '',
+      'Are you sure you want to Logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            auth.logout()
+            props.navigation.navigate('Auth')
+          }
+        },
+      ],
+      { cancelable: false }
+    );
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container}>
@@ -258,13 +279,18 @@ const AccountScreen = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.sectionContainer}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => {
               auth.logout();
               props.navigation.navigate('Auth');
-            }}>
+            }}> */}
+          <TouchableOpacity
+            style={styles.section}
+            activeOpacity={0.7}
+            onPress={handlelogout}
+          >
             <View style={{ flexDirection: 'row' }}>
               <Icon name="logout" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
