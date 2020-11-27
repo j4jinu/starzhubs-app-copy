@@ -25,7 +25,7 @@ const MediaDetailsScreen = (props) => {
         <Image
           style={styles.media}
           source={{
-            uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
+            uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
           }}
         />
       )}

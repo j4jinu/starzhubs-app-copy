@@ -57,7 +57,7 @@ const VideoUploadScreen = (props) => {
       values.link = 'https://www.youtube.com/watch?v=' + ytLink;
       try {
         const response = await fetch(
-          'https://api.starzhubs.com/api/talent/upload/media',
+          'http://13.232.190.226/api/talent/upload/media',
           {
             method: 'POST',
             headers: {

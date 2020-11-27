@@ -24,16 +24,13 @@ const loginSchema = yup.object({
 const LoginScreen = (props) => {
   const auth = React.useContext(AuthContext);
   const loginUser = async (values) => {
-    const loginResponse = await fetch(
-      'https://api.starzhubs.com/api/auth/login',
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(values),
+    const loginResponse = await fetch('http://13.232.190.226/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
       },
-    );
+      body: JSON.stringify(values),
+    });
     const loginData = await loginResponse.json();
     if (!loginData.success) {
       return alert(loginData.message);

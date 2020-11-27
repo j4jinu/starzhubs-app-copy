@@ -29,7 +29,7 @@ const MyMediaScreen = (props) => {
   }, []);
   const getTalents = async () => {
     try {
-      const res = await fetch('https://api.starzhubs.com/api/user/talent', {
+      const res = await fetch('http://13.232.190.226/api/user/talent', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${auth.token}`,
@@ -91,10 +91,7 @@ const MyMediaScreen = (props) => {
         talentId: talentId,
       }),
     };
-    fetch(
-      `https://api.starzhubs.com/api/talent/media/${mediaId}`,
-      requestOptions,
-    )
+    fetch(`http://13.232.190.226/api/talent/media/${mediaId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -201,7 +198,7 @@ const MyMediaScreen = (props) => {
                           resizeMode: 'cover',
                         }}
                         source={{
-                          uri: `https://api.starzhubs.com/api/user/view/media/?${m.file}`,
+                          uri: `http://13.232.190.226/api/user/view/media/?${m.file}`,
                         }}
                       />
                     ) : (

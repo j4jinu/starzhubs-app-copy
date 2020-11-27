@@ -49,7 +49,7 @@ const BuddyRequestItem = (props) => {
       {cancelable: false},
     );
   const unfriendRequest = () => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${props.reqId}`, {
+    fetch(`http://13.232.190.226/api/talent/req/reject/${props.reqId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -71,15 +71,12 @@ const BuddyRequestItem = (props) => {
   };
   const requestHandler = () => {
     // console.warn(status)
-    fetch(
-      `https://api.starzhubs.com/api/talent/user/approve/${props.reqId}/1`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: 'Bearer ' + auth.token,
-        },
+    fetch(`http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`, {
+      method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
       },
-    )
+    })
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
@@ -105,7 +102,7 @@ const BuddyRequestItem = (props) => {
             borderRadius: 100,
           }}
           source={{
-            uri: `https://api.starzhubs.com/api/user/avatar/${props.image.avatar}`,
+            uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
           }}
         />
         <View style={styles.details}>

@@ -44,7 +44,7 @@ const PosterDetailsScreen = (props) => {
     getPosterById();
   }, []);
   const getPosterById = () => {
-    fetch(`https://api.starzhubs.com/api/poster/${posterId}`, {
+    fetch(`http://13.232.190.226/api/poster/${posterId}`, {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -57,7 +57,7 @@ const PosterDetailsScreen = (props) => {
       .catch((error) => {});
   };
   const onSubmitRequest = () => {
-    fetch(`https://api.starzhubs.com/api/poster/req/${posterId}`, {
+    fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
         'Content-type': 'Application/json',
@@ -111,7 +111,7 @@ const PosterDetailsScreen = (props) => {
         status: status,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/poster/req/${id}`, requestOptions)
+    fetch(`http://13.232.190.226/api/poster/req/${id}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -152,7 +152,7 @@ const PosterDetailsScreen = (props) => {
             }}
             resizeMode="cover"
             source={{
-              uri: `https://api.starzhubs.com/api/poster/view/${image}`,
+              uri: `http://13.232.190.226/api/poster/view/${image}`,
             }}
           />
           <View style={styles.posterInfo}>
@@ -192,7 +192,7 @@ const PosterDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                 }}
               />
 
@@ -271,8 +271,8 @@ const PosterDetailsScreen = (props) => {
                           borderRadius: 100,
                         }}
                         source={{
-                          uri: `https://api.starzhubs.com/api/user/avatar/${s.requestBy.image.avatar}`,
-                          // uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                          uri: `http://13.232.190.226/api/user/avatar/${s.requestBy.image.avatar}`,
+                          // uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                         }}
                       />
 

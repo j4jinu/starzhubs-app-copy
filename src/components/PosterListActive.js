@@ -14,7 +14,7 @@ const PosterListActive = (props) => {
     // setLoading(true);
     setPosters([]);
     try {
-      const response = await fetch(`https://api.starzhubs.com/api/poster/me`, {
+      const response = await fetch(`http://13.232.190.226/api/poster/me`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,

@@ -40,7 +40,7 @@ const UserDetailsScreen = (props) => {
 
   useEffect(() => {
     const getUserDetails = () => {
-      fetch(`https://api.starzhubs.com/api/user/${userId}`, {
+      fetch(`http://13.232.190.226/api/user/${userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -67,7 +67,7 @@ const UserDetailsScreen = (props) => {
   }, []);
 
   const getLoggedUser = () => {
-    fetch(`https://api.starzhubs.com/api/user/profile`, {
+    fetch(`http://13.232.190.226/api/user/profile`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -97,7 +97,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const checkFriendship = () => {
-    fetch(`https://api.starzhubs.com/api/user/connection/status/${userId}`, {
+    fetch(`http://13.232.190.226/api/user/connection/status/${userId}`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -150,7 +150,7 @@ const UserDetailsScreen = (props) => {
         userId: userId,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/req/user`, requestOptions)
+    fetch(`http://13.232.190.226/api/talent/req/user`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -202,7 +202,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const requestDeleteHandler = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${requestId}`, {
+    fetch(`http://13.232.190.226/api/talent/req/reject/${requestId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -264,7 +264,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const approveRequest = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/user/approve/${requestId}/1`, {
+    fetch(`http://13.232.190.226/api/talent/user/approve/${requestId}/1`, {
       method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -291,7 +291,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const unfriendRequest = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${requestId}`, {
+    fetch(`http://13.232.190.226/api/talent/req/reject/${requestId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -334,7 +334,7 @@ const UserDetailsScreen = (props) => {
               <Image
                 style={{width: '100%', height: 300, resizeMode: 'cover'}}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                 }}
               />
             )}
@@ -342,7 +342,7 @@ const UserDetailsScreen = (props) => {
               <Image
                 style={{width: '100%', height: 300, resizeMode: 'cover'}}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
                 }}
               />
             )}
@@ -350,7 +350,7 @@ const UserDetailsScreen = (props) => {
               <Image
                 style={{width: '100%', height: 300, resizeMode: 'cover'}}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
                 }}
               />
             )}
@@ -358,7 +358,7 @@ const UserDetailsScreen = (props) => {
               <Image
                 style={{width: '100%', height: 300, resizeMode: 'cover'}}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
                 }}
               />
             )}
@@ -366,7 +366,7 @@ const UserDetailsScreen = (props) => {
               <Image
                 style={{width: '100%', height: 300, resizeMode: 'cover'}}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
                 }}
               />
             )}
@@ -596,7 +596,7 @@ const UserDetailsScreen = (props) => {
                       source={{
                         uri:
                           user.image !== undefined
-                            ? `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`
+                            ? `http://13.232.190.226/api/user/avatar/${user.image.avatar}`
                             : 'https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVID19_SECVPF.gif',
                       }}
                     />

@@ -127,7 +127,7 @@ const EditTalentScreen = (props) => {
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
+      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -147,7 +147,7 @@ const EditTalentScreen = (props) => {
 
   useEffect(() => {
     const getCategory = () => {
-      fetch('https://api.starzhubs.com/api/category', {
+      fetch('http://13.232.190.226/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -195,10 +195,7 @@ const EditTalentScreen = (props) => {
         level: values.level,
       }),
     };
-    fetch(
-      `https://api.starzhubs.com/api/talent/user/${talentId}`,
-      requestOptions,
-    )
+    fetch(`http://13.232.190.226/api/talent/user/${talentId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {

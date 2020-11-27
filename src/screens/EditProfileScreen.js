@@ -176,7 +176,7 @@ const EditProfileScreen = (props) => {
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
-        'https://api.starzhubs.com/api/user/profile',
+        'http://13.232.190.226/api/user/profile',
         {
           method: 'GET',
           headers: {
@@ -258,7 +258,7 @@ const EditProfileScreen = (props) => {
     values.gender = gender;
     values.country = country;
     values.languages = selectedItems.toString();
-    const response = await fetch('https://api.starzhubs.com/api/user/update', {
+    const response = await fetch('http://13.232.190.226/api/user/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -355,7 +355,7 @@ const EditProfileScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `https://api.starzhubs.com/api/user/avatar`,
+        `http://13.232.190.226/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -380,7 +380,7 @@ const EditProfileScreen = (props) => {
       <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
         {msg}
       </Snackbar>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         {userInfo.image !== undefined && image === '' && (
           <Image
             style={{
@@ -393,7 +393,7 @@ const EditProfileScreen = (props) => {
               backgroundColor: 'gray',
             }}
             source={{
-              uri: `https://api.starzhubs.com/api/user/avatar/${userInfo.image.avatar}`,
+              uri: `http://13.232.190.226/api/user/avatar/${userInfo.image.avatar}`,
             }}
           />
         )}
