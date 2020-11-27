@@ -23,9 +23,7 @@ const HomeScreenSingle = (props) => {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        let response = await fetch(
-          `http://13.232.190.226/api/poster/random`,
-        );
+        let response = await fetch(`http://13.232.190.226/api/poster/random`);
         let usersResponse = await fetch(
           `http://13.232.190.226/api/talent/filter/5f5b2b8e96b2173a30948ac6`,
           {

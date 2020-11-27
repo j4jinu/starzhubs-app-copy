@@ -4,28 +4,30 @@ import theme from '../config/theme';
 
 const UserTalentSection = (props) => {
     const { talents } = props
-    if (talents === undefined || talents.length === 0) {
+
+    if (talents.length === 0 || talents === undefined) {
         return (
             <View
                 style={{
                     justifyContent: 'center',
                     alignItems: 'center',
-                    paddingVertical: 25,
-                    marginTop: "10%"
+                    paddingVertical: '5%',
                 }}>
-                <Text style={{ fontSize: 18, color: 'tomato' }}>
-                    No Talents Added yet.
-  </Text>
                 <Image
-                    source={require('../assets/broke.png')}
-                    style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
-                />
+                    source={require('../assets/noresult1.png')}
+                    style={{ height: 50, width: 50, }}
+                ></Image>
+                <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
+                    No Talents Added
+          </Text>
             </View>
         )
     }
+
+
     return (
         <View style={styles.container}>
-            {props.talents.map((t, key) => (
+            {talents.map((t, key) => (
                 <>
                     <Text
                         style={styles.title}

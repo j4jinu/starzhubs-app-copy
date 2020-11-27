@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -13,16 +13,16 @@ import {
   Alert,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
-import { Snackbar } from 'react-native-paper';
+import {Snackbar} from 'react-native-paper';
 
 const languages = [
   {
@@ -125,105 +125,212 @@ const languages = [
   },
 ];
 
-
 const countries = [
-  { label: 'Afganistan', value: 'Afganistan' },
-  { label: 'Albania', value: 'Albania' },
-  { label: 'Algeria', value: 'Algeria' },
-  { label: 'Andorra', value: 'Andorra' },
-  { label: 'Angola', value: 'Angola' },
-  { label: 'Anguilla', value: 'Anguilla' },
-  { label: 'Argentina', value: 'Argentina' },
-  { label: 'Armenia', value: 'Armenia' },
-  { label: 'Aruba', value: 'Aruba' },
-  { label: 'Australia', value: 'Australia' },
-  { label: 'Azerbaijan', value: 'Azerbaijan' },
-  { label: 'Bahamas', value: 'Bahamas' },
-  { label: 'Bahrain', value: 'Bahrain' },
-  { label: 'Bangladesh', value: 'Bangladesh' },
-  { label: 'Barbados', value: 'Barbados' },
-  { label: 'Belarus', value: 'Belarus' },
-  { label: 'Belgium', value: 'Belgium' },
-  { label: 'Belize', value: 'Belize' },
-  { label: 'Benin', value: 'Benin' },
-  { label: 'Bermuda', value: 'Bermuda' },
-  { label: 'Bhutan', value: 'Bhutan' },
-  { label: 'Bolivia', value: 'Bolivia' },
-  { label: 'Bosnia', value: 'Bosnia' },
-  { label: 'Botswana', value: 'Botswana' },
-  { label: 'Brazil', value: 'Brazil' },
-  { label: 'British Virgin Islands', value: 'British Virgin Islands' },
-  { label: 'Brunei', value: 'Brunei' },
-  { label: 'Burkina Faso', value: 'Burkina Faso' },
-  { label: 'Burundi', value: 'Burundi' },
-  { label: 'Cambodia', value: 'Cambodia' },
-  { label: 'Cameroon', value: 'Cameroon' },
-  { label: 'Cape Verde', value: 'Cape Verde' },
-  { label: 'Cayman Islands', value: 'Cayman Islands' },
-  { label: 'Chad', value: 'Chad' },
-  { label: 'Chile', value: 'Chile' },
-  { label: 'China', value: 'China' },
-  { label: 'Colombia', value: 'Colombia' },
-  { label: 'Congo', value: 'Congo' },
-  { label: 'Cook Islands', value: 'Cook Islands' },
-  { label: 'Costa Rica', value: 'Costa Rica' },
-  { label: 'Cote D Ivoire', value: 'Cote D Ivoire' },
-  { label: 'Croatia', value: 'Croatia' },
-  { label: 'Cruise Ship', value: 'Cruise Ship' },
-  { label: 'Cuba', value: 'Cuba' },
-  { label: 'Cyprus', value: 'Cyprus' },
-  { label: 'Czech Republic', value: 'Czech Republic' },
-  { label: 'Denmark', value: 'Denmark' },
-  { label: 'Djibouti', value: 'Djibouti' },
-  { label: 'Dominica', value: 'Dominica' },
-  { label: 'Ecuador', value: 'Ecuador' },
-  { label: 'Egypt', value: 'Egypt' },
-  { label: 'El Salvador', value: 'El Salvador' },
-  { label: 'Equatorial Guinea', value: 'Equatorial Guinea' },
-  { label: 'Estonia', value: 'Estonia' },
-  { label: 'Ethiopia', value: 'Ethiopia' },
-  { label: 'Falkland Islands', value: 'Falkland Islands' },
-  { label: 'Faroe Islands', value: 'Faroe Islands' },
-  { label: 'Fiji', value: 'Fiji' },
-  { label: 'Finland', value: 'Finland' },
-  { label: 'France', value: 'France' },
-  { label: 'French Polynesia', value: 'French Polynesia' },
-  { label: 'Gabon', value: 'Gabon' },
-  { label: 'Gambia', value: 'Gambia' },
-  { label: 'Georgia', value: 'Georgia' },
-  { label: 'Germany', value: 'Germany' },
-  { label: 'Ghana', value: 'Ghana' },
-  { label: 'Gibraltar', value: 'Gibraltar' },
-  { label: 'Greece', value: 'Greece' },
-  { label: 'Greenland', value: 'Greenland' },
-  { label: 'Grenada', value: 'Grenada' },
-  { label: 'Guam', value: 'Guam' },
-  { label: 'Guatemala', value: 'Guatemala' },
-  { label: 'Guernsey', value: 'Guernsey' },
-
+  {label: 'Afganistan', value: 'Afganistan'},
+  {label: 'Albania', value: 'Albania'},
+  {label: 'Algeria', value: 'Algeria'},
+  {label: 'Andorra', value: 'Andorra'},
+  {label: 'Angola', value: 'Angola'},
+  {label: 'Anguilla', value: 'Anguilla'},
+  {label: 'Argentina', value: 'Argentina'},
+  {label: 'Armenia', value: 'Armenia'},
+  {label: 'Aruba', value: 'Aruba'},
+  {label: 'Australia', value: 'Australia'},
+  {label: 'Azerbaijan', value: 'Azerbaijan'},
+  {label: 'Bahamas', value: 'Bahamas'},
+  {label: 'Bahrain', value: 'Bahrain'},
+  {label: 'Bangladesh', value: 'Bangladesh'},
+  {label: 'Barbados', value: 'Barbados'},
+  {label: 'Belarus', value: 'Belarus'},
+  {label: 'Belgium', value: 'Belgium'},
+  {label: 'Belize', value: 'Belize'},
+  {label: 'Benin', value: 'Benin'},
+  {label: 'Bermuda', value: 'Bermuda'},
+  {label: 'Bhutan', value: 'Bhutan'},
+  {label: 'Bolivia', value: 'Bolivia'},
+  {label: 'Bosnia', value: 'Bosnia'},
+  {label: 'Botswana', value: 'Botswana'},
+  {label: 'Brazil', value: 'Brazil'},
+  {label: 'British Virgin Islands', value: 'British Virgin Islands'},
+  {label: 'Brunei', value: 'Brunei'},
+  {label: 'Burkina Faso', value: 'Burkina Faso'},
+  {label: 'Burundi', value: 'Burundi'},
+  {label: 'Cambodia', value: 'Cambodia'},
+  {label: 'Cameroon', value: 'Cameroon'},
+  {label: 'Cape Verde', value: 'Cape Verde'},
+  {label: 'Cayman Islands', value: 'Cayman Islands'},
+  {label: 'Chad', value: 'Chad'},
+  {label: 'Chile', value: 'Chile'},
+  {label: 'China', value: 'China'},
+  {label: 'Colombia', value: 'Colombia'},
+  {label: 'Congo', value: 'Congo'},
+  {label: 'Cook Islands', value: 'Cook Islands'},
+  {label: 'Costa Rica', value: 'Costa Rica'},
+  {label: 'Cote D Ivoire', value: 'Cote D Ivoire'},
+  {label: 'Croatia', value: 'Croatia'},
+  {label: 'Cruise Ship', value: 'Cruise Ship'},
+  {label: 'Cuba', value: 'Cuba'},
+  {label: 'Cyprus', value: 'Cyprus'},
+  {label: 'Czech Republic', value: 'Czech Republic'},
+  {label: 'Denmark', value: 'Denmark'},
+  {label: 'Djibouti', value: 'Djibouti'},
+  {label: 'Dominica', value: 'Dominica'},
+  {label: 'Ecuador', value: 'Ecuador'},
+  {label: 'Egypt', value: 'Egypt'},
+  {label: 'El Salvador', value: 'El Salvador'},
+  {label: 'Equatorial Guinea', value: 'Equatorial Guinea'},
+  {label: 'Estonia', value: 'Estonia'},
+  {label: 'Ethiopia', value: 'Ethiopia'},
+  {label: 'Falkland Islands', value: 'Falkland Islands'},
+  {label: 'Faroe Islands', value: 'Faroe Islands'},
+  {label: 'Fiji', value: 'Fiji'},
+  {label: 'Finland', value: 'Finland'},
+  {label: 'France', value: 'France'},
+  {label: 'French Polynesia', value: 'French Polynesia'},
+  {label: 'Gabon', value: 'Gabon'},
+  {label: 'Gambia', value: 'Gambia'},
+  {label: 'Georgia', value: 'Georgia'},
+  {label: 'Germany', value: 'Germany'},
+  {label: 'Ghana', value: 'Ghana'},
+  {label: 'Gibraltar', value: 'Gibraltar'},
+  {label: 'Greece', value: 'Greece'},
+  {label: 'Greenland', value: 'Greenland'},
+  {label: 'Grenada', value: 'Grenada'},
+  {label: 'Guam', value: 'Guam'},
+  {label: 'Guatemala', value: 'Guatemala'},
+  {label: 'Guernsey', value: 'Guernsey'},
 ];
 
 const country_list = [
-  "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary",
-  "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy",
-  "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kuwait", "Kyrgyz Republic",
-  "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania",
-  "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
-  "Malta", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro",
-  "Montserrat", "Morocco", "Mozambique", "Namibia", "Nepal", "Netherlands",
-  "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger",
-  "Nigeria", "Norway", "Oman", "Pakistan", "Palestine", "Panama", "Papua New Guinea",
-  "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar",
-  "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa",
-  "San Marino", "Satellite", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
-  "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "South Africa", "South Korea",
-  "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "St. Lucia",
-  "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
-  "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga",
-  "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos",
-  "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "Uruguay", "Uzbekistan",
-  "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
-
+  'Guernsey',
+  'Guinea',
+  'Guinea Bissau',
+  'Guyana',
+  'Haiti',
+  'Honduras',
+  'Hong Kong',
+  'Hungary',
+  'Iceland',
+  'India',
+  'Indonesia',
+  'Iran',
+  'Iraq',
+  'Ireland',
+  'Isle of Man',
+  'Israel',
+  'Italy',
+  'Jamaica',
+  'Japan',
+  'Jersey',
+  'Jordan',
+  'Kazakhstan',
+  'Kenya',
+  'Kuwait',
+  'Kyrgyz Republic',
+  'Laos',
+  'Latvia',
+  'Lebanon',
+  'Lesotho',
+  'Liberia',
+  'Libya',
+  'Liechtenstein',
+  'Lithuania',
+  'Luxembourg',
+  'Macau',
+  'Macedonia',
+  'Madagascar',
+  'Malawi',
+  'Malaysia',
+  'Maldives',
+  'Mali',
+  'Malta',
+  'Mauritania',
+  'Mauritius',
+  'Mexico',
+  'Moldova',
+  'Monaco',
+  'Mongolia',
+  'Montenegro',
+  'Montserrat',
+  'Morocco',
+  'Mozambique',
+  'Namibia',
+  'Nepal',
+  'Netherlands',
+  'Netherlands Antilles',
+  'New Caledonia',
+  'New Zealand',
+  'Nicaragua',
+  'Niger',
+  'Nigeria',
+  'Norway',
+  'Oman',
+  'Pakistan',
+  'Palestine',
+  'Panama',
+  'Papua New Guinea',
+  'Paraguay',
+  'Peru',
+  'Philippines',
+  'Poland',
+  'Portugal',
+  'Puerto Rico',
+  'Qatar',
+  'Reunion',
+  'Romania',
+  'Russia',
+  'Rwanda',
+  'Saint Pierre &amp; Miquelon',
+  'Samoa',
+  'San Marino',
+  'Satellite',
+  'Saudi Arabia',
+  'Senegal',
+  'Serbia',
+  'Seychelles',
+  'Sierra Leone',
+  'Singapore',
+  'Slovakia',
+  'Slovenia',
+  'South Africa',
+  'South Korea',
+  'Spain',
+  'Sri Lanka',
+  'St Kitts &amp; Nevis',
+  'St Lucia',
+  'St Vincent',
+  'St. Lucia',
+  'Sudan',
+  'Suriname',
+  'Swaziland',
+  'Sweden',
+  'Switzerland',
+  'Syria',
+  'Taiwan',
+  'Tajikistan',
+  'Tanzania',
+  'Thailand',
+  "Timor L'Este",
+  'Togo',
+  'Tonga',
+  'Trinidad &amp; Tobago',
+  'Tunisia',
+  'Turkey',
+  'Turkmenistan',
+  'Turks &amp; Caicos',
+  'Uganda',
+  'Ukraine',
+  'United Arab Emirates',
+  'United Kingdom',
+  'Uruguay',
+  'Uzbekistan',
+  'Venezuela',
+  'Vietnam',
+  'Virgin Islands (US)',
+  'Yemen',
+  'Zambia',
+  'Zimbabwe',
+];
 
 const EditProfileScreen = (props) => {
   const auth = React.useContext(AuthContext);
@@ -291,29 +398,29 @@ const EditProfileScreen = (props) => {
         const lng = myString.split(',');
         setSelectedItems(lng);
       }
-      checkActorMode(userData.data.talents)
+      checkActorMode(userData.data.talents);
     };
     getUserDetails();
   }, []);
 
   const checkActorMode = (talents) => {
-    talents.forEach(talent => {
-      const category = talent.category
+    talents.forEach((talent) => {
+      const category = talent.category;
       console.log(category);
-      category.forEach(c => {
+      category.forEach((c) => {
         if (c.title === 'Actor' || c.title === 'Model') {
-          setActorMode(true)
-          return
+          setActorMode(true);
+          return;
         }
-      })
+      });
     });
-  }
+  };
 
   const onSelectedItemsChange = (selectedItem) => {
     setSelectedItems(selectedItem);
   };
 
-  const saveUserInfo = async (values, { setSubmitting }) => {
+  const saveUserInfo = async (values, {setSubmitting}) => {
     if (dob === undefined) {
       Alert.alert(
         '',
@@ -324,7 +431,7 @@ const EditProfileScreen = (props) => {
             style: 'cancel',
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
       // alert('Please enter your Date of Birth');
       setSubmitting(false);
@@ -340,7 +447,7 @@ const EditProfileScreen = (props) => {
             style: 'cancel',
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
       // alert('Enter your gender');
       setSubmitting(false);
@@ -356,7 +463,7 @@ const EditProfileScreen = (props) => {
             style: 'cancel',
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
       // alert('Please choose the languages you known');
       setSubmitting(false);
@@ -410,7 +517,7 @@ const EditProfileScreen = (props) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
       ],
       storageOptions: {
         skipBackup: true,
@@ -489,8 +596,7 @@ const EditProfileScreen = (props) => {
       <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
         {msg}
       </Snackbar>
-      <ScrollView>
-        {/* <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={keyboardVerticalOffset} style={{ backgroundColor: 'white', flex: 1 }}> */}
+      <ScrollView keyboardShouldPersistTaps="always">
         {userInfo.image !== undefined && image === '' && (
           <Image
             style={{
@@ -538,8 +644,8 @@ const EditProfileScreen = (props) => {
           enableReinitialize={true}
           initialValues={initialProfileValues}
           validationSchema={profileSchema}
-          onSubmit={(values, { setSubmitting }) =>
-            saveUserInfo(values, { setSubmitting })
+          onSubmit={(values, {setSubmitting}) =>
+            saveUserInfo(values, {setSubmitting})
           }>
           {({
             handleChange,
@@ -550,365 +656,369 @@ const EditProfileScreen = (props) => {
             errors,
             values,
           }) => (
-              <>
-                {/* 
+            <>
+              {/* 
               Full name 
               */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.name ? 'red' : '#e6e6e6',
-                  }}>
-                  <Icon name="person" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'default'}
-                    textContentType={'name'}
-                    style={styles.inputField}
-                    placeholder={'Full name'}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    defaultValue={initialProfileValues.name}
-                  />
-                </View>
-                {/* 
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.name ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="person" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'default'}
+                  textContentType={'name'}
+                  style={styles.inputField}
+                  placeholder={'Full name'}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  defaultValue={initialProfileValues.name}
+                />
+              </View>
+              {/* 
               DoB
                */}
-                <View
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: '#e6e6e6',
+                }}>
+                <DatePicker
                   style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
+                    backgroundColor: 'white',
                     borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    width: '100%',
+                    paddingVertical: 5,
                     borderColor: '#e6e6e6',
-                  }}>
-                  <DatePicker
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: 10,
-                      width: '100%',
-                      paddingVertical: 5,
-                      borderColor: '#e6e6e6',
-                    }}
-                    date={dob}
-                    mode="date"
-                    placeholder="DOB"
-                    format="YYYY-MM-DD"
-                    // minDate="01-01-2016"
-                    // maxDate="01-01-2019"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    iconComponent={
-                      <Icon
-                        name="date-range"
-                        size={23}
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          top: 8,
-                          color: '#fd9242',
-                        }}
-                      />
-                    }
-                    customStyles={{
-                      dateInput: {
-                        borderWidth: 0,
-                        marginLeft: '10%',
-                        alignItems: 'flex-start',
-                      },
-                    }}
-                    onDateChange={(date) => {
-                      setDob(date);
-                    }}
-                  />
-                </View>
-                {/* Gender */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: '#e6e6e6',
-                  }}>
-                  <Icon name="people-alt" size={20} color={theme.$primaryColor} />
-                  <Picker
-                    itemStyle={{ backgroundColor: "gray", color: "blue", fontSize: 17, fontWeight: "normal" }}
-                    selectedValue={gender}
-                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
-                    onValueChange={(itemValue, itemIndex) =>
-                      setGender(itemValue)
-                    }>
-                    <Picker.Item label="Select Gender" value="" />
-                    <Picker.Item label="Female" value="Female" />
-                    <Picker.Item label="Male" value="Male" />
-                    <Picker.Item label="Transgender" value="Transgender" />
-                  </Picker>
-                </View>
-                {/* 
+                  }}
+                  date={dob}
+                  mode="date"
+                  placeholder="DOB"
+                  format="YYYY-MM-DD"
+                  // minDate="01-01-2016"
+                  // maxDate="01-01-2019"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  iconComponent={
+                    <Icon
+                      name="date-range"
+                      size={23}
+                      style={{
+                        position: 'absolute',
+                        left: 0,
+                        top: 8,
+                        color: '#fd9242',
+                      }}
+                    />
+                  }
+                  customStyles={{
+                    dateInput: {
+                      borderWidth: 0,
+                      marginLeft: '10%',
+                      alignItems: 'flex-start',
+                    },
+                  }}
+                  onDateChange={(date) => {
+                    setDob(date);
+                  }}
+                />
+              </View>
+              {/* Gender */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: '#e6e6e6',
+                }}>
+                <Icon name="people-alt" size={20} color={theme.$primaryColor} />
+                <Picker
+                  itemStyle={{
+                    backgroundColor: 'gray',
+                    color: 'blue',
+                    fontSize: 17,
+                    fontWeight: 'normal',
+                  }}
+                  selectedValue={gender}
+                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setGender(itemValue)
+                  }>
+                  <Picker.Item label="Select Gender" value="" />
+                  <Picker.Item label="Female" value="Female" />
+                  <Picker.Item label="Male" value="Male" />
+                  <Picker.Item label="Transgender" value="Transgender" />
+                </Picker>
+              </View>
+              {/* 
               Email address
                */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.email ? 'red' : '#e6e6e6',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    editable={false}
-
-                    style={styles.inputField}
-                    placeholder={'Email address'}
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    defaultValue={initialProfileValues.email}
-                  />
-                </View>
-                {/*
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.email ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  editable={false}
+                  style={styles.inputField}
+                  placeholder={'Email address'}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  defaultValue={initialProfileValues.email}
+                />
+              </View>
+              {/*
               Phone number 
                */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.phone ? 'red' : '#e6e6e6',
-                  }}>
-                  <Icon
-                    name="phone-android"
-                    size={20}
-                    color={theme.$primaryColor}
-                  />
-                  <TextInput
-                    style={styles.inputField}
-                    keyboardType="numeric"
-                    placeholder={'Phone'}
-                    onChangeText={handleChange('phone')}
-                    onBlur={handleBlur('phone')}
-                    defaultValue={initialProfileValues.phone}
-                  />
-                </View>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.phone ? 'red' : '#e6e6e6',
+                }}>
+                <Icon
+                  name="phone-android"
+                  size={20}
+                  color={theme.$primaryColor}
+                />
+                <TextInput
+                  style={styles.inputField}
+                  keyboardType="numeric"
+                  placeholder={'Phone'}
+                  onChangeText={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  defaultValue={initialProfileValues.phone}
+                />
+              </View>
 
-                {/* Country */}
+              {/* Country */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: '#e6e6e6',
+                }}>
+                <Icon
+                  name="location-pin"
+                  size={20}
+                  color={theme.$primaryColor}
+                />
+                <Picker
+                  selectedValue={country}
+                  style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setCountry(itemValue)
+                  }>
+                  {countries.map((c) => (
+                    <Picker.Item label={c.label} value={c.value} />
+                  ))}
+                </Picker>
+              </View>
+
+              {/* State City */}
+              <View
+                style={{
+                  flex: 1,
+                  width: '95%',
+                  alignSelf: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                }}>
                 <View
                   style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
+                    flex: 1,
                     flexDirection: 'row',
                     alignItems: 'center',
+                    borderWidth: 1,
                     borderColor: '#e6e6e6',
+                    borderRadius: 8,
+                    marginHorizontal: 8,
+                    marginTop: 12,
+                    paddingHorizontal: 8,
+                    borderColor: errors.state ? 'red' : '#e6e6e6',
                   }}>
                   <Icon
                     name="location-pin"
                     size={20}
                     color={theme.$primaryColor}
                   />
-                  <Picker
-                    selectedValue={country}
-                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
-                    onValueChange={(itemValue, itemIndex) =>
-                      setCountry(itemValue)
-                    }>
-                    {countries.map((c) => (
-                      <Picker.Item label={c.label} value={c.value} />
-                    ))}
-                  </Picker>
+                  <TextInput
+                    style={styles.inputField}
+                    placeholder={'State'}
+                    onChangeText={handleChange('state')}
+                    onBlur={handleBlur('state')}
+                    defaultValue={initialProfileValues.state}
+                  />
                 </View>
-
-                {/* State City */}
                 <View
                   style={{
                     flex: 1,
-                    width: '95%',
-                    alignSelf: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
-                  }}>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderWidth: 1,
-                      borderColor: '#e6e6e6',
-                      borderRadius: 8,
-                      marginHorizontal: 8,
-                      marginTop: 12,
-                      paddingHorizontal: 8,
-                      borderColor: errors.state ? 'red' : '#e6e6e6',
-                    }}>
-                    <Icon
-                      name="location-pin"
-                      size={20}
-                      color={theme.$primaryColor}
-                    />
-                    <TextInput
-                      style={styles.inputField}
-                      placeholder={'State'}
-                      onChangeText={handleChange('state')}
-                      onBlur={handleBlur('state')}
-                      defaultValue={initialProfileValues.state}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderWidth: 1,
-                      borderColor: '#e6e6e6',
-                      borderRadius: 8,
-                      marginHorizontal: 8,
-                      marginTop: 12,
-                      paddingHorizontal: 8,
-                      borderColor: errors.place ? 'red' : '#e6e6e6',
-                    }}>
-                    <Icon
-                      name="location-pin"
-                      size={20}
-                      color={theme.$primaryColor}
-                    />
-                    <TextInput
-                      style={styles.inputField}
-                      placeholder={'City'}
-                      onChangeText={handleChange('place')}
-                      onBlur={handleBlur('place')}
-                      defaultValue={initialProfileValues.place}
-                    />
-                  </View>
-                </View>
-
-                {/* Higher education */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.education ? 'red' : '#e6e6e6',
+                    borderWidth: 1,
+                    borderColor: '#e6e6e6',
+                    borderRadius: 8,
+                    marginHorizontal: 8,
+                    marginTop: 12,
+                    paddingHorizontal: 8,
+                    borderColor: errors.place ? 'red' : '#e6e6e6',
                   }}>
-                  <Icon name="book" size={20} color={theme.$primaryColor} />
+                  <Icon
+                    name="location-pin"
+                    size={20}
+                    color={theme.$primaryColor}
+                  />
                   <TextInput
                     style={styles.inputField}
-                    placeholder={'Higher Education'}
-                    onChangeText={handleChange('education')}
-                    onBlur={handleBlur('education')}
-                    defaultValue={initialProfileValues.education}
+                    placeholder={'City'}
+                    onChangeText={handleChange('place')}
+                    onBlur={handleBlur('place')}
+                    defaultValue={initialProfileValues.place}
                   />
                 </View>
+              </View>
 
-                {/* Languages */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                  }}>
-                  <SectionedMultiSelect
-                    items={languages}
-                    IconRenderer={Icon}
-                    uniqueKey="id"
-                    //subKey="children"
-                    selectText="Languages known"
-                    showDropDowns={true}
-                    readOnlyHeadings={true}
-                    onSelectedItemsChange={onSelectedItemsChange}
-                    selectedItems={selectedItems}
-                    style={{ padding: 0 }}
-                  />
-                </View>
+              {/* Higher education */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.education ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="book" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  style={styles.inputField}
+                  placeholder={'Higher Education'}
+                  onChangeText={handleChange('education')}
+                  onBlur={handleBlur('education')}
+                  defaultValue={initialProfileValues.education}
+                />
+              </View>
 
-                {/*
+              {/* Languages */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                }}>
+                <SectionedMultiSelect
+                  items={languages}
+                  IconRenderer={Icon}
+                  uniqueKey="id"
+                  //subKey="children"
+                  selectText="Languages known"
+                  showDropDowns={true}
+                  readOnlyHeadings={true}
+                  onSelectedItemsChange={onSelectedItemsChange}
+                  selectedItems={selectedItems}
+                  style={{padding: 0}}
+                />
+              </View>
+
+              {/*
               About user 
                */}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.bio ? 'red' : '#e6e6e6',
-                  }}>
-                  <Icon name="info" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'default'}
-                    multiline
-                    numberOfLines={4}
-                    style={styles.inputField}
-                    placeholder={'About yourself'}
-                    onChangeText={handleChange('bio')}
-                    onBlur={handleBlur('bio')}
-                    defaultValue={initialProfileValues.bio}
-                  />
-                </View>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.bio ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="info" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'default'}
+                  multiline
+                  numberOfLines={4}
+                  style={styles.inputField}
+                  placeholder={'About yourself'}
+                  onChangeText={handleChange('bio')}
+                  onBlur={handleBlur('bio')}
+                  defaultValue={initialProfileValues.bio}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  props.navigation.navigate('PasswordRecovery')
+                }></TouchableOpacity>
+              {!isSubmitting && (
                 <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('PasswordRecovery')
-                  }></TouchableOpacity>
-                {!isSubmitting && (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.loginBtn}
-                    onPress={handleSubmit}>
-                    <Text style={styles.loginBtnText}>SAVE</Text>
-                  </TouchableOpacity>
-                )}
-                {isSubmitting && (
-                  <ActivityIndicator size={'large'} color={theme.$primaryColor} />
-                )}
-              </>
-            )}
+                  activeOpacity={0.8}
+                  style={styles.loginBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.loginBtnText}>SAVE</Text>
+                </TouchableOpacity>
+              )}
+              {isSubmitting && (
+                <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+              )}
+            </>
+          )}
         </Formik>
         {/* //</KeyboardAvoidingView> */}
       </ScrollView>

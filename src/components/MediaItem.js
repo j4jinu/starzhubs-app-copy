@@ -4,10 +4,23 @@ import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
 const MediaItem = (props) => {
-  if (props.media.length === 0) {
-    return null;
+  if (props.user===null) {
+    return null
+    // (
+    //   <View
+    //       style={{
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         width: "100%",
+    //         marginTop: "35%"
+    //       }}>
+    //         <Image source={require("../assets/broke.png")}
+    //         style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+    //         <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
+    //     </View>
+    // )
   }
-
+else{
   return (
     <>
       <TouchableOpacity
@@ -19,6 +32,8 @@ const MediaItem = (props) => {
             mediaType: props.media[0].fileType,
             caption: props.media[0].caption,
             description: props.media[0].description,
+            user:props.user[0] !== undefined?props.user[0]:props.user,
+            status:1
           })
         }>
         {props.media[0].fileType === 'image' ? (
@@ -63,6 +78,7 @@ const MediaItem = (props) => {
       </TouchableOpacity>
     </>
   );
+}
 };
 
 const styles = StyleSheet.create({

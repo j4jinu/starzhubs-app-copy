@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, Image } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { AuthContext } from '../context/authContext';
+import React, {useContext, useEffect, useState} from 'react';
+import {Text, View, Image} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 
 const PosterListExpired = (props) => {
@@ -16,15 +16,12 @@ const PosterListExpired = (props) => {
     setLoading(true);
     setPosters([]);
     try {
-      const response = await fetch(
-        `http://13.232.190.226/api/poster/expired`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + auth.token,
-          },
+      const response = await fetch(`http://13.232.190.226/api/poster/expired`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
         },
-      );
+      });
       const posterData = await response.json();
       posterData.success ? setPosters(posterData.data.posters) : null;
       setLoading(false);
@@ -41,14 +38,17 @@ const PosterListExpired = (props) => {
           justifyContent: 'center',
           alignItems: 'center',
           paddingVertical: 25,
-          marginTop: "35%"
+          marginTop: '35%',
         }}>
-        <Text style={{ fontSize: 18, color: 'tomato' }}>
-          No Expired Posters.
-    </Text>
+        <Text style={{fontSize: 18, color: 'tomato'}}>No Expired Posters.</Text>
         <Image
           source={require('../assets/box.png')}
-          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+          style={{
+            width: '41%',
+            height: 160,
+            marginHorizontal: 100,
+            marginTop: '5%',
+          }}
         />
       </View>
     );
@@ -58,7 +58,7 @@ const PosterListExpired = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <MyPosterGridItem
             id={item.id}
             poster={item.name}

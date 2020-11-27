@@ -13,6 +13,7 @@ import {
   ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IIcon from 'react-native-vector-icons/Ionicons';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import ImagePicker from 'react-native-image-picker';

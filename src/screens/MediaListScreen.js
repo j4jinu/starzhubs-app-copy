@@ -42,7 +42,10 @@ const MediaListSceen = (props) => {
 
   useEffect(() => {
     const getUsers = async () => {
+      console.log("catid",categoryId);
+      setLoading(true)
       if (!categoryId) {
+        setLoading(false)
         return;
       }
       try {
@@ -58,9 +61,12 @@ const MediaListSceen = (props) => {
         const userData = await userResponse.json();
         if (userData.success) {
           setMedia(userData.data.medias);
+          console.log("usersmedia",userData.data.medias);
+          setLoading(false)
           return;
         }
         // alert(userData.message);
+        setLoading(false)
         setMedia([]);
       } catch (error) {
         console.log(error);
@@ -80,6 +86,7 @@ const MediaListSceen = (props) => {
     );
   }
   return (
+    // <View style={{flex:1}}>
     <View >
       <ScrollView
         horizontal
@@ -104,7 +111,8 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          style={{ backgroundColor: 'white', marginTop: 15 }}
+          // style={{marginTop: 15}}
+          style={{ marginTop: 15 }}
           keyExtractor={(item, index) => item.id}
           data={media}
           renderItem={({ item }) => (
@@ -122,13 +130,12 @@ const MediaListSceen = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             width: "100%",
-
             marginTop: "35%"
-
           }}>
-          <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
+          
           <Image source={require("../assets/broke.png")}
             style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+            <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
         </View>
       )}
     </View>

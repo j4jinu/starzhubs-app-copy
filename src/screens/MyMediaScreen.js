@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,9 +14,9 @@ import Icon from 'react-native-vector-icons/Entypo';
 import WebView from 'react-native-webview';
 import MediaGrid from '../components/MediaGrid';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
-import { Snackbar } from 'react-native-paper';
+import {Snackbar} from 'react-native-paper';
 
 const MyMediaScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -42,6 +42,7 @@ const MyMediaScreen = (props) => {
         return;
       } else {
         setTalents(resData.data.talents);
+        console.log("talents",resData.data.talents);
         setLoading(false);
       }
     } catch (error) {
@@ -77,7 +78,7 @@ const MyMediaScreen = (props) => {
           onPress: () => onDelteMedia(tid, mid),
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
 
   const onDelteMedia = (talentId, mediaId) => {
@@ -91,10 +92,7 @@ const MyMediaScreen = (props) => {
         talentId: talentId,
       }),
     };
-    fetch(
-      `http://13.232.190.226/api/talent/media/${mediaId}`,
-      requestOptions,
-    )
+    fetch(`http://13.232.190.226/api/talent/media/${mediaId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -131,10 +129,10 @@ const MyMediaScreen = (props) => {
                 paddingVertical: 8,
                 marginTop: 10,
               }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
+              <Text style={{fontWeight: 'bold', fontSize: 17}}>
                 {t.category.title}
               </Text>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() =>
@@ -154,12 +152,12 @@ const MyMediaScreen = (props) => {
                     marginRight: 10,
                   }}>
                   <Icon
-                    style={{ marginRight: 10 }}
+                    style={{marginRight: 10}}
                     name="camera"
                     size={15}
                     color={theme.$primaryColor}
                   />
-                  <Text style={{ fontSize: 14 }}>Photo</Text>
+                  <Text style={{fontSize: 14}}>Photo</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.7}
@@ -179,17 +177,17 @@ const MyMediaScreen = (props) => {
                     alignItems: 'center',
                   }}>
                   <Icon
-                    style={{ marginRight: 10 }}
+                    style={{marginRight: 10}}
                     name="video-camera"
                     size={15}
                     color={theme.$primaryColor}
                   />
-                  <Text style={{ fontSize: 14 }}>Video</Text>
+                  <Text style={{fontSize: 14}}>Video</Text>
                 </TouchableOpacity>
               </View>
             </View>
 
-            <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+            <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
               {t.media.map((m) => (
                 <>
                   <View style={styles.gridItem}>
@@ -205,27 +203,27 @@ const MyMediaScreen = (props) => {
                         }}
                       />
                     ) : (
-                        //   <WebView
-                        //   javaScriptEnabled={true}
-                        //   domStorageEnabled={true}
-                        //   source={{
-                        //     uri:  m.file,
-                        //   }}
-                        // />
+                      //   <WebView
+                      //   javaScriptEnabled={true}
+                      //   domStorageEnabled={true}
+                      //   source={{
+                      //     uri:  m.file,
+                      //   }}
+                      // />
 
-                        <WebView
-                          javaScriptEnabled={true}
-                          domStorageEnabled={true}
-                          source={{
-                            uri:
-                              'https://www.youtube.com/embed/' +
-                              m.file.substring(m.file.lastIndexOf('=') + 1),
-                          }}
-                        />
-                      )}
+                      <WebView
+                        javaScriptEnabled={true}
+                        domStorageEnabled={true}
+                        source={{
+                          uri:
+                            'https://www.youtube.com/embed/' +
+                            m.file.substring(m.file.lastIndexOf('=') + 1),
+                        }}
+                      />
+                    )}
 
-                    <View style={{ flexDirection: 'row', width: '100%' }}>
-                      <View style={{ width: '70%', flexDirection: 'column' }}>
+                    <View style={{flexDirection: 'row', width: '100%'}}>
+                      <View style={{width: '70%', flexDirection: 'column'}}>
                         <TouchableOpacity
                           activeOpacity={0.7}
                           onPress={() =>
@@ -234,6 +232,8 @@ const MyMediaScreen = (props) => {
                               mediaType: m.fileType,
                               caption: m.caption,
                               description: m.description,
+                              user:t._id,
+                              status:0
                             })
                           }>
                           <Text style={styles.mediaTitle}>{m.caption}</Text>
@@ -244,7 +244,7 @@ const MyMediaScreen = (props) => {
                           </Text>
                         </TouchableOpacity>
                       </View>
-                      <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                      <View style={{flexDirection: 'row', marginTop: 10}}>
                         <TouchableOpacity
                           onPress={() =>
                             props.navigation.navigate('EditMedia', {
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     marginVertical: 3,
     shadowColor: 'black',
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: {width: 0, height: 3},
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 5,

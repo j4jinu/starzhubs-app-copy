@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Alert,
   Image,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
@@ -90,7 +90,7 @@ const TalentListScreen = (props) => {
           if (response.success === true) {
             getUserTalents();
             // setVisible(!visible);
-            showToastWithGravityAndOffset()
+            showToastWithGravityAndOffset();
           } else {
             alert(response.message);
           }
@@ -102,11 +102,11 @@ const TalentListScreen = (props) => {
   };
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
-      "Deleted Successfully",
+      'Deleted Successfully',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
-      100
+      100,
     );
   };
 
@@ -123,28 +123,23 @@ const TalentListScreen = (props) => {
               fontWeight: 'bold',
               fontSize: 18,
               textAlign: 'center',
-              marginBottom: 10
+              marginBottom: 10,
             }}>
             No talents added yet
-              </Text>
+          </Text>
         </View>
 
-
         <TouchableOpacity
-
           onPress={() => props.navigation.navigate('AddTalents')}>
           <Image
             source={require('../assets/add.png')}
-            style={{ width: "41%", height: 160, marginHorizontal: 100 }}
+            style={{ width: '41%', height: 160, marginHorizontal: 100 }}
           />
         </TouchableOpacity>
-
       </>
-    )
+    );
   }
   if (talents.length > 0) {
-
-
     return (
       <>
         <ScrollView style={styles.container}>
@@ -211,7 +206,9 @@ const TalentListScreen = (props) => {
                     </View>
                     <View style={styles.fieldDiv}>
                       <Text style={styles.fieldTitle}>Experience</Text>
-                      <Text style={styles.fieldText}>{t.chars.years} Years</Text>
+                      <Text style={styles.fieldText}>
+                        {t.chars.years} Years
+                      </Text>
                     </View>
                     <View style={styles.fieldDiv}>
                       <Text style={styles.fieldTitle}>Level</Text>
