@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View, Image } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 const PendingConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
@@ -28,17 +28,21 @@ const PendingConnectionScreen = (props) => {
   };
   if (requests.length === 0) {
     return (
-      <View style={{alignItems: 'center', marginTop: '8%'}}>
-        <Text style={{color: '#F98644', fontWeight: 'bold'}}>No Requests</Text>
+      <View style={{ alignItems: 'center', marginTop: '35%' }}>
+        <Text style={{ color: '#F98644', fontWeight: 'bold' }}>No Requests</Text>
+        <Image
+          source={require('../assets/broke.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
       </View>
     );
   }
   return (
     <FlatList
-      style={{backgroundColor: '#efefef'}}
+      style={{ backgroundColor: '#efefef' }}
       keyExtractor={(item) => item.id}
       data={requests}
-      renderItem={({item}) => (
+      renderItem={({ item }) => (
         <BuddyRequestItem
           reqId={item._id}
           name={item.fromUser.name}

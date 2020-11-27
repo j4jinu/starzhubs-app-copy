@@ -1,7 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {AuthContext} from '../context/authContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, Image } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 
 const PosterListExpired = (props) => {
@@ -36,16 +36,21 @@ const PosterListExpired = (props) => {
 
   if (posters.length === 0) {
     return (
-      <Text
+      <View
         style={{
-          fontSize: 16,
-          marginTop: 20,
-          fontWeight: 'bold',
-          color: 'tomato',
-          textAlign: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 25,
+          marginTop: "35%"
         }}>
-        No Expired Posters
-      </Text>
+        <Text style={{ fontSize: 18, color: 'tomato' }}>
+          No Expired Posters.
+    </Text>
+        <Image
+          source={require('../assets/box.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
+      </View>
     );
   }
   return (
@@ -53,7 +58,7 @@ const PosterListExpired = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MyPosterGridItem
             id={item.id}
             poster={item.name}

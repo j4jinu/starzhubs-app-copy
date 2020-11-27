@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View, Image } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const SentConnectionScreen = () => {
   const auth = useContext(AuthContext);
@@ -29,21 +29,25 @@ const SentConnectionScreen = () => {
 
   if (isFriends === undefined) {
     return (
-      <View style={{alignItems: 'center', marginTop: '8%'}}>
-        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+      <View style={{ alignItems: 'center', marginTop: '35%' }}>
+        <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
           No Requests
-        </Text>
+          </Text>
+        <Image
+          source={require('../assets/broke.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
       </View>
     );
   }
 
   return (
     <FlatList
-      style={{backgroundColor: '#efefef'}}
+      style={{ backgroundColor: '#efefef' }}
       keyExtractor={(item) => item.id}
       data={isFriends}
       extraData={getConnectionRequests}
-      renderItem={({item}) =>
+      renderItem={({ item }) =>
         item.fromUser._id === auth.userId ? (
           <BuddyRequestItem
             id={item._id}

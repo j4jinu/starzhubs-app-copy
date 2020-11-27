@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 
 const PosterGrid = (props) => {
   return (
@@ -21,7 +21,7 @@ const PosterGrid = (props) => {
           activeOpacity={0.7}>
           <View style={styles.container}>
             <Image
-              style={{width: '100%', height: '100%', resizeMode: 'cover'}}
+              style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
               source={{
                 uri: `http://13.232.190.226/api/poster/view/${props.image}`,
               }}

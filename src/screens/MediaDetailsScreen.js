@@ -11,86 +11,94 @@ const MediaDetailsScreen = (props) => {
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');
-  const user = props.navigation.getParam('user');
   const status = props.navigation.getParam('status');
-  const [enlargeModal,setEnlargeModal] = useState(false)
+  const user = props.navigation.getParam('user');
+  const [enlargeModal, setEnlargeModal] = useState(false)
 
 
   return (
     // <View>
     <>
       <Modal transparent visible={enlargeModal} animationType="slide">
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 22,
+          }}
+        // onPress={() => setVisible(false)}
+        >
           <View
             style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              // marginTop: 22,
-              backgroundColor:'#000000aa'
-            }}
-            onPress={() => setEnlargeModal(false)}
-          >
+          //     flex: 1,
+          //     justifyContent: 'center',
+          //     alignItems: 'center',
+          //     // marginTop: 22,
+          //     backgroundColor:'#000000aa'
+          //   }}
+          //   onPress={() => setEnlargeModal(false)}
+          // >
+              margin: 5,
+              backgroundColor: 'white',
+              borderRadius: 3,
+              width: '95%',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}>
+
             <View
               style={{
-                margin: 5,
-                backgroundColor: 'white',
-                borderRadius: 3,
-                width: '95%',
-                shadowColor: '#000',
-                shadowOffset: {
-                  width: 0,
-                  height: 2,
-                },
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                // borderBottomWidth: 1,
+                paddingVertical: 12,
+                // backgroundColor: '#f5f5f5',
+                // borderColor: 'gray',
               }}>
-              <View
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  // borderBottomWidth: 1,
-                  paddingVertical: 12,
-                  // backgroundColor: '#f5f5f5',
-                  // borderColor: 'gray',
+                  color: theme.$primaryColorText,
+                  marginLeft: 15,
+                  color: theme.$primaryColorText,
+                  fontSize: 17,
                 }}>
+
+              </Text>
+              <TouchableOpacity onPress={() => setEnlargeModal(false)}>
                 <Text
                   style={{
-                    color: theme.$primaryColorText,
-                    marginLeft: 15,
-                    color: theme.$primaryColorText,
-                    fontSize: 17,
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    marginRight: 12,
                   }}>
-                  
-                </Text>
-                <TouchableOpacity onPress={() => setEnlargeModal(false)}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                      marginRight: 12,
-                    }}>
-                    X
+                  X
                   </Text>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'center',
-                  paddingHorizontal: 15,
-                  paddingVertical: 15,
-                }}>
-                <Image
-          style={styles.media}
-          source={{
-            uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
-          }}
-        />
-              </View>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                justifyContent: 'center',
+                paddingHorizontal: 15,
+                paddingVertical: 15,
+              }}>
+              <Image
+                style={styles.media}
+                source={{
+                  uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+                }}
+              />
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
 
 
 
@@ -105,15 +113,15 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
-        <TouchableOpacity onPress={()=>setEnlargeModal(true)}>
-        <Image
-          style={styles.media}
-          source={{
-            uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
-          }}
-        />
-        </TouchableOpacity>
-      )}
+          <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+            <Image
+              style={styles.media}
+              source={{
+                uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+              }}
+            />
+          </TouchableOpacity>
+        )}
       <ScrollView>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
@@ -159,7 +167,7 @@ const MediaDetailsScreen = (props) => {
 
 
 
-{/* Enlarge Modal */}
+      {/* Enlarge Modal */}
 
 
     </>

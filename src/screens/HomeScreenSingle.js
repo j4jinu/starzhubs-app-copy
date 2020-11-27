@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -66,7 +66,7 @@ const HomeScreenSingle = (props) => {
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator color={theme.$primarycolor} size={'large'} />
       </View>
     );
@@ -91,7 +91,7 @@ const HomeScreenSingle = (props) => {
                 })
               }>
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
                 source={{
                   uri: `http://13.232.190.226/api/poster/view/${p.image}`,
                 }}

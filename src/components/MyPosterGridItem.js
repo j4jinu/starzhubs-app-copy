@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -7,17 +7,18 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  ToastAndroid
 } from 'react-native';
 import theme from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Moment from 'moment';
-import {AuthContext} from '../context/authContext';
-import {Snackbar} from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+import { Snackbar } from 'react-native-paper';
 const MyPosterGridItem = (props) => {
-  const {userId} = props;
+  const { userId } = props;
   const auth = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState({image: {}});
+  const [user, setUser] = useState({ image: {} });
   const confirmDelete = (pid) =>
     Alert.alert(
       'Delete poster',
@@ -32,7 +33,7 @@ const MyPosterGridItem = (props) => {
           onPress: () => posterDeleteHandler(pid),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   const posterDeleteHandler = (id) => {
     const requestOptions = {
@@ -46,7 +47,7 @@ const MyPosterGridItem = (props) => {
       .then(
         (response) => {
           if (response.success === true) {
-            setVisible(!visible);
+            showToastWithGravityAndOffset()
             props.getPosters();
           } else {
             alert(error);
@@ -57,18 +58,18 @@ const MyPosterGridItem = (props) => {
         },
       );
   };
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      " Poster Deleted successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
   return (
     <>
       <View style={styles.containerSnackbar}>
-        <Snackbar
-          visible={visible}
-          duration={5000}
-          onDismiss={onDismissSnackBar}>
-          Poster Deleted Successfully
-        </Snackbar>
       </View>
 
       {
@@ -123,12 +124,12 @@ const MyPosterGridItem = (props) => {
                   //paddingHorizontal: 15,
                 }}>
                 <View style={styles.ownerDetails}>
-                  <Text style={{fontSize: 13}}>{userId.name}</Text>
-                  <Text style={{fontSize: 10, color: 'gray'}}>
+                  <Text style={{ fontSize: 13 }}>{userId.name}</Text>
+                  <Text style={{ fontSize: 10, color: 'gray' }}>
                     {Moment(props.endDate).format('DD/MM/YYYY')}
                   </Text>
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     style={{
                       padding: 10,

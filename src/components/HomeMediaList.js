@@ -1,10 +1,10 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import theme from '../config/theme';
 import MediaItem from './MediaItem';
 
 const HomeMediaList = (props) => {
-  const {talents} = props;
+  const { talents } = props;
 
   if (talents === undefined || talents.length === 0) {
     return <Text>No media files</Text>;
@@ -15,7 +15,7 @@ const HomeMediaList = (props) => {
       <FlatList
         keyExtractor={(item) => item._id}
         data={talents}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MediaItem
             media={item.media}
             user={item.user}
@@ -31,12 +31,14 @@ const HomeMediaList = (props) => {
               alignItems: 'center',
               paddingHorizontal: 10,
               paddingVertical: 15,
+              backgroundColor: "white",
+
             }}>
             <Text style={styles.title}>Trending Media</Text>
             <TouchableOpacity
               style={styles.btn}
               onPress={() => props.navigation.navigate('MediaList')}>
-              <Text style={{color: 'white'}}>View More</Text>
+              <Text style={{ color: 'white' }}>View More</Text>
             </TouchableOpacity>
           </View>
         }

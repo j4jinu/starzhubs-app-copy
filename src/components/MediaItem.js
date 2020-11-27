@@ -1,24 +1,26 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
 const MediaItem = (props) => {
-  if (props.media.length === 0 || props.user===null) {
-    return (
-      <View
-          style={{
-            alignItems: 'center',
-          }}>
-            <Image
-                source={ require('../assets/noresult1.png')}
-                  style={{  height: 140, width: 140, }}
-            ></Image>
-          <Text style={{fontSize: 18, color: 'tomato', marginTop:10}}>Sorry, No media.</Text>
-        </View>
-    )
+  if (props.user===null) {
+    return null
+    // (
+    //   <View
+    //       style={{
+    //         justifyContent: 'center',
+    //         alignItems: 'center',
+    //         width: "100%",
+    //         marginTop: "35%"
+    //       }}>
+    //         <Image source={require("../assets/broke.png")}
+    //         style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+    //         <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
+    //     </View>
+    // )
   }
-
+else{
   return (
     <>
       <TouchableOpacity
@@ -36,24 +38,24 @@ const MediaItem = (props) => {
         }>
         {props.media[0].fileType === 'image' ? (
           <Image
-            style={{width: '100%', height: '60%', resizeMode: 'cover'}}
+            style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
             source={{
               uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
             }}
           />
         ) : (
-          <WebView
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            source={{
-              uri:
-                'https://www.youtube.com/embed/' +
-                props.media[0].file.substring(
-                  props.media[0].file.lastIndexOf('=') + 1,
-                ),
-            }}
-          />
-        )}
+            <WebView
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              source={{
+                uri:
+                  'https://www.youtube.com/embed/' +
+                  props.media[0].file.substring(
+                    props.media[0].file.lastIndexOf('=') + 1,
+                  ),
+              }}
+            />
+          )}
         {/* <Image
                             style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{
@@ -64,7 +66,7 @@ const MediaItem = (props) => {
         <Text style={styles.mediaDescription} numberOfLines={3}>
           {props.media[0].description}
         </Text>
-        <Text style={{color: theme.$primaryColorText, marginLeft: 10}}>
+        <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>
           Posted by:{' '}
           {props.user[0] !== undefined && (
             <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
@@ -76,6 +78,7 @@ const MediaItem = (props) => {
       </TouchableOpacity>
     </>
   );
+}
 };
 
 const styles = StyleSheet.create({
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     marginVertical: 3,
     shadowColor: 'black',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 5,

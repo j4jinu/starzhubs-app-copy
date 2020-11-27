@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {Card} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
-const ServiceScreen = ({navigation}) => {
+import { Card } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+const ServiceScreen = ({ navigation }) => {
   const auth = useContext(AuthContext);
   const [service, setService] = useState([]);
 
@@ -43,7 +43,7 @@ const ServiceScreen = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={{width: '100%', flexWrap: 'wrap', flexDirection: 'row'}}>
+        <View style={{ width: '100%', flexWrap: 'wrap', flexDirection: 'row' }}>
           {service.map((s) => (
             <Card style={styles.cardleft}>
               <TouchableOpacity
@@ -72,7 +72,7 @@ const ServiceScreen = ({navigation}) => {
                     marginBottom: '5%',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'brown'}}>{s.title}</Text>
+                  <Text style={{ color: 'brown' }}>{s.title}</Text>
                 </View>
               </TouchableOpacity>
             </Card>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: '3%',
     paddingRight: '3%',
+    backgroundColor: "#f1f1f1"
   },
   cardleft: {
     elevation: 5,
@@ -95,12 +96,13 @@ const styles = StyleSheet.create({
     width: '47%',
     marginLeft: 5,
     marginRight: 5,
-    marginBottom: '3%',
+    marginBottom: '-2%',
     alignItems: 'center',
+
   },
   img: {
     marginTop: '8%',
-    // marginLeft:"3%",
+
     marginBottom: '8%',
   },
 });

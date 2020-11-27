@@ -95,6 +95,9 @@ const UserTalentSection = (props) => {
                     >
                         {t.description}
                     </Text>
+                    <View style={{ borderBottomWidth: 1, marginTop: 5, marginBottom: 5, borderBottomColor: "f1f1f1" }}>
+
+                    </View>
                 </>
             ))}
         </View>

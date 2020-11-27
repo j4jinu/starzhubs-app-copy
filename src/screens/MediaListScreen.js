@@ -1,15 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View, Image } from 'react-native';
 import {
   FlatList,
   ScrollView,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import {color} from 'react-native-reanimated';
+import { color } from 'react-native-reanimated';
 import MediaItem from '../components/MediaItem';
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const MediaListSceen = (props) => {
   const auth = useContext(AuthContext);
@@ -79,18 +79,19 @@ const MediaListSceen = (props) => {
   if (loading) {
     return (
       <ActivityIndicator
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
         color={theme.$primaryColor}
         size={'large'}
       />
     );
   }
   return (
-    <View style={{flex:1}}>
+    // <View style={{flex:1}}>
+    <View >
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{marginTop: 10}}>
+        style={{ marginTop: 10 }}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
@@ -100,8 +101,8 @@ const MediaListSceen = (props) => {
             <Text
               style={
                 c._id === categoryId
-                  ? {color: 'white', fontSize: 12}
-                  : {color: 'black', fontSize: 12}
+                  ? { color: 'white', fontSize: 12 }
+                  : { color: 'black', fontSize: 12 }
               }>
               {c.title}
             </Text>
@@ -110,10 +111,11 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          style={{marginTop: 15}}
+          // style={{marginTop: 15}}
+          style={{ marginTop: 15 }}
           keyExtractor={(item, index) => item.id}
           data={media}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <MediaItem
               media={item.media}
               user={item.userId}
@@ -127,14 +129,13 @@ const MediaListSceen = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom:'55%'
-            
+            width: "100%",
+            marginTop: "35%"
           }}>
-            <Image
-                source={ require('../assets/noresult1.png')}
-                  style={{  height: 140, width: 140, }}
-            ></Image>
-          <Text style={{fontSize: 18, color: 'tomato', marginTop:10}}>Sorry, No media.</Text>
+          
+          <Image source={require("../assets/broke.png")}
+            style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+            <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
         </View>
       )}
     </View>

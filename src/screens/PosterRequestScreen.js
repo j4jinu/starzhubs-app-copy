@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Image,
   ScrollView,
@@ -10,9 +10,9 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 const PosterRequestScreen = (props) => {
   const auth = useContext(AuthContext);
   console.log('token', auth.token);
@@ -59,7 +59,7 @@ const PosterRequestScreen = (props) => {
         }}>
         <View>
           <Image
-            style={{width: 375, height: 250}}
+            style={{ width: 375, height: 250 }}
             source={{
               uri: `http://13.232.190.226/api/poster/view/${image}`,
             }}
@@ -79,62 +79,61 @@ const PosterRequestScreen = (props) => {
             handleBlur,
             errors,
             setFieldTouched,
-            touched,
-            isValid,
+
             handleSubmit,
           }) => (
-            <>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '95%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.notes ? 'red' : '#e6e6e6',
-                }}>
-                <TextInput
+              <>
+                <View
                   style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '95%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
                     alignItems: 'center',
-                  }}
-                  underlineColorAndroid="transparent"
-                  placeholder="Message"
-                  numberOfLines={3}
-                  multiline={true}
-                  defaultValue={initialValues.notes}
-                  onChangeText={handleChange('notes')}
-                  onBlur={handleBlur('notes')}
-                />
-              </View>
-              <Text style={styles.error}>{errors.notes}</Text>
+                    borderColor: errors.notes ? 'red' : '#e6e6e6',
+                  }}>
+                  <TextInput
+                    style={{
+                      alignItems: 'center',
+                    }}
+                    underlineColorAndroid="transparent"
+                    placeholder="Message"
+                    numberOfLines={3}
+                    multiline={true}
+                    defaultValue={initialValues.notes}
+                    onChangeText={handleChange('notes')}
+                    onBlur={handleBlur('notes')}
+                  />
+                </View>
+                <Text style={styles.error}>{errors.notes}</Text>
 
-              <View
-                style={{
-                  marginTop: 50,
-                  width: '100%',
-                  alignItems: 'center',
-                }}>
-                <TouchableOpacity
+                <View
                   style={{
-                    borderRadius: 20,
-                    backgroundColor: 'tomato',
-                    padding: 10,
-                    width: '50%',
+                    marginTop: 50,
+                    width: '100%',
                     alignItems: 'center',
-                    marginVertical: '-5%',
-                  }}
-                  onPress={handleSubmit}>
-                  <Text style={{color: 'white', fontWeight: 'bold'}}>
-                    Send Request
+                  }}>
+                  <TouchableOpacity
+                    style={{
+                      borderRadius: 20,
+                      backgroundColor: 'tomato',
+                      padding: 10,
+                      width: '50%',
+                      alignItems: 'center',
+                      marginVertical: '-5%',
+                    }}
+                    onPress={handleSubmit}>
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}>
+                      Send Request
                   </Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          )}
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
         </Formik>
       </View>
     </View>
