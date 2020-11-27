@@ -4,8 +4,19 @@ import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
 const MediaItem = (props) => {
-  if (props.media.length === 0) {
-    return null;
+  if (props.media.length === 0 || props.user===null) {
+    return (
+      <View
+          style={{
+            alignItems: 'center',
+          }}>
+            <Image
+                source={ require('../assets/noresult1.png')}
+                  style={{  height: 140, width: 140, }}
+            ></Image>
+          <Text style={{fontSize: 18, color: 'tomato', marginTop:10}}>Sorry, No media.</Text>
+        </View>
+    )
   }
 
   return (
@@ -19,6 +30,8 @@ const MediaItem = (props) => {
             mediaType: props.media[0].fileType,
             caption: props.media[0].caption,
             description: props.media[0].description,
+            user:props.user[0] !== undefined?props.user[0]:props.user,
+            status:1
           })
         }>
         {props.media[0].fileType === 'image' ? (

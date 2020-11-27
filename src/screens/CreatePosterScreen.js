@@ -147,9 +147,9 @@ const CreatePosterScreen = (props, {navigation}) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
-            'Cool Photo App needs access to your camera ' +
+            'Starzhubs App needs access to your camera ' +
             'so you can take awesome pictures.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',

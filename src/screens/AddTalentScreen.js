@@ -10,6 +10,7 @@ import {
   Image,
   PermissionsAndroid,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -506,7 +507,7 @@ export default function AddTalentScreen(props) {
                   alignItems: 'center',
                   borderColor: errors.link ? 'red' : 'gray',
                 }}>
-                <View style={{width: '10%'}}>
+                <View style={{width: '6%'}}>
                   <Gicon
                     name="industry"
                     size={15}
@@ -514,7 +515,7 @@ export default function AddTalentScreen(props) {
                   />
                 </View>
 
-                <View style={{width: '90%', justifyContent: 'center'}}>
+                <View style={{width: '94%'}}>
                   <SectionedMultiSelect
                     items={industryNames}
                     IconRenderer={Icon}
@@ -625,27 +626,42 @@ export default function AddTalentScreen(props) {
                     }}>
                     <View
                       style={{
-                        paddingLeft: 30,
+                        // paddingLeft: 30,
                         marginTop: 10,
                       }}>
                       <TouchableOpacity
                         onPress={() => {
                           requestCameraPermission('head_shot');
                         }}>
-                        <Image
-                          source={
-                            !headimg
-                              ? require('../assets/headshot.jpg')
-                              : {
-                                  uri: headimg,
-                                }
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                          }}
-                        />
+
+                          
+                        <ImageBackground
+                            source={
+                              !headimg
+                                ? require('../assets/headshot.jpg')
+                                : {
+                                    uri: headimg,
+                                  }
+                            }
+                            style={{
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent:'center',
+                            }}
+                          >
+                            <Image
+                              source={
+                                require('../assets/add-button.png')
+                              }
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60
+                              }}
+                            />
+                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Head Shot</Text>
+                          </ImageBackground>
                       </TouchableOpacity>
                     </View>
                     <View
@@ -655,7 +671,7 @@ export default function AddTalentScreen(props) {
                       }}>
                       <TouchableOpacity
                         onPress={() => requestCameraPermission('left_profile')}>
-                        <Image
+                        <ImageBackground
                           source={
                             !leftimg
                               ? require('../assets/left_profile.jpg')
@@ -667,8 +683,21 @@ export default function AddTalentScreen(props) {
                             borderRadius: 50,
                             height: 140,
                             width: 140,
+                            justifyContent:'center',
                           }}
-                        />
+                        >
+                         <Image
+                              source={
+                                require('../assets/add-button.png')
+                              }
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60
+                              }}
+                            />
+                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Left Side Shot</Text> 
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -679,7 +708,7 @@ export default function AddTalentScreen(props) {
                     }}>
                     <View
                       style={{
-                        paddingLeft: 30,
+                        // paddingLeft: 30,
                         marginTop: 10,
                         marginBottom: 20,
                       }}>
@@ -687,7 +716,7 @@ export default function AddTalentScreen(props) {
                         onPress={() =>
                           requestCameraPermission('right_profile')
                         }>
-                        <Image
+                        <ImageBackground
                           source={
                             !rightimg
                               ? require('../assets/right_profile.jpg')
@@ -695,15 +724,25 @@ export default function AddTalentScreen(props) {
                                   uri: rightimg,
                                 }
                           }
-                          //  {{uri:rightimg ===null ?`../../assets/right_profile.jpg`
-                          //  :rightimg}}
-                          //  source={require("../../assets/right_profile.jpg")}
                           style={{
                             borderRadius: 50,
                             height: 140,
                             width: 140,
+                            justifyContent:'center',
                           }}
-                        />
+                        >
+                          <Image
+                              source={
+                                require('../assets/add-button.png')
+                              }
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60
+                              }}
+                            />
+                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Right Side Shot</Text>
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                     <View
@@ -713,7 +752,7 @@ export default function AddTalentScreen(props) {
                       }}>
                       <TouchableOpacity
                         onPress={() => requestCameraPermission('fullsize')}>
-                        <Image
+                        <ImageBackground
                           source={
                             !fullsizeimg
                               ? require('../assets/fullsize.jpg')
@@ -726,8 +765,21 @@ export default function AddTalentScreen(props) {
                             borderRadius: 50,
                             height: 140,
                             width: 140,
+                            justifyContent:'center',
                           }}
-                        />
+                        >
+                          <Image
+                              source={
+                                require('../assets/add-button.png')
+                              }
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60
+                              }}
+                            />
+                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Full Size Shot</Text>
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -776,7 +828,7 @@ export default function AddTalentScreen(props) {
                   <Text style={styles.error}>{errors.complexion}</Text>
                   <View style={styles.inputView}>
                     <TextInput
-                      // style={styles.inputText}
+                      style={{width:'100%'}}
                       placeholder="Height (CMs)"
                       placeholderTextColor="#003f5c"
                       keyboardType="numeric"
@@ -789,7 +841,7 @@ export default function AddTalentScreen(props) {
                   <Text style={styles.error}>{errors.height}</Text>
                   <View style={styles.inputView}>
                     <TextInput
-                      // style={styles.inputText}
+                      style={{width:'100%'}}
                       placeholder="Weight (KGs)"
                       placeholderTextColor="#003f5c"
                       keyboardType="numeric"

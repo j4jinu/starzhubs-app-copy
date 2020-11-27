@@ -12,6 +12,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IIcon from 'react-native-vector-icons/Ionicons';
 import * as yup from 'yup';
 import {Formik} from 'formik';
 import ImagePicker from 'react-native-image-picker';
@@ -194,7 +195,7 @@ const PhotoUploadScreen = (props) => {
                   alignItems: 'center',
                   borderColor: errors.caption ? 'red' : 'gray',
                 }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <Icon name="subtitles" size={20} color={theme.$primaryColor} />
                 <TextInput
                   keyboardType={'email-address'}
                   textContentType={'emailAddress'}
@@ -223,7 +224,7 @@ const PhotoUploadScreen = (props) => {
                   alignItems: 'center',
                   borderColor: errors.description ? 'red' : 'gray',
                 }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <IIcon name="ios-information-circle" size={20} color={theme.$primaryColor} />
                 <TextInput
                   multiline
                   numberOfLines={4}
