@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Image,
@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import EIcon from 'react-native-vector-icons/FontAwesome5';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {Snackbar} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
+import { Snackbar } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
 const ServiceDetailsScreen = (props) => {
   const serviceId = props.navigation.getParam('serviceId');
@@ -32,12 +33,12 @@ const ServiceDetailsScreen = (props) => {
         .then((response) => {
           setServices(response.services);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     };
     getServiceDetails();
   }, []);
 
-  const initialValues = {message: ''};
+  const initialValues = { message: '' };
   const validationSchema = Yup.object({
     message: Yup.string().required('Enter your feedback'),
   });
@@ -50,7 +51,7 @@ const ServiceDetailsScreen = (props) => {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + auth.token,
       },
-      body: JSON.stringify({message: values.message}),
+      body: JSON.stringify({ message: values.message }),
     };
 
     fetch(`http://13.232.190.226/api/services/${serviceId}`, requestOptions)
@@ -60,7 +61,9 @@ const ServiceDetailsScreen = (props) => {
           if (response.success === true) {
             setLoading(false);
             setVisible(!visible);
-            // props.navigation.navigate('OurServices')
+            showToastWithGravityAndOffset()
+            props.navigation.navigate('OurServices')
+
             // props.navigation.goBack()
           } else {
             setVisible(!visible);
@@ -77,11 +80,19 @@ const ServiceDetailsScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "  Thanks for your feedback!",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   return (
     <View style={styles.container}>
       <Snackbar
-        style={{marginBottom: 10}}
+        style={{ marginBottom: 10 }}
         visible={visible}
         duration={4000}
         onDismiss={onDismissSnackBar}>
@@ -94,8 +105,8 @@ const ServiceDetailsScreen = (props) => {
             flexDirection: 'column',
             width: '100%',
           }}>
-          <View style={{marginTop: 30}}>
-            <Text style={{fontSize: 28, color: 'orange', fontWeight: 'bold'}}>
+          <View style={{ marginTop: 30 }}>
+            <Text style={{ fontSize: 28, color: 'orange', fontWeight: 'bold' }}>
               {services.title}
             </Text>
           </View>
@@ -108,7 +119,7 @@ const ServiceDetailsScreen = (props) => {
                     ? null
                     : `http://13.232.190.226/api/services/view/${services.image}`,
               }}
-              style={{borderRadius: 50, height: 200, width: 200}}
+              style={{ borderRadius: 50, height: 200, width: 200 }}
             />
           </View>
 
@@ -122,9 +133,9 @@ const ServiceDetailsScreen = (props) => {
               name="infocirlce"
               size={15}
               color={theme.$primaryColor}
-              style={{marginTop: 4, marginRight: '4%'}}
+              style={{ marginTop: 4, marginRight: '4%' }}
             />
-            <Text style={{textAlign: 'justify', alignSelf: 'center'}}>
+            <Text style={{ textAlign: 'justify', alignSelf: 'center' }}>
               {services.description}
             </Text>
           </View>
@@ -143,50 +154,50 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-              <View style={{width: '80%', marginLeft: '7%'}}>
-                <View style={styles.inputView}>
-                  <EIcon
-                    name="pen"
-                    size={20}
-                    color={theme.$primaryColor}
-                    style={{marginTop: '-6%', marginLeft: '3%'}}
-                  />
-                  <TextInput
-                    style={styles.inputText}
-                    placeholder="Send Your Feedback"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="default"
-                    autoCapitalize="sentences"
-                    numberOfLines={5}
-                    multiline={true}
-                    onChangeText={handleChange('message')}
-                    onBlur={handleBlur('message')}
-                  />
-                </View>
-                {touched.message && errors.message && (
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      color: 'red',
-                      alignSelf: 'center',
-                      marginBottom: 2,
-                    }}>
-                    {errors.message}
-                  </Text>
-                )}
+                <View style={{ width: '90%', marginLeft: 0 }}>
+                  <View style={styles.inputView}>
+                    <EIcon
+                      name="pen"
+                      size={20}
+                      color={theme.$primaryColor}
+                      style={{ marginTop: '-6%', marginLeft: '3%' }}
+                    />
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Send Your Feedback"
+                      placeholderTextColor="#003f5c"
+                      keyboardType="default"
+                      autoCapitalize="sentences"
+                      numberOfLines={5}
+                      multiline={true}
+                      onChangeText={handleChange('message')}
+                      onBlur={handleBlur('message')}
+                    />
+                  </View>
+                  {touched.message && errors.message && (
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        color: 'red',
+                        alignSelf: 'center',
+                        marginBottom: 2,
+                      }}>
+                      {errors.message}
+                    </Text>
+                  )}
 
-                <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
-                  <Text style={styles.BtnText}>
-                    {loading ? (
-                      <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                      'Submit'
-                    )}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              // </Fragment>
-            )}
+                  <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
+                    <Text style={styles.BtnText}>
+                      {loading ? (
+                        <ActivityIndicator size="small" color="#fff" />
+                      ) : (
+                          'Submit'
+                        )}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                // </Fragment>
+              )}
           </Formik>
         </View>
       </ScrollView>
@@ -197,7 +208,7 @@ const ServiceDetailsScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //   margin:'5%',
+    zIndex: 1,
   },
   posterTitle: {
     fontSize: 18,

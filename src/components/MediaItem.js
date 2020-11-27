@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
@@ -15,29 +15,32 @@ const MediaItem = (props) => {
         activeOpacity={0.7}
         onPress={() =>
           props.navigation.navigate('MediaDetails', {
-            media: props.media[0].file,
+            mediaFile: props.media[0].file,
+            mediaType: props.media[0].fileType,
+            caption: props.media[0].caption,
+            description: props.media[0].description,
           })
         }>
         {props.media[0].fileType === 'image' ? (
           <Image
-            style={{width: '100%', height: '60%', resizeMode: 'cover'}}
+            style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
             source={{
               uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
             }}
           />
         ) : (
-          <WebView
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            source={{
-              uri:
-                'https://www.youtube.com/embed/' +
-                props.media[0].file.substring(
-                  props.media[0].file.lastIndexOf('=') + 1,
-                ),
-            }}
-          />
-        )}
+            <WebView
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              source={{
+                uri:
+                  'https://www.youtube.com/embed/' +
+                  props.media[0].file.substring(
+                    props.media[0].file.lastIndexOf('=') + 1,
+                  ),
+              }}
+            />
+          )}
         {/* <Image
                             style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{
@@ -46,9 +49,9 @@ const MediaItem = (props) => {
                         /> */}
         <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
         <Text style={styles.mediaDescription} numberOfLines={3}>
-          {props.media[0].caption}
+          {props.media[0].description}
         </Text>
-        <Text style={{color: theme.$primaryColorText, marginLeft: 10}}>
+        <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>
           Posted by:{' '}
           {props.user[0] !== undefined && (
             <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     marginVertical: 3,
     shadowColor: 'black',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 5,

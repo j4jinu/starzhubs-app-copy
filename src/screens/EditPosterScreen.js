@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 import * as Yup from 'yup';
 import {Formik} from 'formik';
@@ -52,7 +53,8 @@ const EditPosterScreen = (props) => {
     description: Yup.string().required('Please provide poster description'),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, {setSubmitting, resetForm}) => {
+    // const handleSubmit = (values, {resetForm}) => {
     if (startDate === '') {
       setIsStartDate(true);
     } else {
@@ -92,25 +94,53 @@ const EditPosterScreen = (props) => {
       body: formData,
     };
 
-    fetch(`http://13.232.190.226/api/poster/${posterId}`, requestOptions)
-      .then((response) => response.json())
-      .then(
-        (response) => {
-          if (response.success === true) {
-            const msg = 'Poster Edited Successfully.....';
-            setMessage(msg);
-            setVisible(!visible);
-            setStartDate('');
-            setEndDate('');
-            setImage(null);
-          } else {
-            alert('Error: ', response);
-          }
-        },
-        (error) => {
-          alert('Poster upload failed: ' + error);
-        },
+    try {
+      const uploadRes = await fetch(
+        `http://13.232.190.226/api/poster/${posterId}`,
+        requestOptions,
       );
+      const uploadResData = await uploadRes.json();
+      if (!uploadResData.success) {
+        alert(uploadResData.message);
+        return;
+      }
+      // const msg = 'Poster Edited Successfully. Check your poster screen.';
+      // setMessage(msg);
+      // setVisible(!visible);
+      props.navigation.navigate('Account');
+      showToastWithGravityAndOffset();
+      // setStartDate('');
+      // setEndDate('');
+      // setImage(null);
+      // resetForm();
+    } catch (error) {
+      console.error('error', error);
+    }
+
+    // fetch(`http://13.232.190.226/api/poster/${posterId}`, requestOptions)
+    //   .then((response) => response.json())
+    //   .then(
+    //     (response) => {
+    //       if (response.success === true) {
+    //         const msg = 'Poster Edited Successfully. Check your poster screen.';
+    //         setMessage(msg);
+    //         setVisible(!visible);
+    //         values.title = '';
+    //         resetForm({values: ''});
+    //         setStartDate('');
+    //         setEndDate('');
+    //         setSDate('')
+    //         setEDate('')
+    //         setImage(null);
+
+    //       } else {
+    //         alert('Error: ', response);
+    //       }
+    //     },
+    //     (error) => {
+    //       alert('Poster upload failed: ' + error);
+    //     },
+    //   );
   };
 
   const handleStartDate = (date) => {
@@ -137,13 +167,21 @@ const EditPosterScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      'Poster Edited Successfully. Check your poster screen.',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100,
+    );
+  };
   const requestCameraPermission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'Cool Photo App needs access to your camera ' +
             'so you can take awesome pictures.',
@@ -199,9 +237,9 @@ const EditPosterScreen = (props) => {
               <Formik
                 initialValues={posterInitValues}
                 validationSchema={posterValidation}
-                onSubmit={(values) => {
-                  handleSubmit(values);
-                }}>
+                onSubmit={(values, {setSubmitting, resetForm}) =>
+                  handleSubmit(values, {setSubmitting, resetForm})
+                }>
                 {({
                   values,
                   handleChange,
@@ -259,6 +297,7 @@ const EditPosterScreen = (props) => {
                         placeholder="Title"
                         onChangeText={handleChange('title')}
                         onBlur={handleBlur('title')}
+                        value={values.title}
                       />
                     </View>
                     {touched.title && errors.title && (
@@ -298,6 +337,7 @@ const EditPosterScreen = (props) => {
                         multiline={true}
                         onChangeText={handleChange('description')}
                         onBlur={handleBlur('description')}
+                        value={values.description}
                       />
                     </View>
 
@@ -457,7 +497,6 @@ export default EditPosterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: '5%',
   },
   posterTitle: {
     fontSize: 18,

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   View,
@@ -28,7 +28,7 @@ const FilterResultScreen = (props) => {
   }, []);
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {/* <View style={{height: 90}} >
              <ScrollView horizontal>
                 <View style={{flexDirection:"row"}}>
@@ -44,8 +44,8 @@ const FilterResultScreen = (props) => {
             </View> */}
       <FlatList
         data={filter}
-        keyExtractor={({id}, index) => id}
-        renderItem={({item}) => (
+        keyExtractor={({ id }, index) => id}
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('UserDetails', {
@@ -60,10 +60,10 @@ const FilterResultScreen = (props) => {
                   borderWidth: 1,
                   borderColor: 'grey',
                   padding: 2,
-                  transform: [{skewY: '5deg'}],
+                  transform: [{ skewY: '5deg' }],
                 }}>
                 <Image
-                  style={{width: 100, height: 100, alignItems: 'flex-start'}}
+                  style={{ width: 100, height: 100, alignItems: 'flex-start' }}
                   source={{
                     uri:
                       item.image !== undefined
@@ -72,7 +72,7 @@ const FilterResultScreen = (props) => {
                   }}
                 />
               </View>
-              <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
+              <View style={{ flex: 1, flexDirection: 'column', marginLeft: 25 }}>
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -82,7 +82,7 @@ const FilterResultScreen = (props) => {
                   }}>
                   {item.name}
                 </Text>
-                <Text style={{fontSize: 12, alignSelf: 'flex-start'}}>
+                <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
                   {item.location !== undefined ? item.location.place : ''}{' '}
                 </Text>
                 <Text

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   ScrollView,
   SafeAreaView,
@@ -10,14 +10,15 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   PermissionsAndroid,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import ImagePicker from 'react-native-image-picker';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
-import {Snackbar} from 'react-native-paper';
+import { Snackbar } from 'react-native-paper';
 
 const mediaSchema = yup.object({
   caption: yup.string().required('Enter caption about this media'),
@@ -36,7 +37,7 @@ const PhotoUploadScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'starzhubs needs access to your camera ' +
             'so you can take awesome pictures.',
@@ -59,7 +60,7 @@ const PhotoUploadScreen = (props) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -86,7 +87,7 @@ const PhotoUploadScreen = (props) => {
     });
   };
 
-  const uploadMedia = async (values, {setSubmitting, resetForm}) => {
+  const uploadMedia = async (values, { setSubmitting, resetForm }) => {
     if (image === '') {
       alert('Please choose an Image');
       setSubmitting(false);
@@ -121,24 +122,28 @@ const PhotoUploadScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
-      setVisible(!visible);
+
       setImage('');
-      resetForm({values: ''});
-      // props.navigation.goBack();
+      showToastWithGravityAndOffset()
+      resetForm({ values: '' });
+      props.navigation.navigate('Account');
     } catch (error) {
       console.error('error', error);
     }
   };
 
-  const onDismissSnackBar = () => {
-    setVisible(false);
-  };
 
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Image Uploaded Successfully. Check Your Media Screen.",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
   return (
     <View style={styles.container}>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
-        Image Uploaded Successfully. Check Your Media Screen.
-      </Snackbar>
       <ScrollView>
         <Formik
           initialValues={{
@@ -146,8 +151,8 @@ const PhotoUploadScreen = (props) => {
             description: '',
           }}
           validationSchema={mediaSchema}
-          onSubmit={(values, {setSubmitting, resetForm}) =>
-            uploadMedia(values, {setSubmitting, resetForm})
+          onSubmit={(values, { setSubmitting, resetForm }) =>
+            uploadMedia(values, { setSubmitting, resetForm })
           }>
           {({
             handleChange,
@@ -158,106 +163,106 @@ const PhotoUploadScreen = (props) => {
             errors,
             values,
           }) => (
-            <>
-              {image !== '' && (
-                <Image
-                  source={{uri: image}}
-                  style={{width: '100%', height: 200, marginBottom: 10}}
-                />
-              )}
-              <TouchableOpacity
-                style={styles.imageBtn}
-                onPress={requestCameraPermission}>
-                <Text style={{color: theme.$primaryColor}}> Choose Image</Text>
-              </TouchableOpacity>
-              {isImage && (
-                <Text
-                  style={{
-                    fontSize: 13,
-                    color: 'red',
-                    alignSelf: 'center',
-                    marginTop: 1,
-                  }}>
-                  Choose a Poster image
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.caption ? 'red' : 'gray',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'Caption'}
-                  onChangeText={handleChange('caption')}
-                  onBlur={handleBlur('caption')}
-                  value={values.caption}
-                />
-              </View>
-              {touched.caption && errors.caption && (
-                <Text style={styles.errorText}>
-                  {touched.caption && errors.caption}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.description ? 'red' : 'gray',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  multiline
-                  numberOfLines={4}
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'description'}
-                  onChangeText={handleChange('description')}
-                  onBlur={handleBlur('description')}
-                  value={values.description}
-                />
-              </View>
-              {touched.description && errors.description && (
-                <Text style={styles.errorText}>
-                  {touched.description && errors.description}
-                </Text>
-              )}
-              {!isSubmitting && (
+              <>
+                {image !== '' && (
+                  <Image
+                    source={{ uri: image }}
+                    style={{ width: '100%', height: 200, marginBottom: 10 }}
+                  />
+                )}
                 <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.registerBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.registerBtnText}>UPLOAD</Text>
+                  style={styles.imageBtn}
+                  onPress={requestCameraPermission}>
+                  <Text style={{ color: theme.$primaryColor }}> Choose Image</Text>
                 </TouchableOpacity>
-              )}
-              {isSubmitting && (
-                <ActivityIndicator
-                  style={{marginTop: 10}}
-                  size={'large'}
-                  color={theme.$primaryColor}
-                />
-              )}
-            </>
-          )}
+                {isImage && (
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color: 'red',
+                      alignSelf: 'center',
+                      marginTop: 1,
+                    }}>
+                    Choose a Poster image
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.caption ? 'red' : 'gray',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'Caption'}
+                    onChangeText={handleChange('caption')}
+                    onBlur={handleBlur('caption')}
+                    value={values.caption}
+                  />
+                </View>
+                {touched.caption && errors.caption && (
+                  <Text style={styles.errorText}>
+                    {touched.caption && errors.caption}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.description ? 'red' : 'gray',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    multiline
+                    numberOfLines={4}
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'description'}
+                    onChangeText={handleChange('description')}
+                    onBlur={handleBlur('description')}
+                    value={values.description}
+                  />
+                </View>
+                {touched.description && errors.description && (
+                  <Text style={styles.errorText}>
+                    {touched.description && errors.description}
+                  </Text>
+                )}
+                {!isSubmitting && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.registerBtn}
+                    onPress={handleSubmit}>
+                    <Text style={styles.registerBtnText}>UPLOAD</Text>
+                  </TouchableOpacity>
+                )}
+                {isSubmitting && (
+                  <ActivityIndicator
+                    style={{ marginTop: 10 }}
+                    size={'large'}
+                    color={theme.$primaryColor}
+                  />
+                )}
+              </>
+            )}
         </Formik>
       </ScrollView>
     </View>

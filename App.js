@@ -4,6 +4,7 @@ import {useAuth} from './src/context/authHook';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 import {AuthContext} from './src/context/authContext';
+import {StatusBar} from 'react-native';
 
 // const rootReducer = combineReducers({
 //   posters: posterReducer
@@ -14,16 +15,19 @@ import {AuthContext} from './src/context/authContext';
 const App = () => {
   const {token, userId, login, logout} = useAuth();
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: !!token,
-        token: token,
-        userId: userId,
-        login: login,
-        logout: logout,
-      }}>
-      <AppNavigator />
-    </AuthContext.Provider>
+    <>
+      <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          userId: userId,
+          login: login,
+          logout: logout,
+        }}>
+        <AppNavigator />
+      </AuthContext.Provider>
+    </>
   );
 };
 

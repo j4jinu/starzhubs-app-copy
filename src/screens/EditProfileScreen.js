@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   PermissionsAndroid,
   Alert,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import ImagePicker from 'react-native-image-picker';
@@ -125,10 +126,210 @@ const languages = [
 ];
 
 const countries = [
-  {label: 'Afganistan', value: 'afganistan'},
-  {label: 'India', value: 'india'},
-  {label: 'USA', value: 'usa'},
-  {label: 'UK', value: 'uk'},
+  {label: 'Afganistan', value: 'Afganistan'},
+  {label: 'Albania', value: 'Albania'},
+  {label: 'Algeria', value: 'Algeria'},
+  {label: 'Andorra', value: 'Andorra'},
+  {label: 'Angola', value: 'Angola'},
+  {label: 'Anguilla', value: 'Anguilla'},
+  {label: 'Argentina', value: 'Argentina'},
+  {label: 'Armenia', value: 'Armenia'},
+  {label: 'Aruba', value: 'Aruba'},
+  {label: 'Australia', value: 'Australia'},
+  {label: 'Azerbaijan', value: 'Azerbaijan'},
+  {label: 'Bahamas', value: 'Bahamas'},
+  {label: 'Bahrain', value: 'Bahrain'},
+  {label: 'Bangladesh', value: 'Bangladesh'},
+  {label: 'Barbados', value: 'Barbados'},
+  {label: 'Belarus', value: 'Belarus'},
+  {label: 'Belgium', value: 'Belgium'},
+  {label: 'Belize', value: 'Belize'},
+  {label: 'Benin', value: 'Benin'},
+  {label: 'Bermuda', value: 'Bermuda'},
+  {label: 'Bhutan', value: 'Bhutan'},
+  {label: 'Bolivia', value: 'Bolivia'},
+  {label: 'Bosnia', value: 'Bosnia'},
+  {label: 'Botswana', value: 'Botswana'},
+  {label: 'Brazil', value: 'Brazil'},
+  {label: 'British Virgin Islands', value: 'British Virgin Islands'},
+  {label: 'Brunei', value: 'Brunei'},
+  {label: 'Burkina Faso', value: 'Burkina Faso'},
+  {label: 'Burundi', value: 'Burundi'},
+  {label: 'Cambodia', value: 'Cambodia'},
+  {label: 'Cameroon', value: 'Cameroon'},
+  {label: 'Cape Verde', value: 'Cape Verde'},
+  {label: 'Cayman Islands', value: 'Cayman Islands'},
+  {label: 'Chad', value: 'Chad'},
+  {label: 'Chile', value: 'Chile'},
+  {label: 'China', value: 'China'},
+  {label: 'Colombia', value: 'Colombia'},
+  {label: 'Congo', value: 'Congo'},
+  {label: 'Cook Islands', value: 'Cook Islands'},
+  {label: 'Costa Rica', value: 'Costa Rica'},
+  {label: 'Cote D Ivoire', value: 'Cote D Ivoire'},
+  {label: 'Croatia', value: 'Croatia'},
+  {label: 'Cruise Ship', value: 'Cruise Ship'},
+  {label: 'Cuba', value: 'Cuba'},
+  {label: 'Cyprus', value: 'Cyprus'},
+  {label: 'Czech Republic', value: 'Czech Republic'},
+  {label: 'Denmark', value: 'Denmark'},
+  {label: 'Djibouti', value: 'Djibouti'},
+  {label: 'Dominica', value: 'Dominica'},
+  {label: 'Ecuador', value: 'Ecuador'},
+  {label: 'Egypt', value: 'Egypt'},
+  {label: 'El Salvador', value: 'El Salvador'},
+  {label: 'Equatorial Guinea', value: 'Equatorial Guinea'},
+  {label: 'Estonia', value: 'Estonia'},
+  {label: 'Ethiopia', value: 'Ethiopia'},
+  {label: 'Falkland Islands', value: 'Falkland Islands'},
+  {label: 'Faroe Islands', value: 'Faroe Islands'},
+  {label: 'Fiji', value: 'Fiji'},
+  {label: 'Finland', value: 'Finland'},
+  {label: 'France', value: 'France'},
+  {label: 'French Polynesia', value: 'French Polynesia'},
+  {label: 'Gabon', value: 'Gabon'},
+  {label: 'Gambia', value: 'Gambia'},
+  {label: 'Georgia', value: 'Georgia'},
+  {label: 'Germany', value: 'Germany'},
+  {label: 'Ghana', value: 'Ghana'},
+  {label: 'Gibraltar', value: 'Gibraltar'},
+  {label: 'Greece', value: 'Greece'},
+  {label: 'Greenland', value: 'Greenland'},
+  {label: 'Grenada', value: 'Grenada'},
+  {label: 'Guam', value: 'Guam'},
+  {label: 'Guatemala', value: 'Guatemala'},
+  {label: 'Guernsey', value: 'Guernsey'},
+];
+
+const country_list = [
+  'Guernsey',
+  'Guinea',
+  'Guinea Bissau',
+  'Guyana',
+  'Haiti',
+  'Honduras',
+  'Hong Kong',
+  'Hungary',
+  'Iceland',
+  'India',
+  'Indonesia',
+  'Iran',
+  'Iraq',
+  'Ireland',
+  'Isle of Man',
+  'Israel',
+  'Italy',
+  'Jamaica',
+  'Japan',
+  'Jersey',
+  'Jordan',
+  'Kazakhstan',
+  'Kenya',
+  'Kuwait',
+  'Kyrgyz Republic',
+  'Laos',
+  'Latvia',
+  'Lebanon',
+  'Lesotho',
+  'Liberia',
+  'Libya',
+  'Liechtenstein',
+  'Lithuania',
+  'Luxembourg',
+  'Macau',
+  'Macedonia',
+  'Madagascar',
+  'Malawi',
+  'Malaysia',
+  'Maldives',
+  'Mali',
+  'Malta',
+  'Mauritania',
+  'Mauritius',
+  'Mexico',
+  'Moldova',
+  'Monaco',
+  'Mongolia',
+  'Montenegro',
+  'Montserrat',
+  'Morocco',
+  'Mozambique',
+  'Namibia',
+  'Nepal',
+  'Netherlands',
+  'Netherlands Antilles',
+  'New Caledonia',
+  'New Zealand',
+  'Nicaragua',
+  'Niger',
+  'Nigeria',
+  'Norway',
+  'Oman',
+  'Pakistan',
+  'Palestine',
+  'Panama',
+  'Papua New Guinea',
+  'Paraguay',
+  'Peru',
+  'Philippines',
+  'Poland',
+  'Portugal',
+  'Puerto Rico',
+  'Qatar',
+  'Reunion',
+  'Romania',
+  'Russia',
+  'Rwanda',
+  'Saint Pierre &amp; Miquelon',
+  'Samoa',
+  'San Marino',
+  'Satellite',
+  'Saudi Arabia',
+  'Senegal',
+  'Serbia',
+  'Seychelles',
+  'Sierra Leone',
+  'Singapore',
+  'Slovakia',
+  'Slovenia',
+  'South Africa',
+  'South Korea',
+  'Spain',
+  'Sri Lanka',
+  'St Kitts &amp; Nevis',
+  'St Lucia',
+  'St Vincent',
+  'St. Lucia',
+  'Sudan',
+  'Suriname',
+  'Swaziland',
+  'Sweden',
+  'Switzerland',
+  'Syria',
+  'Taiwan',
+  'Tajikistan',
+  'Tanzania',
+  'Thailand',
+  "Timor L'Este",
+  'Togo',
+  'Tonga',
+  'Trinidad &amp; Tobago',
+  'Tunisia',
+  'Turkey',
+  'Turkmenistan',
+  'Turks &amp; Caicos',
+  'Uganda',
+  'Ukraine',
+  'United Arab Emirates',
+  'United Kingdom',
+  'Uruguay',
+  'Uzbekistan',
+  'Venezuela',
+  'Vietnam',
+  'Virgin Islands (US)',
+  'Yemen',
+  'Zambia',
+  'Zimbabwe',
 ];
 
 const EditProfileScreen = (props) => {
@@ -146,7 +347,7 @@ const EditProfileScreen = (props) => {
   });
   const [visible, setVisible] = useState(false);
   const [msg, setMsg] = useState('');
-
+  // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
   const initialProfileValues = {
     name: userInfo.name,
     email: userInfo.email,
@@ -197,9 +398,23 @@ const EditProfileScreen = (props) => {
         const lng = myString.split(',');
         setSelectedItems(lng);
       }
+      checkActorMode(userData.data.talents);
     };
     getUserDetails();
   }, []);
+
+  const checkActorMode = (talents) => {
+    talents.forEach((talent) => {
+      const category = talent.category;
+      console.log(category);
+      category.forEach((c) => {
+        if (c.title === 'Actor' || c.title === 'Model') {
+          setActorMode(true);
+          return;
+        }
+      });
+    });
+  };
 
   const onSelectedItemsChange = (selectedItem) => {
     setSelectedItems(selectedItem);
@@ -272,6 +487,7 @@ const EditProfileScreen = (props) => {
     }
     setMsg('User details updated successfully');
     setVisible(!visible);
+    props.navigation.navigate('Account');
   };
 
   const requestCameraPermission = async () => {
@@ -279,7 +495,7 @@ const EditProfileScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
             'starzhubs needs access to your camera ' +
             'so you can take awesome pictures.',
@@ -488,7 +704,7 @@ const EditProfileScreen = (props) => {
                   style={{
                     backgroundColor: 'white',
                     borderRadius: 10,
-                    width: '80%',
+                    width: '100%',
                     paddingVertical: 5,
                     borderColor: '#e6e6e6',
                   }}
@@ -540,6 +756,12 @@ const EditProfileScreen = (props) => {
                 }}>
                 <Icon name="people-alt" size={20} color={theme.$primaryColor} />
                 <Picker
+                  itemStyle={{
+                    backgroundColor: 'gray',
+                    color: 'blue',
+                    fontSize: 17,
+                    fontWeight: 'normal',
+                  }}
                   selectedValue={gender}
                   style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
                   onValueChange={(itemValue, itemIndex) =>
@@ -571,6 +793,7 @@ const EditProfileScreen = (props) => {
                 <TextInput
                   keyboardType={'email-address'}
                   textContentType={'emailAddress'}
+                  editable={false}
                   style={styles.inputField}
                   placeholder={'Email address'}
                   onChangeText={handleChange('email')}
@@ -741,7 +964,7 @@ const EditProfileScreen = (props) => {
                   items={languages}
                   IconRenderer={Icon}
                   uniqueKey="id"
-                  subKey="children"
+                  //subKey="children"
                   selectText="Languages known"
                   showDropDowns={true}
                   readOnlyHeadings={true}
@@ -797,6 +1020,7 @@ const EditProfileScreen = (props) => {
             </>
           )}
         </Formik>
+        {/* //</KeyboardAvoidingView> */}
       </ScrollView>
     </View>
   );
@@ -843,7 +1067,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     alignSelf: 'center',
-    width: '90%',
+    width: '100%',
     // textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
