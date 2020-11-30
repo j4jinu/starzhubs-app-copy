@@ -76,7 +76,7 @@ const MyPosterGridItem = (props) => {
         <TouchableOpacity
           style={styles.gridItem}
           onPress={() =>
-            props.navigation.navigate('PosterDetails', {
+            props.navigation.navigate('MyPosterDetails', {
               posterId: props.id,
               title: props.poster,
               image: props.image,

@@ -4,7 +4,24 @@ import WebView from 'react-native-webview';
 
 const MediaGrid = (props) => {
   if (props.media.length === 0) {
-    return null;
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 25,
+          marginTop: "5%",
+          marginLeft: "25%"
+        }}>
+        <Text style={{ fontSize: 18, color: 'tomato' }}>
+          No Media files.
+</Text>
+        <Image
+          source={require('../assets/broke.png')}
+          style={{ width: "90%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        />
+      </View>
+    )
   }
   return (
     <>
@@ -17,7 +34,8 @@ const MediaGrid = (props) => {
               mediaFile: media.file,
               mediaType: media.fileType,
               caption: media.caption,
-              description: media.description,            })
+              description: media.description,
+            })
           }>
           <View style={styles.container}>
             {media.fileType === 'image' ? (

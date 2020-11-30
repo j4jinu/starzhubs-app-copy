@@ -1,5 +1,13 @@
-import React, { useContext, useState } from 'react';
-import {Image, StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
@@ -27,7 +35,7 @@ const MediaDetailsScreen = (props) => {
             alignItems: 'center',
             marginTop: 22,
           }}
-        // onPress={() => setVisible(false)}
+          // onPress={() => setVisible(false)}
         >
           <View
             style={{
@@ -69,9 +77,7 @@ const MediaDetailsScreen = (props) => {
                   marginLeft: 15,
                   color: theme.$primaryColorText,
                   fontSize: 17,
-                }}>
-
-              </Text>
+                }}></Text>
               <TouchableOpacity onPress={() => setEnlargeModal(false)}>
                 <Text
                   style={{
@@ -80,7 +86,7 @@ const MediaDetailsScreen = (props) => {
                     marginRight: 12,
                   }}>
                   X
-                  </Text>
+                </Text>
               </TouchableOpacity>
             </View>
             <View
@@ -100,8 +106,6 @@ const MediaDetailsScreen = (props) => {
         </View>
       </Modal>
 
-
-
       {mediaType === 'video' ? (
         <WebView
           javaScriptEnabled={true}
@@ -113,15 +117,15 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
-          <TouchableOpacity onPress={() => setEnlargeModal(true)}>
-            <Image
-              style={styles.media}
-              source={{
-                uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
-              }}
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+          <Image
+            style={styles.media}
+            source={{
+              uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+            }}
+          />
+        </TouchableOpacity>
+      )}
       <ScrollView>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
@@ -165,11 +169,7 @@ const MediaDetailsScreen = (props) => {
 
       </ScrollView>
 
-
-
       {/* Enlarge Modal */}
-
-
     </>
   );
 };

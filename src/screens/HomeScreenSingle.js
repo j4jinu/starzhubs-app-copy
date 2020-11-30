@@ -23,9 +23,7 @@ const HomeScreenSingle = (props) => {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        let response = await fetch(
-          `http://13.232.190.226/api/poster/random`,
-        );
+        let response = await fetch(`http://13.232.190.226/api/poster/random`);
         let usersResponse = await fetch(
           `http://13.232.190.226/api/talent/filter/5f5b2b8e96b2173a30948ac6`,
           {
@@ -75,7 +73,8 @@ const HomeScreenSingle = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Swiper height={200} showsButtons={false}>
+        <Swiper height={200}
+          loop={false} showsPagination={true}>
           {poster.map((p) => (
             <TouchableOpacity
               activeOpacity={0.7}

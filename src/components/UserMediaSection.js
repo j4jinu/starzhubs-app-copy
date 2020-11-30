@@ -14,7 +14,8 @@ import PosterGridItem from './PosterGridItem';
 // ]
 
 const UserMediaSection = (props) => {
-    const {talents} = props
+    // console.warn("talents",props.talents);
+    const { talents } = props
     if (talents === undefined || talents.length === 0) {
         return <Text>No media files</Text>
     }
@@ -25,12 +26,12 @@ const UserMediaSection = (props) => {
                 data={talents}
                 renderItem={({ item }) => (
                     <MediaGrid
-                        media = {item.media}
-                        navigation = {props.navigation}
+                        media={item.media}
+                        navigation={props.navigation}
                     />
                 )}
                 numColumns={3}
-                // ListHeaderComponent={(item) => <Text style={styles.title}> {console.log(item)}</Text>}
+            // ListHeaderComponent={(item) => <Text style={styles.title}> {console.log(item)}</Text>}
             />
         </View>
     );
