@@ -381,7 +381,7 @@ const UserDetailsScreen = (props) => {
                   (isFriends.status === 'AdminPending' ||
                     isFriends.status === 'Pending') && (
                     <TouchableOpacity
-                      style={styles.requestBtn}
+                      style={styles.requestedBtn}
                       onPress={cancelRequest}
                       activeOpacity={0.7}>
                       <Icon
@@ -389,6 +389,7 @@ const UserDetailsScreen = (props) => {
                         size={25}
                         color={'white'}
                       />
+                      <Text style={{color:'white', paddingLeft:'3%',fontWeight:'bold'}}>Request Sent</Text>
                     </TouchableOpacity>
                   )}
                 {isFriends.status === 'Strangers' && (
@@ -591,6 +592,7 @@ const UserDetailsScreen = (props) => {
                   justifyContent: 'center',
                   paddingHorizontal: 15,
                   paddingVertical: 15,
+                  width:'100%'
                 }}>
                 {/* <View style={{alignItems: 'center', width: '100%'}}>
                   {/* <View style={{width: '100%', height: 'auto'}}>
@@ -614,7 +616,9 @@ const UserDetailsScreen = (props) => {
                   <View
                     style={{
                       flexDirection: 'row',
+                      width:'100%'
                     }}>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     {talents.map((item) => (
                       <TouchableOpacity
                         key={item._id}
@@ -637,6 +641,7 @@ const UserDetailsScreen = (props) => {
                         </Text>
                       </TouchableOpacity>
                     ))}
+                    </ScrollView>
                   </View>
                 </View>
                 <View style={{ width: '100%' }}>

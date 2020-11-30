@@ -268,7 +268,7 @@ const FilterScreen = (props) => {
       <ScrollView>
         <View>
           <Searchbar
-            placeholder="Type Here..."
+            placeholder="Search Names..."
             onChangeText={updateSearch}
             value={search}
             onSubmitEditing={doSearch}

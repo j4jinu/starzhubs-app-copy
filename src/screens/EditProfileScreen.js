@@ -234,12 +234,14 @@ const EditProfileScreen = (props) => {
   const [country, setCountry] = useState('india');
   const [gender, setGender] = useState('');
   const [selectedItems, setSelectedItems] = useState();
-  const [userInfo, setUserInfo] = useState({
-    image: {},
-    location: {},
-  });
+  const [userInfo, setUserInfo] = useState({ image: {}, location: {},});
   const [visible, setVisible] = useState(false);
   const [msg, setMsg] = useState('');
+  const [actorMode, setActorMode] = useState(false)
+  const [bodyTypeValue, setbodyTypeValue] = useState();
+  const [complexionValue, setcomplexionValue] = useState();
+
+
   // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
   const initialProfileValues = {
     name: userInfo.name,
@@ -255,6 +257,12 @@ const EditProfileScreen = (props) => {
     // gender: userInfo.gender || '',
   };
 
+  if (actorMode) {
+    initialProfileValues.height = userInfo.height || ''
+    initialProfileValues.weight = userInfo.weight || ''
+    initialProfileValues.complexion = userInfo.complexion || ''
+    initialProfileValues.bodyType = userInfo.bodyType || ''
+}
   const profileSchema = yup.object({
     name: yup.string().required('Enter your name'),
     bio: yup.string().required('Please fill this field'),
@@ -291,6 +299,8 @@ const EditProfileScreen = (props) => {
         const lng = myString.split(',');
         setSelectedItems(lng);
       }
+      setbodyTypeValue(userData.data.user.bodyType)
+      setcomplexionValue(userData.data.user.complexion)
       checkActorMode(userData.data.talents)
     };
     getUserDetails();
@@ -299,7 +309,6 @@ const EditProfileScreen = (props) => {
   const checkActorMode = (talents) => {
     talents.forEach(talent => {
       const category = talent.category
-      console.log(category);
       category.forEach(c => {
         if (c.title === 'Actor' || c.title === 'Model') {
           setActorMode(true)
@@ -545,6 +554,7 @@ const EditProfileScreen = (props) => {
             handleChange,
             handleBlur,
             handleSubmit,
+            setFieldValue,
             isSubmitting,
             touched,
             errors,
@@ -854,7 +864,7 @@ const EditProfileScreen = (props) => {
                     items={languages}
                     IconRenderer={Icon}
                     uniqueKey="id"
-                    //subKey="children"
+                    subKey="children"
                     selectText="Languages known"
                     showDropDowns={true}
                     readOnlyHeadings={true}
@@ -864,6 +874,124 @@ const EditProfileScreen = (props) => {
                   />
                 </View>
 
+                {actorMode && (
+                  <>
+                  {/* Height */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.height ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="book" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    style={styles.inputField}
+                    placeholder={'Height(cm)'}
+                    onChangeText={handleChange('height')}
+                    onBlur={handleBlur('height')}
+                    defaultValue={initialProfileValues.height}
+                  />
+                </View>
+                {/* Weight */}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.height ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon name="book" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    style={styles.inputField}
+                    placeholder={'Weight(Kg)'}
+                    onChangeText={handleChange('weight')}
+                    onBlur={handleBlur('weight')}
+                    defaultValue={initialProfileValues.weight}
+                  />
+                </View>
+
+                {/* BodyType */}
+
+                <View style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.height ? 'red' : '#e6e6e6',
+                }}>
+                      <Picker
+                        selectedValue={bodyTypeValue}
+                        style={{
+                          height: 50,
+                          width: '100%',
+                        }}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setbodyTypeValue(itemValue);
+                          setFieldValue('bodyType', itemValue);
+                        }}>
+                        <Picker.Item label="Select BodyType" value="0" />
+                        <Picker.Item label="Athletic" value="Athletic" />
+                        <Picker.Item
+                          label="Average built"
+                          value="Average built"
+                        />
+                        <Picker.Item label="Fat" value="Fat" />
+                        <Picker.Item label="Hourglass" value="Hourglass" />
+                        <Picker.Item label="Slim" value="Slim" />
+                      </Picker>
+                    </View>
+
+                  {/* SkinTone */}
+
+                  <View style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.height ? 'red' : '#e6e6e6',
+                }}>
+                      <Picker
+                        selectedValue={complexionValue}
+                        style={{
+                          height: 50,
+                          width: '100%',
+                        }}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setcomplexionValue(itemValue);
+                          setFieldValue('complexion', itemValue);
+                        }}>
+                        <Picker.Item label="Select Complexion" value="0" />
+                        <Picker.Item label="Brown" value="Brown" />
+                        <Picker.Item label="Dark" value="Dark" />
+                        <Picker.Item label="Fair" value="Fair" />
+                        <Picker.Item label="Wheatish" value="Wheatish" />
+                      </Picker>
+                    </View>
+
+                    
                 {/*
               About user 
                */}
@@ -892,10 +1020,11 @@ const EditProfileScreen = (props) => {
                     defaultValue={initialProfileValues.bio}
                   />
                 </View>
-                <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('PasswordRecovery')
-                  }></TouchableOpacity>
+
+
+
+                  </>
+                )}
                 {!isSubmitting && (
                   <TouchableOpacity
                     activeOpacity={0.8}

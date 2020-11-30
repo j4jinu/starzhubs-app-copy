@@ -10,7 +10,8 @@ import {
   Alert,
   Image,
   ToastAndroid,
-  PermissionsAndroid
+  PermissionsAndroid,
+  ScrollView
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -25,6 +26,7 @@ import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
+import ImagePicker from 'react-native-image-picker';
 
 const industryNames = [
   {
@@ -79,7 +81,6 @@ const EditTalentScreen = (props) => {
   const talentId = props.navigation.getParam('talentId');
   const category = props.navigation.getParam('category');
   const industry = props.navigation.getParam('industry');
-  const userId = props.navigation.getParam('userId');
   const films = props.navigation.getParam('films');
   const years = props.navigation.getParam('years');
   const description = props.navigation.getParam('description');
@@ -136,8 +137,9 @@ const EditTalentScreen = (props) => {
   })
 
   const userInfo = () => {
-    if (talentId === '5fbd408388613013dcef63c4') {
-      fetch(`http://13.232.190.226/api/user/${userId}`, {
+    if (talentId === '5fbce28f88613013dcef63a4') {
+        setIsProfileImageMode(true);
+      fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -145,14 +147,12 @@ const EditTalentScreen = (props) => {
       })
         .then((response) => response.json())
         .then((response) => {
+          console.log("userinfo",response);
+
           setUser(response.data.user);
-          setbodyTypeValue(response.data.user.bodyType)
-          setcomplexionValue(response.data.user.complexion)
-          // setHeadImage(user.image && user.image.head_shot !== undefined?user.image.head_shot:null)
-          console.log("userdetail", headimg);
         })
         .catch((error) => { });
-      setIsProfileImageMode(true);
+      // setIsProfileImageMode(true);
       // setTalent(tid);
       // return;
     } else {
@@ -263,9 +263,9 @@ const EditTalentScreen = (props) => {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
-          title: 'Cool Photo App Camera Permission',
+          title: 'Starzhubs App Camera Permission',
           message:
-            'Cool Photo App needs access to your camera ' +
+            'Starzhubs App needs access to your camera ' +
             'so you can take awesome pictures.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
@@ -315,7 +315,7 @@ const EditTalentScreen = (props) => {
       }
     });
   };
-
+  
   const uploadAvatar = async (imgType, imgurl) => {
     let image;
     if (imgType === 'head_shot') {
@@ -438,9 +438,8 @@ const EditTalentScreen = (props) => {
                     borderColor: errors.link ? 'red' : 'gray',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    paddingLeft: '5%',
+                    // paddingLeft: '5%',
                   }}>
-                  <Text>Select Confidence Level</Text>
 
                   <View
                     style={{
@@ -582,13 +581,176 @@ const EditTalentScreen = (props) => {
                     />
                   </View>
                   <Text style={styles.error}>{errors.films}</Text>
+
+                  {isProfileImageMode && (
+                  <>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginTop: 10,
+                        marginBottom: 10,
+                      }}>
+                      <View
+                        style={{
+                          paddingLeft: '6%',
+                          paddingRight:'2%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            requestCameraPermission('head_shot');
+                          }}>
+                          {!headimg && user.image && user.image.head_shot !== undefined && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+                              }}
+                            />
+                          )}
+                          {!headimg && user.image.head_shot === undefined && (
+                            <Image
+                              source={require('../assets/headshot.jpg')}
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                            />
+                          )}
+                          {headimg && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{uri: headimg}}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: '2%',
+                          paddingRight:'6%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => requestCameraPermission('left_profile')}>
+                          {!leftimg && user.image && user.image.left_profile !== undefined && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+                              }}
+                            />
+                          )}
+                          {!leftimg && user.image.left_profile === undefined && (
+                            <Image
+                              source={require('../assets/left_profile.jpg')}
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                            />
+                          )}
+                          {leftimg && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{uri: leftimg}}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        // alignItems:'center'
+                      }}>
+                      <View
+                        style={{
+                          paddingLeft: '6%',
+                          paddingRight:'2%',
+                          marginTop: 10,
+                          marginBottom: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            requestCameraPermission('right_profile')
+                          }>
+                          {!rightimg && user.image && user.image.right_profile !== undefined && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+                              }}
+                            />
+                          )}
+                          {!rightimg && user.image.right_profile === undefined && (
+                            <Image
+                              source={require('../assets/right_profile.jpg')}
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                            />
+                          )}
+                          {rightimg && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{uri: rightimg}}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: '2%',
+                          paddingRight:'6%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => requestCameraPermission('fullsize')}>
+                          {!fullsizeimg && user.image && user.image.fullsize !== undefined && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+                              }}
+                            />
+                          )}
+                          {!fullsizeimg && user.image.fullsize === undefined && (
+                            <Image
+                              source={require('../assets/fullsize.jpg')}
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                            />
+                          )}
+                          {fullsizeimg && (
+                            <Image
+                              style={{borderRadius: 50,height: 140,width: 140,}}
+                              source={{uri: fullsizeimg}}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </>
+                )}
+
                   <View
                     style={{
-                      color: '#fd9242',
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: '3%',
+                      marginBottom:'3%',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.link ? 'red' : 'gray',
                     }}
-                  />
-                  <TextInput
-                    style={styles.inputTextDes}
+                  >
+                    <Eicon
+                      name="envelope-open-text"
+                      size={15}
+                      style={{
+                        color: '#fd9242',
+                      }}
+                    />
+                   
+                    <TextInput
+                    style={styles.inputText}
                     defaultValue={description}
                     placeholder="Description"
                     placeholderTextColor="#003f5c"
@@ -601,203 +763,8 @@ const EditTalentScreen = (props) => {
                     onBlur={handleBlur('description')}
                   />
                 </View>
-                {isProfileImageMode && (
-                  <Fragment>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        marginTop: 20,
-                        marginBottom: 10,
-                      }}>
-                      <View
-                        style={{
-                          paddingLeft: 30,
-                          marginTop: 10,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            requestCameraPermission('head_shot');
-                          }}>
-                          {/* {user.image && user.image.head_shot !== undefined && (
-              <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
-                }}
-              />
-            )} */}
-
-
-                          <Image
-                            source={
-                              !headimg
-                                ? require('../assets/headshot.jpg')
-                                : {
-                                  uri: headimg,
-                                }
-                            }
-                            style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      <View
-                        style={{
-                          paddingLeft: 30,
-                          marginTop: 10,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => requestCameraPermission('left_profile')}>
-                          <Image
-                            source={
-                              !leftimg
-                                ? require('../assets/left_profile.jpg')
-                                : {
-                                  uri: leftimg,
-                                }
-                            }
-                            style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
                     </View>
-
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                      }}>
-                      <View
-                        style={{
-                          paddingLeft: 30,
-                          marginTop: 10,
-                          marginBottom: 20,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() =>
-                            requestCameraPermission('right_profile')
-                          }>
-                          <Image
-                            source={
-                              !rightimg
-                                ? require('../assets/right_profile.jpg')
-                                : {
-                                  uri: rightimg,
-                                }
-                            }
-                            //  {{uri:rightimg ===null ?`../../assets/right_profile.jpg`
-                            //  :rightimg}}
-                            //  source={require("../../assets/right_profile.jpg")}
-                            style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      <View
-                        style={{
-                          paddingLeft: 30,
-                          marginTop: 10,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => requestCameraPermission('fullsize')}>
-                          <Image
-                            source={
-                              !fullsizeimg
-                                ? require('../assets/fullsize.jpg')
-                                : {
-                                  uri: fullsizeimg,
-                                }
-                            }
-                            //  source={require("../../assets/fullsize.jpg")}
-                            style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                            }}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                    <View style={styles.inputView}>
-                      <Picker
-                        selectedValue={bodyTypeValue}
-                        style={{
-                          height: 50,
-                          width: '100%',
-                        }}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setbodyTypeValue(itemValue);
-                          setFieldValue('bodyType', itemValue);
-                        }}>
-                        <Picker.Item label="Select BodyType" value="0" />
-                        <Picker.Item label="Athletic" value="Athletic" />
-                        <Picker.Item
-                          label="Average built"
-                          value="Average built"
-                        />
-                        <Picker.Item label="Fat" value="Fat" />
-                        <Picker.Item label="Hourglass" value="Hourglass" />
-                        <Picker.Item label="Slim" value="Slim" />
-                      </Picker>
-                    </View>
-
-                    <Text style={styles.error}>{errors.bodyType}</Text>
-                    <View style={styles.inputView}>
-                      <Picker
-                        selectedValue={complexionValue}
-                        style={{
-                          height: 50,
-                          width: '100%',
-                        }}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setcomplexionValue(itemValue);
-                          setFieldValue('complexion', itemValue);
-                        }}>
-                        <Picker.Item label="Select Complexion" value="0" />
-                        <Picker.Item label="Brown" value="Brown" />
-                        <Picker.Item label="Dark" value="Dark" />
-                        <Picker.Item label="Fair" value="Fair" />
-                        <Picker.Item label="Wheatish" value="Wheatish" />
-                      </Picker>
-                    </View>
-                    <Text style={styles.error}>{errors.complexion}</Text>
-                    <View style={styles.inputView}>
-                      <TextInput
-                        // style={styles.inputText}
-                        placeholder="Height (CMs)"
-                        placeholderTextColor="#003f5c"
-                        keyboardType="text"
-                        autoCapitalize="sentences"
-                        defaultValue={user.height}
-                        onChangeText={handleChange('height')}
-                        onBlur={handleBlur('height')}
-                      />
-                    </View>
-                    <Text style={styles.error}>{errors.height}</Text>
-                    <View style={styles.inputView}>
-                      <TextInput
-                        // style={styles.inputText}
-                        placeholder="Weight (KGs)"
-                        placeholderTextColor="#003f5c"
-                        keyboardType="text"
-                        autoCapitalize="sentences"
-                        defaultValue={user.weight}
-                        onChangeText={handleChange('weight')}
-                        onBlur={handleBlur('weight')}
-                      />
-                    </View>
-                    <Text style={styles.error}>{errors.weight}</Text>
-                  </Fragment>
-                )}
+                  
                 <TouchableOpacity style={styles.registerBtn} onPress={handleSubmit}>
                   <Text style={styles.registerBtnText}>
                     {loading ? (

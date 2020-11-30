@@ -23,6 +23,7 @@ const MyMediaScreen = (props) => {
   const [loading, setLoading] = useState(true);
   const [talents, setTalents] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [isNoMedia, setNoMedia] = useState(false);
 
   useEffect(() => {
     getTalents();
@@ -43,13 +44,23 @@ const MyMediaScreen = (props) => {
       } else {
         setTalents(resData.data.talents);
         console.log("talents",resData.data.talents);
+        checkMediaMode(resData.data.talents)
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
-      alert('Something went wrong. Try again later.');
+      // alert('Something ');
     }
   };
+
+  const checkMediaMode = (talents) => {
+    talents.forEach(c => {
+      console.log("media",c.media);
+        if (c.media === [] || c.media === undefined || c.media.length === 0) {
+          setNoMedia(true)
+        }
+    });
+  }
 
   if (loading) {
     return (
@@ -116,6 +127,25 @@ const MyMediaScreen = (props) => {
     setVisible(false);
   };
 
+
+  if(isNoMedia || talents.length === 0){
+    return(
+    <View
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: "100%",
+        marginTop: "35%"
+      }}>
+          
+        <Image source={require("../assets/broke.png")}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+          <Text style={{ fontSize: 18, color: 'tomato' }}> No Medias Added Yet.</Text>
+    </View>
+    )
+  }
+
+  else{
   return (
     <View style={styles.container}>
       <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
@@ -294,6 +324,7 @@ const MyMediaScreen = (props) => {
       </ScrollView>
     </View>
   );
+  }
 };
 
 const styles = StyleSheet.create({

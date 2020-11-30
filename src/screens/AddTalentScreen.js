@@ -522,7 +522,7 @@ export default function AddTalentScreen(props) {
                     alignItems: 'center',
                     borderColor: errors.link ? 'red' : 'gray',
                   }}>
-                  <View style={{ width: '10%' }}>
+                  <View style={{ width: '7%' }}>
                     <Gicon
                       name="industry"
                       size={15}
@@ -530,7 +530,7 @@ export default function AddTalentScreen(props) {
                     />
                   </View>
 
-                  <View style={{ width: '90%', justifyContent: 'center' }}>
+                  <View style={{ width: '93%', }}>
                     <SectionedMultiSelect
                       items={industryNames}
                       IconRenderer={Icon}

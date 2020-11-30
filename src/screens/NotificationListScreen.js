@@ -22,40 +22,44 @@ const posters = [
   { name: 'H', id: '8' },
 ];
 
-const renderGridItem = (alerts) => {
+const renderGridItem = (alerts,props) => {
   return (
     <NotificationItem
       title={alerts.item.title}
+      notification={alerts.item.notification}
+      nDate={alerts.item.createdAt}
       onSelect={() => props.navigation.navigate('UserDetails')}
     />
   );
 };
 
-const NotificationListScreen = () => {
+const NotificationListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    const getNotifications = async () => {
-      try {
-        const res = await fetch(`http://13.232.190.226/api/alert`, {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + auth.token,
-          },
-        });
-        const resData = await res.json();
-        if (!resData.success) {
-          alert(resData.message);
-          return;
-        }
-        setAlerts(resData.data.notifications);
-      } catch (error) {
-        alert('Something went wrong. Try again later.');
-      }
-    };
     getNotifications();
   });
+  const getNotifications = async () => {
+    try {
+      const res = await fetch(`http://13.232.190.226/api/alert`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
+      });
+      const resData = await res.json();
+      if (!resData.success) {
+        alert(resData.message);
+        return;
+      }
+      setAlerts(resData.data.notifications);
+      console.log("notifications",resData.data.notifications);
+    } catch (error) {
+      alert('Something went wrong. Try again later.');
+    }
+  };
+
   return (
     <>
       <FlatList
