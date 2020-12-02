@@ -65,7 +65,7 @@ const FilterScreen = (props) => {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const res = await fetch('https://api.starzhubs.com/api/category/app');
+        const res = await fetch('http://13.232.190.226/api/category/app');
         const resData = await res.json();
         if (resData.success) {
           setCategories(resData.categories);
@@ -147,7 +147,7 @@ const FilterScreen = (props) => {
       return alert('Enter a search query');
     }
     const searchRes = await fetch(
-      `https://api.starzhubs.com/api/user/search/u?key=${search}`,
+      `http://13.232.190.226/api/user/search/u?key=${search}`,
       {
         method: 'PATCH',
       },
@@ -215,7 +215,7 @@ const FilterScreen = (props) => {
         bodyType: bodyType,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/filter`, requestOptions)
+    fetch(`http://13.232.190.226/api/talent/filter`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {

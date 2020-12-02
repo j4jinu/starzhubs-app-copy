@@ -11,7 +11,7 @@ const SentConnectionScreen = () => {
     getConnectionRequests();
   });
   const getConnectionRequests = () => {
-    fetch(`https://api.starzhubs.com/api/talent/req/sent`, {
+    fetch(`http://13.232.190.226/api/talent/req/sent`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -20,7 +20,7 @@ const SentConnectionScreen = () => {
       .then((response) => response.json())
       .then((response) => {
         setIsFriends(response.data.requests);
-        console.log("sent req",response);
+        console.log("sent req", response);
       })
       .catch((error) => {
         alert(error);

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -35,18 +35,18 @@ const MediaDetailsScreen = (props) => {
             alignItems: 'center',
             marginTop: 22,
           }}
-          // onPress={() => setVisible(false)}
+        // onPress={() => setVisible(false)}
         >
           <View
             style={{
-          //     flex: 1,
-          //     justifyContent: 'center',
-          //     alignItems: 'center',
-          //     // marginTop: 22,
-          //     backgroundColor:'#000000aa'
-          //   }}
-          //   onPress={() => setEnlargeModal(false)}
-          // >
+              //     flex: 1,
+              //     justifyContent: 'center',
+              //     alignItems: 'center',
+              //     // marginTop: 22,
+              //     backgroundColor:'#000000aa'
+              //   }}
+              //   onPress={() => setEnlargeModal(false)}
+              // >
               margin: 5,
               backgroundColor: 'white',
               borderRadius: 3,
@@ -98,7 +98,7 @@ const MediaDetailsScreen = (props) => {
               <Image
                 style={styles.media}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
+                  uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
                 }}
               />
             </View>
@@ -117,20 +117,20 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
-        <TouchableOpacity onPress={() => setEnlargeModal(true)}>
-          <Image
-            style={styles.media}
-            source={{
-              uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
-            }}
-          />
-        </TouchableOpacity>
-      )}
+          <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+            <Image
+              style={styles.media}
+              source={{
+                uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+              }}
+            />
+          </TouchableOpacity>
+        )}
       <ScrollView>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
-        {status===1?
-          user._id !== auth.userId  && (
+        {status === 1 ?
+          user._id !== auth.userId && (
             <View style={styles.authorInfo}>
               <Image
                 style={{
@@ -139,7 +139,7 @@ const MediaDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                 }}
               />
 
@@ -156,16 +156,16 @@ const MediaDetailsScreen = (props) => {
                     justifyContent: 'center',
                     marginLeft: 10,
                   }}>
-                  <Text style={{fontSize: 13}}>{'Posted By'}</Text>
-                  <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
+                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
                     {user.name}
                   </Text>
                 </View>
               </TouchableOpacity>
             </View>
           )
-          :null
-          }
+          : null
+        }
 
       </ScrollView>
 

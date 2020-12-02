@@ -34,7 +34,7 @@ const TalentListScreen = (props) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
+    fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -81,7 +81,7 @@ const TalentListScreen = (props) => {
       }),
     };
     fetch(
-      `https://api.starzhubs.com/api/user/remove/talent/${talentId}`,
+      `http://13.232.190.226/api/user/remove/talent/${talentId}`,
       requestOptions,
     )
       .then((response) => response.json())

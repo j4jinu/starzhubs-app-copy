@@ -18,11 +18,11 @@ const NotificationListScreen = (props) => {
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-      getNotifications();
-  },[]);
+    getNotifications();
+  }, []);
   const getNotifications = async () => {
     try {
-      const res = await fetch(`https://api.starzhubs.com/api/alert`, {
+      const res = await fetch(`http://13.232.190.226/api/alert`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -34,7 +34,7 @@ const NotificationListScreen = (props) => {
         return;
       }
       setAlerts(resData.data.notifications);
-      console.log("notifications",resData.data.notifications);
+      console.log("notifications", resData.data.notifications);
     } catch (error) {
       alert('Something went wrong. Try again later.');
     }
@@ -51,11 +51,11 @@ const NotificationListScreen = (props) => {
   );
 };
 
-const renderGridItem = (alerts,props) => {
+const renderGridItem = (alerts, props) => {
   var dateofvisit = Moment(alerts.item.createdAt);
   var today = Moment();
   var d = today.diff(dateofvisit, 'days');
-   return (
+  return (
     <NotificationItem
       title={alerts.item.title}
       notification={alerts.item.notification}

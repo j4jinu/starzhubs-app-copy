@@ -17,7 +17,22 @@ const UserMediaSection = (props) => {
     // console.warn("talents",props.talents);
     const { talents } = props
     if (talents === undefined || talents.length === 0) {
-        return <Text>No media files</Text>
+        return (
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingVertical: '5%',
+                }}>
+                <Image
+                    source={require('../assets/noresult1.png')}
+                    style={{ height: 50, width: 50, }}
+                ></Image>
+                <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
+                    No Media Files
+      </Text>
+            </View>
+        )
     }
     return (
         <View style={styles.container}>

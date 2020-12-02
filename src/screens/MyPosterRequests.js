@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { AuthContext } from '../context/authContext';
 const MyPosterRequests = (props) => {
-    const auth = useContext(AuthContext)
+  const auth = useContext(AuthContext)
   const [data, setData] = useState([]);
   const [requests, setRequests] = useState([]);
   useEffect(() => {
@@ -19,7 +19,7 @@ const MyPosterRequests = (props) => {
 
   const getPosterRequest = async () => {
     try {
-      let response = await fetch(`https://api.starzhubs.com/api/user/poster/request/sent`, {
+      let response = await fetch(`http://13.232.190.226/api/user/poster/request/sent`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -27,7 +27,7 @@ const MyPosterRequests = (props) => {
       });
       let userData = await response.json();
       setRequests(userData.requests);
-      console.log("poster request",userData.requests);
+      console.log("poster request", userData.requests);
     } catch (error) { }
   };
 
@@ -46,17 +46,17 @@ const MyPosterRequests = (props) => {
                 </View> 
             </ScrollView>
             </View> */}
-        <FlatList
-            data={requests}
-            keyExtractor={({ id }, index) => id}
-            renderItem={({ item }) => (
+      <FlatList
+        data={requests}
+        keyExtractor={({ id }, index) => id}
+        renderItem={({ item }) => (
           <TouchableOpacity
-            // onPress={() => {
-            //   props.navigation.navigate('UserDetails', {
-            //     userId: item._id,
-            //   });
-            // }}
-            >
+          // onPress={() => {
+          //   props.navigation.navigate('UserDetails', {
+          //     userId: item._id,
+          //   });
+          // }}
+          >
             <View style={styles.listItem}>
               <View
                 style={{
@@ -72,7 +72,7 @@ const MyPosterRequests = (props) => {
                   source={{
                     uri:
                       item.posterId.image !== undefined
-                        ?`https://api.starzhubs.com/api/poster/view/${item.posterId.image}`
+                        ? `http://13.232.190.226/api/poster/view/${item.posterId.image}`
                         : '',
                   }}
                 />

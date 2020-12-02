@@ -22,7 +22,7 @@ const MediaListSceen = (props) => {
   useEffect(() => {
     const getCategoiries = async () => {
       try {
-        const response = await fetch('https://api.starzhubs.com/api/category');
+        const response = await fetch('http://13.232.190.226/api/category');
         const categoryData = await response.json();
         console.log(categoryData);
         if (categoryData.success) {
@@ -42,7 +42,7 @@ const MediaListSceen = (props) => {
 
   useEffect(() => {
     const getUsers = async () => {
-      console.log("catid",categoryId);
+      console.log("catid", categoryId);
       setLoading(true)
       if (!categoryId) {
         setLoading(false)
@@ -50,7 +50,7 @@ const MediaListSceen = (props) => {
       }
       try {
         const userResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/${categoryId}`,
+          `http://13.232.190.226/api/talent/filter/${categoryId}`,
           {
             method: 'PATCH',
             headers: {
@@ -61,7 +61,7 @@ const MediaListSceen = (props) => {
         const userData = await userResponse.json();
         if (userData.success) {
           setMedia(userData.data.medias);
-          console.log("usersmedia",userData.data.medias);
+          console.log("usersmedia", userData.data.medias);
           setLoading(false)
           return;
         }
@@ -132,10 +132,10 @@ const MediaListSceen = (props) => {
             width: "100%",
             marginTop: "35%"
           }}>
-          
+
           <Image source={require("../assets/broke.png")}
             style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
-            <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
+          <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
         </View>
       )}
     </View>
