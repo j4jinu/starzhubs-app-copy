@@ -139,7 +139,7 @@ const EditTalentScreen = (props) => {
   const userInfo = () => {
     if (talentId === '5fc4ddd488613013dcef6434') {
         setIsProfileImageMode(true);
-      fetch(`https://api.starzhubs.com/api/user/${auth.userId}`, {
+      fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -170,7 +170,7 @@ const EditTalentScreen = (props) => {
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
+      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -190,7 +190,7 @@ const EditTalentScreen = (props) => {
 
   useEffect(() => {
     const getCategory = () => {
-      fetch('https://api.starzhubs.com/api/category', {
+      fetch('http://13.232.190.226/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -237,7 +237,7 @@ const EditTalentScreen = (props) => {
         level: values.level,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/user/${talentId}`, requestOptions)
+    fetch(`http://13.232.190.226/api/talent/user/${talentId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -343,7 +343,7 @@ const EditTalentScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `https://api.starzhubs.com/api/user/avatar`,
+        `http://13.232.190.226/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -601,7 +601,7 @@ const EditTalentScreen = (props) => {
                                     <Image
                                       style={{borderRadius: 50,height: 140,width: 140,}}
                                       source={{
-                                        uri: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
+                                        uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
                                       }}
                                     />
                                   )}
@@ -631,7 +631,7 @@ const EditTalentScreen = (props) => {
                                       <Image
                                         style={{borderRadius: 50,height: 140,width: 140,}}
                                         source={{
-                                          uri: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
+                                          uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
                                         }}
                                       />
                                     )}
@@ -671,7 +671,7 @@ const EditTalentScreen = (props) => {
                             <Image
                               style={{borderRadius: 50,height: 140,width: 140,}}
                               source={{
-                                uri: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
                               }}
                             />
                           )}
@@ -701,7 +701,7 @@ const EditTalentScreen = (props) => {
                             <Image
                               style={{borderRadius: 50,height: 140,width: 140,}}
                               source={{
-                                uri: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
                               }}
                             />
                           )}

@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import HomeMediaList from '../components/HomeMediaList';
@@ -19,19 +20,21 @@ const HomeScreenSingle = (props) => {
   const [users, setUsers] = React.useState([]);
   const [media, setMedia] = React.useState([]);
   const [talent, setTalent] = React.useState([]);
+  const deviceWidth = Dimensions.get('window').width;
+
 
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        let response = await fetch(`https://api.starzhubs.com/api/poster/random`);
+        let response = await fetch(`http://13.232.190.226/api/poster/random`);
         let usersResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/5f5b2b8e96b2173a30948ac6`,
+          `http://13.232.190.226/api/talent/filter/5f5b2b8e96b2173a30948ac6`,
           {
             method: 'PATCH',
           },
         );
         let mediaResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/random`,
+          `http://13.232.190.226/api/talent/random`,
         );
         let userData = await usersResponse.json();
         userData.success ? setUsers(userData.data.users) : setUsers([]);
@@ -90,26 +93,18 @@ const HomeScreenSingle = (props) => {
                 })
               }>
               <Image
-                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
+                resizeMode={'cover'}
+                style={{ width: deviceWidth,
+                  height: deviceWidth/2,}}
+                // style={{ width: '100%', height:200 }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/poster/view/${p.image}`,
+                  uri: `http://13.232.190.226/api/poster/view/${p.image}`,
                 }}
               />
             </TouchableOpacity>
           ))}
         </Swiper>
         <HomePortfolioList users={users} navigation={props.navigation} />
-        {/* <View style={{ backgroundColor: '#f4ece7', marginVertical: 15 }}>
-                    <Text style={{
-                        textAlign: 'center',
-                        fontStyle: 'italic',
-                        fontWeight: 'bold',
-                        paddingHorizontal: 15,
-                        marginVertical: 15
-                    }}>
-                        "We understands the needs and importance of the roles designed, and the time spent by the artists in the industry to fill a perfect character in an appropriate place"
-                    </Text>
-                </View> */}
         <HomeMediaList talents={talent} navigation={props.navigation} />
       </ScrollView>
     </View>

@@ -22,7 +22,7 @@ const MediaListSceen = (props) => {
   useEffect(() => {
     const getCategoiries = async () => {
       try {
-        const response = await fetch('https://api.starzhubs.com/api/category');
+        const response = await fetch('http://13.232.190.226/api/category');
         const categoryData = await response.json();
         console.log(categoryData);
         if (categoryData.success) {
@@ -50,7 +50,7 @@ const MediaListSceen = (props) => {
       }
       try {
         const userResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/${categoryId}`,
+          `http://13.232.190.226/api/talent/filter/${categoryId}`,
           {
             method: 'PATCH',
             headers: {
@@ -111,8 +111,7 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          // style={{marginTop: 15}}
-          style={{ marginTop: 15 }}
+          style={{ marginTop: 15, marginBottom:'20%' }}
           keyExtractor={(item, index) => item.id}
           data={media}
           renderItem={({ item }) => (

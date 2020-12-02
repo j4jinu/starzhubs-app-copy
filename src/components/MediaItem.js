@@ -1,24 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
 import WebView from 'react-native-webview';
 import theme from '../config/theme';
 
 const MediaItem = (props) => {
+  const deviceWidth = Dimensions.get('window').width;
+
   if (props.user===null) {
     return null
-    // (
-    //   <View
-    //       style={{
-    //         justifyContent: 'center',
-    //         alignItems: 'center',
-    //         width: "100%",
-    //         marginTop: "35%"
-    //       }}>
-    //         <Image source={require("../assets/broke.png")}
-    //         style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
-    //         <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
-    //     </View>
-    // )
   }
 else{
   return (
@@ -38,9 +27,11 @@ else{
         }>
         {props.media[0].fileType === 'image' ? (
           <Image
-            style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
+            style={{ width: '100%',height: deviceWidth/2 }}
+            // style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
+            resizeMode= 'cover'
             source={{
-              uri: `https://api.starzhubs.com/api/user/view/media/?${props.media[0].file}`,
+              uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
             }}
           />
         ) : (
@@ -63,9 +54,7 @@ else{
                             }}
                         /> */}
         <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
-        <Text style={styles.mediaDescription} numberOfLines={3}>
-          {props.media[0].description}
-        </Text>
+        <Text style={styles.mediaDescription}>{props.media[0].description}</Text>
         <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>
           Posted by:{' '}
           {props.user[0] !== undefined && (
@@ -120,7 +109,7 @@ const styles = StyleSheet.create({
     color: theme.$primaryColorText,
     fontSize: 14,
     marginHorizontal: 10,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   mediaAuthor: {
     color: theme.$primaryColor,

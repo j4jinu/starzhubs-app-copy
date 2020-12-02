@@ -35,7 +35,7 @@ const HomeScreen = (props) => {
 
   const getRandomUsers = async () => {
     axios
-      .get('https://api.starzhubs.com/api/talent/random')
+      .get('http://13.232.190.226/api/talent/random')
       .then((response) => {
         // handle success
         console.warn(response);

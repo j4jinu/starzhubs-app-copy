@@ -19,7 +19,7 @@ const MyPosterRequests = (props) => {
 
   const getPosterRequest = async () => {
     try {
-      let response = await fetch(`https://api.starzhubs.com/api/user/poster/request/sent`, {
+      let response = await fetch(`http://13.232.190.226/api/user/poster/request/sent`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -67,15 +67,15 @@ const MyPosterRequests = (props) => {
                   padding: 2,
                   transform: [{ skewY: '5deg' }],
                 }}>
-                <Image
+                {/* <Image
                   style={{ width: 100, height: 100, alignItems: 'flex-start' }}
                   source={{
                     uri:
                       item.posterId.image !== undefined
-                        ?`https://api.starzhubs.com/api/poster/view/${item.posterId.image}`
+                        ?`http://13.232.190.226/api/poster/view/${item.posterId.image}`
                         : '',
                   }}
-                />
+                /> */}
               </View>
               <View style={{ flex: 1, flexDirection: 'column', marginLeft: 25 }}>
                 <Text
@@ -85,7 +85,7 @@ const MyPosterRequests = (props) => {
                     color: '#222',
                     alignSelf: 'flex-start',
                   }}>
-                  {item.posterId.title}
+                  {item.title}
                 </Text>
                 {/* <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
                   {item.location !== undefined ? item.location.place : ''}{' '}
@@ -97,7 +97,7 @@ const MyPosterRequests = (props) => {
                     alignSelf: 'center',
                     top: 7,
                   }}>
-                  {item.posterId.description.substring(0, 120) + '...'}
+                  {/* {item.posterId.description.substring(0, 120) + '...'} */}
                 </Text>
               </View>
             </View>

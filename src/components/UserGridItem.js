@@ -20,14 +20,14 @@ const UserGridItem = (props) => {
               style={{ width: '100%', height: '75%', resizeMode: 'cover' }}
               source={{
                 uri: props.image
-                  ? `https://api.starzhubs.com/api/user/avatar/${props.image.avatar}`
+                  ? `http://13.232.190.226/api/user/avatar/${props.image.avatar}`
                   : '',
               }}
             />
             <Text style={styles.gridItemText}>{props.name}</Text>
             <Text style={{ marginLeft: 10, marginTop: 1 }}>
               {props.location !== undefined ? props.location.place : ''},{' '}
-              {props.location !== undefined ? props.location.place : ''}
+              {props.location !== undefined ? props.location.state : ''}
             </Text>
             {/* <Text style={{marginLeft: 10, marginTop: 1}}>
               {'Actor, Singer'}

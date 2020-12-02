@@ -138,7 +138,7 @@ export default function AddTalentScreen(props) {
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
+      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -162,7 +162,7 @@ export default function AddTalentScreen(props) {
   }, []);
   useEffect(() => {
     const getCategory = () => {
-      fetch('https://api.starzhubs.com/api/category', {
+      fetch('http://13.232.190.226/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -261,7 +261,7 @@ export default function AddTalentScreen(props) {
       }),
     };
 
-    fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
+    fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -336,7 +336,7 @@ export default function AddTalentScreen(props) {
     };
     try {
       const uploadRes = await fetch(
-        `https://api.starzhubs.com/api/user/avatar`,
+        `http://13.232.190.226/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();

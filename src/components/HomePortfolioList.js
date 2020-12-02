@@ -11,17 +11,6 @@ import {
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
 
-const users = [
-  { name: 'A', id: '1' },
-  { name: 'B', id: '2' },
-  { name: 'C', id: '3' },
-  { name: 'D', id: '4' },
-  { name: 'E', id: '5' },
-  { name: 'F', id: '6' },
-  { name: 'G', id: '7' },
-  { name: 'H', id: '8' },
-];
-
 const renderGridItem = (user) => {
   return (
     <UserGridItem
@@ -41,7 +30,7 @@ const HomePortfolioList = (props) => {
         <UserGridItem
           userId={item._id}
           name={item.name}
-          locaton={item.locaton}
+          location={item.location}
           image={item.image}
           navigation={props.navigation}
         />

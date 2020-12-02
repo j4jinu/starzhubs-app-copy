@@ -7,6 +7,7 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,6 +23,8 @@ const MediaDetailsScreen = (props) => {
   const status = props.navigation.getParam('status');
   const user = props.navigation.getParam('user');
   const [enlargeModal, setEnlargeModal] = useState(false)
+  const deviceWidth = Dimensions.get('window').width;
+
 
 
   return (
@@ -97,8 +100,10 @@ const MediaDetailsScreen = (props) => {
               }}>
               <Image
                 style={styles.media}
+                // style={{ width: '100%',height: deviceWidth/2 }}
+                resizeMode='cover'
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
+                  uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
                 }}
               />
             </View>
@@ -119,9 +124,10 @@ const MediaDetailsScreen = (props) => {
       ) : (
         <TouchableOpacity onPress={() => setEnlargeModal(true)}>
           <Image
-            style={styles.media}
+            // style={styles.media}
+            style={{ width: '100%',height: deviceWidth/2 }}
             source={{
-              uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
+              uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
             }}
           />
         </TouchableOpacity>
@@ -139,7 +145,7 @@ const MediaDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                 }}
               />
 

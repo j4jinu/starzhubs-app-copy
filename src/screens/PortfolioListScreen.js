@@ -19,9 +19,8 @@ const PortfolioListScreen = (props) => {
   useEffect(() => {
     const getCategoiries = async () => {
       try {
-        const response = await fetch('https://api.starzhubs.com/api/category');
+        const response = await fetch('http://13.232.190.226/api/category');
         const categoryData = await response.json();
-        console.log(categoryData);
         if (categoryData.success) {
           setCategory(categoryData.categories);
           setCategoryId(categoryData.categories[0]._id);
@@ -44,7 +43,7 @@ const PortfolioListScreen = (props) => {
       }
       try {
         const userResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/${categoryId}`,
+          `http://13.232.190.226/api/talent/filter/${categoryId}`,
           {
             method: 'PATCH',
             headers: {
@@ -98,14 +97,14 @@ const PortfolioListScreen = (props) => {
       </ScrollView>
       {users.length > 0 && 
         <FlatList
-          style={{ backgroundColor: '#fafafa', marginTop: 20 }}
+          style={{ backgroundColor: '#fafafa', marginTop: 20, marginBottom:30 }}
           keyExtractor={(item, index) => item.id}
           data={users}
           renderItem={({ item }) => (
             <UserGridItem
               userId={item._id}
               name={item.name}
-              locaton={item.locaton}
+              location={item.location}
               image={item.image}
               navigation={props.navigation}
             />
@@ -118,7 +117,7 @@ const PortfolioListScreen = (props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            paddingVertical: '35%',
+            paddingVertical: '30%',
           }}>
             <Image
                 source={ require('../assets/noresult1.png')}
