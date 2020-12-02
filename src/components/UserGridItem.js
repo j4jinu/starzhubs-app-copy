@@ -27,7 +27,7 @@ const UserGridItem = (props) => {
             <Text style={styles.gridItemText}>{props.name}</Text>
             <Text style={{ marginLeft: 10, marginTop: 1 }}>
               {props.location !== undefined ? props.location.place : ''},{' '}
-              {props.location !== undefined ? props.location.place : ''}
+              {props.location !== undefined ? props.location.state : ''}
             </Text>
             {/* <Text style={{marginLeft: 10, marginTop: 1}}>
               {'Actor, Singer'}

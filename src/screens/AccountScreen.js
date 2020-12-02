@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Text,
   View,
-  Alert
+  Alert,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../config/theme';
@@ -19,6 +20,7 @@ const Divider = (
 const AccountScreen = (props) => {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState({ image: {}, location: {} });
+  const deviceWidth = Dimensions.get('window').width;
 
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
@@ -66,7 +68,8 @@ const AccountScreen = (props) => {
         <View>
           {user.image && user.image.avatar !== undefined && (
             <Image
-              style={{ width: '100%', height: 250, resizeMode: 'stretch' }}
+              style={{ width: deviceWidth,
+              height: deviceWidth }}
               source={{
                 uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
               }}

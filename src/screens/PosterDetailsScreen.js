@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  Dimensions,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import theme from '../config/theme';
@@ -22,7 +23,6 @@ import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
-  console.log('token', auth.token);
   const posterId = props.navigation.getParam('posterId');
   const title = props.navigation.getParam('title');
   const image = props.navigation.getParam('image');
@@ -35,6 +35,7 @@ const PosterDetailsScreen = (props) => {
   const [msg, setmsg] = useState();
   const [visible, setVisible] = useState(false);
   const [enlargeModal, setEnlargeModal] = useState(false)
+  const deviceWidth = Dimensions.get('window').width;
 
   const initialValues = {
     notes: `I'm very much inetersted in your post`,
@@ -156,11 +157,9 @@ const PosterDetailsScreen = (props) => {
         <View style={styles.container}>
           <TouchableOpacity onPress={() => setEnlargeModal(true)}>
             <Image
-              style={{
-                width: '100%',
-                height: 300,
-                backgroundColor: '#e6e6e6',
-              }}
+              style={{ width: deviceWidth,
+              height: deviceWidth/2,
+              backgroundColor: '#e6e6e6', }}
               resizeMode="cover"
               source={{
                 uri: `http://13.232.190.226/api/poster/view/${image}`,
@@ -379,10 +378,7 @@ const PosterDetailsScreen = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                // borderBottomWidth: 1,
-                paddingVertical: 12,
-                // backgroundColor: '#f5f5f5',
-                // borderColor: 'gray',
+                paddingVertical: 5,
               }}>
               <Text
                 style={{
@@ -407,11 +403,14 @@ const PosterDetailsScreen = (props) => {
             <View
               style={{
                 justifyContent: 'center',
-                paddingHorizontal: 15,
-                paddingVertical: 15,
+                paddingHorizontal: 5,
+                paddingVertical: 5,
               }}>
               <Image
-                style={styles.media}
+                // style={styles.media}
+                style={{ width: '100%',
+                  height: deviceWidth/2,
+                  backgroundColor: '#e6e6e6', }}
                 source={{
                   uri: `http://13.232.190.226/api/poster/view/${image}`,
                 }}

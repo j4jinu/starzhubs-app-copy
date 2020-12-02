@@ -7,6 +7,7 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,6 +23,8 @@ const MediaDetailsScreen = (props) => {
   const status = props.navigation.getParam('status');
   const user = props.navigation.getParam('user');
   const [enlargeModal, setEnlargeModal] = useState(false)
+  const deviceWidth = Dimensions.get('window').width;
+
 
 
   return (
@@ -97,6 +100,8 @@ const MediaDetailsScreen = (props) => {
               }}>
               <Image
                 style={styles.media}
+                // style={{ width: '100%',height: deviceWidth/2 }}
+                resizeMode='cover'
                 source={{
                   uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
                 }}
@@ -119,7 +124,8 @@ const MediaDetailsScreen = (props) => {
       ) : (
           <TouchableOpacity onPress={() => setEnlargeModal(true)}>
             <Image
-              style={styles.media}
+              // style={styles.media}
+              style={{ width: '100%', height: deviceWidth / 2 }}
               source={{
                 uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
               }}

@@ -23,7 +23,7 @@ const NotificationItem = (props) => {
                                 <Icon name="notifications" size={20} color={theme.$primaryColor} />
                             </View>
                             <View style={{ flexDirection: 'column' }}>
-                                <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'black', marginBottom: 3 }}>{props.title}</Text>
+                                <Text style={{ fontSize: 15, color: 'black', marginBottom: 3 }}>{props.title}</Text>
                                 <Text style={{ fontSize: 13, color: 'dimgray' }}>{props.notification}</Text>
                                 <Text style={{ fontSize: 12, color: 'silver', marginTop: 7 }}>{props.nDate} days ago</Text>
                             </View>

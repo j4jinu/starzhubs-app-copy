@@ -67,15 +67,19 @@ const MyPosterRequests = (props) => {
                   padding: 2,
                   transform: [{ skewY: '5deg' }],
                 }}>
-                <Image
+                {/* <Image
                   style={{ width: 100, height: 100, alignItems: 'flex-start' }}
                   source={{
                     uri:
                       item.posterId.image !== undefined
+<<<<<<< HEAD
                         ? `http://13.232.190.226/api/poster/view/${item.posterId.image}`
+=======
+                        ?`http://13.232.190.226/api/poster/view/${item.posterId.image}`
+>>>>>>> 64ca61be5077c1195b871e6aa4bdf31578dbb154
                         : '',
                   }}
-                />
+                /> */}
               </View>
               <View style={{ flex: 1, flexDirection: 'column', marginLeft: 25 }}>
                 <Text
@@ -85,7 +89,7 @@ const MyPosterRequests = (props) => {
                     color: '#222',
                     alignSelf: 'flex-start',
                   }}>
-                  {item.posterId.title}
+                  {item.title}
                 </Text>
                 {/* <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
                   {item.location !== undefined ? item.location.place : ''}{' '}
@@ -97,7 +101,7 @@ const MyPosterRequests = (props) => {
                     alignSelf: 'center',
                     top: 7,
                   }}>
-                  {item.posterId.description.substring(0, 120) + '...'}
+                  {/* {item.posterId.description.substring(0, 120) + '...'} */}
                 </Text>
               </View>
             </View>

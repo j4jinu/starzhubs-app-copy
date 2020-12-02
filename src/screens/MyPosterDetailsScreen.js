@@ -139,6 +139,29 @@ const MyPosterDetailsScreen = (props) => {
         },
       );
   };
+  fetch(`http://13.232.190.226/api/poster/req/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then(
+      (response) => {
+        console.log(response);
+        if (response.success) {
+          if (status === 1) {
+            setmsg('Request approved');
+          } else {
+            setmsg('Request Rejected');
+          }
+          setVisible(!visible);
+          getPosterById();
+        } else {
+          props.close();
+          alert('Error: ' + response.message);
+        }
+      },
+      (error) => {
+        alert('Poster updation failed: ' + error);
+      },
+    );
+
   const onDismissSnackBar = () => {
     setVisible(false);
   };
@@ -341,7 +364,6 @@ const MyPosterDetailsScreen = (props) => {
     </>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

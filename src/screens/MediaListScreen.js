@@ -111,8 +111,7 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          // style={{marginTop: 15}}
-          style={{ marginTop: 15 }}
+          style={{ marginTop: 15, marginBottom:'20%' }}
           keyExtractor={(item, index) => item.id}
           data={media}
           renderItem={({ item }) => (

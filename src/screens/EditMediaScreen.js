@@ -144,19 +144,15 @@ const EditMediaScreen = (props) => {
                   )}
                 <View
                   style={{
-                    alignSelf: 'center',
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: '5%',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={{ color: 'red' }}>
-                    You can update only the caption and description , not the
-                    media file!
-                </Text>
-                </View>
+                    width: '100%',
+                    height: 220,
+                    resizeMode: 'cover',
+                  }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+                  }}
+                />
+              ) : (
                 <View
                   style={{
                     alignSelf: 'center',
