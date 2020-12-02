@@ -1,8 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import Moment from 'moment';
+import Icon from 'react-native-vector-icons/Ionicons';
+import theme from '../config/theme';
 
 const NotificationItem = (props) => {
+    // var a = Moment();
+    // var b = Moment(alerts.item.createdAt);
+    // var d = a.diff(b)
     const divider = <View style={{ width: '100%', height: 1, backgroundColor: '#e6e6e6' }} />
     return (
         <>
@@ -14,10 +19,16 @@ const NotificationItem = (props) => {
                         activeOpacity={0.7}
                     >
                         <View style={{flexDirection:'row',width:'100%', marginBottom:5}}>
-                        <Text style={{fontSize:15, fontWeight:'bold', width:'80%'}}>{props.title}</Text>
-                        <Text>{Moment(props.nDate).format('DD/MM/YYYY')}</Text>
+                            <View style={{marginRight:10}}>
+                                <Icon name="notifications" size={20} color={theme.$primaryColor} />
+                            </View>
+                            <View style={{flexDirection:'column'}}>
+                                <Text style={{fontSize:15, fontWeight:'bold', color:'black', marginBottom:3}}>{props.title}</Text>
+                                <Text style={{fontSize:13, color:'dimgray'}}>{props.notification}</Text>
+                                <Text style={{fontSize:12, color:'silver', marginTop:7}}>{props.nDate} days ago</Text>
+                            </View>
                         </View>
-                        <Text>{props.notification}</Text>
+                        
                     </View>
                     {divider}
                 </>
@@ -36,7 +47,7 @@ const styles = StyleSheet.create({
     gridItem: {
         flex: 1,
         padding: 10,
-        backgroundColor:'floralwhite',
+        backgroundColor:'white',
         marginBottom:2
     },
     gridItemText: {

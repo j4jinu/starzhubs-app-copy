@@ -34,7 +34,7 @@ const TalentListScreen = (props) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -54,7 +54,7 @@ const TalentListScreen = (props) => {
   const confirmDelete = (tid) => {
     Alert.alert(
       '',
-      'Are you sure to delete this media?',
+      'Are you sure to delete this talent?',
       [
         {
           text: 'Cancel',
@@ -81,7 +81,7 @@ const TalentListScreen = (props) => {
       }),
     };
     fetch(
-      `http://13.232.190.226/api/user/remove/talent/${talentId}`,
+      `https://api.starzhubs.com/api/user/remove/talent/${talentId}`,
       requestOptions,
     )
       .then((response) => response.json())

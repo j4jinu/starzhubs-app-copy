@@ -9,7 +9,6 @@ const RouteConfigs = {
     Connections: MyConnectionScreen,
     Requests: PendingConnectionScreen,
     Sent: SentConnectionScreen,
-    PendingApproval:SentConnectionScreen
 }
 
 const TabNavigatorConfig = {
@@ -18,11 +17,11 @@ const TabNavigatorConfig = {
     showIcon: true,
     showLabel: false,
     indicatorStyle: {
-        activeTintColor: theme.$primaryColor
+        activeTintColor: theme.$primaryColor,
     },
     labelStyle: {
         fontSize: 12,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     tabBarOptions: {
         labelStyle: {
@@ -36,10 +35,11 @@ const TabNavigatorConfig = {
         style: {
             backgroundColor: 'white',
             elevation: 0,
-            width: '100%'
+            width: '100%',
+            
         },
         indicatorStyle: {
-            backgroundColor: theme.$primaryColor
+            backgroundColor: theme.$primaryColor,
         },
     },
     tabsStyle: {
@@ -47,7 +47,8 @@ const TabNavigatorConfig = {
         elevation: 0,
     },
     style: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+
     }
 }
 

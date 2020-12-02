@@ -31,7 +31,7 @@ const EditPosterScreen = (props) => {
   const auth = useContext(AuthContext);
   const [message, setMessage] = useState();
   const [image, setImage] = useState(
-    `http://13.232.190.226/api/poster/view/${img}`,
+    `https://api.starzhubs.com/api/poster/view/${img}`,
   );
   const [startDate, setStartDate] = useState(
     Moment(stDate).format('YYYY/MM/DD'),
@@ -96,7 +96,7 @@ const EditPosterScreen = (props) => {
 
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/poster/${posterId}`,
+        `https://api.starzhubs.com/api/poster/${posterId}`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -117,7 +117,7 @@ const EditPosterScreen = (props) => {
       console.error('error', error);
     }
 
-    // fetch(`http://13.232.190.226/api/poster/${posterId}`, requestOptions)
+    // fetch(`https://api.starzhubs.com/api/poster/${posterId}`, requestOptions)
     //   .then((response) => response.json())
     //   .then(
     //     (response) => {

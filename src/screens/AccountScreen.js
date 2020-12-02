@@ -29,7 +29,7 @@ const AccountScreen = (props) => {
 
   const getUserDetails = async () => {
     try {
-      let response = await fetch(`http://13.232.190.226/api/user/profile`, {
+      let response = await fetch(`https://api.starzhubs.com/api/user/profile`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -68,7 +68,7 @@ const AccountScreen = (props) => {
             <Image
               style={{ width: '100%', height: 250, resizeMode: 'stretch' }}
               source={{
-                uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
               }}
             />
           )}
@@ -172,6 +172,22 @@ const AccountScreen = (props) => {
                 <Text style={styles.sectionDetailsTitle}>Poster</Text>
                 <Text style={styles.sectionDetailsSubtitle}>
                   Manage your posters
+                </Text>
+              </View>
+            </View>
+            <Icon name="chevron-right" size={24} color={theme.$primaryColor} />
+          </TouchableOpacity>
+          {Divider}
+          <TouchableOpacity
+            style={styles.section}
+            activeOpacity={0.7}
+            onPress={() => props.navigation.navigate('MyPosterRequest')}>
+            <View style={{ flexDirection: 'row' }}>
+              <Icon name="post-outline" size={24} color={theme.$primaryColor} />
+              <View style={styles.sectionDetails}>
+                <Text style={styles.sectionDetailsTitle}>Poster Requests</Text>
+                <Text style={styles.sectionDetailsSubtitle}>
+                  Manage your poster requests
                 </Text>
               </View>
             </View>

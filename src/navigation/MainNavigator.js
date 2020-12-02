@@ -45,6 +45,7 @@ import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
 import MyPosterDetailsScreen from '../screens/MyPosterDetailsScreen';
+import MyPosterRequests from '../screens/MyPosterRequests';
 
 
 const HomeNavigator = createStackNavigator(
@@ -268,6 +269,12 @@ const AccountNavigator = createStackNavigator(
       screen: MyPostersScreen,
       navigationOptions: {
         title: 'Your posters',
+      },
+    },
+    MyPosterRequest: {
+      screen: MyPosterRequests,
+      navigationOptions: {
+        title: 'Your poster requests',
       },
     },
     MyMedia: {

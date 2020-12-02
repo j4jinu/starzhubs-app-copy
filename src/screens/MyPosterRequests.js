@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   FlatList,
   View,
@@ -8,24 +8,28 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-const FilterResultScreen = (props) => {
-  const filter = props.navigation.getParam('filter');
+import { AuthContext } from '../context/authContext';
+const MyPosterRequests = (props) => {
+    const auth = useContext(AuthContext)
   const [data, setData] = useState([]);
-  const [userData, setUserData] = useState([]);
+  const [requests, setRequests] = useState([]);
   useEffect(() => {
-    const getCategory = () => {
-      fetch('https://api.starzhubs.com/api/category')
-        .then((response) => response.json())
-        .then((json) => {
-          setData(json.categories);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    };
-
-    getCategory();
+    getPosterRequest();
   }, []);
+
+  const getPosterRequest = async () => {
+    try {
+      let response = await fetch(`https://api.starzhubs.com/api/user/poster/request/sent`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
+      });
+      let userData = await response.json();
+      setRequests(userData.requests);
+      console.log("poster request",userData.requests);
+    } catch (error) { }
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,16 +46,17 @@ const FilterResultScreen = (props) => {
                 </View> 
             </ScrollView>
             </View> */}
-      <FlatList
-        data={filter}
-        keyExtractor={({ id }, index) => id}
-        renderItem={({ item }) => (
+        <FlatList
+            data={requests}
+            keyExtractor={({ id }, index) => id}
+            renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate('UserDetails', {
-                userId: item._id,
-              });
-            }}>
+            // onPress={() => {
+            //   props.navigation.navigate('UserDetails', {
+            //     userId: item._id,
+            //   });
+            // }}
+            >
             <View style={styles.listItem}>
               <View
                 style={{
@@ -66,8 +71,8 @@ const FilterResultScreen = (props) => {
                   style={{ width: 100, height: 100, alignItems: 'flex-start' }}
                   source={{
                     uri:
-                      item.image !== undefined
-                        ? `https://api.starzhubs.com/api/user/avatar/${item.image.avatar}`
+                      item.posterId.image !== undefined
+                        ?`https://api.starzhubs.com/api/poster/view/${item.posterId.image}`
                         : '',
                   }}
                 />
@@ -80,11 +85,11 @@ const FilterResultScreen = (props) => {
                     color: '#222',
                     alignSelf: 'flex-start',
                   }}>
-                  {item.name}
+                  {item.posterId.title}
                 </Text>
-                <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
+                {/* <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
                   {item.location !== undefined ? item.location.place : ''}{' '}
-                </Text>
+                </Text> */}
                 <Text
                   style={{
                     fontSize: 12,
@@ -92,9 +97,8 @@ const FilterResultScreen = (props) => {
                     alignSelf: 'center',
                     top: 7,
                   }}>
-                  {item.bio.substring(0, 120) + '...'}
+                  {item.posterId.description.substring(0, 120) + '...'}
                 </Text>
-                {/* <Text style={{fontSize:18,color:"gray",alignSelf:"center"}} >{item.education}</Text>  */}
               </View>
             </View>
           </TouchableOpacity>
@@ -125,4 +129,4 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
 });
-export default FilterResultScreen;
+export default MyPosterRequests;

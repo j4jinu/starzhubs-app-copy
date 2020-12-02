@@ -77,7 +77,7 @@ const industryNames = [
 
 export default function AddTalentScreen(props) {
   const auth = useContext(AuthContext);
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedValue, setSelectedValue] = useState();
   const [industryValue, setIndustryValue] = useState();
   const [value, setValue] = useState('first');
   const [talent, setTalent] = useState();
@@ -138,7 +138,7 @@ export default function AddTalentScreen(props) {
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -162,7 +162,7 @@ export default function AddTalentScreen(props) {
   }, []);
   useEffect(() => {
     const getCategory = () => {
-      fetch('http://13.232.190.226/api/category', {
+      fetch('https://api.starzhubs.com/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -222,7 +222,22 @@ export default function AddTalentScreen(props) {
       setSubmitting(false);
       return;
     }
-
+    if (selectedItems === undefined || selectedItems.length === 0) {
+      Alert.alert(
+        '',
+        'Select atleast one industry',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      );
+      setLoading(false)
+      setSubmitting(false);
+      return;
+    }
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -246,7 +261,7 @@ export default function AddTalentScreen(props) {
       }),
     };
 
-    fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -321,7 +336,7 @@ export default function AddTalentScreen(props) {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/user/avatar`,
+        `https://api.starzhubs.com/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -473,7 +488,7 @@ export default function AddTalentScreen(props) {
                     ))}
                   </Picker>
                 </View>
-                <Text style={styles.error}>{errors.talentId}</Text>
+                {errors.talentId?<Text style={styles.error}>{errors.talentId}</Text>:null}
 
                 <View
                   style={{
@@ -517,7 +532,7 @@ export default function AddTalentScreen(props) {
                     width: '90%',
                     paddingLeft: 8,
                     paddingRight: 8,
-                    marginTop: '6%',
+                    marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
                     borderColor: errors.link ? 'red' : 'gray',
@@ -538,13 +553,15 @@ export default function AddTalentScreen(props) {
                       subKey="children"
                       selectText="Select Industry"
                       showDropDowns={true}
+                      expandDropDowns
+                      showCancelButton
                       readOnlyHeadings={true}
                       onSelectedItemsChange={onSelectedItemsChange}
                       selectedItems={selectedItems}
                     />
                   </View>
                 </View>
-                <Text style={styles.error}>{errors.industry}</Text>
+                {errors.industry?<Text style={styles.error}>{errors.industry}</Text>:null}
                 <View
                   style={{
                     alignSelf: 'center',
@@ -556,7 +573,7 @@ export default function AddTalentScreen(props) {
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.experience ? 'red' : 'gray',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -576,8 +593,20 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('experience')}
                   />
                 </View>
-                <Text style={styles.error}>{errors.experience}</Text>
-                <View style={styles.inputView}>
+                {errors.experience?<Text style={styles.error}>{errors.experience}</Text>:null}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.projects ? 'red' : 'gray',
+                  }}>
                   <Eicon
                     name="envelope-open-text"
                     size={15}
@@ -596,7 +625,7 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('projects')}
                   />
                 </View>
-                <Text style={styles.error}>{errors.projects}</Text>
+                {errors.projects?<Text style={styles.error}>{errors.projects}</Text>:null}
                 <View
                   style={{
                     alignSelf: 'center',
@@ -608,7 +637,7 @@ export default function AddTalentScreen(props) {
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.description ? 'red' : 'gray',
                   }}>
                   <Cicon
                     name="class"
@@ -630,7 +659,7 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('description')}
                   />
                 </View>
-                <Text style={styles.error}>{errors.description}</Text>
+                {errors.description?<Text style={styles.error}>{errors.description}</Text>:null}
                 {isProfileImageMode && (
                   <Fragment>
                     <View
@@ -641,7 +670,7 @@ export default function AddTalentScreen(props) {
                       }}>
                       <View
                         style={{
-                          paddingLeft: 30,
+                          // paddingLeft: 30,
                           marginTop: 10,
                         }}>
                         <TouchableOpacity
@@ -721,7 +750,7 @@ export default function AddTalentScreen(props) {
                       }}>
                       <View
                         style={{
-                          paddingLeft: 30,
+                          // paddingLeft: 30,
                           marginTop: 10,
                           marginBottom: 20,
                         }}>
@@ -794,7 +823,19 @@ export default function AddTalentScreen(props) {
                         </TouchableOpacity>
                       </View>
                     </View>
-                    <View style={styles.inputView}>
+                    <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.bodyType ? 'red' : 'gray',
+                  }}>
                       <Picker
                         selectedValue={bodyTypeValue}
                         style={{
@@ -817,8 +858,20 @@ export default function AddTalentScreen(props) {
                       </Picker>
                     </View>
 
-                    <Text style={styles.error}>{errors.bodyType}</Text>
-                    <View style={styles.inputView}>
+                    {errors.bodyType?<Text style={styles.error}>{errors.bodyType}</Text>:null}
+                    <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.complexion ? 'red' : 'gray',
+                  }}>
                       <Picker
                         selectedValue={complexionValue}
                         style={{
@@ -836,8 +889,20 @@ export default function AddTalentScreen(props) {
                         <Picker.Item label="Wheatish" value="Wheatish" />
                       </Picker>
                     </View>
-                    <Text style={styles.error}>{errors.complexion}</Text>
-                    <View style={styles.inputView}>
+                    {errors.complexion?<Text style={styles.error}>{errors.complexion}</Text>:null}
+                    <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.height ? 'red' : 'gray',
+                  }}>
                       <TextInput
                         style={styles.inputText}
                         placeholder="Height (CMs)"
@@ -849,8 +914,20 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('height')}
                       />
                     </View>
-                    <Text style={styles.error}>{errors.height}</Text>
-                    <View style={styles.inputView}>
+                    {errors.height?<Text style={styles.error}>{errors.height}</Text>:null}
+                    <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.weight ? 'red' : 'gray',
+                  }}>
                       <TextInput
                         style={styles.inputText}
                         placeholder="Weight (KGs)"
@@ -862,7 +939,7 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('weight')}
                       />
                     </View>
-                    <Text style={styles.error}>{errors.weight}</Text>
+                    {errors.weight?<Text style={styles.error}>{errors.weight}</Text>:null}
                   </Fragment>
                 )}
 

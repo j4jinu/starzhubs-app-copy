@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -98,7 +98,7 @@ const MediaDetailsScreen = (props) => {
               <Image
                 style={styles.media}
                 source={{
-                  uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+                  uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
                 }}
               />
             </View>
@@ -121,7 +121,7 @@ const MediaDetailsScreen = (props) => {
           <Image
             style={styles.media}
             source={{
-              uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+              uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
             }}
           />
         </TouchableOpacity>
@@ -139,7 +139,7 @@ const MediaDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
                 }}
               />
 

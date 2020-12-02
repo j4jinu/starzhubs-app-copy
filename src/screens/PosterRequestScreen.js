@@ -28,7 +28,7 @@ const PosterRequestScreen = (props) => {
   });
 
   const onSubmitRequest = (values) => {
-    fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
+    fetch(`https://api.starzhubs.com/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
         'Content-type': 'Application/json',
@@ -61,7 +61,7 @@ const PosterRequestScreen = (props) => {
           <Image
             style={{ width: 375, height: 250 }}
             source={{
-              uri: `http://13.232.190.226/api/poster/view/${image}`,
+              uri: `https://api.starzhubs.com/api/poster/view/${image}`,
             }}
           />
         </View>

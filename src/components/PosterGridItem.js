@@ -40,7 +40,7 @@ const PosterGridItem = (props) => {
               }}
               resizeMode={'cover'}
               source={{
-                uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+                uri: `https://api.starzhubs.com/api/poster/view/${props.image}`,
               }}
             />
             <View style={styles.owner}>
@@ -55,7 +55,7 @@ const PosterGridItem = (props) => {
                     userId.image === undefined
                       ? `https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVI
                                     D19_SECVPF.gif`
-                      : `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`,
+                      : `https://api.starzhubs.com/api/user/avatar/${userId.image.avatar}`,
                 }}
               />
 

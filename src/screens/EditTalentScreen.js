@@ -112,7 +112,7 @@ const EditTalentScreen = (props) => {
     talentId: talentId,
     level: levels,
     experience: years,
-    industry: industry,
+    // industry: industry,
     films: films,
     description: description,
     // height:''
@@ -122,7 +122,7 @@ const EditTalentScreen = (props) => {
   const talentValidationSchema = Yup.object({
     talentId: Yup.string().required('Select one category'),
     level: Yup.string().required('Select your level'),
-    industry: Yup.string().required('Select one industry'),
+    // industry: Yup.string().required('Select atleast one industry'),
     experience: Yup.string()
       .matches(phoneRegExp, 'Invalid input')
       .required('Enter experience details'),
@@ -137,9 +137,9 @@ const EditTalentScreen = (props) => {
   });
 
   const userInfo = () => {
-    if (talentId === '5fbce28f88613013dcef63a4') {
+    if (talentId === '5fc4ddd488613013dcef6434') {
         setIsProfileImageMode(true);
-      fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
+      fetch(`https://api.starzhubs.com/api/user/${auth.userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -170,7 +170,7 @@ const EditTalentScreen = (props) => {
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -190,7 +190,7 @@ const EditTalentScreen = (props) => {
 
   useEffect(() => {
     const getCategory = () => {
-      fetch('http://13.232.190.226/api/category', {
+      fetch('https://api.starzhubs.com/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -204,11 +204,11 @@ const EditTalentScreen = (props) => {
 
   const handleSubmit = (values, {setSubmitting}) => {
     values.level = level;
-    values.industry = selectedItems;
+    // values.industry = selectedItems;
     if (selectedItems === undefined || selectedItems.length === 0) {
       Alert.alert(
         '',
-        'Choose the languages you known',
+        'Select atleast one industry',
         [
           {
             text: 'Ok',
@@ -229,7 +229,7 @@ const EditTalentScreen = (props) => {
       },
       body: JSON.stringify({
         chars: {
-          industry: values.industry,
+          industry: selectedItems,
           films: values.films,
           years: values.experience,
         },
@@ -237,7 +237,7 @@ const EditTalentScreen = (props) => {
         level: values.level,
       }),
     };
-    fetch(`http://13.232.190.226/api/talent/user/${talentId}`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/talent/user/${talentId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -343,7 +343,7 @@ const EditTalentScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/user/avatar`,
+        `https://api.starzhubs.com/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -423,7 +423,7 @@ const EditTalentScreen = (props) => {
                   {category}
                 </Text>
               </View>
-              <Text style={styles.error}>{errors.talentId}</Text>
+              {errors.talentId?<Text style={styles.error}>{errors.talentId}</Text>:null}
 
               <View
                 style={{
@@ -440,7 +440,6 @@ const EditTalentScreen = (props) => {
                   alignItems: 'flex-start',
                   paddingLeft: '5%',
                 }}>
-                <Text>Select Confidence Level</Text>
 
                 <View
                   style={{
@@ -493,40 +492,6 @@ const EditTalentScreen = (props) => {
                     // paddingLeft: '5%',
                   }}>
 
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: '3%',
-                      alignItems: 'center',
-                      borderColor: errors.link ? 'red' : 'gray',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      paddingLeft: '5%',
-                    }}>
-                    <Text>Select Confidence Level</Text>
-
-                    <AirbnbRating
-                      reviews={[
-                        'Beginner',
-                        'Average',
-                        'Good',
-                        'Excellent',
-                        'Experienced',
-                      ]}
-                      defaultRating={level}
-                      size={20}
-                      count={5}
-                      showRating={false}
-                      onFinishRating={handleLevelChange}
-                      selectedColor={theme.$primaryColor}
-                    />
-                  </View>
-
                   <View style={{width: '90%', justifyContent: 'center'}}>
                     <SectionedMultiSelect
                       items={industryNames}
@@ -535,14 +500,15 @@ const EditTalentScreen = (props) => {
                       subKey="children"
                       selectText="Select Industry"
                       showDropDowns={true}
+                      expandDropDowns
+                      showCancelButton
                       readOnlyHeadings={true}
                       onSelectedItemsChange={onSelectedItemsChange}
                       selectedItems={selectedItems}
                     />
                   </View>
                 </View>
-
-                <Text style={styles.error}>{errors.industry}</Text>
+                {errors.industry?<Text style={styles.error}>{errors.industry}</Text>:null}
 
                 <View
                   style={{
@@ -555,7 +521,7 @@ const EditTalentScreen = (props) => {
                     marginTop: '3%',
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.experience ? 'red' : 'gray',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -577,7 +543,7 @@ const EditTalentScreen = (props) => {
                   />
                 </View>
 
-                <Text style={styles.error}>{errors.years}</Text>
+                {errors.experience?<Text style={styles.error}>{errors.experience}</Text>:null}
 
                   <View
                     style={{
@@ -607,11 +573,11 @@ const EditTalentScreen = (props) => {
                       keyboardType="numeric"
                       autoCapitalize="sentences"
                       // defaultValue={user.email}
-                      onChangeText={handleChange('experience')}
-                      onBlur={handleBlur('experience')}
+                      onChangeText={handleChange('films')}
+                      onBlur={handleBlur('films')}
                     />
                   </View>
-                  <Text style={styles.error}>{errors.films}</Text>
+                  {errors.films?<Text style={styles.error}>{errors.films}</Text>:null}
 
                   {isProfileImageMode && (
                   <>
@@ -635,7 +601,7 @@ const EditTalentScreen = (props) => {
                                     <Image
                                       style={{borderRadius: 50,height: 140,width: 140,}}
                                       source={{
-                                        uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+                                        uri: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
                                       }}
                                     />
                                   )}
@@ -665,7 +631,7 @@ const EditTalentScreen = (props) => {
                                       <Image
                                         style={{borderRadius: 50,height: 140,width: 140,}}
                                         source={{
-                                          uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+                                          uri: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
                                         }}
                                       />
                                     )}
@@ -705,7 +671,7 @@ const EditTalentScreen = (props) => {
                             <Image
                               style={{borderRadius: 50,height: 140,width: 140,}}
                               source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+                                uri: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
                               }}
                             />
                           )}
@@ -735,7 +701,7 @@ const EditTalentScreen = (props) => {
                             <Image
                               style={{borderRadius: 50,height: 140,width: 140,}}
                               source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+                                uri: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
                               }}
                             />
                           )}
@@ -829,7 +795,8 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     fontSize: 10,
-    marginBottom: -15,
+    marginBottom: 0,
+    alignSelf:'center'
   },
   logo: {
     fontWeight: 'bold',

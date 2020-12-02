@@ -87,7 +87,7 @@ const CreatePosterScreen = (props, { navigation }) => {
 
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/poster`,
+        `https://api.starzhubs.com/api/poster`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -103,7 +103,7 @@ const CreatePosterScreen = (props, { navigation }) => {
       console.error('error', error);
     }
 
-    // fetch(`http://13.232.190.226/api/poster`, requestOptions)
+    // fetch(`https://api.starzhubs.com/api/poster`, requestOptions)
     //   .then((response) => response.json())
     //   .then(
     //     (response) => {

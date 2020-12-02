@@ -199,137 +199,32 @@ const countries = [
   {label: 'Guam', value: 'Guam'},
   {label: 'Guatemala', value: 'Guatemala'},
   {label: 'Guernsey', value: 'Guernsey'},
-];
-
-const country_list = [
-  'Guernsey',
-  'Guinea',
-  'Guinea Bissau',
-  'Guyana',
-  'Haiti',
-  'Honduras',
-  'Hong Kong',
-  'Hungary',
-  'Iceland',
-  'India',
-  'Indonesia',
-  'Iran',
-  'Iraq',
-  'Ireland',
-  'Isle of Man',
-  'Israel',
-  'Italy',
-  'Jamaica',
-  'Japan',
-  'Jersey',
-  'Jordan',
-  'Kazakhstan',
-  'Kenya',
-  'Kuwait',
-  'Kyrgyz Republic',
-  'Laos',
-  'Latvia',
-  'Lebanon',
-  'Lesotho',
-  'Liberia',
-  'Libya',
-  'Liechtenstein',
-  'Lithuania',
-  'Luxembourg',
-  'Macau',
-  'Macedonia',
-  'Madagascar',
-  'Malawi',
-  'Malaysia',
-  'Maldives',
-  'Mali',
-  'Malta',
-  'Mauritania',
-  'Mauritius',
-  'Mexico',
-  'Moldova',
-  'Monaco',
-  'Mongolia',
-  'Montenegro',
-  'Montserrat',
-  'Morocco',
-  'Mozambique',
-  'Namibia',
-  'Nepal',
-  'Netherlands',
-  'Netherlands Antilles',
-  'New Caledonia',
-  'New Zealand',
-  'Nicaragua',
-  'Niger',
-  'Nigeria',
-  'Norway',
-  'Oman',
-  'Pakistan',
-  'Palestine',
-  'Panama',
-  'Papua New Guinea',
-  'Paraguay',
-  'Peru',
-  'Philippines',
-  'Poland',
-  'Portugal',
-  'Puerto Rico',
-  'Qatar',
-  'Reunion',
-  'Romania',
-  'Russia',
-  'Rwanda',
-  'Saint Pierre &amp; Miquelon',
-  'Samoa',
-  'San Marino',
-  'Satellite',
-  'Saudi Arabia',
-  'Senegal',
-  'Serbia',
-  'Seychelles',
-  'Sierra Leone',
-  'Singapore',
-  'Slovakia',
-  'Slovenia',
-  'South Africa',
-  'South Korea',
-  'Spain',
-  'Sri Lanka',
-  'St Kitts &amp; Nevis',
-  'St Lucia',
-  'St Vincent',
-  'St. Lucia',
-  'Sudan',
-  'Suriname',
-  'Swaziland',
-  'Sweden',
-  'Switzerland',
-  'Syria',
-  'Taiwan',
-  'Tajikistan',
-  'Tanzania',
-  'Thailand',
-  "Timor L'Este",
-  'Togo',
-  'Tonga',
-  'Trinidad &amp; Tobago',
-  'Tunisia',
-  'Turkey',
-  'Turkmenistan',
-  'Turks &amp; Caicos',
-  'Uganda',
-  'Ukraine',
-  'United Arab Emirates',
-  'United Kingdom',
-  'Uruguay',
-  'Uzbekistan',
-  'Venezuela',
-  'Vietnam',
-  'Virgin Islands (US)',
-  'Yemen',
-  'Zambia',
-  'Zimbabwe',
+  {label: 'Hong Kong', value: 'Hong Kong'},
+  {label: 'Hungary', value: 'Hungary'},
+  {label: 'Iceland', value: 'Iceland'},
+  {label: 'India', value: 'India'},
+  {label: 'Indonesia', value: 'Indonesia'},
+  {label: 'Iran', value: 'Iran'},
+  {label: 'Ireland', value: 'Ireland'},
+  {label: 'Italy', value: 'Italy'},
+  {label: 'Japan', value: 'Japan'},
+  {label: 'Kuwait', value: 'Kuwait'},
+  {label: 'Latvia', value: 'Latvia'},
+  {label: 'Liberia', value: 'Liberia'},
+  {label: 'Malaysia', value: 'Malaysia'},
+  {label: 'Malta', value: 'Malta'},
+  {label: 'Malaysia', value: 'Malaysia'},
+  {label: 'Mexico', value: 'Mexico'},
+  {label: 'Nepal', value: 'Nepal'},
+  {label: 'New Zealand', value: 'New Zealand'},
+  {label: 'Pakistan', value: 'Pakistan'},
+  {label: 'Peru', value: 'Peru'},
+  {label: 'Qatar', value: 'Qatar'},
+  {label: 'Russia', value: 'Russia'},
+  {label: 'Saudi Arabia', value: 'Saudi Arabia'},
+  {label: 'Singapore', value: 'Singapore'},
+  {label: 'Zimbabwe', value: 'Zimbabwe'},
+  
 ];
 
 const EditProfileScreen = (props) => {
@@ -385,7 +280,7 @@ const EditProfileScreen = (props) => {
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
-        'http://13.232.190.226/api/user/profile',
+        'https://api.starzhubs.com/api/user/profile',
         {
           method: 'GET',
           headers: {
@@ -482,7 +377,7 @@ const EditProfileScreen = (props) => {
     values.gender = gender;
     values.country = country;
     values.languages = selectedItems.toString();
-    const response = await fetch('http://13.232.190.226/api/user/update', {
+    const response = await fetch('https://api.starzhubs.com/api/user/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -580,7 +475,7 @@ const EditProfileScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/user/avatar`,
+        `https://api.starzhubs.com/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -618,7 +513,7 @@ const EditProfileScreen = (props) => {
               backgroundColor: 'gray',
             }}
             source={{
-              uri: `http://13.232.190.226/api/user/avatar/${userInfo.image.avatar}`,
+              uri: `https://api.starzhubs.com/api/user/avatar/${userInfo.image.avatar}`,
             }}
           />
         )}
@@ -953,6 +848,8 @@ const EditProfileScreen = (props) => {
                     subKey="children"
                     selectText="Languages known"
                     showDropDowns={true}
+                    expandDropDowns
+                    showCancelButton
                     readOnlyHeadings={true}
                     onSelectedItemsChange={onSelectedItemsChange}
                     selectedItems={selectedItems}

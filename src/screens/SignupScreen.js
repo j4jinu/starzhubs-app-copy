@@ -64,7 +64,7 @@ const SignupScreen = (props) => {
     };
     try {
       const response = await fetch(
-        `http://13.232.190.226/api/user/otp`,
+        `https://api.starzhubs.com/api/user/otp`,
         requestOptions,
       );
       const responseData = await response.json();

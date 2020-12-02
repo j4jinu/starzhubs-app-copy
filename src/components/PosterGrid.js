@@ -23,7 +23,7 @@ const PosterGrid = (props) => {
             <Image
               style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
               source={{
-                uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+                uri: `https://api.starzhubs.com/api/poster/view/${props.image}`,
               }}
             />
           </View>

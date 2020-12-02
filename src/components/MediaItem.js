@@ -40,7 +40,7 @@ else{
           <Image
             style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
             source={{
-              uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
+              uri: `https://api.starzhubs.com/api/user/view/media/?${props.media[0].file}`,
             }}
           />
         ) : (
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 5,
-    borderRadius: 8,
+    borderRadius: 4,
     marginTop: 10,
   },
   gridItemText: {
