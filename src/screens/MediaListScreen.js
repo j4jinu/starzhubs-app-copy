@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, Image } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, Image ,ScrollView} from 'react-native';
 import {
   FlatList,
-  ScrollView,
+  
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import { color } from 'react-native-reanimated';
@@ -86,12 +86,11 @@ const MediaListSceen = (props) => {
     );
   }
   return (
-    // <View style={{flex:1}}>
-    <View >
+    <View style={{flexDirection:'column', flex:1}}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ marginTop: 10 }}>
+        style={{ marginVertical: 10,}}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
@@ -111,7 +110,7 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          style={{ marginTop: 15, marginBottom:'20%' }}
+          style={{paddingHorizontal:'2%',}}
           keyExtractor={(item, index) => item.id}
           data={media}
           renderItem={({ item }) => (
@@ -126,15 +125,16 @@ const MediaListSceen = (props) => {
       {media.length === 0 && (
         <View
           style={{
-            justifyContent: 'center',
+            // justifyContent: 'center',
             alignItems: 'center',
             width: "100%",
-            marginTop: "35%"
+            flex: 6,
           }}>
-          
+          <>
           <Image source={require("../assets/broke.png")}
             style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
             <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
+        </>
         </View>
       )}
     </View>

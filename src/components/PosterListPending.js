@@ -71,6 +71,7 @@ const PosterListPending = (props) => {
             userId={item.userId}
             getPosters={getPosters}
             navigation={props.navigation}
+            status='pending'
           />
         )}
       />

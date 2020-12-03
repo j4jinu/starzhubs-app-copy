@@ -130,6 +130,7 @@ const MyPosterGridItem = (props) => {
                   </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
+                  {(props.status === 'expired' ||props.status === 'rejected') ? null:(
                   <TouchableOpacity
                     style={{
                       padding: 10,
@@ -150,6 +151,7 @@ const MyPosterGridItem = (props) => {
                     }>
                     <Icon name="edit" size={25} color="blue" />
                   </TouchableOpacity>
+                  )}
                   <TouchableOpacity
                     style={{
                       padding: 10,

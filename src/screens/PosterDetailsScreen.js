@@ -31,6 +31,7 @@ const PosterDetailsScreen = (props) => {
   const startDate = props.navigation.getParam('startDate');
   const [selectedPoster, setSelectedPoster] = useState([]);
   const user = props.navigation.getParam('user');
+  const status = props.navigation.getParam('status');
   const [isRequestModal, setRequestModal] = useState(false);
   const [msg, setmsg] = useState();
   const [visible, setVisible] = useState(false);
@@ -332,7 +333,7 @@ const PosterDetailsScreen = (props) => {
                 )}
             </>
           ) : null}
-          {user._id === auth.userId ? null : (
+          {(user._id === auth.userId || status !== undefined) ? null : (
             <TouchableOpacity
               onPress={onSubmitRequest}
               activeOpacity={0.7}

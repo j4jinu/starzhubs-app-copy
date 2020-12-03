@@ -70,6 +70,7 @@ const PosterListRejected = (props) => {
             userId={item.userId}
             navigation={props.navigation}
             getPosters={getPosters}
+            status='rejected'
           />
         )}
       />

@@ -141,15 +141,9 @@ const TalentListScreen = (props) => {
   }
   if (talents.length > 0) {
     return (
-      <>
-        <ScrollView style={styles.container}>
-          {/* <Snackbar
-            visible={visible}
-            duration={5000}
-            onDismiss={onDismissSnackBar}>
-            Deleted Successfully
-        </Snackbar> */}
-          <View>
+      <View style={{flexDirection:'column'}}>
+        <ScrollView >
+          <View style={styles.container}>
             {talents.map((t, key) => (
               <View style={styles.card}>
                 <View style={styles.subHeadDiv2}>
@@ -233,7 +227,7 @@ const TalentListScreen = (props) => {
         <View
           style={{
             borderWidth: 0,
-            bottom: 10,
+            bottom: '10%',
             right: 10,
             alignSelf: 'flex-end',
           }}>
@@ -243,7 +237,7 @@ const TalentListScreen = (props) => {
             <GIcon name="plus" size={25} color="white" />
           </TouchableOpacity>
         </View>
-      </>
+      </View>
     );
   }
 };
@@ -251,6 +245,7 @@ const TalentListScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom:10
   },
   card: {
     backgroundColor: 'white',
@@ -261,7 +256,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 2,
     marginHorizontal: 20,
     padding: 8,
     marginTop: 10,

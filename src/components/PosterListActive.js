@@ -66,6 +66,7 @@ const PosterListActive = (props) => {
             userId={item.userId}
             getPosters={getPosters}
             navigation={props.navigation}
+            status='active'
           />
         )}
       />

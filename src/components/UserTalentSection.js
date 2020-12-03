@@ -44,7 +44,7 @@ const UserTalentSection = (props) => {
                                 justifyContent: 'center'
                             }}
                         >
-                            <Text>Level</Text>
+                            <Text style={{fontWeight:'bold',color: "darkgrey",}}>Level</Text>
                             <Text>
                                 {t.level == '1'
                                     ? "Beginner"
@@ -65,7 +65,7 @@ const UserTalentSection = (props) => {
                                 justifyContent: 'center'
                             }}
                         >
-                            <Text>Experience</Text>
+                            <Text style={{fontWeight:'bold',color: "darkgrey",}}>Experience</Text>
                             <Text>{t.chars.years} Years</Text>
                         </View>
                         <View
@@ -75,18 +75,13 @@ const UserTalentSection = (props) => {
                                 justifyContent: 'center'
                             }}
                         >
-                            <Text>Works</Text>
+                            <Text style={{fontWeight:'bold',color: "darkgrey",}}>Works</Text>
                             <Text>{t.chars.films}</Text>
                         </View>
                     </View>
-                    <Text
-                        style={{
-                            marginTop: 10,
-                            fontWeight: 'bold'
-                        }}
-                    >
+                    <Text style={{marginTop: 10,fontWeight: 'bold',color: "darkgrey" }}>
                         Description
-                </Text>
+                    </Text>
                     <Text
                         style={{
                             color: theme.$primaryColorText,

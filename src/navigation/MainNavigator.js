@@ -235,7 +235,9 @@ const AccountNavigator = createStackNavigator(
     },
     Talents: {
       screen: TalentListScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Your Talents',
+      },
     },
     EditTalents: {
       screen: EditTalentScreen,

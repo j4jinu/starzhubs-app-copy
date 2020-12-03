@@ -69,6 +69,7 @@ const PosterListExpired = (props) => {
             userId={item.userId}
             navigation={props.navigation}
             getPosters={getPosters}
+            status='expired'
           />
         )}
       />
