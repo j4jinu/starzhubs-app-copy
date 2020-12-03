@@ -762,6 +762,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: theme.$primaryColorText,
     marginLeft: 15,
+    marginTop: 5,
     marginBottom: 8,
   },
   row: {

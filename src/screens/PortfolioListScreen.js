@@ -95,43 +95,42 @@ const PortfolioListScreen = (props) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {users.length > 0 &&
-        <FlatList
-          style={{ backgroundColor: '#fafafa', marginTop: 20, marginBottom:30 }}
-          keyExtractor={(item, index) => item.id}
-          data={users}
-          renderItem={({ item }) => (
-            <UserGridItem
-              userId={item._id}
-              name={item.name}
-              location={item.location}
-              image={item.image}
-              navigation={props.navigation}
-            />
-          )}
-          numColumns={2}
-        />
-      }
-      {users.length === 0 && (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: '30%',
-          }}>
-          <Image
-            source={require('../assets/noresult1.png')}
-            style={{ height: 140, width: 140, }}
-          ></Image>
-          <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
-            Sorry, No users available.
-          </Text>
-          <Image
-            source={require('../assets/broke.png')}
-            style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+      <ScrollView>
+        {users.length > 0 &&
+          <FlatList
+            style={{ backgroundColor: '#fafafa', marginTop: 20, marginBottom: 30 }}
+            keyExtractor={(item, index) => item.id}
+            data={users}
+            renderItem={({ item }) => (
+              <UserGridItem
+                userId={item._id}
+                name={item.name}
+                location={item.location}
+                image={item.image}
+                navigation={props.navigation}
+              />
+            )}
+            numColumns={2}
           />
-        </View>
-      )}
+        }
+        {users.length === 0 && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingVertical: '30%',
+            }}>
+
+            <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
+              Sorry, No users available.
+          </Text>
+            <Image
+              source={require('../assets/broke.png')}
+              style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+            />
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 };

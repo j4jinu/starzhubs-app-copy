@@ -105,11 +105,7 @@ const ServiceDetailsScreen = (props) => {
             flexDirection: 'column',
             width: '100%',
           }}>
-          <View style={{ marginTop: 30 }}>
-            <Text style={{ fontSize: 28, color: 'orange', fontWeight: 'bold' }}>
-              {services.title}
-            </Text>
-          </View>
+
 
           <View style={styles.img}>
             <Image
@@ -122,7 +118,11 @@ const ServiceDetailsScreen = (props) => {
               style={{ borderRadius: 50, height: 200, width: 200 }}
             />
           </View>
-
+          <View style={{ marginBottom: 15 }}>
+            <Text style={{ fontSize: 28, color: 'orange', fontWeight: 'bold' }}>
+              {services.title}
+            </Text>
+          </View>
           <View
             style={{
               flexDirection: 'row',
@@ -156,15 +156,10 @@ const ServiceDetailsScreen = (props) => {
             }) => (
                 <View style={{ width: '90%', marginLeft: 0 }}>
                   <View style={styles.inputView}>
-                    <EIcon
-                      name="pen"
-                      size={20}
-                      color={theme.$primaryColor}
-                      style={{ marginTop: '-6%', marginLeft: '3%' }}
-                    />
+
                     <TextInput
                       style={styles.inputText}
-                      placeholder="Send Your Feedback"
+                      placeholder="Write Your Feedback"
                       placeholderTextColor="#003f5c"
                       keyboardType="default"
                       autoCapitalize="sentences"
@@ -223,7 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   img: {
-    marginTop: '2%',
+    marginTop: '10%',
     marginBottom: '8%',
   },
   inputView: {

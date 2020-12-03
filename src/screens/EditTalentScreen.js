@@ -408,7 +408,7 @@ const EditTalentScreen = (props) => {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
+                    backgroundColor: "white",
                     width: '90%',
                     paddingLeft: 8,
                     paddingRight: 8,
@@ -429,7 +429,7 @@ const EditTalentScreen = (props) => {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
+                    backgroundColor: "white",
                     width: '90%',
                     paddingLeft: 8,
                     paddingRight: 8,
@@ -445,7 +445,7 @@ const EditTalentScreen = (props) => {
                     style={{
                       alignSelf: 'center',
                       borderWidth: 1,
-                      borderRadius: 10,
+                      backgroundColor: "white",
                       width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
@@ -479,7 +479,7 @@ const EditTalentScreen = (props) => {
                     style={{
                       alignSelf: 'center',
                       borderWidth: 1,
-                      borderRadius: 10,
+                      backgroundColor: "white",
                       width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
@@ -514,7 +514,7 @@ const EditTalentScreen = (props) => {
                     style={{
                       alignSelf: 'center',
                       borderWidth: 1,
-                      borderRadius: 10,
+                      backgroundColor: "white",
                       width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
@@ -549,7 +549,7 @@ const EditTalentScreen = (props) => {
                     style={{
                       alignSelf: 'center',
                       borderWidth: 1,
-                      borderRadius: 10,
+                      backgroundColor: "white",
                       width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,

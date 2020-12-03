@@ -11,6 +11,7 @@ import {
   PermissionsAndroid,
   Alert,
   ImageBackground,
+  ToastAndroid
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -454,15 +455,15 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
                     // marginBottom: 5,
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.link ? 'red' : 'white',
                   }}>
                   <Cicon
                     name="merge-type"
@@ -494,18 +495,20 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    paddingBottom: 10,
+                    paddingTop: 10,
                     marginTop: 8,
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.link ? 'red' : 'white',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    paddingLeft: '5%',
+
                   }}>
-                  <Text>Select Confidence Level</Text>
+                  <Text style={{ fontSize: 15 }}>Select Confidence Level</Text>
 
                   <AirbnbRating
                     reviews={[
@@ -528,24 +531,27 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.link ? 'red' : 'white',
                   }}>
                   <View style={{ width: '7%' }}>
                     <Gicon
                       name="industry"
                       size={15}
-                      style={{ color: '#fd9242', marginTop: -10 }}
+                      style={{
+                        color: '#fd9242', marginTop: -10,
+
+                      }}
                     />
                   </View>
 
-                  <View style={{ width: '93%', }}>
+                  <View style={{ width: '96%', marginLeft: "-2%" }}>
                     <SectionedMultiSelect
                       items={industryNames}
                       IconRenderer={Icon}
@@ -566,14 +572,14 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
+                    backgroundColor: "white",
+                    width: '96%',
                     paddingLeft: 8,
                     paddingRight: 8,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.experience ? 'red' : 'gray',
+                    borderColor: errors.experience ? 'red' : 'white',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -598,14 +604,14 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
+                    backgroundColor: "white",
+                    width: '96%',
                     paddingLeft: 8,
                     paddingRight: 8,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.projects ? 'red' : 'gray',
+                    borderColor: errors.projects ? 'red' : 'white',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -630,14 +636,14 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
+                    backgroundColor: "white",
+                    width: '96%',
                     paddingLeft: 8,
                     paddingRight: 8,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.description ? 'red' : 'gray',
+                    borderColor: errors.description ? 'red' : 'white',
                   }}>
                   <Cicon
                     name="class"
@@ -827,14 +833,14 @@ export default function AddTalentScreen(props) {
                       style={{
                         alignSelf: 'center',
                         borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
+                        backgroundColor: "white",
+                        width: '96%',
                         paddingLeft: 8,
                         paddingRight: 8,
                         marginTop: 8,
                         flexDirection: 'row',
                         alignItems: 'center',
-                        borderColor: errors.bodyType ? 'red' : 'gray',
+                        borderColor: errors.bodyType ? 'red' : 'white',
                       }}>
                       <Picker
                         selectedValue={bodyTypeValue}
@@ -863,14 +869,14 @@ export default function AddTalentScreen(props) {
                       style={{
                         alignSelf: 'center',
                         borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
+                        backgroundColor: "white",
+                        width: '96%',
                         paddingLeft: 8,
                         paddingRight: 8,
                         marginTop: 8,
                         flexDirection: 'row',
                         alignItems: 'center',
-                        borderColor: errors.complexion ? 'red' : 'gray',
+                        borderColor: errors.complexion ? 'red' : 'white',
                       }}>
                       <Picker
                         selectedValue={complexionValue}
@@ -894,14 +900,14 @@ export default function AddTalentScreen(props) {
                       style={{
                         alignSelf: 'center',
                         borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
+                        backgroundColor: "white",
+                        width: '96%',
                         paddingLeft: 8,
                         paddingRight: 8,
                         marginTop: 8,
                         flexDirection: 'row',
                         alignItems: 'center',
-                        borderColor: errors.height ? 'red' : 'gray',
+                        borderColor: errors.height ? 'red' : 'white',
                       }}>
                       <TextInput
                         style={styles.inputText}
@@ -919,14 +925,14 @@ export default function AddTalentScreen(props) {
                       style={{
                         alignSelf: 'center',
                         borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
+                        backgroundColor: "white",
+                        width: '96%',
                         paddingLeft: 8,
                         paddingRight: 8,
                         marginTop: 8,
                         flexDirection: 'row',
                         alignItems: 'center',
-                        borderColor: errors.weight ? 'red' : 'gray',
+                        borderColor: errors.weight ? 'red' : 'white',
                       }}>
                       <TextInput
                         style={styles.inputText}
@@ -967,6 +973,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
+
   },
   radio: {
     flexDirection: 'row',
@@ -1001,8 +1008,9 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '100%',
-    color: '#000000',
-    marginLeft: 15,
+    color: "black",
+    marginLeft: 10,
+    fontSize: 15,
   },
   inputViewDes: {
     alignSelf: 'center',
@@ -1018,10 +1026,11 @@ const styles = StyleSheet.create({
   },
   inputTextDes: {
     width: '100%',
-    color: '#000000',
-    marginLeft: 15,
+    color: "black",
+    marginLeft: 10,
     marginBottom: 5,
     marginTop: 5,
+    fontSize: 15,
   },
   forgot: {
     color: 'white',

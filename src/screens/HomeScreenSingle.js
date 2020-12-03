@@ -94,8 +94,10 @@ const HomeScreenSingle = (props) => {
               }>
               <Image
                 resizeMode={'cover'}
-                style={{ width: deviceWidth,
-                  height: deviceWidth/2,}}
+                style={{
+                  width: deviceWidth,
+                  height: deviceWidth / 2,
+                }}
                 // style={{ width: '100%', height:200 }}
                 source={{
                   uri: `http://13.232.190.226/api/poster/view/${p.image}`,
@@ -115,6 +117,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+
+
   },
   wrapper: {
     height: 300,

@@ -143,92 +143,86 @@ const TalentListScreen = (props) => {
     return (
       <>
         <ScrollView style={styles.container}>
-          {/* <Snackbar
-            visible={visible}
-            duration={5000}
-            onDismiss={onDismissSnackBar}>
-            Deleted Successfully
-        </Snackbar> */}
-          <View>
-            {talents.map((t, key) => (
-              <View style={styles.card}>
-                <View style={styles.subHeadDiv2}>
-                  <View style={{ width: '70%' }}>
-                    <Text style={styles.subHead}>{t.category.title}</Text>
-                  </View>
-                  <View style={{ width: '20%', flexDirection: 'row' }}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.navigation.navigate('EditTalents', {
-                          talentId: t._id,
-                          category: t.category.title,
-                          type: t.chars.type,
-                          industry: t.chars.industry,
-                          films: t.chars.films,
-                          years: t.chars.years,
-                          description: t.description,
-                          levels: t.level,
-                        })
-                      }>
-                      <EIcon
-                        name="user-edit"
-                        size={15}
-                        color="orange"
-                        style={{ marginLeft: '35%', alignSelf: 'flex-end' }}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => confirmDelete(t._id)}>
-                      <DIcon
-                        name="delete"
-                        size={18}
-                        color="orange"
-                        style={{ marginLeft: 20, alignSelf: 'flex-end' }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
 
-                <View style={styles.infoDiv}>
-                  <View style={{ marginTop: 10 }}>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Type</Text>
-                      <Text style={styles.fieldText}>{t.chars.type}</Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Industries</Text>
-                      <Text style={styles.fieldText}>
-                        {t.chars.industry.toString()}
+          {talents.map((t, key) => (
+            <View style={styles.card}>
+              <View style={styles.subHeadDiv2}>
+                <View style={{ width: '70%' }}>
+                  <Text style={styles.subHead}>{t.category.title}</Text>
+                </View>
+                <View style={{ width: '20%', flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.navigation.navigate('EditTalents', {
+                        talentId: t._id,
+                        category: t.category.title,
+                        type: t.chars.type,
+                        industry: t.chars.industry,
+                        films: t.chars.films,
+                        years: t.chars.years,
+                        description: t.description,
+                        levels: t.level,
+                      })
+                    }>
+                    <EIcon
+                      name="user-edit"
+                      size={15}
+                      color="orange"
+                      style={{ marginLeft: '35%', alignSelf: 'flex-end' }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => confirmDelete(t._id)}>
+                    <DIcon
+                      name="delete"
+                      size={18}
+                      color="orange"
+                      style={{ marginLeft: 20, alignSelf: 'flex-end' }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View style={styles.infoDiv}>
+                <View style={{ marginTop: 10 }}>
+                  <View style={styles.fieldDiv}>
+                    <Text style={styles.fieldTitle}>Type</Text>
+                    <Text style={styles.fieldText}>{t.chars.type}</Text>
+                  </View>
+                  <View style={styles.fieldDiv}>
+                    <Text style={styles.fieldTitle}>Industries</Text>
+                    <Text style={styles.fieldText}>
+                      {t.chars.industry.toString()}
+                    </Text>
+                  </View>
+                  <View style={styles.fieldDiv}>
+                    <Text style={styles.fieldTitle}>Projects</Text>
+                    <Text style={styles.fieldText}>{t.chars.films}</Text>
+                  </View>
+                  <View style={styles.fieldDiv}>
+                    <Text style={styles.fieldTitle}>Experience</Text>
+                    <Text style={styles.fieldText}>
+                      {t.chars.years} Years
                       </Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Projects</Text>
-                      <Text style={styles.fieldText}>{t.chars.films}</Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Experience</Text>
-                      <Text style={styles.fieldText}>
-                        {t.chars.years} Years
-                      </Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Level</Text>
-                      <Text style={styles.fieldText}>
-                        {t.level == '1'
-                          ? 'Beginner'
-                          : t.level == '2'
-                            ? 'Average'
-                            : t.level == '3'
-                              ? 'Good'
-                              : t.level == '4'
-                                ? 'Excellent'
-                                : 'Experienced'}
-                      </Text>
-                    </View>
+                  </View>
+                  <View style={styles.fieldDiv}>
+                    <Text style={styles.fieldTitle}>Level</Text>
+                    <Text style={styles.fieldText}>
+                      {t.level == '1'
+                        ? 'Beginner'
+                        : t.level == '2'
+                          ? 'Average'
+                          : t.level == '3'
+                            ? 'Good'
+                            : t.level == '4'
+                              ? 'Excellent'
+                              : 'Experienced'}
+                    </Text>
                   </View>
                 </View>
               </View>
-            ))}
-          </View>
+            </View>
+          ))}
+
         </ScrollView>
         <View
           style={{
@@ -236,6 +230,7 @@ const TalentListScreen = (props) => {
             bottom: 10,
             right: 10,
             alignSelf: 'flex-end',
+
           }}>
           <TouchableOpacity
             style={styles.createBtn}
@@ -251,6 +246,8 @@ const TalentListScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: "3%"
+
   },
   card: {
     backgroundColor: 'white',
@@ -264,10 +261,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginHorizontal: 20,
     padding: 8,
-    marginTop: 10,
+
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
     paddingBottom: '5%',
+    marginBottom: "3%"
+
   },
   subHeadDiv: {
     marginTop: 8,

@@ -56,8 +56,7 @@ const MediaItem = (props) => {
                         /> */}
           <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
           <Text style={styles.mediaDescription}>{props.media[0].description}</Text>
-          <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>
-            Posted by:{' '}
+          <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>Posted by:
             {props.user[0] !== undefined && (
               <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
             )}
@@ -88,10 +87,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 3.26,
     shadowRadius: 5,
-    elevation: 5,
+    elevation: 3,
     borderRadius: 2,
-    marginBottom: 15,
-    marginTop: 10,
+    marginBottom: "3%"
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',

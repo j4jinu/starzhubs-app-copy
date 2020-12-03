@@ -92,7 +92,9 @@ const HomeNavigator = createStackNavigator(
     },
     FilterResult: {
       screen: FilterResultScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Filter Result',
+      },
     },
     MediaDetails: {
       screen: MediaDetailsScreen,

@@ -55,6 +55,8 @@ const UserMediaSection = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
+        marginBottom: "5%"
     },
     row: {
         flexDirection: 'row',

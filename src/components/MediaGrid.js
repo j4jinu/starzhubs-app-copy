@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 
 const MediaGrid = (props) => {
@@ -9,6 +10,7 @@ const MediaGrid = (props) => {
   }
   return (
     <>
+
       {props.media.map((media) => (
         <TouchableOpacity
           style={styles.gridItem}
@@ -49,6 +51,7 @@ const MediaGrid = (props) => {
           </View>
         </TouchableOpacity>
       ))}
+
     </>
   );
 };
