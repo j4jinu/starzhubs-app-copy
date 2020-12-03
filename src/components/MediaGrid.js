@@ -1,30 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import WebView from 'react-native-webview';
 
 const MediaGrid = (props) => {
   if (props.media.length === 0) {
-    return (
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingVertical: 25,
-          marginTop: "5%",
-          marginLeft: "25%"
-        }}>
-        <Text style={{ fontSize: 18, color: 'tomato' }}>
-          No Media files.
-</Text>
-        <Image
-          source={require('../assets/broke.png')}
-          style={{ width: "90%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
-        />
-      </View>
-    )
+    return null
+
   }
   return (
     <>
+
       {props.media.map((media) => (
         <TouchableOpacity
           style={styles.gridItem}
@@ -65,6 +51,7 @@ const MediaGrid = (props) => {
           </View>
         </TouchableOpacity>
       ))}
+
     </>
   );
 };

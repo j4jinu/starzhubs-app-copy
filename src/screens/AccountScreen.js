@@ -68,8 +68,10 @@ const AccountScreen = (props) => {
         <View>
           {user.image && user.image.avatar !== undefined && (
             <Image
-              style={{ width: deviceWidth,
-              height: deviceWidth }}
+              style={{
+                width: deviceWidth,
+                height: deviceWidth
+              }}
               source={{
                 uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
               }}

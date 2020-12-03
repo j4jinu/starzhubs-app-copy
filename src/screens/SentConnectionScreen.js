@@ -20,7 +20,7 @@ const SentConnectionScreen = () => {
       .then((response) => response.json())
       .then((response) => {
         setIsFriends(response.data.requests);
-        console.log("sent req",response);
+        console.log("sent req", response);
       })
       .catch((error) => {
         alert(error);

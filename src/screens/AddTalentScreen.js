@@ -11,6 +11,7 @@ import {
   PermissionsAndroid,
   Alert,
   ImageBackground,
+  ToastAndroid
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -454,15 +455,15 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
                     // marginBottom: 5,
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.link ? 'red' : 'white',
                   }}>
                   <Cicon
                     name="merge-type"
@@ -488,24 +489,26 @@ export default function AddTalentScreen(props) {
                     ))}
                   </Picker>
                 </View>
-                {errors.talentId?<Text style={styles.error}>{errors.talentId}</Text>:null}
+                {errors.talentId ? <Text style={styles.error}>{errors.talentId}</Text> : null}
 
                 <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    paddingBottom: 10,
+                    paddingTop: 10,
                     marginTop: 8,
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.link ? 'red' : 'white',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    paddingLeft: '5%',
+
                   }}>
-                  <Text>Select Confidence Level</Text>
+                  <Text style={{ fontSize: 15 }}>Select Confidence Level</Text>
 
                   <AirbnbRating
                     reviews={[
@@ -528,24 +531,27 @@ export default function AddTalentScreen(props) {
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    borderColor: errors.link ? 'red' : 'white',
                   }}>
                   <View style={{ width: '7%' }}>
                     <Gicon
                       name="industry"
                       size={15}
-                      style={{ color: '#fd9242', marginTop: -10 }}
+                      style={{
+                        color: '#fd9242', marginTop: -10,
+
+                      }}
                     />
                   </View>
 
-                  <View style={{ width: '93%', }}>
+                  <View style={{ width: '96%', marginLeft: "-2%" }}>
                     <SectionedMultiSelect
                       items={industryNames}
                       IconRenderer={Icon}
@@ -561,19 +567,19 @@ export default function AddTalentScreen(props) {
                     />
                   </View>
                 </View>
-                {errors.industry?<Text style={styles.error}>{errors.industry}</Text>:null}
+                {errors.industry ? <Text style={styles.error}>{errors.industry}</Text> : null}
                 <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
+                    backgroundColor: "white",
+                    width: '96%',
                     paddingLeft: 8,
                     paddingRight: 8,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.experience ? 'red' : 'gray',
+                    borderColor: errors.experience ? 'red' : 'white',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -593,19 +599,19 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('experience')}
                   />
                 </View>
-                {errors.experience?<Text style={styles.error}>{errors.experience}</Text>:null}
+                {errors.experience ? <Text style={styles.error}>{errors.experience}</Text> : null}
                 <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
+                    backgroundColor: "white",
+                    width: '96%',
                     paddingLeft: 8,
                     paddingRight: 8,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.projects ? 'red' : 'gray',
+                    borderColor: errors.projects ? 'red' : 'white',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -625,19 +631,19 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('projects')}
                   />
                 </View>
-                {errors.projects?<Text style={styles.error}>{errors.projects}</Text>:null}
+                {errors.projects ? <Text style={styles.error}>{errors.projects}</Text> : null}
                 <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
+                    backgroundColor: "white",
+                    width: '96%',
                     paddingLeft: 8,
                     paddingRight: 8,
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.description ? 'red' : 'gray',
+                    borderColor: errors.description ? 'red' : 'white',
                   }}>
                   <Cicon
                     name="class"
@@ -659,7 +665,7 @@ export default function AddTalentScreen(props) {
                     onBlur={handleBlur('description')}
                   />
                 </View>
-                {errors.description?<Text style={styles.error}>{errors.description}</Text>:null}
+                {errors.description ? <Text style={styles.error}>{errors.description}</Text> : null}
                 {isProfileImageMode && (
                   <Fragment>
                     <View
@@ -682,14 +688,14 @@ export default function AddTalentScreen(props) {
                               !headimg
                                 ? require('../assets/headshot.jpg')
                                 : {
-                                    uri: headimg,
-                                  }
+                                  uri: headimg,
+                                }
                             }
                             style={{
                               borderRadius: 50,
                               height: 140,
                               width: 140,
-                              justifyContent:'center',
+                              justifyContent: 'center',
                             }}
                           >
                             <Image
@@ -702,7 +708,7 @@ export default function AddTalentScreen(props) {
                                 width: 60
                               }}
                             />
-                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Head Shot</Text>
+                            <Text style={{ alignSelf: 'center', fontSize: 12, marginTop: 5 }}>Upload Head Shot</Text>
                           </ImageBackground>
                         </TouchableOpacity>
                       </View>
@@ -714,21 +720,21 @@ export default function AddTalentScreen(props) {
                         <TouchableOpacity
                           onPress={() => requestCameraPermission('left_profile')}>
                           <ImageBackground
-                          source={
-                            !leftimg
-                              ? require('../assets/left_profile.jpg')
-                              : {
+                            source={
+                              !leftimg
+                                ? require('../assets/left_profile.jpg')
+                                : {
                                   uri: leftimg,
                                 }
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent:'center',
-                          }}
-                        >
-                         <Image
+                            }
+                            style={{
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <Image
                               source={
                                 require('../assets/add-button.png')
                               }
@@ -738,8 +744,8 @@ export default function AddTalentScreen(props) {
                                 width: 60
                               }}
                             />
-                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Left Side Shot</Text> 
-                        </ImageBackground>
+                            <Text style={{ alignSelf: 'center', fontSize: 12, marginTop: 5 }}>Upload Left Side Shot</Text>
+                          </ImageBackground>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -759,21 +765,21 @@ export default function AddTalentScreen(props) {
                             requestCameraPermission('right_profile')
                           }>
                           <ImageBackground
-                          source={
-                            !rightimg
-                              ? require('../assets/right_profile.jpg')
-                              : {
+                            source={
+                              !rightimg
+                                ? require('../assets/right_profile.jpg')
+                                : {
                                   uri: rightimg,
                                 }
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent:'center',
-                          }}
-                        >
-                          <Image
+                            }
+                            style={{
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <Image
                               source={
                                 require('../assets/add-button.png')
                               }
@@ -783,8 +789,8 @@ export default function AddTalentScreen(props) {
                                 width: 60
                               }}
                             />
-                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Right Side Shot</Text>
-                        </ImageBackground>
+                            <Text style={{ alignSelf: 'center', fontSize: 12, marginTop: 5 }}>Upload Right Side Shot</Text>
+                          </ImageBackground>
                         </TouchableOpacity>
                       </View>
                       <View
@@ -795,22 +801,22 @@ export default function AddTalentScreen(props) {
                         <TouchableOpacity
                           onPress={() => requestCameraPermission('fullsize')}>
                           <ImageBackground
-                          source={
-                            !fullsizeimg
-                              ? require('../assets/fullsize.jpg')
-                              : {
+                            source={
+                              !fullsizeimg
+                                ? require('../assets/fullsize.jpg')
+                                : {
                                   uri: fullsizeimg,
                                 }
-                          }
-                          //  source={require("../../assets/fullsize.jpg")}
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent:'center',
-                          }}
-                        >
-                          <Image
+                            }
+                            //  source={require("../../assets/fullsize.jpg")}
+                            style={{
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
+                            }}
+                          >
+                            <Image
                               source={require('../assets/add-button.png')}
                               style={{
                                 alignSelf: 'center',
@@ -818,24 +824,24 @@ export default function AddTalentScreen(props) {
                                 width: 60
                               }}
                             />
-                            <Text style={{alignSelf:'center', fontSize:12,marginTop:5}}>Upload Full Size Shot</Text>
-                        </ImageBackground>
+                            <Text style={{ alignSelf: 'center', fontSize: 12, marginTop: 5 }}>Upload Full Size Shot</Text>
+                          </ImageBackground>
                         </TouchableOpacity>
                       </View>
                     </View>
                     <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.bodyType ? 'red' : 'gray',
-                  }}>
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        backgroundColor: "white",
+                        width: '96%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.bodyType ? 'red' : 'white',
+                      }}>
                       <Picker
                         selectedValue={bodyTypeValue}
                         style={{
@@ -858,20 +864,20 @@ export default function AddTalentScreen(props) {
                       </Picker>
                     </View>
 
-                    {errors.bodyType?<Text style={styles.error}>{errors.bodyType}</Text>:null}
+                    {errors.bodyType ? <Text style={styles.error}>{errors.bodyType}</Text> : null}
                     <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.complexion ? 'red' : 'gray',
-                  }}>
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        backgroundColor: "white",
+                        width: '96%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.complexion ? 'red' : 'white',
+                      }}>
                       <Picker
                         selectedValue={complexionValue}
                         style={{
@@ -889,20 +895,20 @@ export default function AddTalentScreen(props) {
                         <Picker.Item label="Wheatish" value="Wheatish" />
                       </Picker>
                     </View>
-                    {errors.complexion?<Text style={styles.error}>{errors.complexion}</Text>:null}
+                    {errors.complexion ? <Text style={styles.error}>{errors.complexion}</Text> : null}
                     <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.height ? 'red' : 'gray',
-                  }}>
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        backgroundColor: "white",
+                        width: '96%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.height ? 'red' : 'white',
+                      }}>
                       <TextInput
                         style={styles.inputText}
                         placeholder="Height (CMs)"
@@ -914,20 +920,20 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('height')}
                       />
                     </View>
-                    {errors.height?<Text style={styles.error}>{errors.height}</Text>:null}
+                    {errors.height ? <Text style={styles.error}>{errors.height}</Text> : null}
                     <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.weight ? 'red' : 'gray',
-                  }}>
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        backgroundColor: "white",
+                        width: '96%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 8,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.weight ? 'red' : 'white',
+                      }}>
                       <TextInput
                         style={styles.inputText}
                         placeholder="Weight (KGs)"
@@ -939,7 +945,7 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('weight')}
                       />
                     </View>
-                    {errors.weight?<Text style={styles.error}>{errors.weight}</Text>:null}
+                    {errors.weight ? <Text style={styles.error}>{errors.weight}</Text> : null}
                   </Fragment>
                 )}
 
@@ -958,7 +964,7 @@ export default function AddTalentScreen(props) {
             )}
         </Formik>
       </View>
-    </ScrollView>  );
+    </ScrollView>);
 }
 
 const styles = StyleSheet.create({
@@ -967,6 +973,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
+
   },
   radio: {
     flexDirection: 'row',
@@ -1001,8 +1008,9 @@ const styles = StyleSheet.create({
   },
   inputText: {
     width: '100%',
-    color: '#000000',
-    marginLeft: 15,
+    color: "black",
+    marginLeft: 10,
+    fontSize: 15,
   },
   inputViewDes: {
     alignSelf: 'center',
@@ -1018,10 +1026,11 @@ const styles = StyleSheet.create({
   },
   inputTextDes: {
     width: '100%',
-    color: '#000000',
-    marginLeft: 15,
+    color: "black",
+    marginLeft: 10,
     marginBottom: 5,
     marginTop: 5,
+    fontSize: 15,
   },
   forgot: {
     color: 'white',

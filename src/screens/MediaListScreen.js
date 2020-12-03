@@ -42,7 +42,7 @@ const MediaListSceen = (props) => {
 
   useEffect(() => {
     const getUsers = async () => {
-      console.log("catid",categoryId);
+      console.log("catid", categoryId);
       setLoading(true)
       if (!categoryId) {
         setLoading(false)
@@ -61,7 +61,7 @@ const MediaListSceen = (props) => {
         const userData = await userResponse.json();
         if (userData.success) {
           setMedia(userData.data.medias);
-          console.log("usersmedia",userData.data.medias);
+          console.log("usersmedia", userData.data.medias);
           setLoading(false)
           return;
         }
@@ -111,6 +111,7 @@ const MediaListSceen = (props) => {
       {media.length > 0 && (
         <FlatList
           style={{paddingHorizontal:'2%',}}
+          // style={{ marginTop: 15, marginBottom: '10%' }}
           keyExtractor={(item, index) => item.id}
           data={media}
           renderItem={({ item }) => (
@@ -130,11 +131,13 @@ const MediaListSceen = (props) => {
             width: "100%",
             flex: 6,
           }}>
-          <>
           <Image source={require("../assets/broke.png")}
             style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
             <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
-        </>
+
+          {/* <Image source={require("../assets/broke.png")}
+            style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+         <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text> */}
         </View>
       )}
     </View>

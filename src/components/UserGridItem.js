@@ -1,40 +1,43 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const UserGridItem = (props) => {
   const { image, location, talents, userId } = props;
   console.warn('talents', talents);
   return (
     <>
-      {
-        <TouchableOpacity
-          style={styles.gridItem}
-          onPress={() =>
-            props.navigation.navigate('UserDetails', {
-              userId: props.userId,
-            })
-          }
-          activeOpacity={0.7}>
-          <View style={styles.container}>
-            <Image
-              style={{ width: '100%', height: '75%', resizeMode: 'cover' }}
-              source={{
-                uri: props.image
-                  ? `http://13.232.190.226/api/user/avatar/${props.image.avatar}`
-                  : '',
-              }}
-            />
-            <Text style={styles.gridItemText}>{props.name}</Text>
-            <Text style={{ marginLeft: 10, marginTop: 1 }}>
-              {props.location !== undefined ? props.location.place : ''},{' '}
-              {props.location !== undefined ? props.location.state : ''}
-            </Text>
-            {/* <Text style={{marginLeft: 10, marginTop: 1}}>
+      <ScrollView>
+        {
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() =>
+              props.navigation.navigate('UserDetails', {
+                userId: props.userId,
+              })
+            }
+            activeOpacity={0.7}>
+            <View style={styles.container}>
+              <Image
+                style={{ width: '100%', height: '75%', resizeMode: 'cover' }}
+                source={{
+                  uri: props.image
+                    ? `http://13.232.190.226/api/user/avatar/${props.image.avatar}`
+                    : '',
+                }}
+              />
+              <Text style={styles.gridItemText}>{props.name}</Text>
+              <Text style={{ marginLeft: 10, marginTop: 1 }}>
+                {props.location !== undefined ? props.location.place : ''},{' '}
+                {props.location !== undefined ? props.location.state : ''}
+              </Text>
+              {/* <Text style={{marginLeft: 10, marginTop: 1}}>
               {'Actor, Singer'}
             </Text> */}
-          </View>
-        </TouchableOpacity>
-      }
+            </View>
+          </TouchableOpacity>
+        }
+      </ScrollView>
     </>
   );
 };

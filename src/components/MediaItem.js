@@ -6,68 +6,68 @@ import theme from '../config/theme';
 const MediaItem = (props) => {
   const deviceWidth = Dimensions.get('window').width;
 
-  if (props.user===null) {
+  if (props.user === null) {
     return null
   }
-else{
-  return (
-    <>
-      <TouchableOpacity
-        style={styles.gridItem}
-        activeOpacity={0.7}
-        onPress={() =>
-          props.navigation.navigate('MediaDetails', {
-            mediaFile: props.media[0].file,
-            mediaType: props.media[0].fileType,
-            caption: props.media[0].caption,
-            description: props.media[0].description,
-            user:props.user[0] !== undefined?props.user[0]:props.user,
-            status:1
-          })
-        }>
-        {props.media[0].fileType === 'image' ? (
-          <Image
-            style={{ width: '100%',height: deviceWidth/2 }}
-            // style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
-            resizeMode= 'cover'
-            source={{
-              uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
-            }}
-          />
-        ) : (
-            <WebView
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
+  else {
+    return (
+      <>
+        <TouchableOpacity
+          style={styles.gridItem}
+          activeOpacity={0.7}
+          onPress={() =>
+            props.navigation.navigate('MediaDetails', {
+              mediaFile: props.media[0].file,
+              mediaType: props.media[0].fileType,
+              caption: props.media[0].caption,
+              description: props.media[0].description,
+              user: props.user[0] !== undefined ? props.user[0] : props.user,
+              status: 1
+            })
+          }>
+          {props.media[0].fileType === 'image' ? (
+            <Image
+              style={{ width: '100%', height: deviceWidth / 2 }}
+              // style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
+              resizeMode='cover'
               source={{
-                uri:
-                  'https://www.youtube.com/embed/' +
-                  props.media[0].file.substring(
-                    props.media[0].file.lastIndexOf('=') + 1,
-                  ),
+                uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
               }}
             />
-          )}
-        {/* <Image
+
+          ) : (
+              <WebView
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                source={{
+                  uri:
+                    'https://www.youtube.com/embed/' +
+                    props.media[0].file.substring(
+                      props.media[0].file.lastIndexOf('=') + 1,
+                    ),
+                }}
+              />
+            )}
+          {/* <Image
                             style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{
                                 uri: props.image
                             }}
                         /> */}
-        <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
-        <Text style={styles.mediaDescription}>{props.media[0].description}</Text>
-        <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>
-          Posted by:{' '}
-          {props.user[0] !== undefined && (
-            <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
-          )}
-          {props.user !== undefined && (
-            <Text style={styles.mediaAuthor}>{props.user.name}</Text>
-          )}
-        </Text>
-      </TouchableOpacity>
-    </>
-  );
-}
+          <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
+          <Text style={styles.mediaDescription}>{props.media[0].description}</Text>
+          <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>Posted by:
+            {props.user[0] !== undefined && (
+              <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
+            )}
+            {props.user !== undefined && (
+              <Text style={styles.mediaAuthor}>{props.user.name}</Text>
+            )}
+          </Text>
+        </TouchableOpacity>
+      </>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     alignSelf: 'center',
-    width: '95%',
+    width: '99%',
     height: 300,
     backgroundColor: 'white',
     marginHorizontal: 3,
@@ -89,6 +89,9 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 2,
     marginBottom: 10,
+    // elevation: 3,
+    // borderRadius: 2,
+    // marginBottom: "3%"
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',
