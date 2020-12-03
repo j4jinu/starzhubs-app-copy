@@ -157,9 +157,11 @@ const PosterDetailsScreen = (props) => {
         <View style={styles.container}>
           <TouchableOpacity onPress={() => setEnlargeModal(true)}>
             <Image
-              style={{ width: deviceWidth,
-              height: deviceWidth/2,
-              backgroundColor: '#e6e6e6', }}
+              style={{
+                width: deviceWidth,
+                height: deviceWidth / 2,
+                backgroundColor: '#e6e6e6',
+              }}
               resizeMode="cover"
               source={{
                 uri: `http://13.232.190.226/api/poster/view/${image}`,
@@ -408,9 +410,11 @@ const PosterDetailsScreen = (props) => {
               }}>
               <Image
                 // style={styles.media}
-                style={{ width: '100%',
-                  height: deviceWidth/2,
-                  backgroundColor: '#e6e6e6', }}
+                style={{
+                  width: '100%',
+                  height: deviceWidth / 2,
+                  backgroundColor: '#e6e6e6',
+                }}
                 source={{
                   uri: `http://13.232.190.226/api/poster/view/${image}`,
                 }}
