@@ -17,10 +17,13 @@ import Moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
 import AIcon from 'react-native-vector-icons/AntDesign';
+import SIcon from 'react-native-vector-icons/FontAwesome';
+import EIcon from 'react-native-vector-icons/Entypo';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
+
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
   const posterId = props.navigation.getParam('posterId');
@@ -36,6 +39,7 @@ const PosterDetailsScreen = (props) => {
   const [msg, setmsg] = useState();
   const [visible, setVisible] = useState(false);
   const [enlargeModal, setEnlargeModal] = useState(false)
+  const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
 
   const initialValues = {
@@ -160,7 +164,7 @@ const PosterDetailsScreen = (props) => {
             <Image
               style={{
                 width: deviceWidth,
-                height: deviceWidth / 2,
+                height: deviceHeight/3,
                 backgroundColor: '#e6e6e6',
               }}
               resizeMode="cover"
@@ -170,39 +174,54 @@ const PosterDetailsScreen = (props) => {
             />
           </TouchableOpacity>
           <View style={styles.posterInfo}>
+          {(user._id === auth.userId || status !== undefined) ? null : (
+          <TouchableOpacity
+                style={styles.sendBtn}
+                onPress={onSubmitRequest}
+                activeOpacity={0.7}>
+                <SIcon name="send" size={25} color={'white'} />
+          </TouchableOpacity>
+          )}
+            <View style={{flexDirection:'row'}}>
+              <View style={{width:'80%'}}>
             <Text style={styles.title} numberOfLines={2}>
               {title}
             </Text>
+            </View>
+              
+            </View>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                marginHorizontal: 5,
+                // marginHorizontal: 5,
                 marginVertical: 15,
               }}>
-              <View>
-                <Text style={{ fontSize: 12 }}>
+              <View style={{flexDirection:'row'}}>
+                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{marginTop:1}} />
+                <Text style={{ fontSize: 12, marginLeft:'5%' }}>
                   Starts : {Moment(startDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
-              <View>
-                <Text style={{ fontSize: 12 }}>
+              <View style={{flexDirection:'row',}}>
+                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{marginTop:1}} />
+                <Text style={{ fontSize: 12, marginLeft:8 }}>
                   Ends: {Moment(endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
             </View>
-            <Text style={{ fontWeight: 'bold', marginHorizontal: 5 }}>
-              {'Description'}
-            </Text>
-            <Text style={styles.description}>{description}</Text>
-          </View>
-          {user._id === auth.userId ? null : (
+            <View style={{flexDirection:'row', width:'100%'}}>
+                <EIcon name="info-with-circle" size={12} color={theme.$primaryColor} style={{marginTop:3, width:'5%'}} />
+              <Text style={styles.description}>{description}</Text>
+            </View>
+            </View>
+            {user._id === auth.userId ? null : (
             <View style={styles.authorInfo}>
               <Image
                 style={{
-                  width: 50,
-                  height: 50,
+                  width: 30,
+                  height: 30,
                   borderRadius: 100,
                 }}
                 source={{
@@ -223,14 +242,16 @@ const PosterDetailsScreen = (props) => {
                     justifyContent: 'center',
                     marginLeft: 10,
                   }}>
-                  <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                  <Text style={{ fontSize: 13, color:'grey' }}>{'Posted By'}</Text>
+                  <Text style={{ fontSize: 14, fontWeight: '700' }}>
                     {user.name}
                   </Text>
                 </View>
               </TouchableOpacity>
             </View>
           )}
+          
+          
           {user._id === auth.userId ? (
             <>
               <View>
@@ -335,7 +356,7 @@ const PosterDetailsScreen = (props) => {
                 )}
             </>
           ) : null}
-          {(user._id === auth.userId || status !== undefined) ? null : (
+          {/* {(user._id === auth.userId || status !== undefined) ? null : (
             <TouchableOpacity
               onPress={onSubmitRequest}
               activeOpacity={0.7}
@@ -344,7 +365,7 @@ const PosterDetailsScreen = (props) => {
                 {'Show Interest'}
               </Text>
             </TouchableOpacity>
-          )}
+          )} */}
         </View>
       </ScrollView>
 
@@ -435,40 +456,45 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   description: {
-    marginHorizontal: 5,
-    marginVertical: 5,
+    // marginHorizontal: 5,
+    // marginVertical: 5,
     lineHeight: 20,
+    textAlign:'justify',
+    width:'95%'
   },
   posterInfo: {
     backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    marginHorizontal: 10,
-    padding: 8,
-    marginTop: -10,
-    borderRadius: theme.$borderRadius,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 5,
+    // marginHorizontal: 10,
+    padding: 20,
+    // paddingBottom:20
+    // marginTop: -10,
+    // borderRadius: theme.$borderRadius,
   },
   authorInfo: {
     backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    marginHorizontal: 10,
-    padding: 8,
-    marginTop: 10,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 5,
+    // marginHorizontal: 10,
+    // padding: 8,
+    marginTop: 1,
     flexDirection: 'row',
     borderRadius: theme.$borderRadius,
+    padding:20,
+    // flex:1
   },
   requestBtn: {
     backgroundColor: theme.$primaryColor,
@@ -488,10 +514,10 @@ const styles = StyleSheet.create({
     borderRadius: theme.$borderRadius,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     textTransform: 'capitalize',
-    color: theme.$primaryColor,
-    alignSelf: 'center',
+    color: "black",
+    // alignSelf: 'center',
     fontWeight: 'bold',
   },
   error: {
@@ -503,6 +529,20 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 400,
   },
+  sendBtn: {
+    backgroundColor: theme.$primaryColor,
+    borderRadius: 100,
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // alignSelf: 'flex-end',
+    marginTop: '-12%',
+    elevation:5,
+    // marginRight: 15,
+    alignSelf:'flex-end'
+  },
+
 
 });
 

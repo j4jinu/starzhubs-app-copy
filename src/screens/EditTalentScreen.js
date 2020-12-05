@@ -409,13 +409,14 @@ const EditTalentScreen = (props) => {
                     alignSelf: 'center',
                     borderWidth: 1,
                     backgroundColor: "white",
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: '6%',
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
+                    // marginBottom: 5,
+                    borderColor: errors.link ? 'red' : 'white',
                   }}>
                   <Cicon name="merge-type" size={20} style={{ color: '#fd9242' }} />
                   <Text
@@ -425,7 +426,7 @@ const EditTalentScreen = (props) => {
                 </View>
                 {errors.talentId ? <Text style={styles.error}>{errors.talentId}</Text> : null}
 
-                <View
+                {/* <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
@@ -439,22 +440,23 @@ const EditTalentScreen = (props) => {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     paddingLeft: '5%',
-                  }}>
+                  }}> */}
 
                   <View
                     style={{
                       alignSelf: 'center',
                       borderWidth: 1,
                       backgroundColor: "white",
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: '3%',
-                      alignItems: 'center',
-                      borderColor: errors.link ? 'red' : 'gray',
-                      flexDirection: 'column',
+                      width: '96%',
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      marginTop: 8,
+                      flexDirection: 'row',
                       alignItems: 'flex-start',
-                      paddingLeft: '5%',
+                      paddingVertical:12,
+                      // marginBottom: 5,
+                      borderColor: errors.link ? 'red' : 'white',
+                      flexDirection:'column'
                     }}>
                     <Text>Select Confidence Level</Text>
 
@@ -478,21 +480,30 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       alignSelf: 'center',
-                      borderWidth: 1,
-                      backgroundColor: "white",
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: '3%',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.link ? 'red' : 'gray',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      // paddingLeft: '5%',
+                    borderWidth: 1,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent:'center',
+                    borderColor: errors.link ? 'red' : 'white',
                     }}>
 
-                    <View style={{ width: '90%', justifyContent: 'center' }}>
+                  <View style={{ width: '7%' }}>
+                    <Gicon
+                      name="industry"
+                      size={15}
+                      style={{
+                        color: '#fd9242', marginTop: -10,
+
+                      }}
+                    />
+                  </View>
+
+                  <View style={{ width: '96%', marginLeft: "-2%", paddingBottom:12 }}>
                       <SectionedMultiSelect
                         items={industryNames}
                         IconRenderer={Icon}
@@ -513,15 +524,15 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       alignSelf: 'center',
-                      borderWidth: 1,
-                      backgroundColor: "white",
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: '3%',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.experience ? 'red' : 'gray',
+                    borderWidth: 1,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.experience ? 'red' : 'white',
                     }}>
                     <Eicon
                       name="envelope-open-text"
@@ -548,15 +559,15 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       alignSelf: 'center',
-                      borderWidth: 1,
-                      backgroundColor: "white",
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: '3%',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.link ? 'red' : 'gray',
+                    borderWidth: 1,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.experience ? 'red' : 'white',
                     }}>
                     <Eicon
                       name="envelope-open-text"
@@ -726,16 +737,15 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: '3%',
-                      marginBottom: '3%',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.link ? 'red' : 'gray',
+                    borderWidth: 1,
+                    backgroundColor: "white",
+                    width: '96%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.experience ? 'red' : 'white',
                     }}
                   >
                     <Eicon
@@ -760,7 +770,7 @@ const EditTalentScreen = (props) => {
                       onBlur={handleBlur('description')}
                     />
                   </View>
-                </View>
+                {/* </View> */}
 
                 <TouchableOpacity style={styles.registerBtn} onPress={handleSubmit}>
                   <Text style={styles.registerBtnText}>

@@ -91,9 +91,8 @@ const BuddyRequestItem = (props) => {
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity onSelect={() => props.navigation.navigate('UserDetails',{
-                        userId: item.fromUser._id
-                    })}> */}
+      <TouchableOpacity
+       onPress={props.onSelect}>
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
         <Image
           style={{
@@ -123,7 +122,7 @@ const BuddyRequestItem = (props) => {
           </Text>
         </View>
       </View>
-      {/* </TouchableOpacity> */}
+      </TouchableOpacity>
       <View
         style={{
           flexDirection: 'row',

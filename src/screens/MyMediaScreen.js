@@ -125,7 +125,7 @@ const MyMediaScreen = (props) => {
   };
 
 
-  if (isNoMedia || talents.length === 0) {
+  if (talents.length === 0) {
     return (
       <View
         style={{
@@ -158,10 +158,13 @@ const MyMediaScreen = (props) => {
                   paddingHorizontal: 10,
                   paddingVertical: 8,
                   marginTop: 10,
+                  // backgroundColor:'gainsboro'
                 }}>
+                  
                 <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
                   {t.category.title}
                 </Text>
+                
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -218,6 +221,13 @@ const MyMediaScreen = (props) => {
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+                {/* {t.media === [] || t.media === undefined || t.media.length === 0?(
+                  <View style={{alignItems:'center', width:'100%'}}>
+                  <Image source={require("../assets/broke.png")}
+                  style={{ width: 50, height: 50, marginTop: "5%" }} />
+                <Text style={{ fontSize: 13, color: 'tomato' }}> No medias added under this category</Text>
+                </View>
+                ):( */}
                 {t.media.map((m) => (
                   <>
                     <View style={styles.gridItem}>
@@ -314,6 +324,7 @@ const MyMediaScreen = (props) => {
                       </View>
                     </View>
                   </>
+                // ))
                 ))}
               </View>
             </>
