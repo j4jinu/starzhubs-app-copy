@@ -11,7 +11,6 @@ import {
   ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import EIcon from 'react-native-vector-icons/FontAwesome5';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Snackbar } from 'react-native-paper';
@@ -129,13 +128,13 @@ const ServiceDetailsScreen = (props) => {
               marginRight: '10%',
               marginLeft: '10%',
             }}>
-            <Icon
+            {/* <Icon
               name="infocirlce"
               size={15}
               color={theme.$primaryColor}
               style={{ marginTop: 4, marginRight: '4%' }}
-            />
-            <Text style={{ textAlign: 'justify', alignSelf: 'center' }}>
+            /> */}
+            <Text style={{ textAlign: 'center', alignSelf: 'center' }}>
               {services.description}
             </Text>
           </View>
@@ -186,7 +185,7 @@ const ServiceDetailsScreen = (props) => {
                       {loading ? (
                         <ActivityIndicator size="small" color="#fff" />
                       ) : (
-                          'Submit'
+                          'SUBMIT'
                         )}
                     </Text>
                   </TouchableOpacity>
@@ -204,6 +203,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 1,
+    backgroundColor: "ivory"
   },
   posterTitle: {
     fontSize: 18,
@@ -226,18 +226,20 @@ const styles = StyleSheet.create({
     marginTop: '7%',
     justifyContent: 'flex-start',
     padding: 5,
-    borderColor: 'grey',
-    borderWidth: 1,
+    borderColor: "#707070",
+    backgroundColor: "#F6F6F6",
+    borderRadius: 8,
     marginBottom: 5,
   },
   inputText: {
     width: '100%',
   },
   Btn: {
-    width: '100%',
+    width: '30%',
     backgroundColor: '#fd9242',
-    borderRadius: 10,
+    marginLeft: "70%",
     height: 40,
+    borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: '5%',

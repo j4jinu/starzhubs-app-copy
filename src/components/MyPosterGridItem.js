@@ -73,20 +73,21 @@ const MyPosterGridItem = (props) => {
       </View>
 
       {
-        <TouchableOpacity
-          style={styles.gridItem}
-          onPress={() =>
-            props.navigation.navigate('MyPosterDetails', {
-              posterId: props.id,
-              title: props.poster,
-              image: props.image,
-              description: props.description,
-              endDate: props.endDate,
-              startDate: props.startDate,
-              user: userId,
-            })
-          }
-          activeOpacity={0.7}>
+        // <TouchableOpacity
+        //   style={styles.gridItem}
+        //   onPress={() =>
+        //     props.navigation.navigate('MyPosterDetails', {
+        //       posterId: props.id,
+        //       title: props.poster,
+        //       image: props.image,
+        //       description: props.description,
+        //       endDate: props.endDate,
+        //       startDate: props.startDate,
+        //       user: userId,
+        //     })
+        //   }
+        //   activeOpacity={0.7}>
+        <View style={styles.gridItem}>
           <View style={styles.container}>
             <Image
               style={{
@@ -177,7 +178,8 @@ const MyPosterGridItem = (props) => {
               {props.description}
             </Text>
           </View>
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
+        </View>
       }
     </>
   );
