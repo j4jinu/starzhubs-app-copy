@@ -92,36 +92,36 @@ const BuddyRequestItem = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-       onPress={props.onSelect}>
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <Image
-          style={{
-            width: 75,
-            height: 75,
-            borderRadius: 100,
-          }}
-          source={{
-            uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
-          }}
-        />
-        <View style={styles.details}>
-          <Text
+        onPress={props.onSelect}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <Image
             style={{
-              fontSize: 17,
-              marginBottom: 5,
-              color: theme.$primaryColorText,
-              fontWeight: 'bold',
-            }}>
-            {props.name}
-          </Text>
-          <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>
-            {'Talent(s) Requested'}
-          </Text>
-          <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>
-            {props.talents}
-          </Text>
+              width: 75,
+              height: 75,
+              borderRadius: 100,
+            }}
+            source={{
+              uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
+            }}
+          />
+          <View style={styles.details}>
+            <Text
+              style={{
+                fontSize: 17,
+                marginBottom: 5,
+                color: theme.$primaryColorText,
+                fontWeight: 'bold',
+              }}>
+              {props.name}
+            </Text>
+            <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>
+              {'Talent(s) Requested'}
+            </Text>
+            <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>
+              {props.talents}
+            </Text>
+          </View>
         </View>
-      </View>
       </TouchableOpacity>
       <View
         style={{
