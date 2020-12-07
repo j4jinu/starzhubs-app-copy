@@ -60,8 +60,8 @@ const ServiceScreen = ({ navigation }) => {
                     }}
                     style={{
                       borderRadius: 50,
-                      height: 80,
-                      width: 80,
+                      height: 50,
+                      width: 50,
                       alignSelf: 'center',
                     }}
                   />
@@ -86,24 +86,27 @@ const ServiceScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingLeft: '3%',
-    paddingRight: '3%',
-    backgroundColor: "#f1f1f1"
+    paddingVertical: '3%',
+    paddingHorizontal: '3%',
+    backgroundColor: "#f1f1f1",
+    // alignItems:'center',
+    
   },
   cardleft: {
-    elevation: 5,
-    marginTop: '5%',
+    elevation: 1,
+    marginTop: '1%',
     width: '47%',
+    height:150,
     marginLeft: 5,
     marginRight: 5,
-    marginBottom: '-2%',
+    marginBottom: '1%',
     alignItems: 'center',
+    justifyContent:'center'
 
   },
   img: {
-    marginTop: '8%',
-
-    marginBottom: '8%',
+    // marginTop: '8%',
+    // marginBottom: '8%',
   },
 });
 export default ServiceScreen;
