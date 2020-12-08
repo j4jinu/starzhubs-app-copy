@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Image,
   StyleSheet,
@@ -12,7 +12,7 @@ import {
 import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const MediaDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -22,10 +22,8 @@ const MediaDetailsScreen = (props) => {
   const description = props.navigation.getParam('description');
   const status = props.navigation.getParam('status');
   const user = props.navigation.getParam('user');
-  const [enlargeModal, setEnlargeModal] = useState(false)
+  const [enlargeModal, setEnlargeModal] = useState(false);
   const deviceWidth = Dimensions.get('window').width;
-
-
 
   return (
     // <View>
@@ -38,7 +36,7 @@ const MediaDetailsScreen = (props) => {
             alignItems: 'center',
             marginTop: 22,
           }}
-        // onPress={() => setVisible(false)}
+          // onPress={() => setVisible(false)}
         >
           <View
             style={{
@@ -63,7 +61,6 @@ const MediaDetailsScreen = (props) => {
               shadowRadius: 3.84,
               elevation: 5,
             }}>
-
             <View
               style={{
                 flexDirection: 'row',
@@ -101,7 +98,7 @@ const MediaDetailsScreen = (props) => {
               <Image
                 style={styles.media}
                 // style={{ width: '100%',height: deviceWidth/2 }}
-                resizeMode='cover'
+                resizeMode="cover"
                 source={{
                   uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
                 }}
@@ -122,57 +119,55 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
-          <TouchableOpacity onPress={() => setEnlargeModal(true)}>
-            <Image
-              // style={styles.media}
-              style={{ width: '100%', height: deviceWidth / 2 }}
-              source={{
-                uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
-              }}
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+          <Image
+            // style={styles.media}
+            style={{width: '100%', height: deviceWidth / 2}}
+            source={{
+              uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+            }}
+          />
+        </TouchableOpacity>
+      )}
       <ScrollView>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
-        {status === 1 ?
-          user._id !== auth.userId && (
-            <View style={styles.authorInfo}>
-              <Image
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 100,
-                }}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
-                }}
-              />
-
-              <TouchableOpacity
-                onPress={() =>
-                  props.navigation.navigate('UserDetails', {
-                    userId: user._id,
-                  })
-                }>
-                <View
+        {status === 1
+          ? user._id !== auth.userId && (
+              <View style={styles.authorInfo}>
+                <Image
                   style={{
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    marginLeft: 10,
-                  }}>
-                  <Text style={{ fontSize: 13 }}>{'Posted By'}</Text>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                    {user.name}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          )
-          : null
-        }
+                    width: 50,
+                    height: 50,
+                    borderRadius: 100,
+                  }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  }}
+                />
 
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate('UserDetails', {
+                      userId: user._id,
+                    })
+                  }>
+                  <View
+                    style={{
+                      flex: 1,
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      marginLeft: 10,
+                    }}>
+                    <Text style={{fontSize: 13}}>{'Posted By'}</Text>
+                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                      {user.name}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )
+          : null}
       </ScrollView>
 
       {/* Enlarge Modal */}
@@ -215,7 +210,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: theme.$borderRadius,
   },
-
 });
 
 export default MediaDetailsScreen;
