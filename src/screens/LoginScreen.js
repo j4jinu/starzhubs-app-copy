@@ -40,8 +40,8 @@ const LoginScreen = (props) => {
     console.log('logintoken', loginData.data.token);
   };
   return (
-    <ScrollView>
-      <View>
+    <View style={styles.container}>
+      <ScrollView style={{backgroundColor: 'white'}}>
         <Image
           style={styles.logo}
           source={{
@@ -146,8 +146,8 @@ const LoginScreen = (props) => {
             <Text style={styles.registerLayoutText2}>Register</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

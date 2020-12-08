@@ -1,18 +1,5 @@
-<<<<<<< HEAD
-import React, {useState} from 'react';
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
-=======
 import React, { useContext, useState } from 'react';
 import {Image, StyleSheet, Text, View, Modal, TouchableOpacity, ScrollView} from 'react-native';
->>>>>>> ebffbf666e6f6d1cc75f6d2fb53ff1125a7ebfa5
 import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
@@ -24,14 +11,10 @@ const MediaDetailsScreen = (props) => {
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');
-<<<<<<< HEAD
-  const [enlargeModal, setEnlargeModal] = useState(false);
-=======
   const status = props.navigation.getParam('status');
   const user = props.navigation.getParam('user');
   const [enlargeModal, setEnlargeModal] = useState(false)
 
->>>>>>> ebffbf666e6f6d1cc75f6d2fb53ff1125a7ebfa5
 
   return (
     // <View>
