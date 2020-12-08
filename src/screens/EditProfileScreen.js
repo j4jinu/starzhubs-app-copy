@@ -386,6 +386,7 @@ const EditProfileScreen = (props) => {
       },
       body: JSON.stringify(values),
     });
+    console.log("user data",values);
     const resData = await response.json();
     if (!resData.success) {
       return alert(resData.message);
@@ -764,7 +765,8 @@ const EditProfileScreen = (props) => {
                     color={theme.$primaryColor}
                   />
                   <Picker
-                    selectedValue={initialProfileValues.country!==null?initialProfileValues.country:country}
+                    selectedValue={country}
+                    // selectedValue={initialProfileValues.country!==null?initialProfileValues.country:country}
                     style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
                     onValueChange={(itemValue, itemIndex) =>
                       setCountry(itemValue)
@@ -838,6 +840,39 @@ const EditProfileScreen = (props) => {
                   </View>
                 </View>
 
+                {/* Education */}
+
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.phone ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon
+                    name="phone-android"
+                    size={20}
+                    color={theme.$primaryColor}
+                  />
+                  <TextInput
+                    style={styles.inputField}
+                    keyboardType={'default'}
+                    placeholder={'Education'}
+                    onChangeText={handleChange('education')}
+                    onBlur={handleBlur('education')}
+                    defaultValue={initialProfileValues.education}
+                  />
+                </View>
+
+
+
+
                 {/* Languages */}
                 <View
                   style={{
@@ -863,6 +898,32 @@ const EditProfileScreen = (props) => {
                     style={{ padding: 0 }}
                   />
                 </View>
+
+                 <View
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        width: '90%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 12,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.bio ? 'red' : '#e6e6e6',
+                      }}>
+                      <Icon name="info" size={20} color={theme.$primaryColor} />
+                      <TextInput
+                        keyboardType={'default'}
+                        multiline
+                        numberOfLines={4}
+                        style={styles.inputField}
+                        placeholder={'About yourself'}
+                        onChangeText={handleChange('bio')}
+                        onBlur={handleBlur('bio')}
+                        defaultValue={initialProfileValues.bio}
+                      />
+                    </View>
 
                 {actorMode && (
                   <>
@@ -982,34 +1043,10 @@ const EditProfileScreen = (props) => {
                     </View>
 
 
-                    {/*
-              About user 
-               */}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 12,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.bio ? 'red' : '#e6e6e6',
-                      }}>
-                      <Icon name="info" size={20} color={theme.$primaryColor} />
-                      <TextInput
-                        keyboardType={'default'}
-                        multiline
-                        numberOfLines={4}
-                        style={styles.inputField}
-                        placeholder={'About yourself'}
-                        onChangeText={handleChange('bio')}
-                        onBlur={handleBlur('bio')}
-                        defaultValue={initialProfileValues.bio}
-                      />
-                    </View>
+                      {/*
+                      About user 
+                      */}
+                   
 
 
 
