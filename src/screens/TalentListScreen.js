@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 18,
     color: "#555",
     textTransform: 'uppercase'
   },

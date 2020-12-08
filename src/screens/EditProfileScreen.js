@@ -248,6 +248,7 @@ const EditProfileScreen = (props) => {
     name: userInfo.name,
     bio: userInfo.bio || '',
     phone: userInfo.phone || '',
+    email: userInfo.email || '',
     // dob: '',
     country:
       userInfo.location !== undefined ? userInfo.location.country : 'India',
@@ -382,6 +383,7 @@ const EditProfileScreen = (props) => {
       },
       body: JSON.stringify(values),
     });
+    console.log('user data', values);
     const resData = await response.json();
     if (!resData.success) {
       return alert(resData.message);
@@ -544,21 +546,10 @@ const EditProfileScreen = (props) => {
           onPress={requestCameraPermission}
           style={{
             position: 'absolute',
-            top: 145,
-            left: 250,
+            top: 159,
+            left: 240,
           }}>
-          <Icon
-            name="photo-camera"
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 100,
-              backgroundColor: theme.$primaryColor,
-              padding: 10,
-            }}
-            size={30}
-            color="#fff"
-          />
+          <Icon name="photo-camera" size={35} color={theme.$primaryColor} />
         </TouchableOpacity>
         <Formik
           enableReinitialize={true}
@@ -605,6 +596,11 @@ const EditProfileScreen = (props) => {
                   defaultValue={initialProfileValues.name}
                 />
               </View>
+              {touched.name && errors.name && (
+                <Text style={styles.errorText}>
+                  {touched.name && errors.name}
+                </Text>
+              )}
               {/* 
               DoB
                */}
@@ -696,31 +692,31 @@ const EditProfileScreen = (props) => {
               {/* 
               Email address
                */}
-              {/* <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.email ? 'red' : '#e6e6e6',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    editable={false}
-                    style={styles.inputField}
-                    placeholder={'Email address'}
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    defaultValue={initialProfileValues.email}
-                  />
-                </View> */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.email ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  editable={false}
+                  style={styles.inputField}
+                  placeholder={'Email address'}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  defaultValue={initialProfileValues.email}
+                />
+              </View>
               {/*
               Phone number 
                */}
@@ -751,6 +747,11 @@ const EditProfileScreen = (props) => {
                   defaultValue={initialProfileValues.phone}
                 />
               </View>
+              {touched.phone && errors.phone && (
+                <Text style={styles.errorText}>
+                  {touched.phone && errors.phone}
+                </Text>
+              )}
 
               {/* Country */}
               <View
@@ -772,11 +773,8 @@ const EditProfileScreen = (props) => {
                   color={theme.$primaryColor}
                 />
                 <Picker
-                  selectedValue={
-                    initialProfileValues.country !== null
-                      ? initialProfileValues.country
-                      : country
-                  }
+                  selectedValue={country}
+                  // selectedValue={initialProfileValues.country!==null?initialProfileValues.country:country}
                   style={{height: 50, width: '100%', borderColor: '#e6e6e6'}}
                   onValueChange={(itemValue, itemIndex) =>
                     setCountry(itemValue)
@@ -822,6 +820,11 @@ const EditProfileScreen = (props) => {
                     defaultValue={initialProfileValues.state}
                   />
                 </View>
+                {touched.state && errors.state && (
+                  <Text style={styles.errorText}>
+                    {touched.state && errors.state}
+                  </Text>
+                )}
                 <View
                   style={{
                     flex: 1,
@@ -849,32 +852,47 @@ const EditProfileScreen = (props) => {
                   />
                 </View>
               </View>
+              {touched.place && errors.place && (
+                <Text style={styles.errorText}>
+                  {touched.place && errors.place}
+                </Text>
+              )}
 
-              {/* Languages */}
+              {/* Education */}
+
               <View
                 style={{
                   alignSelf: 'center',
+                  borderWidth: 1,
                   borderRadius: 10,
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.education ? 'red' : '#e6e6e6',
                 }}>
-                <SectionedMultiSelect
-                  items={languages}
-                  IconRenderer={Icon}
-                  uniqueKey="id"
-                  subKey="children"
-                  selectText="Languages known"
-                  showDropDowns={true}
-                  expandDropDowns
-                  showCancelButton
-                  readOnlyHeadings={true}
-                  onSelectedItemsChange={onSelectedItemsChange}
-                  selectedItems={selectedItems}
-                  style={{padding: 0}}
+                <Icon
+                  name="phone-android"
+                  size={20}
+                  color={theme.$primaryColor}
+                />
+                <TextInput
+                  style={styles.inputField}
+                  keyboardType={'default'}
+                  placeholder={'Education'}
+                  onChangeText={handleChange('education')}
+                  onBlur={handleBlur('education')}
+                  defaultValue={initialProfileValues.education}
                 />
               </View>
+
+              {touched.education && errors.education && (
+                <Text style={styles.errorText}>
+                  {touched.education && errors.education}
+                </Text>
+              )}
 
               {actorMode && (
                 <>
@@ -901,6 +919,11 @@ const EditProfileScreen = (props) => {
                       defaultValue={initialProfileValues.height}
                     />
                   </View>
+                  {touched.height && errors.height && (
+                    <Text style={styles.errorText}>
+                      {touched.height && errors.height}
+                    </Text>
+                  )}
                   {/* Weight */}
                   <View
                     style={{
@@ -924,6 +947,11 @@ const EditProfileScreen = (props) => {
                       defaultValue={initialProfileValues.weight}
                     />
                   </View>
+                  {touched.weight && errors.weight && (
+                    <Text style={styles.errorText}>
+                      {touched.weight && errors.weight}
+                    </Text>
+                  )}
 
                   {/* BodyType */}
 
@@ -961,6 +989,11 @@ const EditProfileScreen = (props) => {
                       <Picker.Item label="Slim" value="Slim" />
                     </Picker>
                   </View>
+                  {touched.bodyType && errors.bodyType && (
+                    <Text style={styles.errorText}>
+                      {touched.bodyType && errors.bodyType}
+                    </Text>
+                  )}
 
                   {/* SkinTone */}
 
@@ -975,7 +1008,7 @@ const EditProfileScreen = (props) => {
                       marginTop: 12,
                       flexDirection: 'row',
                       alignItems: 'center',
-                      borderColor: errors.height ? 'red' : '#e6e6e6',
+                      borderColor: errors.complexion ? 'red' : '#e6e6e6',
                     }}>
                     <Picker
                       selectedValue={complexionValue}
@@ -996,35 +1029,61 @@ const EditProfileScreen = (props) => {
                   </View>
 
                   {/*
-              About user 
-               */}
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: 12,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.bio ? 'red' : '#e6e6e6',
-                    }}>
-                    <Icon name="info" size={20} color={theme.$primaryColor} />
-                    <TextInput
-                      keyboardType={'default'}
-                      multiline
-                      numberOfLines={4}
-                      style={styles.inputField}
-                      placeholder={'About yourself'}
-                      onChangeText={handleChange('bio')}
-                      onBlur={handleBlur('bio')}
-                      defaultValue={initialProfileValues.bio}
-                    />
-                  </View>
+                      About user 
+                      */}
                 </>
               )}
+              {/* Languages */}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                }}>
+                <SectionedMultiSelect
+                  items={languages}
+                  IconRenderer={Icon}
+                  uniqueKey="id"
+                  subKey="children"
+                  selectText="Languages known"
+                  showDropDowns={true}
+                  expandDropDowns
+                  showCancelButton
+                  readOnlyHeadings={true}
+                  onSelectedItemsChange={onSelectedItemsChange}
+                  selectedItems={selectedItems}
+                  style={{padding: 0}}
+                />
+              </View>
+
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.bio ? 'red' : '#e6e6e6',
+                }}>
+                <Icon name="info" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'default'}
+                  multiline
+                  numberOfLines={4}
+                  style={styles.inputField}
+                  placeholder={'About yourself'}
+                  onChangeText={handleChange('bio')}
+                  onBlur={handleBlur('bio')}
+                  defaultValue={initialProfileValues.bio}
+                />
+              </View>
               {!isSubmitting && (
                 <TouchableOpacity
                   activeOpacity={0.8}
@@ -1054,6 +1113,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginTop: 3,
     color: 'red',
+    paddingLeft: '4%',
   },
   forgotText: {
     color: 'purple',
@@ -1100,7 +1160,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 10,
     marginTop: 15,
-    marginBottom: 30,
+    marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
