@@ -40,8 +40,8 @@ const LoginScreen = (props) => {
     console.log('logintoken', loginData.data.token);
   };
   return (
-    <ScrollView>
-      <View>
+    <View style={styles.container}>
+      <ScrollView>
         <Image
           style={styles.logo}
           source={{
@@ -146,15 +146,14 @@ const LoginScreen = (props) => {
             <Text style={styles.registerLayoutText2}>Register</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: 'white',
   },
   errorText: {

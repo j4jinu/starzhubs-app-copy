@@ -247,7 +247,6 @@ const EditProfileScreen = (props) => {
   // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
   const initialProfileValues = {
     name: userInfo.name,
-    email: userInfo.email,
     bio: userInfo.bio || '',
     phone: userInfo.phone || '',
     // dob: '',
@@ -269,7 +268,6 @@ const EditProfileScreen = (props) => {
     name: yup.string().required('Enter your name'),
     bio: yup.string().required('Please fill this field'),
     phone: yup.string().required('Enter phone number'),
-    email: yup.string().required('Enter email address'),
     state: yup.string().required('Enter state of residence'),
     place: yup.string().required('Enter your city'),
     education: yup.string().required('Enter your Higher education'),
@@ -391,7 +389,7 @@ const EditProfileScreen = (props) => {
     }
     setMsg('User details updated successfully');
     setVisible(!visible);
-    props.navigation.navigate('Account');
+    type === 'signup' ? props.navigation.navigate('Talents') : props.navigation.navigate('Account');
   };
 
   const requestCameraPermission = async () => {
@@ -672,7 +670,6 @@ const EditProfileScreen = (props) => {
                     onValueChange={(itemValue, itemIndex) =>
                       setGender(itemValue)
                     }>
-                    <Picker.Item label="Select Gender" value="" />
                     <Picker.Item label="Female" value="Female" />
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Transgender" value="Transgender" />
@@ -681,7 +678,7 @@ const EditProfileScreen = (props) => {
                 {/* 
               Email address
                */}
-                <View
+                {/* <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
@@ -705,7 +702,7 @@ const EditProfileScreen = (props) => {
                     onBlur={handleBlur('email')}
                     defaultValue={initialProfileValues.email}
                   />
-                </View>
+                </View> */}
                 {/*
               Phone number 
                */}
