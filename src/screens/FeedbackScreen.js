@@ -58,7 +58,7 @@ const FeedbackScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor:'white' }}>
         <View
           style={{
             alignItems: 'center',

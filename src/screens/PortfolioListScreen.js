@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import {
   FlatList,
   ScrollView,
@@ -21,7 +21,6 @@ const PortfolioListScreen = (props) => {
       try {
         const response = await fetch('http://13.232.190.226/api/category');
         const categoryData = await response.json();
-        console.log(categoryData);
         if (categoryData.success) {
           setCategory(categoryData.categories);
           setCategoryId(categoryData.categories[0]._id);
@@ -96,36 +95,34 @@ const PortfolioListScreen = (props) => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      {users.length > 0 && 
-        <FlatList
-          style={{ backgroundColor: '#fafafa', marginTop: 20 }}
-          keyExtractor={(item, index) => item.id}
-          data={users}
-          renderItem={({ item }) => (
-            <UserGridItem
-              userId={item._id}
-              name={item.name}
-              locaton={item.locaton}
-              image={item.image}
-              navigation={props.navigation}
-            />
-          )}
-          numColumns={2}
-        />
-      }
-      {users.length === 0 && (
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingVertical: '35%',
-          }}>
-            <Image
-                source={ require('../assets/noresult1.png')}
-                  style={{  height: 140, width: 140, }}
-            ></Image>
-          <Text style={{fontSize: 18, color: 'tomato', marginTop:10}}>
-            Sorry, No users available.
+      <ScrollView>
+        {users.length > 0 &&
+          <FlatList
+            style={{ backgroundColor: '#fafafa', marginTop: 20, marginBottom: 30 }}
+            keyExtractor={(item, index) => item.id}
+            data={users}
+            renderItem={({ item }) => (
+              <UserGridItem
+                userId={item._id}
+                name={item.name}
+                location={item.location}
+                image={item.image}
+                navigation={props.navigation}
+              />
+            )}
+            numColumns={2}
+          />
+        }
+        {users.length === 0 && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingVertical: '30%',
+            }}>
+
+            <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
+              Sorry, No users available.
           </Text>
             <Image
               source={require('../assets/broke.png')}
@@ -133,6 +130,7 @@ const PortfolioListScreen = (props) => {
             />
           </View>
         )}
+      </ScrollView>
     </View>
   );
 };

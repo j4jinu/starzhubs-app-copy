@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Alert,
+  Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../config/theme';
@@ -18,6 +20,7 @@ const Divider = (
 const AccountScreen = (props) => {
   const auth = useContext(AuthContext);
   const [user, setUser] = useState({ image: {}, location: {} });
+  const deviceWidth = Dimensions.get('window').width;
 
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
@@ -39,13 +42,36 @@ const AccountScreen = (props) => {
     } catch (error) { }
   };
   unsubscribe;
+  const handlelogout = () => {
+    Alert.alert(
+      '',
+      'Are you sure you want to Logout?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            auth.logout()
+            props.navigation.navigate('Auth')
+          }
+        },
+      ],
+      { cancelable: false }
+    );
+  }
   return (
     <ScrollView style={styles.container}>
       <View style={styles.container}>
         <View>
           {user.image && user.image.avatar !== undefined && (
             <Image
-              style={{ width: '100%', height: 250, resizeMode: 'stretch' }}
+              style={{
+                width: deviceWidth,
+                height: deviceWidth
+              }}
               source={{
                 uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
               }}
@@ -156,6 +182,22 @@ const AccountScreen = (props) => {
             </View>
             <Icon name="chevron-right" size={24} color={theme.$primaryColor} />
           </TouchableOpacity>
+          {Divider}
+          <TouchableOpacity
+            style={styles.section}
+            activeOpacity={0.7}
+            onPress={() => props.navigation.navigate('MyPosterRequest')}>
+            <View style={{ flexDirection: 'row' }}>
+              <Icon name="post-outline" size={24} color={theme.$primaryColor} />
+              <View style={styles.sectionDetails}>
+                <Text style={styles.sectionDetailsTitle}>Poster Requests</Text>
+                <Text style={styles.sectionDetailsSubtitle}>
+                  Manage your poster requests
+                </Text>
+              </View>
+            </View>
+            <Icon name="chevron-right" size={24} color={theme.$primaryColor} />
+          </TouchableOpacity>
         </View>
         <View style={styles.sectionContainer}>
           <TouchableOpacity
@@ -258,13 +300,18 @@ const AccountScreen = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.sectionContainer}>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => {
               auth.logout();
               props.navigation.navigate('Auth');
-            }}>
+            }}> */}
+          <TouchableOpacity
+            style={styles.section}
+            activeOpacity={0.7}
+            onPress={handlelogout}
+          >
             <View style={{ flexDirection: 'row' }}>
               <Icon name="logout" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>

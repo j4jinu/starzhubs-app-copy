@@ -10,53 +10,35 @@ import {
 } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
 import {AuthContext} from '../context/authContext';
+import Moment from 'moment';
 
-const posters = [
-  {name: 'A', id: '1'},
-  {name: 'B', id: '2'},
-  {name: 'C', id: '3'},
-  {name: 'D', id: '4'},
-  {name: 'E', id: '5'},
-  {name: 'F', id: '6'},
-  {name: 'G', id: '7'},
-  {name: 'H', id: '8'},
-];
-
-const renderGridItem = (alerts) => {
-  return (
-    <NotificationItem
-      title={alerts.item.title}
-      descripion={alerts.descripion}
-      onSelect={() => props.navigation.navigate('UserDetails')}
-    />
-  );
-};
-
-const NotificationListScreen = () => {
+const NotificationListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [alerts, setAlerts] = useState([]);
 
   useEffect(() => {
-    const getNotifications = async () => {
-      try {
-        const res = await fetch(`http://13.232.190.226/api/alert`, {
-          method: 'GET',
-          headers: {
-            Authorization: 'Bearer ' + auth.token,
-          },
-        });
-        const resData = await res.json();
-        if (!resData.success) {
-          alert(resData.message);
-          return;
-        }
-        setAlerts(resData.data.notifications);
-      } catch (error) {
-        alert('Something went wrong. Try again later.');
-      }
-    };
     getNotifications();
-  });
+  }, []);
+  const getNotifications = async () => {
+    try {
+      const res = await fetch(`http://13.232.190.226/api/alert`, {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + auth.token,
+        },
+      });
+      const resData = await res.json();
+      if (!resData.success) {
+        alert(resData.message);
+        return;
+      }
+      setAlerts(resData.data.notifications);
+      console.log('notifications', resData.data.notifications);
+    } catch (error) {
+      alert('Something went wrong. Try again later.');
+    }
+  };
+
   return (
     <>
       <FlatList
@@ -65,6 +47,20 @@ const NotificationListScreen = () => {
         renderItem={renderGridItem}
       />
     </>
+  );
+};
+
+const renderGridItem = (alerts, props) => {
+  var dateofvisit = Moment(alerts.item.createdAt);
+  var today = Moment();
+  var d = today.diff(dateofvisit, 'days');
+  return (
+    <NotificationItem
+      title={alerts.item.title}
+      notification={alerts.item.notification}
+      nDate={d}
+      onSelect={() => props.navigation.navigate('UserDetails')}
+    />
   );
 };
 

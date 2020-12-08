@@ -4,12 +4,12 @@ import BuddyRequestItem from '../components/BuddyRequestItem';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 
-const SentConnectionScreen = () => {
+const SentConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [isFriends, setIsFriends] = useState([]);
   useEffect(() => {
     getConnectionRequests();
-  });
+  },[]);
   const getConnectionRequests = () => {
     fetch(`http://13.232.190.226/api/talent/req/sent`, {
       method: 'GET',
@@ -19,8 +19,8 @@ const SentConnectionScreen = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        setIsFriends(response.data.connections);
-        console.log("sent req",response.data);
+        setIsFriends(response.data.requests);
+        console.log("sent req", response.data.requests);
       })
       .catch((error) => {
         alert(error);
@@ -48,14 +48,14 @@ const SentConnectionScreen = () => {
       data={isFriends}
       extraData={getConnectionRequests}
       renderItem={({ item }) =>
-        item.fromUser._id === auth.userId ? (
+        item.fromUser === auth.userId ? (
           <BuddyRequestItem
-            id={item._id}
+            reqId={item._id}
             name={item.toUser.name}
             image={item.toUser.image}
             onSelect={() =>
               props.navigation.navigate('UserDetails', {
-                userId: item.toUser._id,
+                userId: item.toUser._id
               })
             }
           />

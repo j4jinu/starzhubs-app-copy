@@ -44,6 +44,9 @@ import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
+import MyPosterDetailsScreen from '../screens/MyPosterDetailsScreen';
+import MyPosterRequests from '../screens/MyPosterRequests';
+
 
 const HomeNavigator = createStackNavigator(
   {
@@ -79,7 +82,9 @@ const HomeNavigator = createStackNavigator(
     },
     EditPoster: {
       screen: EditPosterScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Edit Poster',
+      },
     },
     Filter: {
       screen: FilterScreen,
@@ -87,7 +92,9 @@ const HomeNavigator = createStackNavigator(
     },
     FilterResult: {
       screen: FilterResultScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Filter Result',
+      },
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
@@ -161,11 +168,15 @@ const PosterNavigator = createStackNavigator(
     },
     PosterRequest: {
       screen: PosterRequestScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Poster Request',
+      },
     },
     EditPoster: {
       screen: EditPosterScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Edit Poster',
+      },
     },
     CreatePosters: {
       screen: CreatePosterScreen,
@@ -223,16 +234,12 @@ const AccountNavigator = createStackNavigator(
 
 
       },
-      // navigationOptions: {
-      //   headerShown: false,
-      // },
-      // navigationOptions: {
-      //   title: navigation.getParam('serviceName'),
-      // },
     },
     Talents: {
       screen: TalentListScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Your Talents',
+      },
     },
     EditTalents: {
       screen: EditTalentScreen,
@@ -268,6 +275,12 @@ const AccountNavigator = createStackNavigator(
         title: 'Your posters',
       },
     },
+    MyPosterRequest: {
+      screen: MyPosterRequests,
+      navigationOptions: {
+        title: 'Your poster requests',
+      },
+    },
     MyMedia: {
       screen: MyMediaScreen,
       navigationOptions: {
@@ -295,6 +308,15 @@ const AccountNavigator = createStackNavigator(
     },
     EditPoster: {
       screen: EditPosterScreen,
+      navigationOptions: {
+        title: 'Edit Poster',
+      },
+    },
+    MyPosterDetailsScreen: {
+      screen: MyPosterDetailsScreen,
+      navigationOptions: {
+        title: 'My Poster Details',
+      },
     },
     EditMedia: {
       screen: EditMediaScreen,
@@ -304,7 +326,11 @@ const AccountNavigator = createStackNavigator(
     },
     CreatePosters: {
       screen: CreatePosterScreen,
+      navigationOptions: {
+        title: 'Create Poster',
+      },
     },
+
   },
   {
     defaultNavigationOptions: {

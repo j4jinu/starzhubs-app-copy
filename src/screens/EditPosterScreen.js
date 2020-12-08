@@ -291,7 +291,7 @@ const EditPosterScreen = (props) => {
                         style={{color: 'tomato', marginRight: '2%'}}
                       />
                       <TextInput
-                        style={{paddingVertical: 5}}
+                        style={{paddingVertical: 5, width:'100%'}}
                         underlineColorAndroid="transparent"
                         defaultValue={title}
                         placeholder="Title"
@@ -330,6 +330,7 @@ const EditPosterScreen = (props) => {
                         style={{color: 'tomato', marginRight: '2%'}}
                       />
                       <TextInput
+                        style={{width:'100%'}}
                         underlineColorAndroid="transparent"
                         placeholder="Description"
                         defaultValue={description}

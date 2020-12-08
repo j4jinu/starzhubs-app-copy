@@ -41,7 +41,7 @@ const LoginScreen = (props) => {
   };
   return (
     <View style={styles.container}>
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView>
         <Image
           style={styles.logo}
           source={{
@@ -154,7 +154,6 @@ const LoginScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: 'white',
   },
   errorText: {

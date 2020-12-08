@@ -14,9 +14,25 @@ import PosterGridItem from './PosterGridItem';
 // ]
 
 const UserMediaSection = (props) => {
-    const {talents} = props
+    // console.warn("talents",props.talents);
+    const { talents } = props
     if (talents === undefined || talents.length === 0) {
-        return <Text>No media files</Text>
+        return (
+            <View
+                style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingVertical: '5%',
+                }}>
+                <Image
+                    source={require('../assets/noresult1.png')}
+                    style={{ height: 50, width: 50, }}
+                ></Image>
+                <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
+                    No Media Files
+      </Text>
+            </View>
+        )
     }
     return (
         <View style={styles.container}>
@@ -25,12 +41,12 @@ const UserMediaSection = (props) => {
                 data={talents}
                 renderItem={({ item }) => (
                     <MediaGrid
-                        media = {item.media}
-                        navigation = {props.navigation}
+                        media={item.media}
+                        navigation={props.navigation}
                     />
                 )}
                 numColumns={3}
-                // ListHeaderComponent={(item) => <Text style={styles.title}> {console.log(item)}</Text>}
+            // ListHeaderComponent={(item) => <Text style={styles.title}> {console.log(item)}</Text>}
             />
         </View>
     );
@@ -39,6 +55,8 @@ const UserMediaSection = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+
+        marginBottom: "5%"
     },
     row: {
         flexDirection: 'row',

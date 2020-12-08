@@ -102,8 +102,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
     }
   };
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <ScrollView>
         {isEmailMode && (
           <Formik
             initialValues={forgotPwdValues}
@@ -380,8 +380,8 @@ const ForgotPasswordScreen = ({ navigation }) => {
             </TouchableOpacity>
           </React.Fragment>
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

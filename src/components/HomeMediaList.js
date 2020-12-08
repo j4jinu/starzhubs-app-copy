@@ -13,6 +13,7 @@ const HomeMediaList = (props) => {
   return (
     <View style={styles.container}>
       <FlatList
+        // style={{marginBottom:20}}
         keyExtractor={(item) => item._id}
         data={talents}
         renderItem={({ item }) => (

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import HomeMediaList from '../components/HomeMediaList';
@@ -19,6 +20,8 @@ const HomeScreenSingle = (props) => {
   const [users, setUsers] = React.useState([]);
   const [media, setMedia] = React.useState([]);
   const [talent, setTalent] = React.useState([]);
+  const deviceWidth = Dimensions.get('window').width;
+
 
   useEffect(() => {
     const fetchHomeData = async () => {
@@ -64,7 +67,7 @@ const HomeScreenSingle = (props) => {
 
   if (isLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator color={theme.$primarycolor} size={'large'} />
       </View>
     );
@@ -73,7 +76,8 @@ const HomeScreenSingle = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Swiper height={200} showsButtons={false}>
+        <Swiper height={200}
+          loop={false} showsPagination={true}>
           {poster.map((p) => (
             <TouchableOpacity
               activeOpacity={0.7}
@@ -89,7 +93,12 @@ const HomeScreenSingle = (props) => {
                 })
               }>
               <Image
-                style={{width: '100%', height: 300, resizeMode: 'cover'}}
+                resizeMode={'cover'}
+                style={{
+                  width: deviceWidth,
+                  height: deviceWidth / 2,
+                }}
+                // style={{ width: '100%', height:200 }}
                 source={{
                   uri: `http://13.232.190.226/api/poster/view/${p.image}`,
                 }}
@@ -98,17 +107,6 @@ const HomeScreenSingle = (props) => {
           ))}
         </Swiper>
         <HomePortfolioList users={users} navigation={props.navigation} />
-        {/* <View style={{ backgroundColor: '#f4ece7', marginVertical: 15 }}>
-                    <Text style={{
-                        textAlign: 'center',
-                        fontStyle: 'italic',
-                        fontWeight: 'bold',
-                        paddingHorizontal: 15,
-                        marginVertical: 15
-                    }}>
-                        "We understands the needs and importance of the roles designed, and the time spent by the artists in the industry to fill a perfect character in an appropriate place"
-                    </Text>
-                </View> */}
         <HomeMediaList talents={talent} navigation={props.navigation} />
       </ScrollView>
     </View>
@@ -119,6 +117,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+
+
   },
   wrapper: {
     height: 300,

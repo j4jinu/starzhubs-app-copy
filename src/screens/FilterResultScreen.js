@@ -89,7 +89,7 @@ const FilterResultScreen = (props) => {
                   style={{
                     fontSize: 12,
                     color: 'gray',
-                    alignSelf: 'center',
+
                     top: 7,
                   }}>
                   {item.bio.substring(0, 120) + '...'}

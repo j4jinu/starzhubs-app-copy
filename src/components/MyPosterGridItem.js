@@ -73,20 +73,21 @@ const MyPosterGridItem = (props) => {
       </View>
 
       {
-        <TouchableOpacity
-          style={styles.gridItem}
-          onPress={() =>
-            props.navigation.navigate('PosterDetails', {
-              posterId: props.id,
-              title: props.poster,
-              image: props.image,
-              description: props.description,
-              endDate: props.endDate,
-              startDate: props.startDate,
-              user: userId,
-            })
-          }
-          activeOpacity={0.7}>
+        // <TouchableOpacity
+        //   style={styles.gridItem}
+        //   onPress={() =>
+        //     props.navigation.navigate('MyPosterDetails', {
+        //       posterId: props.id,
+        //       title: props.poster,
+        //       image: props.image,
+        //       description: props.description,
+        //       endDate: props.endDate,
+        //       startDate: props.startDate,
+        //       user: userId,
+        //     })
+        //   }
+        //   activeOpacity={0.7}>
+        <View style={styles.gridItem}>
           <View style={styles.container}>
             <Image
               style={{
@@ -130,6 +131,7 @@ const MyPosterGridItem = (props) => {
                   </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
+                  {(props.status === 'expired' ||props.status === 'rejected') ? null:(
                   <TouchableOpacity
                     style={{
                       padding: 10,
@@ -150,6 +152,7 @@ const MyPosterGridItem = (props) => {
                     }>
                     <Icon name="edit" size={25} color="blue" />
                   </TouchableOpacity>
+                  )}
                   <TouchableOpacity
                     style={{
                       padding: 10,
@@ -175,7 +178,8 @@ const MyPosterGridItem = (props) => {
               {props.description}
             </Text>
           </View>
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
+        </View>
       }
     </>
   );
