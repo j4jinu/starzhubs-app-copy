@@ -248,9 +248,9 @@ const EditProfileScreen = (props) => {
   // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
   const initialProfileValues = {
     name: userInfo.name,
-    email: userInfo.email,
     bio: userInfo.bio || '',
     phone: userInfo.phone || '',
+    email:userInfo.email || '',
     // dob: '',
     country:
       userInfo.location !== undefined ? userInfo.location.country : 'India',
@@ -270,7 +270,6 @@ const EditProfileScreen = (props) => {
     name: yup.string().required('Enter your name'),
     bio: yup.string().required('Please fill this field'),
     phone: yup.string().required('Enter phone number'),
-    email: yup.string().required('Enter email address'),
     state: yup.string().required('Enter state of residence'),
     place: yup.string().required('Enter your city'),
     education: yup.string().required('Enter your Higher education'),
@@ -393,7 +392,7 @@ const EditProfileScreen = (props) => {
     }
     setMsg('User details updated successfully');
     showToastWithGravityAndOffset('User details updated successfully')
-    props.navigation.navigate('Account');
+    type === 'signup' ? props.navigation.navigate('Talents') : props.navigation.navigate('Account');
   };
 
   const requestCameraPermission = async () => {
@@ -597,6 +596,11 @@ const EditProfileScreen = (props) => {
                     defaultValue={initialProfileValues.name}
                   />
                 </View>
+                {touched.name && errors.name && (
+                  <Text style={styles.errorText}>
+                    {touched.name && errors.name}
+                  </Text>
+                )}
                 {/* 
               DoB
                */}
@@ -680,7 +684,6 @@ const EditProfileScreen = (props) => {
                     onValueChange={(itemValue, itemIndex) =>
                       setGender(itemValue)
                     }>
-                    <Picker.Item label="Select Gender" value="" />
                     <Picker.Item label="Female" value="Female" />
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Transgender" value="Transgender" />
@@ -744,6 +747,11 @@ const EditProfileScreen = (props) => {
                     defaultValue={initialProfileValues.phone}
                   />
                 </View>
+                {touched.phone && errors.phone && (
+                  <Text style={styles.errorText}>
+                    {touched.phone && errors.phone}
+                  </Text>
+                )}
 
                 {/* Country */}
                 <View
@@ -812,6 +820,11 @@ const EditProfileScreen = (props) => {
                       defaultValue={initialProfileValues.state}
                     />
                   </View>
+                  {touched.state && errors.state && (
+                  <Text style={styles.errorText}>
+                    {touched.state && errors.state}
+                  </Text>
+                )}
                   <View
                     style={{
                       flex: 1,
@@ -839,6 +852,11 @@ const EditProfileScreen = (props) => {
                     />
                   </View>
                 </View>
+                {touched.place && errors.place && (
+                  <Text style={styles.errorText}>
+                    {touched.place && errors.place}
+                  </Text>
+                )}
 
                 {/* Education */}
 
@@ -853,7 +871,7 @@ const EditProfileScreen = (props) => {
                     marginTop: 12,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.phone ? 'red' : '#e6e6e6',
+                    borderColor: errors.education ? 'red' : '#e6e6e6',
                   }}>
                   <Icon
                     name="phone-android"
@@ -870,10 +888,152 @@ const EditProfileScreen = (props) => {
                   />
                 </View>
 
+                {touched.education && errors.education && (
+                  <Text style={styles.errorText}>
+                    {touched.education && errors.education}
+                  </Text>
+                )}
 
 
+               
 
-                {/* Languages */}
+                {actorMode && (
+                  <>
+                    {/* Height */}
+                    <View
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        width: '90%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 12,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.height ? 'red' : '#e6e6e6',
+                      }}>
+                      <Icon name="book" size={20} color={theme.$primaryColor} />
+                      <TextInput
+                        style={styles.inputField}
+                        placeholder={'Height(cm)'}
+                        onChangeText={handleChange('height')}
+                        onBlur={handleBlur('height')}
+                        defaultValue={initialProfileValues.height}
+                      />
+                    </View>
+                    {touched.height && errors.height && (
+                  <Text style={styles.errorText}>
+                    {touched.height && errors.height}
+                  </Text>
+                )}
+                    {/* Weight */}
+                    <View
+                      style={{
+                        alignSelf: 'center',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        width: '90%',
+                        paddingLeft: 8,
+                        paddingRight: 8,
+                        marginTop: 12,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        borderColor: errors.height ? 'red' : '#e6e6e6',
+                      }}>
+                      <Icon name="book" size={20} color={theme.$primaryColor} />
+                      <TextInput
+                        style={styles.inputField}
+                        placeholder={'Weight(Kg)'}
+                        onChangeText={handleChange('weight')}
+                        onBlur={handleBlur('weight')}
+                        defaultValue={initialProfileValues.weight}
+                      />
+                    </View>
+                    {touched.weight && errors.weight && (
+                  <Text style={styles.errorText}>
+                    {touched.weight && errors.weight}
+                  </Text>
+                )}
+
+                    {/* BodyType */}
+
+                    <View style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 12,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.height ? 'red' : '#e6e6e6',
+                    }}>
+                      <Picker
+                        selectedValue={bodyTypeValue}
+                        style={{
+                          height: 50,
+                          width: '100%',
+                        }}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setbodyTypeValue(itemValue);
+                          setFieldValue('bodyType', itemValue);
+                        }}>
+                        <Picker.Item label="Select BodyType" value="0" />
+                        <Picker.Item label="Athletic" value="Athletic" />
+                        <Picker.Item
+                          label="Average built"
+                          value="Average built"
+                        />
+                        <Picker.Item label="Fat" value="Fat" />
+                        <Picker.Item label="Hourglass" value="Hourglass" />
+                        <Picker.Item label="Slim" value="Slim" />
+                      </Picker>
+                    </View>
+                    {touched.bodyType && errors.bodyType && (
+                  <Text style={styles.errorText}>
+                    {touched.bodyType && errors.bodyType}
+                  </Text>
+                )}
+
+                    {/* SkinTone */}
+
+                    <View style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 12,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.complexion ? 'red' : '#e6e6e6',
+                    }}>
+                      <Picker
+                        selectedValue={complexionValue}
+                        style={{
+                          height: 50,
+                          width: '100%',
+                        }}
+                        onValueChange={(itemValue, itemIndex) => {
+                          setcomplexionValue(itemValue);
+                          setFieldValue('complexion', itemValue);
+                        }}>
+                        <Picker.Item label="Select Complexion" value="0" />
+                        <Picker.Item label="Brown" value="Brown" />
+                        <Picker.Item label="Dark" value="Dark" />
+                        <Picker.Item label="Fair" value="Fair" />
+                        <Picker.Item label="Wheatish" value="Wheatish" />
+                      </Picker>
+                    </View>
+
+
+                      {/*
+                      About user 
+                      */}
+                    {/* Languages */}
                 <View
                   style={{
                     alignSelf: 'center',
@@ -925,129 +1085,6 @@ const EditProfileScreen = (props) => {
                       />
                     </View>
 
-                {actorMode && (
-                  <>
-                    {/* Height */}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 12,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.height ? 'red' : '#e6e6e6',
-                      }}>
-                      <Icon name="book" size={20} color={theme.$primaryColor} />
-                      <TextInput
-                        style={styles.inputField}
-                        placeholder={'Height(cm)'}
-                        onChangeText={handleChange('height')}
-                        onBlur={handleBlur('height')}
-                        defaultValue={initialProfileValues.height}
-                      />
-                    </View>
-                    {/* Weight */}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 12,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.height ? 'red' : '#e6e6e6',
-                      }}>
-                      <Icon name="book" size={20} color={theme.$primaryColor} />
-                      <TextInput
-                        style={styles.inputField}
-                        placeholder={'Weight(Kg)'}
-                        onChangeText={handleChange('weight')}
-                        onBlur={handleBlur('weight')}
-                        defaultValue={initialProfileValues.weight}
-                      />
-                    </View>
-
-                    {/* BodyType */}
-
-                    <View style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: 12,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.height ? 'red' : '#e6e6e6',
-                    }}>
-                      <Picker
-                        selectedValue={bodyTypeValue}
-                        style={{
-                          height: 50,
-                          width: '100%',
-                        }}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setbodyTypeValue(itemValue);
-                          setFieldValue('bodyType', itemValue);
-                        }}>
-                        <Picker.Item label="Select BodyType" value="0" />
-                        <Picker.Item label="Athletic" value="Athletic" />
-                        <Picker.Item
-                          label="Average built"
-                          value="Average built"
-                        />
-                        <Picker.Item label="Fat" value="Fat" />
-                        <Picker.Item label="Hourglass" value="Hourglass" />
-                        <Picker.Item label="Slim" value="Slim" />
-                      </Picker>
-                    </View>
-
-                    {/* SkinTone */}
-
-                    <View style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      width: '90%',
-                      paddingLeft: 8,
-                      paddingRight: 8,
-                      marginTop: 12,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.height ? 'red' : '#e6e6e6',
-                    }}>
-                      <Picker
-                        selectedValue={complexionValue}
-                        style={{
-                          height: 50,
-                          width: '100%',
-                        }}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setcomplexionValue(itemValue);
-                          setFieldValue('complexion', itemValue);
-                        }}>
-                        <Picker.Item label="Select Complexion" value="0" />
-                        <Picker.Item label="Brown" value="Brown" />
-                        <Picker.Item label="Dark" value="Dark" />
-                        <Picker.Item label="Fair" value="Fair" />
-                        <Picker.Item label="Wheatish" value="Wheatish" />
-                      </Picker>
-                    </View>
-
-
-                      {/*
-                      About user 
-                      */}
-                   
-
 
 
                   </>
@@ -1081,6 +1118,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     marginTop: 3,
     color: 'red',
+    paddingLeft:'4%'
   },
   forgotText: {
     color: 'purple',
