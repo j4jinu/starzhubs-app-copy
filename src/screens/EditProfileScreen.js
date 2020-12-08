@@ -12,6 +12,7 @@ import {
   PermissionsAndroid,
   Alert,
   KeyboardAvoidingView,
+  ToastAndroid
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import ImagePicker from 'react-native-image-picker';
@@ -233,7 +234,7 @@ const EditProfileScreen = (props) => {
   const type = props.navigation.getParam('type');
 
   const [dob, setDob] = useState('');
-  const [country, setCountry] = useState('india');
+  const [country, setCountry] = useState('India');
   const [gender, setGender] = useState('');
   const [selectedItems, setSelectedItems] = useState();
   const [userInfo, setUserInfo] = useState({ image: {}, location: {}, });
@@ -388,7 +389,7 @@ const EditProfileScreen = (props) => {
       return alert(resData.message);
     }
     setMsg('User details updated successfully');
-    setVisible(!visible);
+    showToastWithGravityAndOffset('User details updated successfully')
     type === 'signup' ? props.navigation.navigate('Talents') : props.navigation.navigate('Account');
   };
 
@@ -479,25 +480,31 @@ const EditProfileScreen = (props) => {
       const uploadResData = await uploadRes.json();
       if (!uploadResData.success) {
         setMsg('Something went wrong. Try again!');
-        setVisible(!visible);
+        showToastWithGravityAndOffset('Something went wrong. Try again!')
         return;
       }
       setMsg('Profile image uploaded successfully');
-      setVisible(!visible);
+      showToastWithGravityAndOffset('Profile image uploaded successfully')
     } catch (error) {
       console.error('error', error);
     }
   };
 
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset = (msg) => {
+    ToastAndroid.showWithGravityAndOffset(
+      msg,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100,
+    );
   };
 
   return (
     <View style={styles.container}>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+      {/* <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
         {msg}
-      </Snackbar>
+      </Snackbar> */}
       <ScrollView keyboardShouldPersistTaps="always">
         {userInfo.image !== undefined && image === '' && (
           <Image
@@ -754,7 +761,7 @@ const EditProfileScreen = (props) => {
                     color={theme.$primaryColor}
                   />
                   <Picker
-                    selectedValue={country}
+                    selectedValue={initialProfileValues.country !== null ? initialProfileValues.country : country}
                     style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
                     onValueChange={(itemValue, itemIndex) =>
                       setCountry(itemValue)

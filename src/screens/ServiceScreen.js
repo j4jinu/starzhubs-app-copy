@@ -47,13 +47,14 @@ const ServiceScreen = ({ navigation }) => {
           {service.map((s) => (
             <Card style={styles.cardleft}>
               <TouchableOpacity
+              style={{justifyContent:'center', alignItems:'center', height:'100%'}}
                 onPress={() => {
                   navigation.navigate('ServiceDetails', {
                     serviceId: s._id,
                     serviceName: s.title,
                   });
                 }}>
-                <View style={styles.img}>
+                {/* <View style={styles.img}> */}
                   <Image
                     source={{
                       uri: `http://13.232.190.226/api/services/view/${s.image}`,
@@ -65,7 +66,7 @@ const ServiceScreen = ({ navigation }) => {
                       alignSelf: 'center',
                     }}
                   />
-                </View>
+                {/* </View> */}
                 <View
                   style={{
                     marginLeft: '5%',
@@ -101,8 +102,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginBottom: '1%',
     alignItems: 'center',
-    justifyContent:'center'
-
+    justifyContent:'center',
   },
   img: {
     // marginTop: '8%',

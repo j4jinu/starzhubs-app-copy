@@ -17,6 +17,7 @@ import { Snackbar } from 'react-native-paper';
 import { AuthContext } from '../context/authContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import GIcon from 'react-native-vector-icons/FontAwesome';
+import { Rating, AirbnbRating } from 'react-native-elements';
 
 const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -110,9 +111,6 @@ const TalentListScreen = (props) => {
     );
   };
 
-  // const onDismissSnackBar = () => {
-  //   setVisible(false);
-  // };
   if (talents.length === 0) {
     return (
       <>
@@ -141,103 +139,160 @@ const TalentListScreen = (props) => {
   }
   if (talents.length > 0) {
     return (
-      <View style={{flexDirection:'column'}}>
-        <ScrollView >
-          <View style={styles.container}>
+      <>
+        <View style={styles.container}>
+          <ScrollView >
             {talents.map((t, key) => (
               <View style={styles.card}>
-                <View style={styles.subHeadDiv2}>
-                  <View style={{ width: '70%' }}>
-                    <Text style={styles.subHead}>{t.category.title}</Text>
+                <View style={{ paddingHorizontal: '5%' }}>
+                  <Text style={styles.title}>
+                    {t.category.title}
+                  </Text>
+                  <View style={{ alignItems: 'flex-start', flexDirection: 'row', marginBottom: 10 }}>
+                    <Rating
+                      type='custom'
+                      readonly
+                      ratingColor={theme.$primaryColor}
+                      ratingBackgroundColor='#c8c7c8'
+                      ratingCount={5}
+                      imageSize={15}
+                      style={{ paddingVertical: 5 }}
+                      defaultRating={t.level}
+                    />
+                    <Text style={{ marginLeft: '5%', marginTop: 4 }}>
+                      {t.level == '1'
+                        ? "Beginner"
+                        : t.level == '2'
+                          ? "Average"
+                          : t.level == '3'
+                            ? "Good"
+                            : t.level == '4'
+                              ? "Excellent"
+                              : "Experienced"
+                      }
+                    </Text>
                   </View>
-                  <View style={{ width: '20%', flexDirection: 'row' }}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.navigation.navigate('EditTalents', {
-                          talentId: t._id,
-                          category: t.category.title,
-                          type: t.chars.type,
-                          industry: t.chars.industry,
-                          films: t.chars.films,
-                          years: t.chars.years,
-                          description: t.description,
-                          levels: t.level,
-                        })
-                      }>
-                      <EIcon
-                        name="user-edit"
-                        size={15}
-                        color="orange"
-                        style={{ marginLeft: '35%', alignSelf: 'flex-end' }}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => confirmDelete(t._id)}>
-                      <DIcon
-                        name="delete"
-                        size={18}
-                        color="orange"
-                        style={{ marginLeft: 20, alignSelf: 'flex-end' }}
-                      />
-                    </TouchableOpacity>
+                  <View style={styles.subrow}>
+                    <View
+                      style={{
+                        padding: 5,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '50%'
+                      }}
+                    >
+                      <Text style={{ fontWeight: 'bold', color: "black", }}>Type</Text>
+                      <Text style={{ color: "darkgrey", }}>
+                        {t.chars.type
+                        }
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 5,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '50%'
+                      }}
+                    >
+                      <Text style={{ fontWeight: 'bold', color: "black", }}>Industries</Text>
+                      <Text style={{ color: "darkgrey", }}>{t.chars.industry.toString()}</Text>
+                    </View>
+
                   </View>
+                  <View style={styles.subrow}>
+
+                    <View
+                      style={{
+                        padding: 5,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '50%'
+                      }}
+                    >
+                      <Text style={{ fontWeight: 'bold', color: "black", }}>Experience</Text>
+                      <Text style={{ color: "darkgrey", }}>{t.chars.years} Year Experienced</Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 5,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '50%'
+                      }}
+                    >
+                      <Text style={{ color: "black", fontWeight: 'bold', }}>Works</Text>
+                      <Text style={{ color: "darkgrey", }}>{t.chars.films} work(s) completed</Text>
+                    </View>
+                  </View>
+                  <View style={{ paddingHorizontal: 5 }}>
+                    <Text style={{ marginTop: 10, color: "black", fontWeight: 'bold' }}>
+                      Description
+              </Text>
+                    <Text
+                      style={{
+                        color: "darkgrey",
+                        marginBottom: 15
+                      }}
+                    >
+                      {t.description}
+                    </Text>
+                  </View>
+
+                </View>
+                <View style={{ flexDirection: "row", bottom: "-2%" }}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.navigation.navigate('EditTalents', {
+                        talentId: t._id,
+                        category: t.category.title,
+                        type: t.chars.type,
+                        industry: t.chars.industry,
+                        films: t.chars.films,
+                        years: t.chars.years,
+                        description: t.description,
+                        levels: t.level,
+                      })
+                    }
+                    style={styles.EditBtn}>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      EDIT
+                  </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => confirmDelete(t._id)}
+                    style={styles.DeleteBtn}>
+                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                      DELETE
+                  </Text>
+                  </TouchableOpacity>
                 </View>
 
-                <View style={styles.infoDiv}>
-                  <View style={{ marginTop: 10 }}>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Type</Text>
-                      <Text style={styles.fieldText}>{t.chars.type}</Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Industries</Text>
-                      <Text style={styles.fieldText}>
-                        {t.chars.industry.toString()}
-                      </Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Projects</Text>
-                      <Text style={styles.fieldText}>{t.chars.films}</Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Experience</Text>
-                      <Text style={styles.fieldText}>
-                        {t.chars.years} Years
-                      </Text>
-                    </View>
-                    <View style={styles.fieldDiv}>
-                      <Text style={styles.fieldTitle}>Level</Text>
-                      <Text style={styles.fieldText}>
-                        {t.level == '1'
-                          ? 'Beginner'
-                          : t.level == '2'
-                            ? 'Average'
-                            : t.level == '3'
-                              ? 'Good'
-                              : t.level == '4'
-                                ? 'Excellent'
-                                : 'Experienced'}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
               </View>
+
+
             ))}
+
+
+          </ScrollView>
+          <View
+            style={{
+              borderWidth: 0,
+              bottom: '7%',
+              right: 20,
+              alignSelf: 'flex-end',
+
+
+            }}>
+            <TouchableOpacity
+              style={styles.createBtn}
+              onPress={() => props.navigation.navigate('AddTalents')}>
+              <GIcon name="plus" size={25} color="white" />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
-        <View
-          style={{
-            borderWidth: 0,
-            bottom: '10%',
-            right: 10,
-            alignSelf: 'flex-end',
-          }}>
-          <TouchableOpacity
-            style={styles.createBtn}
-            onPress={() => props.navigation.navigate('AddTalents')}>
-            <GIcon name="plus" size={25} color="white" />
-          </TouchableOpacity>
         </View>
-      </View>
+
+      </>
     );
   }
 };
@@ -245,7 +300,45 @@ const TalentListScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom:10
+    marginBottom: -40,
+
+  },
+  EditBtn: {
+    width: "150%",
+    backgroundColor: 'green',
+    height: 50,
+
+    marginRight: "25%",
+    justifyContent: 'center',
+    marginTop: 2,
+  },
+  DeleteBtn: {
+    width: "69%",
+    backgroundColor: "firebrick",
+    marginLeft: "25%",
+    marginRight: "32%",
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 2,
+
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: '1%'
+  },
+  subrow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%'
+    //marginVertical:'1%'
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: "#555",
+    textTransform: 'uppercase'
   },
   card: {
     backgroundColor: 'white',
@@ -256,13 +349,13 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 2,
     marginHorizontal: 20,
-    padding: 8,
+    // padding: 8,
+    marginBottom: "3%",
     marginTop: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
-    paddingBottom: '5%',
+
   },
   subHeadDiv: {
     marginTop: 8,
