@@ -19,6 +19,7 @@ import Moment from 'moment';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../context/authContext';
+import theme from '../config/theme';
 
 const CreatePosterScreen = (props, { navigation }) => {
   const auth = useContext(AuthContext);
@@ -221,7 +222,7 @@ const CreatePosterScreen = (props, { navigation }) => {
                   touched,
                 }) => (
                     <View
-                      style={{ marginLeft: 25, marginRight: 25, marginTop: 10 }}>
+                      style={{ marginLeft: 10, marginRight: 10, marginTop: 10 }}>
                       {image && (
                         <Image
                           source={{ uri: image }}
@@ -259,8 +260,8 @@ const CreatePosterScreen = (props, { navigation }) => {
                         }}>
                         <Cicon
                           name="subtitles"
-                          size={25}
-                          style={{ color: 'tomato', marginRight: '2%' }}
+                          size={18}
+                          style={{ color: theme.$primaryColor, marginRight: '2%' }}
                         />
                         <TextInput
                           style={{ paddingVertical: 5, width: '100%', }}
@@ -296,8 +297,8 @@ const CreatePosterScreen = (props, { navigation }) => {
                         }}>
                         <Icon
                           name="ios-information-circle"
-                          size={25}
-                          style={{ color: 'tomato', marginRight: '2%' }}
+                          size={18}
+                          style={{ color: theme.$primaryColor, marginRight: '2%' }}
                         />
                         <TextInput
                           style={{ paddingVertical: 5, width: '100%', }}
@@ -341,12 +342,12 @@ const CreatePosterScreen = (props, { navigation }) => {
                         iconComponent={
                           <Cicon
                             name="date-range"
-                            size={23}
+                            size={18}
                             style={{
                               position: 'absolute',
                               left: 0,
-                              top: 8,
-                              color: 'tomato',
+                              top: 9,
+                              color: theme.$primaryColor,
                             }}
                           />
                         }
@@ -393,12 +394,12 @@ const CreatePosterScreen = (props, { navigation }) => {
                         iconComponent={
                           <Cicon
                             name="date-range"
-                            size={23}
+                            size={18}
                             style={{
                               position: 'absolute',
                               left: 0,
-                              top: 8,
-                              color: 'tomato',
+                              top: 9,
+                              color: theme.$primaryColor,
                             }}
                           />
                         }
@@ -434,7 +435,7 @@ const CreatePosterScreen = (props, { navigation }) => {
                         <TouchableOpacity
                           style={{
                             borderRadius: 2,
-                            backgroundColor: 'tomato',
+                            backgroundColor:theme.$primaryColor,
                             padding: 10,
                             width: '50%',
                             alignItems: 'center',
@@ -518,7 +519,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingVertical: 8,
     paddingHorizontal: 5,
-    backgroundColor: 'tomato',
+    backgroundColor: theme.$primaryColor,
     alignItems: 'center',
     marginBottom: 10,
   },

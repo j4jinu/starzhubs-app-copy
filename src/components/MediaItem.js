@@ -55,7 +55,7 @@ const MediaItem = (props) => {
                             }}
                         /> */}
           <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
-          <Text style={styles.mediaDescription}>{props.media[0].description}</Text>
+          <Text style={styles.mediaDescription}>{props.media[0].description.substring(0, 100)}...</Text>
           <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>Posted by:
             {props.user[0] !== undefined && (
               <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     borderRadius: 2,
     marginBottom: 10,
+    paddingBottom:10
     // elevation: 3,
     // borderRadius: 2,
     // marginBottom: "3%"

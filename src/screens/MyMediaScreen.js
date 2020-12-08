@@ -237,14 +237,6 @@ const MyMediaScreen = (props) => {
                           }}
                         />
                       ) : (
-                          //   <WebView
-                          //   javaScriptEnabled={true}
-                          //   domStorageEnabled={true}
-                          //   source={{
-                          //     uri:  m.file,
-                          //   }}
-                          // />
-
                           <WebView
                             javaScriptEnabled={true}
                             domStorageEnabled={true}
@@ -301,7 +293,7 @@ const MyMediaScreen = (props) => {
                             <Text
                               style={styles.mediaDescription}
                               numberOfLines={3}>
-                              {m.description}
+                              {m.description.substring(0, 100)}...
                             </Text>
                           </TouchableOpacity>
                         </View>

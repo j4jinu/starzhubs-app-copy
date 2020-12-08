@@ -240,7 +240,7 @@ const TalentListScreen = (props) => {
                   </View>
 
                 </View>
-                <View style={{ flexDirection: "row", bottom: "-2%" }}>
+                <View style={{ flexDirection: "row", bottom: 0 }}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate('EditTalents', {
@@ -255,14 +255,14 @@ const TalentListScreen = (props) => {
                       })
                     }
                     style={styles.EditBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                    <Text style={{ color: 'white', textAlign: 'center',fontWeight:'700' }}>
                       EDIT
                   </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => confirmDelete(t._id)}
                     style={styles.DeleteBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                    <Text style={{ color: 'white', textAlign: 'center',fontWeight:'700' }}>
                       DELETE
                   </Text>
                   </TouchableOpacity>
@@ -305,8 +305,8 @@ const styles = StyleSheet.create({
   },
   EditBtn: {
     width: "150%",
-    backgroundColor: 'green',
-    height: 50,
+    backgroundColor: 'lightgrey',
+    height: 40,
 
     marginRight: "25%",
     justifyContent: 'center',
@@ -314,10 +314,10 @@ const styles = StyleSheet.create({
   },
   DeleteBtn: {
     width: "69%",
-    backgroundColor: "firebrick",
+    backgroundColor: "lightgrey",
     marginLeft: "25%",
     marginRight: "32%",
-    height: 50,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
@@ -355,6 +355,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
+    elevation:2,
+    paddingTop:10
 
   },
   subHeadDiv: {
