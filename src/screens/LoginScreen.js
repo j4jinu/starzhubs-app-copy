@@ -48,7 +48,7 @@ const LoginScreen = (props) => {
             uri: 'https://starzhubs.com/assets/images/starzhubs_logo.png',
           }}
         />
-        <Text style={styles.welcomeText}>Welcome to StarZHubs</Text>
+        <Text style={styles.welcomeText}>Sign In</Text>
         <Formik
           initialValues={{username: '', password: ''}}
           validationSchema={loginSchema}
@@ -67,7 +67,7 @@ const LoginScreen = (props) => {
                 style={{
                   alignSelf: 'center',
                   borderWidth: 1,
-                  borderRadius: 10,
+                  borderRadius: 8,
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
@@ -96,7 +96,7 @@ const LoginScreen = (props) => {
                 style={{
                   alignSelf: 'center',
                   borderWidth: 1,
-                  borderRadius: 10,
+                  borderRadius: 8,
                   width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
@@ -129,7 +129,7 @@ const LoginScreen = (props) => {
                   activeOpacity={0.8}
                   style={styles.loginBtn}
                   onPress={handleSubmit}>
-                  <Text style={styles.loginBtnText}>LOG IN</Text>
+                  <Text style={styles.loginBtnText}>Sign In</Text>
                 </TouchableOpacity>
               )}
               {isSubmitting && (
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 8,
     width: '90%',
     paddingLeft: 8,
     paddingRight: 8,
@@ -202,8 +202,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '90%',
     backgroundColor: theme.$primaryColor,
-    padding: 5,
-    borderRadius: 10,
+    padding: 8,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -232,11 +232,12 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-regular',
   },
   welcomeText: {
-    color: theme.$primaryColor,
-    fontSize: 22,
+    color: '#000',
+    fontSize: 25,
     marginTop: 50,
     marginBottom: 20,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
+    marginLeft: 20,
     fontFamily: 'montserrat-medium',
   },
 });
