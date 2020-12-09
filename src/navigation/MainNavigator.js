@@ -347,22 +347,34 @@ const AccountNavigator = createStackNavigator(
   },
 );
 
-const BuddyNavigator = createStackNavigator(
+const FilterNavigator = createStackNavigator(
   {
-    Connections: {
-      screen: BuddyTopNavigator,
+    Search: {
+      screen: FilterScreen,
+      title: '',
+    },
+    FilterResult: {
+      screen: FilterResultScreen,
       navigationOptions: {
-        title: 'Friends',
-        headerTitleStyle: {
-          fontWeight: '100',
-          fontSize: 16,
-        },
+        title: 'Filter Result',
       },
     },
     UserDetails: {
       screen: UserDetailsScreen,
       navigationOptions: {
         title: 'User Details',
+      },
+    },
+    PosterDetails: {
+      screen: PosterDetailsScreen,
+      navigationOptions: {
+        title: 'Poster Details',
+      },
+    },
+    MediaDetails: {
+      screen: MediaDetailsScreen,
+      navigationOptions: {
+        title: 'Media Details',
       },
     },
   },
@@ -427,7 +439,7 @@ const MainNavigator = createBottomTabNavigator(
   {
     // Users: UserNavigator,
     Posters: PosterNavigator,
-    Search: FilterScreen,
+    Search: FilterNavigator,
     Home: HomeNavigator,
     // Friends: BuddyNavigator,
     Notification: NotificationNavigator,

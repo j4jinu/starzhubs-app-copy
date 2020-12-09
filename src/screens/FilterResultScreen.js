@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   View,
@@ -28,7 +28,7 @@ const FilterResultScreen = (props) => {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1, backgroundColor: '#fafafa'}}>
       {/* <View style={{height: 90}} >
              <ScrollView horizontal>
                 <View style={{flexDirection:"row"}}>
@@ -44,8 +44,8 @@ const FilterResultScreen = (props) => {
             </View> */}
       <FlatList
         data={filter}
-        keyExtractor={({ id }, index) => id}
-        renderItem={({ item }) => (
+        keyExtractor={({id}, index) => id}
+        renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('UserDetails', {
@@ -55,15 +55,16 @@ const FilterResultScreen = (props) => {
             <View style={styles.listItem}>
               <View
                 style={{
-                  borderRadius: 3,
+                  borderRadius: 100,
                   backgroundColor: 'gray',
-                  borderWidth: 1,
-                  borderColor: 'grey',
-                  padding: 2,
-                  transform: [{ skewY: '5deg' }],
                 }}>
                 <Image
-                  style={{ width: 100, height: 100, alignItems: 'flex-start' }}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: 100,
+                    alignItems: 'flex-start',
+                  }}
                   source={{
                     uri:
                       item.image !== undefined
@@ -72,7 +73,7 @@ const FilterResultScreen = (props) => {
                   }}
                 />
               </View>
-              <View style={{ flex: 1, flexDirection: 'column', marginLeft: 25 }}>
+              <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -82,7 +83,7 @@ const FilterResultScreen = (props) => {
                   }}>
                   {item.name}
                 </Text>
-                <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
+                <Text style={{fontSize: 12, alignSelf: 'flex-start'}}>
                   {item.location !== undefined ? item.location.place : ''}{' '}
                 </Text>
                 <Text
@@ -92,7 +93,9 @@ const FilterResultScreen = (props) => {
 
                     top: 7,
                   }}>
-                  {item.bio.substring(0, 120) + '...'}
+                  {item.bio.length > 120
+                    ? item.bio.substring(0, 120) + '...'
+                    : item.bio}
                 </Text>
                 {/* <Text style={{fontSize:18,color:"gray",alignSelf:"center"}} >{item.education}</Text>  */}
               </View>
@@ -116,12 +119,15 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 13,
     backgroundColor: '#FFF',
-    width: '96%',
+    width: '95%',
     marginHorizontal: 5,
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     alignSelf: 'center',
     flexDirection: 'row',
-    borderRadius: 3,
+    borderRadius: 8,
+    marginVertical: 5,
     elevation: 3,
   },
 });
