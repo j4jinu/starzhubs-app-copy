@@ -24,9 +24,14 @@ const MyMediaScreen = (props) => {
   const [talents, setTalents] = useState([]);
   const [visible, setVisible] = useState(false);
   const [isNoMedia, setNoMedia] = useState(false);
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+    getTalents();
+  });
 
   useEffect(() => {
     getTalents();
+    unsubscribe;
   }, []);
   const getTalents = async () => {
     try {

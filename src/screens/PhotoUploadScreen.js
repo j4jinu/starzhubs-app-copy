@@ -125,9 +125,9 @@ const PhotoUploadScreen = (props) => {
       }
 
       setImage('');
-      showToastWithGravityAndOffset()
       resetForm({ values: '' });
-      props.navigation.navigate('Account');
+      props.navigation.navigate('MyMedia');
+      showToastWithGravityAndOffset()
     } catch (error) {
       console.error('error', error);
     }
