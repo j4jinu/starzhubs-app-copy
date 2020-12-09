@@ -1051,7 +1051,6 @@ const styles = StyleSheet.create({
     width: '90%',
     paddingLeft: 8,
     paddingRight: 8,
-
     flexDirection: 'row',
     marginTop: '5%',
     justifyContent: 'flex-start',
