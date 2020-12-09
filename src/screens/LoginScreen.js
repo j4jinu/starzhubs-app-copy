@@ -11,10 +11,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as yup from 'yup';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const loginSchema = yup.object({
   username: yup.string().required('Enter email address'),
@@ -40,17 +40,17 @@ const LoginScreen = (props) => {
     console.log('logintoken', loginData.data.token);
   };
   return (
-    <ScrollView>
-      <View>
+    <View style={styles.container}>
+      <ScrollView>
         <Image
           style={styles.logo}
           source={{
             uri: 'https://starzhubs.com/assets/images/starzhubs_logo.png',
           }}
         />
-        <Text style={styles.welcomeText}>Welcome to StarZHubs</Text>
+        <Text style={styles.welcomeText}>Sign In</Text>
         <Formik
-          initialValues={{ username: '', password: '' }}
+          initialValues={{username: '', password: ''}}
           validationSchema={loginSchema}
           onSubmit={(values) => loginUser(values)}>
           {({
@@ -62,81 +62,81 @@ const LoginScreen = (props) => {
             errors,
             values,
           }) => (
-              <>
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.username ? 'red' : 'gray',
-                  }}>
-                  <Icon name="mail" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    style={styles.inputField}
-                    placeholder={'Email address'}
-                    onChangeText={handleChange('username')}
-                    onBlur={handleBlur('username')}
-                    value={values.username}
-                  />
-                </View>
-                {touched.username && errors.username && (
-                  <Text style={styles.errorText}>
-                    {touched.username && errors.username}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.password ? 'red' : 'gray',
-                  }}>
-                  <Icon name="lock" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    secureTextEntry={true}
-                    style={styles.inputField}
-                    placeholder={'Password'}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                  />
-                </View>
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>
-                    {touched.password && errors.password}
-                  </Text>
-                )}
+            <>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.username ? 'red' : 'gray',
+                }}>
+                <Icon name="mail" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  style={styles.inputField}
+                  placeholder={'Email address'}
+                  onChangeText={handleChange('username')}
+                  onBlur={handleBlur('username')}
+                  value={values.username}
+                />
+              </View>
+              {touched.username && errors.username && (
+                <Text style={styles.errorText}>
+                  {touched.username && errors.username}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 8,
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.password ? 'red' : 'gray',
+                }}>
+                <Icon name="lock" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  secureTextEntry={true}
+                  style={styles.inputField}
+                  placeholder={'Password'}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                />
+              </View>
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>
+                  {touched.password && errors.password}
+                </Text>
+              )}
+              <TouchableOpacity
+                onPress={() => props.navigation.navigate('PasswordRecovery')}>
+                <Text style={styles.forgotText}>Forgot Password?</Text>
+              </TouchableOpacity>
+              {!isSubmitting && (
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('PasswordRecovery')}>
-                  <Text style={styles.forgotText}>Forgot Password?</Text>
+                  activeOpacity={0.8}
+                  style={styles.loginBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.loginBtnText}>Sign In</Text>
                 </TouchableOpacity>
-                {!isSubmitting && (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.loginBtn}
-                    onPress={handleSubmit}>
-                    <Text style={styles.loginBtnText}>LOG IN</Text>
-                  </TouchableOpacity>
-                )}
-                {isSubmitting && (
-                  <ActivityIndicator size={'large'} color={theme.$primaryColor} />
-                )}
-              </>
-            )}
+              )}
+              {isSubmitting && (
+                <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+              )}
+            </>
+          )}
         </Formik>
         <View style={styles.registerLayout}>
           <Text style={styles.registerLayoutText1}>Don't have an account?</Text>
@@ -146,15 +146,14 @@ const LoginScreen = (props) => {
             <Text style={styles.registerLayoutText2}>Register</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: 'white',
   },
   errorText: {
@@ -182,7 +181,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 8,
     width: '90%',
     paddingLeft: 8,
     paddingRight: 8,
@@ -203,8 +202,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '90%',
     backgroundColor: theme.$primaryColor,
-    padding: 5,
-    borderRadius: 10,
+    padding: 8,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -233,11 +232,12 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-regular',
   },
   welcomeText: {
-    color: theme.$primaryColor,
-    fontSize: 22,
+    color: '#000',
+    fontSize: 25,
     marginTop: 50,
     marginBottom: 20,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
+    marginLeft: 20,
     fontFamily: 'montserrat-medium',
   },
 });

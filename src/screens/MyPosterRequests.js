@@ -28,14 +28,14 @@ const MyPosterRequests = (props) => {
       });
       let userData = await response.json();
       setRequests(userData.requests);
-      console.log("poster request",userData.requests[0].posterId.userId);
+      console.log("poster request",userData);
     } catch (error) { }
   };
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView >
-        {requests.length > 0 && (
+        {requests !== undefined ? (
         <FlatList
             data={requests}
             keyExtractor={({ id }, index) => id}
@@ -128,6 +128,18 @@ const MyPosterRequests = (props) => {
             )
           )}
       />
+      ):(
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: "100%",
+            flex: 1,
+          }}>
+          <Image source={require("../assets/broke.png")}
+            style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+            <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No Requests</Text>
+        </View>
       )}
       </ScrollView>
     </View>

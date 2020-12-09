@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   FlatList,
@@ -9,9 +9,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 import Moment from 'moment';
-
 
 const NotificationListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -34,7 +33,7 @@ const NotificationListScreen = (props) => {
         return;
       }
       setAlerts(resData.data.notifications);
-      console.log("notifications", resData.data.notifications);
+      console.log('notifications', resData.data.notifications);
     } catch (error) {
       alert('Something went wrong. Try again later.');
     }
