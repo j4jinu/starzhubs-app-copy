@@ -25,7 +25,12 @@ import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
+<<<<<<< HEAD
 import { ScrollView } from 'react-native-gesture-handler';
+=======
+import {ScrollView} from 'react-native-gesture-handler';
+import UserDetailsScreen from './UserDetailsScreen';
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
 
 const industryNames = [
   {
@@ -108,8 +113,8 @@ export default function AddTalentScreen(props) {
     projects: '',
     complexion: 'Brown',
     bodyType: 'Athletic',
-    height: 0,
-    weight: 0,
+    height: '',
+    weight: '',
     description: '',
   };
 
@@ -161,6 +166,7 @@ export default function AddTalentScreen(props) {
     getUserTalents();
     // getUserTalents()
   }, []);
+
   useEffect(() => {
     const getCategory = () => {
       fetch('http://13.232.190.226/api/category', {
@@ -290,6 +296,7 @@ export default function AddTalentScreen(props) {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+
   const showToast = () => {
     ToastAndroid.show('Talent already added by the user', ToastAndroid.SHORT);
   };
@@ -303,6 +310,7 @@ export default function AddTalentScreen(props) {
       100,
     );
   };
+
   const uploadAvatar = async (imgType, imgurl) => {
     let image;
     if (imgType === 'head_shot') {
@@ -372,6 +380,7 @@ export default function AddTalentScreen(props) {
       console.warn(err);
     }
   };
+
   const chooseFile = async (imgType) => {
     var options = {
       title: 'Select Image',
@@ -419,6 +428,7 @@ export default function AddTalentScreen(props) {
   const handleReset = (resetForm) => {
     resetForm();
   };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -445,8 +455,29 @@ export default function AddTalentScreen(props) {
             values,
             errors,
           }) => (
+<<<<<<< HEAD
               <React.Fragment>
                 <View
+=======
+            <React.Fragment>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // marginBottom: 5,
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
+                }}>
+                <Cicon
+                  name="merge-type"
+                  size={20}
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
@@ -506,6 +537,7 @@ export default function AddTalentScreen(props) {
                   }}>
                   <Text style={{ fontSize: 15 }}>Select Confidence Level</Text>
 
+<<<<<<< HEAD
                   <AirbnbRating
                     reviews={[
                       'Beginner',
@@ -522,6 +554,25 @@ export default function AddTalentScreen(props) {
                     selectedColor={theme.$primaryColor}
                   />
                 </View>
+=======
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingTop: 10,
+                  marginTop: 8,
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                }}>
+                <Text style={{fontSize: 15}}>Select Confidence Level</Text>
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
 
                 <View
                   style={{
@@ -547,6 +598,7 @@ export default function AddTalentScreen(props) {
                     />
                   </View>
 
+<<<<<<< HEAD
                   <View style={{ width: '95%', marginLeft: '-2%' }}>
                     <SectionedMultiSelect
                       items={industryNames}
@@ -581,11 +633,30 @@ export default function AddTalentScreen(props) {
                   }}>
                   <Eicon
                     name="envelope-open-text"
+=======
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
+                }}>
+                <View style={{width: '7%'}}>
+                  <Gicon
+                    name="industry"
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
                     size={15}
                     style={{
                       color: '#fd9242',
                     }}
                   />
+<<<<<<< HEAD
                   <TextInput
                     style={styles.inputText}
                     placeholder="Experience"
@@ -635,6 +706,113 @@ export default function AddTalentScreen(props) {
                   <Text style={styles.error}>{errors.projects}</Text>
                 ) : null}
                 <View
+=======
+                </View>
+
+                <View style={{width: '90%', marginLeft: '-2%'}}>
+                  <SectionedMultiSelect
+                    items={industryNames}
+                    IconRenderer={Icon}
+                    uniqueKey="id"
+                    subKey="children"
+                    selectText="Select Industry"
+                    showDropDowns={true}
+                    expandDropDowns
+                    showCancelButton
+                    readOnlyHeadings={true}
+                    onSelectedItemsChange={onSelectedItemsChange}
+                    selectedItems={selectedItems}
+                  />
+                </View>
+              </View>
+              {errors.industry ? (
+                <Text style={styles.error}>{errors.industry}</Text>
+              ) : null}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.experience ? 'red' : '#e6e6e6',
+                }}>
+                <Eicon
+                  name="envelope-open-text"
+                  size={15}
+                  style={{
+                    color: '#fd9242',
+                  }}
+                />
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="Experience"
+                  placeholderTextColor="#003f5c"
+                  keyboardType="numeric"
+                  autoCapitalize="sentences"
+                  // defaultValue={user.email}
+                  onChangeText={handleChange('experience')}
+                  onBlur={handleBlur('experience')}
+                />
+              </View>
+              {errors.experience ? (
+                <Text style={styles.error}>{errors.experience}</Text>
+              ) : null}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.projects ? 'red' : '#e6e6e6',
+                }}>
+                <Eicon
+                  name="envelope-open-text"
+                  size={15}
+                  style={{
+                    color: '#fd9242',
+                  }}
+                />
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="No.of Projects"
+                  placeholderTextColor="#003f5c"
+                  keyboardType="numeric"
+                  autoCapitalize="sentences"
+                  // defaultValue={user.email}
+                  onChangeText={handleChange('projects')}
+                  onBlur={handleBlur('projects')}
+                />
+              </View>
+              {errors.projects ? (
+                <Text style={styles.error}>{errors.projects}</Text>
+              ) : null}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.description ? 'red' : '#e6e6e6',
+                }}>
+                <Cicon
+                  name="class"
+                  size={15}
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
@@ -853,7 +1031,26 @@ export default function AddTalentScreen(props) {
                         </TouchableOpacity>
                       </View>
                     </View>
+<<<<<<< HEAD
                     <View
+=======
+                  </View>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.bodyType ? 'red' : '#e6e6e6',
+                    }}>
+                    <Picker
+                      selectedValue={bodyTypeValue}
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
                       style={{
                         alignSelf: 'center',
                         borderWidth: 1,
@@ -888,10 +1085,31 @@ export default function AddTalentScreen(props) {
                       </Picker>
                     </View>
 
+<<<<<<< HEAD
                     {errors.bodyType ? (
                       <Text style={styles.error}>{errors.bodyType}</Text>
                     ) : null}
                     <View
+=======
+                  {errors.bodyType ? (
+                    <Text style={styles.error}>{errors.bodyType}</Text>
+                  ) : null}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.complexion ? 'red' : '#e6e6e6',
+                    }}>
+                    <Picker
+                      selectedValue={complexionValue}
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
                       style={{
                         alignSelf: 'center',
                         borderWidth: 1,
@@ -904,6 +1122,7 @@ export default function AddTalentScreen(props) {
                         alignItems: 'center',
                         borderColor: errors.complexion ? 'red' : '#e6e6e6',
                       }}>
+<<<<<<< HEAD
                       <Picker
                         selectedValue={complexionValue}
                         style={{
@@ -980,6 +1199,74 @@ export default function AddTalentScreen(props) {
                     ) : null}
                   </Fragment>
                 )}
+=======
+                      <Picker.Item label="Select Complexion" value="0" />
+                      <Picker.Item label="Brown" value="Brown" />
+                      <Picker.Item label="Dark" value="Dark" />
+                      <Picker.Item label="Fair" value="Fair" />
+                      <Picker.Item label="Wheatish" value="Wheatish" />
+                    </Picker>
+                  </View>
+                  {errors.complexion ? (
+                    <Text style={styles.error}>{errors.complexion}</Text>
+                  ) : null}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.height ? 'red' : '#e6e6e6',
+                    }}>
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Height (cm)"
+                      placeholderTextColor="#003f5c"
+                      keyboardType="numeric"
+                      autoCapitalize="sentences"
+                      // defaultValue={user.email}
+                      onChangeText={handleChange('height')}
+                      onBlur={handleBlur('height')}
+                    />
+                  </View>
+                  {errors.height ? (
+                    <Text style={styles.error}>{errors.height}</Text>
+                  ) : null}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.weight ? 'red' : '#e6e6e6',
+                    }}>
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Weight (KGs)"
+                      placeholderTextColor="#003f5c"
+                      keyboardType="numeric"
+                      autoCapitalize="sentences"
+                      defaultValue={initialTalentValues.weight}
+                      onChangeText={handleChange('weight')}
+                      onBlur={handleBlur('weight')}
+                    />
+                  </View>
+                  {errors.weight ? (
+                    <Text style={styles.error}>{errors.weight}</Text>
+                  ) : null}
+                </Fragment>
+              )}
+>>>>>>> 528c27c920980220933e6194fc69ceb2058d80bd
 
                 <TouchableOpacity
                   style={styles.registerBtn}
@@ -1017,7 +1304,8 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    fontSize: 10,
+    fontSize: 12,
+    marginHorizontal: '5%',
     //marginBottom: -15,
   },
   logo: {

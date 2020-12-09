@@ -63,6 +63,7 @@ const AccountScreen = (props) => {
       {cancelable: false},
     );
   };
+
   return (
     <View style={styles.container}>
       <ScrollView>
