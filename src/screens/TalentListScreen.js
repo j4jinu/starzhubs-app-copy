@@ -24,8 +24,14 @@ const TalentListScreen = (props) => {
   const [talents, setTalents] = useState([]);
   const [visible, setVisible] = useState(false);
 
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+    getUserTalents();
+  });
+
   useEffect(() => {
     getUserTalents();
+    unsubscribe;
   }, []);
 
   const getUserTalents = () => {
