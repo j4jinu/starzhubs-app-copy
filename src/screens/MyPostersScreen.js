@@ -15,8 +15,9 @@ import PIcon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
 
 const MyPostersScreen = (props) => {
-  const cnt = props.navigation.getParams('content')
-  const [content, setContent] = useState('me');
+  const cnt = props.navigation.getParam('content')
+  console.log("sda",cnt);
+  const [content, setContent] = useState(cnt!==undefined?cnt:'me');
   const [loading, setLoading] = useState(false);
 
   return (

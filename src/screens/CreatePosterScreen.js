@@ -97,7 +97,7 @@ const CreatePosterScreen = (props, {navigation}) => {
         return;
       }
 
-      props.navigation.navigate('MyPosters', {
+      props.navigation.navigate('MyPosters',{
         content:'pending'
       });
       showToastWithGravityAndOffset();
