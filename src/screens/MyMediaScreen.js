@@ -160,7 +160,7 @@ const MyMediaScreen = (props) => {
                   marginTop: 10,
                   // backgroundColor:'gainsboro'
                 }}>
-                  
+                
                 <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
                   {t.category.title}
                 </Text>
@@ -293,7 +293,7 @@ const MyMediaScreen = (props) => {
                             <Text
                               style={styles.mediaDescription}
                               numberOfLines={3}>
-                              {m.description.substring(0, 100)}...
+                              {m.description}
                             </Text>
                           </TouchableOpacity>
                         </View>
