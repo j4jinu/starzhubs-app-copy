@@ -160,11 +160,11 @@ const MyMediaScreen = (props) => {
                   marginTop: 10,
                   // backgroundColor:'gainsboro'
                 }}>
-                  
+
                 <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
                   {t.category.title}
                 </Text>
-                
+
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -221,7 +221,7 @@ const MyMediaScreen = (props) => {
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                
+
                 {t.media.map((m) => (
                   <>
                     <View style={styles.gridItem}>
@@ -256,31 +256,37 @@ const MyMediaScreen = (props) => {
                           />
                         )}
 
-                      <View style={{flexDirection:'row', 
-                      backgroundColor:'black', marginTop:'-10%',
-                       opacity: 0.7, width:'100%'}}
-                       >
+                      <View style={{
+                        flexDirection: 'row',
+                        backgroundColor: 'black', marginTop: '-10%',
+                        opacity: 0.7, width: '100%'
+                      }}
+                      >
                         <TouchableOpacity
-                          style={{borderRightWidth:1, borderRightColor:'white',
-                           width:'50%', alignItems:'center',justifyContent:'center',paddingVertical:10}}
-                            onPress={() =>
-                              props.navigation.navigate('EditMedia', {
-                                talentId: t._id,
-                                mediaFile: m.file,
-                                mediaType: m.fileType,
-                                caption: m.caption,
-                                description: m.description,
-                                mediaId: m._id,
-                              })
-                            }>
-                          <Text style={{color:'white', fontWeight:"bold", textTransform:'uppercase'}}>Edit</Text>
-                        </TouchableOpacity> 
+                          style={{
+                            borderRightWidth: 1, borderRightColor: 'white',
+                            width: '50%', alignItems: 'center', justifyContent: 'center', paddingVertical: 10
+                          }}
+                          onPress={() =>
+                            props.navigation.navigate('EditMedia', {
+                              talentId: t._id,
+                              mediaFile: m.file,
+                              mediaType: m.fileType,
+                              caption: m.caption,
+                              description: m.description,
+                              mediaId: m._id,
+                            })
+                          }>
+                          <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Edit</Text>
+                        </TouchableOpacity>
                         <TouchableOpacity
-                          style={{borderRightWidth:1, borderRightColor:'white',
-                          width:'50%', alignItems:'center',justifyContent:'center'}}
-                            onPress={() => confirmDelete(t._id, m._id)}>
-                          <Text style={{color:'white', fontWeight:"bold", textTransform:'uppercase'}}>Delete</Text>
-                          </TouchableOpacity>
+                          style={{
+                            borderRightWidth: 1, borderRightColor: 'white',
+                            width: '50%', alignItems: 'center', justifyContent: 'center'
+                          }}
+                          onPress={() => confirmDelete(t._id, m._id)}>
+                          <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Delete</Text>
+                        </TouchableOpacity>
                       </View>
 
                       <View style={{ flexDirection: 'row', width: '100%' }}>
@@ -354,7 +360,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 5,
     marginHorizontal: 10,
-    textTransform:'uppercase'
+    textTransform: 'uppercase'
   },
   mediaDescription: {
     color: theme.$primaryColorText,

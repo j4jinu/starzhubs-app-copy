@@ -296,7 +296,7 @@ const FilterScreen = (props) => {
               IconRenderer={Icon}
               uniqueKey="id"
               subKey="children"
-              selectText="Select Industry"
+              selectText="Select Category"
               showDropDowns={true}
               expandDropDowns
               showCancelButton

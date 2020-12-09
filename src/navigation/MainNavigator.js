@@ -1,6 +1,6 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -44,14 +44,13 @@ import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
-import MyPosterDetailsScreen from '../screens/MyPosterDetailsScreen';
 import MyPosterRequests from '../screens/MyPosterRequests';
 
 const HomeNavigator = createStackNavigator(
   {
     Portfolio: {
       screen: HomeScreenSingle,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         title: 'Explore',
         headerTitleStyle: {
           fontWeight: '100',
@@ -59,7 +58,7 @@ const HomeNavigator = createStackNavigator(
         },
         headerRight: () => (
           <MaterialIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="search"
             onPress={() => navigation.navigate('Filter')}
@@ -124,10 +123,10 @@ const UserNavigator = createStackNavigator(
   {
     Users: {
       screen: PortfolioListScreen,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         headerRight: () => (
           <MaterialCommunityIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="filter-outline"
             onPress={() => navigation.navigate('Filter')}
@@ -240,7 +239,9 @@ const AccountNavigator = createStackNavigator(
     },
     EditTalents: {
       screen: EditTalentScreen,
-      title: '',
+      navigationOptions: {
+        title: 'Edit Talents',
+      },
     },
     AddTalents: {
       screen: AddTalentScreen,
@@ -284,6 +285,12 @@ const AccountNavigator = createStackNavigator(
         title: 'Your media',
       },
     },
+    MediaDetails: {
+      screen: MediaDetailsScreen,
+      navigationOptions: {
+        title: 'Media Details',
+      },
+    },
     Photo: {
       screen: PhotoUploadScreen,
       navigationOptions: {
@@ -306,12 +313,6 @@ const AccountNavigator = createStackNavigator(
       screen: EditPosterScreen,
       navigationOptions: {
         title: 'Edit Poster',
-      },
-    },
-    MyPosterDetailsScreen: {
-      screen: MyPosterDetailsScreen,
-      navigationOptions: {
-        title: 'My Poster Details',
       },
     },
     UserPosterDetails: {
@@ -436,9 +437,9 @@ const MainNavigator = createBottomTabNavigator(
     Profile: AccountNavigator,
   },
   {
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({focused, horizontal, tintColor}) => {
-        const {routeName} = navigation.state;
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {

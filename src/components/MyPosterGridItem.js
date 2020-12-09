@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -12,13 +12,13 @@ import {
 import theme from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Moment from 'moment';
-import {AuthContext} from '../context/authContext';
-import {Snackbar} from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
+import { Snackbar } from 'react-native-paper';
 const MyPosterGridItem = (props) => {
-  const {userId} = props;
+  const { userId } = props;
   const auth = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState({image: {}});
+  const [user, setUser] = useState({ image: {} });
   const confirmDelete = (pid) =>
     Alert.alert(
       'Delete poster',
@@ -33,7 +33,7 @@ const MyPosterGridItem = (props) => {
           onPress: () => posterDeleteHandler(pid),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   const posterDeleteHandler = (id) => {
     const requestOptions = {
@@ -121,35 +121,35 @@ const MyPosterGridItem = (props) => {
                 //paddingHorizontal: 15,
               }}>
               <View style={styles.ownerDetails}>
-                <Text style={{fontSize: 13}}>{userId.name}</Text>
-                <Text style={{fontSize: 10, color: 'gray'}}>
+                <Text style={{ fontSize: 13 }}>{userId.name}</Text>
+                <Text style={{ fontSize: 10, color: 'gray' }}>
                   {Moment(props.endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 {props.status === 'expired' ||
-                props.status === 'rejected' ? null : (
-                  <TouchableOpacity
-                    style={{
-                      padding: 10,
-                      backgroundColor: '#f2f2f2',
-                      borderRadius: 100,
-                      marginHorizontal: 5,
-                    }}
-                    onPress={() =>
-                      props.navigation.navigate('EditPoster', {
-                        posterId: props.id,
-                        title: props.poster,
-                        image: props.image,
-                        description: props.description,
-                        endDate: props.endDate,
-                        startDate: props.startDate,
-                        user: userId,
-                      })
-                    }>
-                    <Icon name="edit" size={25} color="blue" />
-                  </TouchableOpacity>
-                )}
+                  props.status === 'rejected' ? null : (
+                    <TouchableOpacity
+                      style={{
+                        padding: 10,
+                        backgroundColor: '#f2f2f2',
+                        borderRadius: 100,
+                        marginHorizontal: 5,
+                      }}
+                      onPress={() =>
+                        props.navigation.navigate('EditPoster', {
+                          posterId: props.id,
+                          title: props.poster,
+                          image: props.image,
+                          description: props.description,
+                          endDate: props.endDate,
+                          startDate: props.startDate,
+                          user: userId,
+                        })
+                      }>
+                      <Icon name="edit" size={25} color="blue" />
+                    </TouchableOpacity>
+                  )}
                 <TouchableOpacity
                   style={{
                     padding: 10,
