@@ -103,11 +103,11 @@ const HomeNavigator = createStackNavigator(
     },
     UsersList: {
       screen: PortfolioListScreen,
-      title: '',
+      title: 'Trending profiles',
     },
     MediaList: {
       screen: MediaListSceen,
-      title: '',
+      title: 'Trending media',
     },
   },
   {

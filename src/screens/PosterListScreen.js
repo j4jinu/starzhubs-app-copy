@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   FlatList,
@@ -8,9 +8,9 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 import PosterGridItem from '../components/PosterGridItem';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const PosterListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -34,12 +34,12 @@ const PosterListScreen = (props) => {
   };
 
   return (
-    <>
+    <View style={{flex: 1, backgroundColor: '#fafafa'}}>
       <FlatList
-        style={{ backgroundColor: '#e6e6e6' }}
+        style={{backgroundColor: '#white'}}
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <PosterGridItem
             id={item._id}
             poster={item.title}
@@ -52,7 +52,7 @@ const PosterListScreen = (props) => {
           />
         )}
       />
-    </>
+    </View>
   );
 };
 

@@ -26,6 +26,7 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
 import {ScrollView} from 'react-native-gesture-handler';
+import UserDetailsScreen from './UserDetailsScreen';
 
 const industryNames = [
   {
@@ -108,8 +109,8 @@ export default function AddTalentScreen(props) {
     projects: '',
     complexion: 'Brown',
     bodyType: 'Athletic',
-    height: 0,
-    weight: 0,
+    height: '',
+    weight: '',
     description: '',
   };
 
@@ -161,6 +162,7 @@ export default function AddTalentScreen(props) {
     getUserTalents();
     // getUserTalents()
   }, []);
+
   useEffect(() => {
     const getCategory = () => {
       fetch('http://13.232.190.226/api/category', {
@@ -290,6 +292,7 @@ export default function AddTalentScreen(props) {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+
   const showToast = () => {
     ToastAndroid.show('Talent already added by the user', ToastAndroid.SHORT);
   };
@@ -303,6 +306,7 @@ export default function AddTalentScreen(props) {
       100,
     );
   };
+
   const uploadAvatar = async (imgType, imgurl) => {
     let image;
     if (imgType === 'head_shot') {
@@ -372,6 +376,7 @@ export default function AddTalentScreen(props) {
       console.warn(err);
     }
   };
+
   const chooseFile = async (imgType) => {
     var options = {
       title: 'Select Image',
@@ -419,6 +424,7 @@ export default function AddTalentScreen(props) {
   const handleReset = (resetForm) => {
     resetForm();
   };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -451,7 +457,7 @@ export default function AddTalentScreen(props) {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '95%',
+                  width: '90%',
                   paddingLeft: 10,
                   paddingRight: 10,
                   marginTop: 8,
@@ -493,7 +499,7 @@ export default function AddTalentScreen(props) {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '95%',
+                  width: '90%',
                   paddingLeft: 10,
                   paddingRight: 10,
                   paddingBottom: 10,
@@ -528,7 +534,7 @@ export default function AddTalentScreen(props) {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '95%',
+                  width: '90%',
                   paddingLeft: 10,
                   paddingRight: 10,
                   marginTop: 8,
@@ -547,7 +553,7 @@ export default function AddTalentScreen(props) {
                   />
                 </View>
 
-                <View style={{width: '95%', marginLeft: '-2%'}}>
+                <View style={{width: '90%', marginLeft: '-2%'}}>
                   <SectionedMultiSelect
                     items={industryNames}
                     IconRenderer={Icon}
@@ -571,7 +577,7 @@ export default function AddTalentScreen(props) {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '95%',
+                  width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 8,
@@ -605,7 +611,7 @@ export default function AddTalentScreen(props) {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '95%',
+                  width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 8,
@@ -639,7 +645,7 @@ export default function AddTalentScreen(props) {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '95%',
+                  width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 8,
@@ -858,7 +864,7 @@ export default function AddTalentScreen(props) {
                       alignSelf: 'center',
                       borderWidth: 1,
                       backgroundColor: 'white',
-                      width: '95%',
+                      width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
                       marginTop: 8,
@@ -896,7 +902,7 @@ export default function AddTalentScreen(props) {
                       alignSelf: 'center',
                       borderWidth: 1,
                       backgroundColor: 'white',
-                      width: '95%',
+                      width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
                       marginTop: 8,
@@ -929,7 +935,7 @@ export default function AddTalentScreen(props) {
                       alignSelf: 'center',
                       borderWidth: 1,
                       backgroundColor: 'white',
-                      width: '95%',
+                      width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
                       marginTop: 8,
@@ -939,7 +945,7 @@ export default function AddTalentScreen(props) {
                     }}>
                     <TextInput
                       style={styles.inputText}
-                      placeholder="Height (CMs)"
+                      placeholder="Height (cm)"
                       placeholderTextColor="#003f5c"
                       keyboardType="numeric"
                       autoCapitalize="sentences"
@@ -956,7 +962,7 @@ export default function AddTalentScreen(props) {
                       alignSelf: 'center',
                       borderWidth: 1,
                       backgroundColor: 'white',
-                      width: '95%',
+                      width: '90%',
                       paddingLeft: 8,
                       paddingRight: 8,
                       marginTop: 8,
@@ -970,7 +976,7 @@ export default function AddTalentScreen(props) {
                       placeholderTextColor="#003f5c"
                       keyboardType="numeric"
                       autoCapitalize="sentences"
-                      // defaultValue={user.email}
+                      defaultValue={initialTalentValues.weight}
                       onChangeText={handleChange('weight')}
                       onBlur={handleBlur('weight')}
                     />
@@ -1017,7 +1023,8 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    fontSize: 10,
+    fontSize: 12,
+    marginHorizontal: '5%',
     //marginBottom: -15,
   },
   logo: {
@@ -1051,7 +1058,6 @@ const styles = StyleSheet.create({
     width: '90%',
     paddingLeft: 8,
     paddingRight: 8,
-
     flexDirection: 'row',
     marginTop: '5%',
     justifyContent: 'flex-start',
