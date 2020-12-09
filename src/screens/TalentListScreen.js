@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -13,11 +13,11 @@ import {
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
 import EIcon from 'react-native-vector-icons/FontAwesome5';
-import { Snackbar } from 'react-native-paper';
-import { AuthContext } from '../context/authContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {Snackbar} from 'react-native-paper';
+import {AuthContext} from '../context/authContext';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import GIcon from 'react-native-vector-icons/FontAwesome';
-import { Rating, AirbnbRating } from 'react-native-elements';
+import {Rating, AirbnbRating} from 'react-native-elements';
 
 const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -66,7 +66,7 @@ const TalentListScreen = (props) => {
           onPress: () => onDelteMedia(tid),
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
   };
 
@@ -114,7 +114,7 @@ const TalentListScreen = (props) => {
   if (talents.length === 0) {
     return (
       <>
-        <View style={{ alignItems: 'center', marginTop: '50%' }}>
+        <View style={{alignItems: 'center', marginTop: '50%'}}>
           <Text
             style={{
               color: theme.$primaryColor,
@@ -131,7 +131,7 @@ const TalentListScreen = (props) => {
           onPress={() => props.navigation.navigate('AddTalents')}>
           <Image
             source={require('../assets/add.png')}
-            style={{ width: '41%', height: 160, marginHorizontal: 100 }}
+            style={{width: '41%', height: 160, marginHorizontal: 100}}
           />
         </TouchableOpacity>
       </>
@@ -141,35 +141,37 @@ const TalentListScreen = (props) => {
     return (
       <>
         <View style={styles.container}>
-          <ScrollView >
+          <ScrollView>
             {talents.map((t, key) => (
               <View style={styles.card}>
-                <View style={{ paddingHorizontal: '5%' }}>
-                  <Text style={styles.title}>
-                    {t.category.title}
-                  </Text>
-                  <View style={{ alignItems: 'flex-start', flexDirection: 'row', marginBottom: 10 }}>
+                <View style={{paddingHorizontal: '5%'}}>
+                  <Text style={styles.title}>{t.category.title}</Text>
+                  <View
+                    style={{
+                      alignItems: 'flex-start',
+                      flexDirection: 'row',
+                      marginBottom: 10,
+                    }}>
                     <Rating
-                      type='custom'
+                      type="custom"
                       readonly
                       ratingColor={theme.$primaryColor}
-                      ratingBackgroundColor='#c8c7c8'
+                      ratingBackgroundColor="#c8c7c8"
                       ratingCount={5}
                       imageSize={15}
-                      style={{ paddingVertical: 5 }}
+                      style={{paddingVertical: 5}}
                       defaultRating={t.level}
                     />
-                    <Text style={{ marginLeft: '5%', marginTop: 4 }}>
+                    <Text style={{marginLeft: '5%', marginTop: 4}}>
                       {t.level == '1'
-                        ? "Beginner"
+                        ? 'Beginner'
                         : t.level == '2'
-                          ? "Average"
-                          : t.level == '3'
-                            ? "Good"
-                            : t.level == '4'
-                              ? "Excellent"
-                              : "Experienced"
-                      }
+                        ? 'Average'
+                        : t.level == '3'
+                        ? 'Good'
+                        : t.level == '4'
+                        ? 'Excellent'
+                        : 'Experienced'}
                     </Text>
                   </View>
                   <View style={styles.subrow}>
@@ -178,13 +180,41 @@ const TalentListScreen = (props) => {
                         padding: 5,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
-                        width: '50%'
-                      }}
-                    >
-                      <Text style={{ fontWeight: 'bold', color: "black", }}>Type</Text>
-                      <Text style={{ color: "darkgrey", }}>
-                        {t.chars.type
-                        }
+                        width: '50%',
+                      }}>
+                      <Text style={{fontWeight: 'bold', color: 'black'}}>
+                        Type
+                      </Text>
+                      <Text style={{color: 'darkgrey'}}>{t.chars.type}</Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 5,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '50%',
+                      }}>
+                      <Text style={{fontWeight: 'bold', color: 'black'}}>
+                        Industries
+                      </Text>
+                      <Text style={{color: 'darkgrey'}}>
+                        {t.chars.industry.toString()}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.subrow}>
+                    <View
+                      style={{
+                        padding: 5,
+                        alignItems: 'flex-start',
+                        justifyContent: 'center',
+                        width: '50%',
+                      }}>
+                      <Text style={{fontWeight: 'bold', color: 'black'}}>
+                        Experience
+                      </Text>
+                      <Text style={{color: 'darkgrey'}}>
+                        {t.chars.years} Year Experienced
                       </Text>
                     </View>
                     <View
@@ -192,53 +222,33 @@ const TalentListScreen = (props) => {
                         padding: 5,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
-                        width: '50%'
-                      }}
-                    >
-                      <Text style={{ fontWeight: 'bold', color: "black", }}>Industries</Text>
-                      <Text style={{ color: "darkgrey", }}>{t.chars.industry.toString()}</Text>
-                    </View>
-
-                  </View>
-                  <View style={styles.subrow}>
-
-                    <View
-                      style={{
-                        padding: 5,
-                        alignItems: 'flex-start',
-                        justifyContent: 'center',
-                        width: '50%'
-                      }}
-                    >
-                      <Text style={{ fontWeight: 'bold', color: "black", }}>Experience</Text>
-                      <Text style={{ color: "darkgrey", }}>{t.chars.years} Year Experienced</Text>
-                    </View>
-                    <View
-                      style={{
-                        padding: 5,
-                        alignItems: 'flex-start',
-                        justifyContent: 'center',
-                        width: '50%'
-                      }}
-                    >
-                      <Text style={{ color: "black", fontWeight: 'bold', }}>Works</Text>
-                      <Text style={{ color: "darkgrey", }}>{t.chars.films} work(s) completed</Text>
+                        width: '50%',
+                      }}>
+                      <Text style={{color: 'black', fontWeight: 'bold'}}>
+                        Works
+                      </Text>
+                      <Text style={{color: 'darkgrey'}}>
+                        {t.chars.films} work(s) completed
+                      </Text>
                     </View>
                   </View>
-                  <View style={{ paddingHorizontal: 5 }}>
-                    <Text style={{ marginTop: 10, color: "black", fontWeight: 'bold' }}>
-                      Description
-              </Text>
+                  <View style={{paddingHorizontal: 5}}>
                     <Text
                       style={{
-                        color: "darkgrey",
-                        marginBottom: 15
-                      }}
-                    >
+                        marginTop: 10,
+                        color: 'black',
+                        fontWeight: 'bold',
+                      }}>
+                      Description
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'darkgrey',
+                        marginBottom: 15,
+                      }}>
                       {t.description}
                     </Text>
                   </View>
-
                 </View>
                 <View style={{ flexDirection: "row", bottom: 0 }}>
                   <TouchableOpacity
@@ -257,23 +267,18 @@ const TalentListScreen = (props) => {
                     style={styles.EditBtn}>
                     <Text style={{ color: 'white', textAlign: 'center',fontWeight:'700' }}>
                       EDIT
-                  </Text>
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => confirmDelete(t._id)}
                     style={styles.DeleteBtn}>
                     <Text style={{ color: 'white', textAlign: 'center',fontWeight:'700' }}>
                       DELETE
-                  </Text>
+                    </Text>
                   </TouchableOpacity>
                 </View>
-
               </View>
-
-
             ))}
-
-
           </ScrollView>
           <View
             style={{
@@ -281,8 +286,6 @@ const TalentListScreen = (props) => {
               bottom: '7%',
               right: 20,
               alignSelf: 'flex-end',
-
-
             }}>
             <TouchableOpacity
               style={styles.createBtn}
@@ -291,7 +294,6 @@ const TalentListScreen = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-
       </>
     );
   }
@@ -301,14 +303,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: -40,
-
+    backgroundColor: 'white',
   },
   EditBtn: {
     width: "150%",
     backgroundColor: 'lightgrey',
     height: 40,
 
-    marginRight: "25%",
+    marginRight: '25%',
     justifyContent: 'center',
     marginTop: 2,
   },
@@ -321,24 +323,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
-
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: '1%'
+    marginVertical: '1%',
   },
   subrow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
     //marginVertical:'1%'
   },
   title: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: "#555",
-    textTransform: 'uppercase'
+    color: '#555',
+    textTransform: 'uppercase',
   },
   card: {
     backgroundColor: 'white',
@@ -351,7 +352,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     marginHorizontal: 20,
     // padding: 8,
-    marginBottom: "3%",
+    marginBottom: '3%',
     marginTop: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,

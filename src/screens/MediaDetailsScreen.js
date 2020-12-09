@@ -129,7 +129,7 @@ const MediaDetailsScreen = (props) => {
           />
         </TouchableOpacity>
       )}
-      <ScrollView>
+      <View style={{backgroundColor: 'white'}}>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
         {status === 1
@@ -137,8 +137,8 @@ const MediaDetailsScreen = (props) => {
               <View style={styles.authorInfo}>
                 <Image
                   style={{
-                    width: 50,
-                    height: 50,
+                    width: 45,
+                    height: 45,
                     borderRadius: 100,
                   }}
                   source={{
@@ -159,8 +159,8 @@ const MediaDetailsScreen = (props) => {
                       justifyContent: 'center',
                       marginLeft: 10,
                     }}>
-                    <Text style={{fontSize: 13}}>{'Posted By'}</Text>
-                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                    <Text style={{fontSize: 9}}>{'Posted By'}</Text>
+                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
                       {user.name}
                     </Text>
                   </View>
@@ -168,7 +168,7 @@ const MediaDetailsScreen = (props) => {
               </View>
             )
           : null}
-      </ScrollView>
+      </View>
 
       {/* Enlarge Modal */}
     </>
@@ -183,6 +183,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 8,
     lineHeight: 17,
+    fontSize: 13,
+    lineHeight: 18,
   },
   media: {
     width: '100%',
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     marginTop: 10,
     marginHorizontal: 15,
   },
@@ -201,12 +203,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    marginHorizontal: 10,
     padding: 8,
-    marginTop: 10,
+    marginTop: 5,
+    marginHorizontal: 5,
     flexDirection: 'row',
     borderRadius: theme.$borderRadius,
   },
