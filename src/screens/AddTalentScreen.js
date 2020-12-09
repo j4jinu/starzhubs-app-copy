@@ -273,7 +273,7 @@ export default function AddTalentScreen(props) {
             // setMessage(msg);
             // setVisible(!visible);
 
-            props.navigation.navigate('Account');
+            props.navigation.navigate('Talents');
             showToastWithGravityAndOffset();
           } else {
             // alert(response.message);
