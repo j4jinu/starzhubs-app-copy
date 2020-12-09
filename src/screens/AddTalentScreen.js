@@ -99,6 +99,7 @@ export default function AddTalentScreen(props) {
   const [level, setLevel] = useState(2);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
+  const [isBodyValid, setBodyValid] = useState(false)
 
   const initialTalentValues = {
     talentId: talent,
@@ -107,10 +108,10 @@ export default function AddTalentScreen(props) {
     experience: '',
     // industry:[],
     projects: '',
-    complexion: 'Brown',
-    bodyType: 'Athletic',
-    height: '',
-    weight: '',
+    complexion: 'NA',
+    bodyType: 'NA',
+    height: 0,
+    weight: 0,
     description: '',
   };
 
@@ -238,6 +239,11 @@ export default function AddTalentScreen(props) {
       setLoading(false);
       setSubmitting(false);
       return;
+    }
+    if(isProfileImageMode){
+      if(bodyTypeValue==='NA'){
+        setBodyValid(true)
+      }
     }
     const requestOptions = {
       method: 'POST',
@@ -894,8 +900,8 @@ export default function AddTalentScreen(props) {
                     </Picker>
                   </View>
 
-                  {errors.bodyType ? (
-                    <Text style={styles.error}>{errors.bodyType}</Text>
+                  {isBodyValid ? (
+                    <Text style={styles.error}>Please Choose One</Text>
                   ) : null}
                   <View
                     style={{
