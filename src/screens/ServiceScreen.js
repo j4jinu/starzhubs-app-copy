@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Card } from 'react-native-paper';
-import { AuthContext } from '../context/authContext';
-const ServiceScreen = ({ navigation }) => {
+import {Card} from 'react-native-paper';
+import {AuthContext} from '../context/authContext';
+const ServiceScreen = ({navigation}) => {
   const auth = useContext(AuthContext);
   const [service, setService] = useState([]);
 
@@ -41,13 +41,17 @@ const ServiceScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={{ width: '100%', flexWrap: 'wrap', flexDirection: 'row' }}>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={{width: '100%', flexWrap: 'wrap', flexDirection: 'row'}}>
           {service.map((s) => (
             <Card style={styles.cardleft}>
               <TouchableOpacity
-              style={{justifyContent:'center', alignItems:'center', height:'100%'}}
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: '100%',
+                }}
                 onPress={() => {
                   navigation.navigate('ServiceDetails', {
                     serviceId: s._id,
@@ -55,17 +59,17 @@ const ServiceScreen = ({ navigation }) => {
                   });
                 }}>
                 {/* <View style={styles.img}> */}
-                  <Image
-                    source={{
-                      uri: `http://13.232.190.226/api/services/view/${s.image}`,
-                    }}
-                    style={{
-                      borderRadius: 50,
-                      height: 50,
-                      width: 50,
-                      alignSelf: 'center',
-                    }}
-                  />
+                <Image
+                  source={{
+                    uri: `http://13.232.190.226/api/services/view/${s.image}`,
+                  }}
+                  style={{
+                    borderRadius: 50,
+                    height: 50,
+                    width: 50,
+                    alignSelf: 'center',
+                  }}
+                />
                 {/* </View> */}
                 <View
                   style={{
@@ -73,14 +77,14 @@ const ServiceScreen = ({ navigation }) => {
                     marginBottom: '5%',
                     alignItems: 'center',
                   }}>
-                  <Text style={{ color: 'brown' }}>{s.title}</Text>
+                  <Text style={{color: 'brown'}}>{s.title}</Text>
                 </View>
               </TouchableOpacity>
             </Card>
           ))}
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -89,20 +93,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: '3%',
     paddingHorizontal: '3%',
-    backgroundColor: "#f1f1f1",
+    backgroundColor: '#fff',
     // alignItems:'center',
-    
   },
   cardleft: {
     elevation: 1,
     marginTop: '1%',
     width: '47%',
-    height:150,
+    height: 150,
     marginLeft: 5,
     marginRight: 5,
     marginBottom: '1%',
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   img: {
     // marginTop: '8%',
