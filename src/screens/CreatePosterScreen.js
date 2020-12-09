@@ -18,7 +18,7 @@ import DatePicker from 'react-native-datepicker';
 import Moment from 'moment';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
 
 const CreatePosterScreen = (props, {navigation}) => {
@@ -97,7 +97,9 @@ const CreatePosterScreen = (props, {navigation}) => {
         return;
       }
 
-      props.navigation.navigate('MyPosters');
+      props.navigation.navigate('MyPosters', {
+        content:'pending'
+      });
       showToastWithGravityAndOffset();
     } catch (error) {
       console.error('error', error);
@@ -467,7 +469,7 @@ const styles = StyleSheet.create({
   },
   posterTitle: {
     fontSize: 18,
-    color: 'orange',
+    color: theme.$primaryColor,
     fontWeight: 'bold',
   },
   iconDiv: {

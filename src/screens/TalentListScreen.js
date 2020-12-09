@@ -23,7 +23,6 @@ const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [talents, setTalents] = useState([]);
   const [visible, setVisible] = useState(false);
-
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
     getUserTalents();
@@ -32,6 +31,10 @@ const TalentListScreen = (props) => {
   useEffect(() => {
     getUserTalents();
     unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    getUserTalents();
   }, []);
 
   const getUserTalents = () => {
@@ -289,14 +292,14 @@ const TalentListScreen = (props) => {
           <View
             style={{
               borderWidth: 0,
-              bottom: '7%',
-              right: 20,
+              bottom: '10%',
+              right: 10,
               alignSelf: 'flex-end',
             }}>
             <TouchableOpacity
               style={styles.createBtn}
               onPress={() => props.navigation.navigate('AddTalents')}>
-              <GIcon name="plus" size={25} color="white" />
+              <GIcon name="plus" size={15} color="white" />
             </TouchableOpacity>
           </View>
         </View>
@@ -308,24 +311,32 @@ const TalentListScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: -40,
-    backgroundColor: 'white',
+    backgroundColor: '#fafafa',
+    marginBottom:'-12%'
   },
   EditBtn: {
-    width: "150%",
-    backgroundColor: 'lightgrey',
-    height: 40,
+    // width: "150%",
+    // backgroundColor: 'lightgrey',
+    // height: 40,
 
+    width: '150%',
+    backgroundColor: '#00ba28',
+    height: 50,
     marginRight: '25%',
     justifyContent: 'center',
     marginTop: 2,
   },
   DeleteBtn: {
-    width: "69%",
-    backgroundColor: "lightgrey",
-    marginLeft: "25%",
-    marginRight: "32%",
-    height: 40,
+    // width: "69%",
+    // backgroundColor: "lightgrey",
+    // marginLeft: "25%",
+    // marginRight: "32%",
+    // height: 40,
+    width: '70%',
+    backgroundColor: '#db3000',
+    marginLeft: '25%',
+    marginRight: '32%',
+    height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
@@ -356,10 +367,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     // padding: 8,
     marginBottom: '3%',
     marginTop: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
     elevation:2,
@@ -414,13 +427,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   createBtn: {
-    width: '100%',
+    width: 50,
+    height: 50,
     elevation: 5,
     borderRadius: 50,
-    paddingVertical: 12,
-    paddingHorizontal: 5,
-    backgroundColor: 'orange',
-    marginRight: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: theme.$primaryColor,
+    marginRight: 10,
     alignItems: 'center',
   },
 });
