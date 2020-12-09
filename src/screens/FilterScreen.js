@@ -152,6 +152,7 @@ const FilterScreen = (props) => {
         method: 'PATCH',
       },
     );
+    setSearch('');
     const searchData = await searchRes.json();
     if (!searchData.success) {
       setVisible(!visible);
@@ -227,9 +228,14 @@ const FilterScreen = (props) => {
           } else {
             setVisible(!visible);
           }
+          resetFields();
         },
         (error) => { },
       );
+  };
+
+  const resetFields = () => {
+    setSearch('');
   };
 
   const onDismissSnackBar = () => {

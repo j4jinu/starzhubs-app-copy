@@ -42,13 +42,16 @@ const LoginScreen = (props) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: 'https://starzhubs.com/assets/images/starzhubs_logo.png',
-          }}
-        />
-        <Text style={styles.welcomeText}>Sign In</Text>
+        <Image style={styles.logo} source={require('../assets/starz.png')} />
+        <Text style={styles.welcomeText}>Welcome</Text>
+        <Text
+          style={{
+            color: '#000',
+            marginLeft: 20,
+            marginBottom: 20,
+          }}>
+          Sign in to your account,
+        </Text>
         <Formik
           initialValues={{username: '', password: ''}}
           validationSchema={loginSchema}
@@ -161,7 +164,7 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   forgotText: {
-    color: 'purple',
+    color: '#3446eb',
     alignSelf: 'flex-end',
     marginRight: '8%',
     fontWeight: 'bold',
@@ -171,10 +174,11 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-medium',
   },
   logo: {
-    width: '50%',
+    width: '20%',
     height: 100,
-    alignSelf: 'center',
-    marginTop: 20,
+    alignSelf: 'flex-start',
+    marginTop: 50,
+    marginLeft: 20,
     resizeMode: 'center',
   },
   inputFieldBackground: {
@@ -202,8 +206,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '90%',
     backgroundColor: theme.$primaryColor,
-    padding: 8,
     borderRadius: 8,
+    padding: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 15,
+    marginTop: 25,
   },
   registerLayoutText1: {
     color: 'black',
@@ -234,8 +238,8 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: '#000',
     fontSize: 25,
-    marginTop: 50,
-    marginBottom: 20,
+    fontWeight: 'bold',
+    marginTop: 25,
     alignSelf: 'flex-start',
     marginLeft: 20,
     fontFamily: 'montserrat-medium',

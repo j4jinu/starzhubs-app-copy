@@ -180,6 +180,12 @@ const PosterNavigator = createStackNavigator(
       screen: CreatePosterScreen,
       title: '',
     },
+    UserDetails: {
+      screen: UserDetailsScreen,
+      navigationOptions: {
+        title: 'User Details',
+      },
+    },
   },
   {
     defaultNavigationOptions: {
