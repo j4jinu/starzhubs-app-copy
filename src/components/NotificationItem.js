@@ -32,7 +32,8 @@ const NotificationItem = (props) => {
                 <Text style={{fontSize: 15, color: 'black', marginBottom: 3}}>
                   {props.title}
                 </Text>
-                <Text style={{fontSize: 13, color: 'dimgray'}}>
+                <Text
+                  style={{fontSize: 13, marginHorizontal: 5, color: 'dimgray'}}>
                   {props.notification}
                 </Text>
                 <Text style={{fontSize: 12, color: 'silver', marginTop: 7}}>
@@ -60,9 +61,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     marginBottom: 2,
+    marginHorizontal: 5,
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',
+    marginHorizontal: 5,
     fontSize: 16,
   },
 });

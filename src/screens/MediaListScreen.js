@@ -1,15 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, Image ,ScrollView} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-  FlatList,
-  
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {color} from 'react-native-reanimated';
 import MediaItem from '../components/MediaItem';
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const MediaListSceen = (props) => {
   const auth = useContext(AuthContext);
@@ -42,10 +45,10 @@ const MediaListSceen = (props) => {
 
   useEffect(() => {
     const getUsers = async () => {
-      console.log("catid", categoryId);
-      setLoading(true)
+      console.log('catid', categoryId);
+      setLoading(true);
       if (!categoryId) {
-        setLoading(false)
+        setLoading(false);
         return;
       }
       try {
@@ -61,12 +64,12 @@ const MediaListSceen = (props) => {
         const userData = await userResponse.json();
         if (userData.success) {
           setMedia(userData.data.medias);
-          console.log("usersmedia", userData.data.medias);
-          setLoading(false)
+          console.log('usersmedia', userData.data.medias);
+          setLoading(false);
           return;
         }
         // alert(userData.message);
-        setLoading(false)
+        setLoading(false);
         setMedia([]);
       } catch (error) {
         console.log(error);
@@ -79,18 +82,18 @@ const MediaListSceen = (props) => {
   if (loading) {
     return (
       <ActivityIndicator
-        style={{ marginTop: 20 }}
+        style={{marginTop: 20}}
         color={theme.$primaryColor}
         size={'large'}
       />
     );
   }
   return (
-    <View style={{flexDirection:'column', flex:1}}>
+    <View style={{flexDirection: 'column', backgroundColor: 'white', flex: 1}}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{ marginVertical: 10,}}>
+        style={{marginVertical: 10, backgroundColor: 'white', height: 40}}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
@@ -100,8 +103,8 @@ const MediaListSceen = (props) => {
             <Text
               style={
                 c._id === categoryId
-                  ? { color: 'white', fontSize: 12 }
-                  : { color: 'black', fontSize: 12 }
+                  ? {color: 'white', fontSize: 12}
+                  : {color: 'black', fontSize: 12}
               }>
               {c.title}
             </Text>
@@ -110,11 +113,11 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          style={{paddingHorizontal:'2%',}}
+          style={{paddingHorizontal: '2%'}}
           // style={{ marginTop: 15, marginBottom: '10%' }}
           keyExtractor={(item, index) => item.id}
           data={media}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <MediaItem
               media={item.media}
               user={item.userId}
@@ -128,12 +131,19 @@ const MediaListSceen = (props) => {
           style={{
             // justifyContent: 'center',
             alignItems: 'center',
-            width: "100%",
+            width: '100%',
             flex: 6,
           }}>
-          <Image source={require("../assets/broke.png")}
-            style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
-            <Text style={{ fontSize: 18, color: 'tomato' }}>Sorry, No media.</Text>
+          <Image
+            source={require('../assets/broke.png')}
+            style={{
+              width: '41%',
+              height: 160,
+              marginHorizontal: 100,
+              marginTop: '5%',
+            }}
+          />
+          <Text style={{fontSize: 18, color: 'tomato'}}>Sorry, No media.</Text>
 
           {/* <Image source={require("../assets/broke.png")}
             style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
