@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 1,
-    backgroundColor: "#FBFBFB"
+    backgroundColor: "ivory"
   },
   posterTitle: {
     fontSize: 18,

@@ -221,13 +221,7 @@ const MyMediaScreen = (props) => {
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                {/* {t.media === [] || t.media === undefined || t.media.length === 0?(
-                  <View style={{alignItems:'center', width:'100%'}}>
-                  <Image source={require("../assets/broke.png")}
-                  style={{ width: 50, height: 50, marginTop: "5%" }} />
-                <Text style={{ fontSize: 13, color: 'tomato' }}> No medias added under this category</Text>
-                </View>
-                ):( */}
+                
                 {t.media.map((m) => (
                   <>
                     <View style={styles.gridItem}>
@@ -262,8 +256,35 @@ const MyMediaScreen = (props) => {
                           />
                         )}
 
+                      <View style={{flexDirection:'row', 
+                      backgroundColor:'black', marginTop:'-10%',
+                       opacity: 0.7, width:'100%'}}
+                       >
+                        <TouchableOpacity
+                          style={{borderRightWidth:1, borderRightColor:'white',
+                           width:'50%', alignItems:'center',justifyContent:'center',paddingVertical:10}}
+                            onPress={() =>
+                              props.navigation.navigate('EditMedia', {
+                                talentId: t._id,
+                                mediaFile: m.file,
+                                mediaType: m.fileType,
+                                caption: m.caption,
+                                description: m.description,
+                                mediaId: m._id,
+                              })
+                            }>
+                          <Text style={{color:'white', fontWeight:"bold", textTransform:'uppercase'}}>Edit</Text>
+                        </TouchableOpacity> 
+                        <TouchableOpacity
+                          style={{borderRightWidth:1, borderRightColor:'white',
+                          width:'50%', alignItems:'center',justifyContent:'center'}}
+                            onPress={() => confirmDelete(t._id, m._id)}>
+                          <Text style={{color:'white', fontWeight:"bold", textTransform:'uppercase'}}>Delete</Text>
+                          </TouchableOpacity>
+                      </View>
+
                       <View style={{ flexDirection: 'row', width: '100%' }}>
-                        <View style={{ width: '70%', flexDirection: 'column' }}>
+                        <View style={{ width: '100%', flexDirection: 'column' }}>
                           <TouchableOpacity
                             activeOpacity={0.7}
                             onPress={() =>
@@ -284,47 +305,9 @@ const MyMediaScreen = (props) => {
                             </Text>
                           </TouchableOpacity>
                         </View>
-                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              props.navigation.navigate('EditMedia', {
-                                talentId: t._id,
-                                mediaFile: m.file,
-                                mediaType: m.fileType,
-                                caption: m.caption,
-                                description: m.description,
-                                mediaId: m._id,
-                              })
-                            }>
-                            <DIcon
-                              name="edit"
-                              size={20}
-                              color="orange"
-                              style={{
-                                marginTop: 4,
-                                marginRight: 20,
-                                alignSelf: 'flex-end',
-                              }}
-                            />
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            onPress={() => confirmDelete(t._id, m._id)}>
-                            <DIcon
-                              name="delete"
-                              size={20}
-                              color="orange"
-                              style={{
-                                marginTop: 4,
-                                marginRight: 20,
-                                alignSelf: 'flex-end',
-                              }}
-                            />
-                          </TouchableOpacity>
-                        </View>
                       </View>
                     </View>
                   </>
-                // ))
                 ))}
               </View>
             </>
@@ -354,7 +337,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 5,
-    borderRadius: 8,
+    borderRadius: 2,
     marginTop: 10,
     marginBottom: 15,
   },
@@ -371,6 +354,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 5,
     marginHorizontal: 10,
+    textTransform:'uppercase'
   },
   mediaDescription: {
     color: theme.$primaryColorText,

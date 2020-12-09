@@ -178,7 +178,7 @@ const TalentListScreen = (props) => {
                         padding: 5,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
-                        width: '60%'
+                        width: '50%'
                       }}
                     >
                       <Text style={{ fontWeight: 'bold', color: "black", }}>Type</Text>
@@ -192,7 +192,7 @@ const TalentListScreen = (props) => {
                         padding: 5,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
-                        width: '40%'
+                        width: '50%'
                       }}
                     >
                       <Text style={{ fontWeight: 'bold', color: "black", }}>Industries</Text>
@@ -207,7 +207,7 @@ const TalentListScreen = (props) => {
                         padding: 5,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
-                        width: '60%'
+                        width: '50%'
                       }}
                     >
                       <Text style={{ fontWeight: 'bold', color: "black", }}>Experience</Text>
@@ -218,7 +218,7 @@ const TalentListScreen = (props) => {
                         padding: 5,
                         alignItems: 'flex-start',
                         justifyContent: 'center',
-                        width: '40%'
+                        width: '50%'
                       }}
                     >
                       <Text style={{ color: "black", fontWeight: 'bold', }}>Works</Text>
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   },
   EditBtn: {
     width: "150%",
-    backgroundColor: theme.$primaryColor,
+    backgroundColor: 'green',
     height: 50,
 
     marginRight: "25%",
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   },
   DeleteBtn: {
     width: "69%",
-    backgroundColor: "red",
+    backgroundColor: "firebrick",
     marginLeft: "25%",
     marginRight: "32%",
     height: 50,
