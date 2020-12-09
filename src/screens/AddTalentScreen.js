@@ -199,7 +199,7 @@ export default function AddTalentScreen(props) {
     }
   };
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = (values, { resetForm, setSubmitting }) => {
     setLoading(true);
     // console.warn(JSON.stringify(values));
     // if (industries.length === 0) {
@@ -268,12 +268,14 @@ export default function AddTalentScreen(props) {
         (response) => {
           if (response.success === true) {
             setLoading(false);
+            resetForm({ values: '' });
             // const msg =
             //   'New Talent added successfully. Check your profile page and add medias.';
             // setMessage(msg);
             // setVisible(!visible);
 
             props.navigation.navigate('Talents');
+            //props.navigation.navigate('MyMedia');
             showToastWithGravityAndOffset();
           } else {
             // alert(response.message);
@@ -439,8 +441,8 @@ export default function AddTalentScreen(props) {
           enableReinitialize={true}
           initialValues={initialTalentValues}
           validationSchema={talentValidationSchema}
-          onSubmit={(values, { setSubmitting }) =>
-            handleSubmit(values, { setSubmitting })
+          onSubmit={(values, { resetForm, setSubmitting }) =>
+            handleSubmit(values, { resetForm, setSubmitting })
           }>
           {({
             handleChange,
@@ -599,6 +601,7 @@ export default function AddTalentScreen(props) {
                     keyboardType="numeric"
                     autoCapitalize="sentences"
                     // defaultValue={user.email}
+                    value={values.experience}
                     onChangeText={handleChange('experience')}
                     onBlur={handleBlur('experience')}
                   />
@@ -633,6 +636,7 @@ export default function AddTalentScreen(props) {
                     keyboardType="numeric"
                     autoCapitalize="sentences"
                     // defaultValue={user.email}
+                    value={values.projects}
                     onChangeText={handleChange('projects')}
                     onBlur={handleBlur('projects')}
                   />
@@ -669,6 +673,7 @@ export default function AddTalentScreen(props) {
                     numberOfLines={3}
                     multiline={true}
                     // defaultValue={user.email}
+                    value={values.description}
                     onChangeText={handleChange('description')}
                     onBlur={handleBlur('description')}
                   />

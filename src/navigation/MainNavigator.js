@@ -56,14 +56,6 @@ const HomeNavigator = createStackNavigator(
           fontWeight: '100',
           fontSize: 16,
         },
-        headerRight: () => (
-          <MaterialIcons
-            style={{ marginRight: 15 }}
-            size={25}
-            name="search"
-            onPress={() => navigation.navigate('Filter')}
-          />
-        ),
       }),
     },
     UserDetails: {

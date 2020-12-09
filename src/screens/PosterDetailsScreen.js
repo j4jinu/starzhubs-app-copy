@@ -24,6 +24,7 @@ import { Formik } from 'formik';
 import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
 
+
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
   const posterId = props.navigation.getParam('posterId');
@@ -164,7 +165,7 @@ const PosterDetailsScreen = (props) => {
             <Image
               style={{
                 width: deviceWidth,
-                height: deviceHeight/3,
+                height: deviceHeight / 3,
                 backgroundColor: '#e6e6e6',
               }}
               resizeMode="cover"
@@ -174,21 +175,21 @@ const PosterDetailsScreen = (props) => {
             />
           </TouchableOpacity>
           <View style={styles.posterInfo}>
-          {(user._id === auth.userId || status !== undefined) ? null : (
-          <TouchableOpacity
+            {(user._id === auth.userId || status !== undefined) ? null : (
+              <TouchableOpacity
                 style={styles.sendBtn}
                 onPress={onSubmitRequest}
                 activeOpacity={0.7}>
                 <SIcon name="send" size={25} color={'white'} />
-          </TouchableOpacity>
-          )}
-            <View style={{flexDirection:'row'}}>
-              <View style={{width:'80%'}}>
-            <Text style={styles.title} numberOfLines={2}>
-              {title}
-            </Text>
-            </View>
-              
+              </TouchableOpacity>
+            )}
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ width: '80%' }}>
+                <Text style={styles.title} numberOfLines={2}>
+                  {title}
+                </Text>
+              </View>
+
             </View>
             <View
               style={{
@@ -198,25 +199,25 @@ const PosterDetailsScreen = (props) => {
                 // marginHorizontal: 5,
                 marginVertical: 15,
               }}>
-              <View style={{flexDirection:'row'}}>
-                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{marginTop:1}} />
-                <Text style={{ fontSize: 12, marginLeft:'5%' }}>
+              <View style={{ flexDirection: 'row' }}>
+                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{ marginTop: 1 }} />
+                <Text style={{ fontSize: 12, marginLeft: '5%' }}>
                   Starts : {Moment(startDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
-              <View style={{flexDirection:'row',}}>
-                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{marginTop:1}} />
-                <Text style={{ fontSize: 12, marginLeft:8 }}>
+              <View style={{ flexDirection: 'row', }}>
+                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{ marginTop: 1 }} />
+                <Text style={{ fontSize: 12, marginLeft: 8 }}>
                   Ends: {Moment(endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
             </View>
-            <View style={{flexDirection:'row', width:'100%'}}>
-                <EIcon name="info-with-circle" size={12} color={theme.$primaryColor} style={{marginTop:3, width:'5%'}} />
+            <View style={{ flexDirection: 'row', width: '100%' }}>
+              <EIcon name="info-with-circle" size={12} color={theme.$primaryColor} style={{ marginTop: 3, width: '5%' }} />
               <Text style={styles.description}>{description}</Text>
             </View>
-            </View>
-            {user._id === auth.userId ? null : (
+          </View>
+          {user._id === auth.userId ? null : (
             <View style={styles.authorInfo}>
               <Image
                 style={{
@@ -242,7 +243,7 @@ const PosterDetailsScreen = (props) => {
                     justifyContent: 'center',
                     marginLeft: 10,
                   }}>
-                  <Text style={{ fontSize: 13, color:'grey' }}>{'Posted By'}</Text>
+                  <Text style={{ fontSize: 13, color: 'grey' }}>{'Posted By'}</Text>
                   <Text style={{ fontSize: 14, fontWeight: '700' }}>
                     {user.name}
                   </Text>
@@ -250,8 +251,8 @@ const PosterDetailsScreen = (props) => {
               </TouchableOpacity>
             </View>
           )}
-          
-          
+
+
           {user._id === auth.userId ? (
             <>
               <View>
@@ -459,8 +460,8 @@ const styles = StyleSheet.create({
     // marginHorizontal: 5,
     // marginVertical: 5,
     lineHeight: 20,
-    textAlign:'justify',
-    width:'95%'
+    textAlign: 'justify',
+    width: '95%'
   },
   posterInfo: {
     backgroundColor: 'white',
@@ -493,7 +494,7 @@ const styles = StyleSheet.create({
     marginTop: 1,
     flexDirection: 'row',
     borderRadius: theme.$borderRadius,
-    padding:20,
+    padding: 20,
     // flex:1
   },
   requestBtn: {
@@ -538,9 +539,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // alignSelf: 'flex-end',
     marginTop: '-12%',
-    elevation:5,
+    elevation: 5,
     // marginRight: 15,
-    alignSelf:'flex-end'
+    alignSelf: 'flex-end'
   },
 
 

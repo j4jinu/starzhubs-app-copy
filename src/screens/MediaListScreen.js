@@ -89,7 +89,7 @@ const MediaListSceen = (props) => {
     );
   }
   return (
-    <View style={{flexDirection: 'column', backgroundColor: 'white', flex: 1}}>
+    <View style={{backgroundColor: '#fafafa'}}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

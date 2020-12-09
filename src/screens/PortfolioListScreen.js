@@ -1,13 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
 import {
-  FlatList,
-  ScrollView,
-} from 'react-native-gesture-handler';
-import { color } from 'react-native-reanimated';
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {color} from 'react-native-reanimated';
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const PortfolioListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -68,7 +72,7 @@ const PortfolioListScreen = (props) => {
   if (loading) {
     return (
       <ActivityIndicator
-        style={{ marginTop: 20 }}
+        style={{marginTop: 20}}
         color={theme.$primaryColor}
         size={'large'}
       />
@@ -76,61 +80,69 @@ const PortfolioListScreen = (props) => {
   }
   return (
     <View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={{backgroundColor: 'white', marginTop: 12}}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
             onPress={() => {
               setCategoryId(c._id);
-
             }}>
             <Text
               style={
                 c._id === categoryId
-                  ? { color: 'white', fontSize: 12 }
-                  : { color: 'black', fontSize: 12 }
+                  ? {color: 'white', fontSize: 12}
+                  : {color: 'black', fontSize: 12}
               }>
               {c.title}
             </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <ScrollView>
-        {users.length > 0 &&
-          <FlatList
-            style={{ backgroundColor: '#fafafa', marginTop: 20, marginBottom: 30 }}
-            keyExtractor={(item, index) => item.id}
-            data={users}
-            renderItem={({ item }) => (
-              <UserGridItem
-                userId={item._id}
-                name={item.name}
-                location={item.location}
-                image={item.image}
-                navigation={props.navigation}
-              />
-            )}
-            numColumns={2}
-          />
-        }
-        {users.length === 0 && (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingVertical: '30%',
-            }}>
-
-            <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
-              Sorry, No users available.
-          </Text>
-            <Image
-              source={require('../assets/broke.png')}
-              style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+      {users.length > 0 && (
+        <FlatList
+          style={{
+            backgroundColor: '#fafafa',
+            marginTop: 10,
+            marginBottom: 30,
+          }}
+          keyExtractor={(item, index) => item.id}
+          data={users}
+          renderItem={({item}) => (
+            <UserGridItem
+              userId={item._id}
+              name={item.name}
+              location={item.location}
+              image={item.image}
+              navigation={props.navigation}
             />
-          </View>
-        )}
-      </ScrollView>
+          )}
+          numColumns={2}
+        />
+      )}
+      {users.length === 0 && (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: '30%',
+          }}>
+          <Text style={{fontSize: 18, color: 'tomato', marginTop: 10}}>
+            Sorry, No users available.
+          </Text>
+          <Image
+            source={require('../assets/broke.png')}
+            style={{
+              width: '41%',
+              height: 160,
+              marginHorizontal: 100,
+              marginTop: '5%',
+            }}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -140,7 +152,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     color: theme.$primaryColorText,
     borderWidth: 1,
-    marginVertical: 5,
+    height: 30,
     marginHorizontal: 5,
     borderRadius: 100,
     paddingHorizontal: 8,
@@ -150,8 +162,8 @@ const styles = StyleSheet.create({
     borderColor: theme.$primaryColor,
     backgroundColor: theme.$primaryColor,
     color: 'white',
+    height: 30,
     borderWidth: 1,
-    marginVertical: 5,
     marginHorizontal: 5,
     borderRadius: 100,
     paddingHorizontal: 8,
