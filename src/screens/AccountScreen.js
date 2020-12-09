@@ -18,6 +18,7 @@ const Divider = (
 );
 
 const AccountScreen = (props) => {
+
   const auth = useContext(AuthContext);
   const [user, setUser] = useState({image: {}, location: {}});
   const deviceWidth = Dimensions.get('window').width;
