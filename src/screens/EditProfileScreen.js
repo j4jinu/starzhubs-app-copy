@@ -244,7 +244,8 @@ const EditProfileScreen = (props) => {
   const [complexionValue, setcomplexionValue] = useState();
 
   // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
-  const initialProfileValues = {
+  let initialProfileValues;
+  initialProfileValues = {
     name: userInfo.name,
     bio: userInfo.bio || '',
     phone: userInfo.phone || '',
@@ -259,8 +260,9 @@ const EditProfileScreen = (props) => {
   };
 
   if (actorMode) {
-    initialProfileValues.height = userInfo.height || '';
-    initialProfileValues.weight = userInfo.weight || '';
+    console.log('Actor mode');
+    initialProfileValues.height = userInfo.height.toString() || 0;
+    initialProfileValues.weight = userInfo.weight.toString() || 0;
     initialProfileValues.complexion = userInfo.complexion || '';
     initialProfileValues.bodyType = userInfo.bodyType || '';
   }
@@ -692,7 +694,7 @@ const EditProfileScreen = (props) => {
               {/* 
               Email address
                */}
-              <View
+              {/* <View
                 style={{
                   alignSelf: 'center',
                   borderWidth: 1,
@@ -716,7 +718,7 @@ const EditProfileScreen = (props) => {
                   onBlur={handleBlur('email')}
                   defaultValue={initialProfileValues.email}
                 />
-              </View>
+              </View> */}
               {/*
               Phone number 
                */}
