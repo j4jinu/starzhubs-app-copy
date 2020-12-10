@@ -276,6 +276,12 @@ const AccountNavigator = createStackNavigator(
         title: 'Your poster requests',
       },
     },
+    PosterDetails: {
+      screen: PosterDetailsScreen,
+      navigationOptions: {
+        title: 'Poster Details',
+      },
+    },
     MyMedia: {
       screen: MyMediaScreen,
       navigationOptions: {
@@ -469,6 +475,10 @@ const MainNavigator = createBottomTabNavigator(
 
         // You can return any component that you like here!
         return <IconComponent name={iconName} size={25} color={tintColor} />;
+      },
+      tabBarOnPress: ({navigation}) => {
+        navigation.popToTop();
+        navigation.navigate(navigation.state.routeName);
       },
     }),
     tabBarOptions: {
