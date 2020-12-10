@@ -430,7 +430,7 @@ const EditProfileScreen = (props) => {
       },
       maxWidth: 500,
       maxHeight: 500,
-      quality: 0.2,
+      quality: 0.7,
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.didCancel) {

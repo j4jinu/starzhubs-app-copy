@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
+import React, {useState, useContext, useEffect, Fragment} from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,19 +13,19 @@ import {
   ImageBackground,
   ToastAndroid,
 } from 'react-native';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Gicon from 'react-native-vector-icons/FontAwesome';
 import Eicon from 'react-native-vector-icons/FontAwesome5';
 import ImagePicker from 'react-native-image-picker';
-import { Rating, AirbnbRating } from 'react-native-elements';
-import { Snackbar } from 'react-native-paper';
-import { AuthContext } from '../context/authContext';
+import {Rating, AirbnbRating} from 'react-native-elements';
+import {Snackbar} from 'react-native-paper';
+import {AuthContext} from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import UserDetailsScreen from './UserDetailsScreen';
 
 const industryNames = [
@@ -115,22 +115,38 @@ export default function AddTalentScreen(props) {
   };
 
   const phoneRegExp = /^[0-9]*$/;
-  const talentValidationSchema = Yup.object({
-    talentId: Yup.string().required('Select one category'),
-    // level: Yup.string().required('Select your level'),
-    // industry: Yup.string().required('Select one industry'),
-    complexion: Yup.string().required('Select one complexion'),
-    bodyType: Yup.string().required('Please choose one'),
-    experience: Yup.string()
-      .matches(phoneRegExp, 'Invalid input')
-      .required('Enter experience details'),
-    projects: Yup.string()
-      .matches(phoneRegExp, 'Invalid input')
-      .required('Enter no. of projects'),
-    height: Yup.string().required('Enter height'),
-    weight: Yup.string().required('Enter weight'),
-    description: Yup.string().required('Enter talent  details'),
-  });
+  let talentValidationSchema;
+  if (isProfileImageMode) {
+    talentValidationSchema = Yup.object({
+      talentId: Yup.string().required('Select one category'),
+      // level: Yup.string().required('Select your level'),
+      // industry: Yup.string().required('Select one industry'),
+      complexion: Yup.string().required('Select one complexion'),
+      bodyType: Yup.string().required('Please choose one'),
+      experience: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter experience details'),
+      projects: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter no. of projects'),
+      height: Yup.string().required('Enter height'),
+      weight: Yup.string().required('Enter weight'),
+      description: Yup.string().required('Enter talent  details'),
+    });
+  } else {
+    talentValidationSchema = Yup.object({
+      talentId: Yup.string().required('Select one category'),
+      // level: Yup.string().required('Select your level'),
+      // industry: Yup.string().required('Select one industry'),
+      experience: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter experience details'),
+      projects: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter no. of projects'),
+      description: Yup.string().required('Enter talent  details'),
+    });
+  }
 
   useEffect(() => {
     const getUserTalents = () => {
@@ -199,7 +215,7 @@ export default function AddTalentScreen(props) {
     }
   };
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
+  const handleSubmit = (values, {resetForm, setSubmitting}) => {
     setLoading(true);
     // console.warn(JSON.stringify(values));
     // if (industries.length === 0) {
@@ -217,7 +233,7 @@ export default function AddTalentScreen(props) {
             style: 'cancel',
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
       setLoading(false);
       setSubmitting(false);
@@ -233,7 +249,7 @@ export default function AddTalentScreen(props) {
             style: 'cancel',
           },
         ],
-        { cancelable: false },
+        {cancelable: false},
       );
       setLoading(false);
       setSubmitting(false);
@@ -268,7 +284,7 @@ export default function AddTalentScreen(props) {
         (response) => {
           if (response.success === true) {
             setLoading(false);
-            resetForm({ values: '' });
+            resetForm({values: ''});
             // const msg =
             //   'New Talent added successfully. Check your profile page and add medias.';
             // setMessage(msg);
@@ -383,7 +399,7 @@ export default function AddTalentScreen(props) {
     var options = {
       title: 'Select Image',
       customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
       ],
       storageOptions: {
         skipBackup: true,
@@ -441,8 +457,8 @@ export default function AddTalentScreen(props) {
           enableReinitialize={true}
           initialValues={initialTalentValues}
           validationSchema={talentValidationSchema}
-          onSubmit={(values, { resetForm, setSubmitting }) =>
-            handleSubmit(values, { resetForm, setSubmitting })
+          onSubmit={(values, {resetForm, setSubmitting}) =>
+            handleSubmit(values, {resetForm, setSubmitting})
           }>
           {({
             handleChange,
@@ -453,558 +469,558 @@ export default function AddTalentScreen(props) {
             values,
             errors,
           }) => (
-              <React.Fragment>
-                <View
+            <React.Fragment>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // marginBottom: 5,
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
+                }}>
+                <Cicon
+                  name="merge-type"
+                  size={20}
                   style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    width: '90%',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    // marginBottom: 5,
-                    borderColor: errors.link ? 'red' : '#e6e6e6',
+                    color: '#fd9242',
+                  }}
+                />
+                <Picker
+                  selectedValue={selectedValue}
+                  style={{
+                    height: 50,
+                    width: '100%',
+                  }}
+                  onValueChange={(itemValue, itemIndex) => {
+                    setFieldValue('talentId', itemValue);
+                    setSelectedValue(itemValue);
+                    isProfileImageModeHandler(itemValue);
                   }}>
-                  <Cicon
-                    name="merge-type"
-                    size={20}
+                  <Picker.Item label="Select Category" value="0" />
+                  {categories.map((cat) => (
+                    <Picker.Item label={cat.title} value={cat._id} />
+                  ))}
+                </Picker>
+              </View>
+              {errors.talentId ? (
+                <Text style={styles.error}>{errors.talentId}</Text>
+              ) : null}
+
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingTop: 10,
+                  marginTop: 8,
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                }}>
+                <Text style={{fontSize: 15}}>Select Confidence Level</Text>
+
+                <AirbnbRating
+                  reviews={[
+                    'Beginner',
+                    'Average',
+                    'Good',
+                    'Excellent',
+                    'Experienced',
+                  ]}
+                  defaultRating={2}
+                  size={20}
+                  count={5}
+                  showRating={false}
+                  onFinishRating={handleLevelChange}
+                  selectedColor={theme.$primaryColor}
+                />
+              </View>
+
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 10,
+                  paddingRight: 10,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
+                }}>
+                <View style={{width: '7%'}}>
+                  <Gicon
+                    name="industry"
+                    size={15}
                     style={{
                       color: '#fd9242',
+                      marginTop: -10,
                     }}
                   />
-                  <Picker
-                    selectedValue={selectedValue}
+                </View>
+
+                <View style={{width: '90%', marginLeft: '-2%'}}>
+                  <SectionedMultiSelect
+                    items={industryNames}
+                    IconRenderer={Icon}
+                    uniqueKey="id"
+                    subKey="children"
+                    selectText="Select Industry"
+                    showDropDowns={true}
+                    expandDropDowns
+                    showCancelButton
+                    readOnlyHeadings={true}
+                    onSelectedItemsChange={onSelectedItemsChange}
+                    selectedItems={selectedItems}
+                  />
+                </View>
+              </View>
+              {errors.industry ? (
+                <Text style={styles.error}>{errors.industry}</Text>
+              ) : null}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.experience ? 'red' : '#e6e6e6',
+                }}>
+                <Eicon
+                  name="envelope-open-text"
+                  size={15}
+                  style={{
+                    color: '#fd9242',
+                  }}
+                />
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="Experience"
+                  placeholderTextColor="#003f5c"
+                  keyboardType="numeric"
+                  autoCapitalize="sentences"
+                  // defaultValue={user.email}
+                  value={values.experience}
+                  onChangeText={handleChange('experience')}
+                  onBlur={handleBlur('experience')}
+                />
+              </View>
+              {errors.experience ? (
+                <Text style={styles.error}>{errors.experience}</Text>
+              ) : null}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.projects ? 'red' : '#e6e6e6',
+                }}>
+                <Eicon
+                  name="envelope-open-text"
+                  size={15}
+                  style={{
+                    color: '#fd9242',
+                  }}
+                />
+                <TextInput
+                  style={styles.inputText}
+                  placeholder="No.of Projects"
+                  placeholderTextColor="#003f5c"
+                  keyboardType="numeric"
+                  autoCapitalize="sentences"
+                  // defaultValue={user.email}
+                  value={values.projects}
+                  onChangeText={handleChange('projects')}
+                  onBlur={handleBlur('projects')}
+                />
+              </View>
+              {errors.projects ? (
+                <Text style={styles.error}>{errors.projects}</Text>
+              ) : null}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  backgroundColor: 'white',
+                  width: '90%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.description ? 'red' : '#e6e6e6',
+                }}>
+                <Cicon
+                  name="class"
+                  size={15}
+                  style={{
+                    color: '#fd9242',
+                  }}
+                />
+                <TextInput
+                  style={styles.inputTextDes}
+                  placeholder="Description"
+                  placeholderTextColor="#003f5c"
+                  keyboardType="email-address"
+                  autoCapitalize="sentences"
+                  numberOfLines={3}
+                  multiline={true}
+                  // defaultValue={user.email}
+                  value={values.description}
+                  onChangeText={handleChange('description')}
+                  onBlur={handleBlur('description')}
+                />
+              </View>
+              {errors.description ? (
+                <Text style={styles.error}>{errors.description}</Text>
+              ) : null}
+              {isProfileImageMode && (
+                <Fragment>
+                  <View
                     style={{
-                      height: 50,
-                      width: '100%',
-                    }}
-                    onValueChange={(itemValue, itemIndex) => {
-                      setFieldValue('talentId', itemValue);
-                      setSelectedValue(itemValue);
-                      isProfileImageModeHandler(itemValue);
+                      flexDirection: 'row',
+                      justifyContent: 'space-evenly',
+                      marginTop: 20,
+                      marginBottom: 10,
                     }}>
-                    <Picker.Item label="Select Category" value="0" />
-                    {categories.map((cat) => (
-                      <Picker.Item label={cat.title} value={cat._id} />
-                    ))}
-                  </Picker>
-                </View>
-                {errors.talentId ? (
-                  <Text style={styles.error}>{errors.talentId}</Text>
-                ) : null}
-
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    width: '90%',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    paddingBottom: 10,
-                    paddingTop: 10,
-                    marginTop: 8,
-                    alignItems: 'center',
-                    borderColor: errors.link ? 'red' : '#e6e6e6',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                  }}>
-                  <Text style={{ fontSize: 15 }}>Select Confidence Level</Text>
-
-                  <AirbnbRating
-                    reviews={[
-                      'Beginner',
-                      'Average',
-                      'Good',
-                      'Excellent',
-                      'Experienced',
-                    ]}
-                    defaultRating={2}
-                    size={20}
-                    count={5}
-                    showRating={false}
-                    onFinishRating={handleLevelChange}
-                    selectedColor={theme.$primaryColor}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    width: '90%',
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.link ? 'red' : '#e6e6e6',
-                  }}>
-                  <View style={{ width: '7%' }}>
-                    <Gicon
-                      name="industry"
-                      size={15}
-                      style={{
-                        color: '#fd9242',
-                        marginTop: -10,
-                      }}
-                    />
-                  </View>
-
-                  <View style={{ width: '90%', marginLeft: '-2%' }}>
-                    <SectionedMultiSelect
-                      items={industryNames}
-                      IconRenderer={Icon}
-                      uniqueKey="id"
-                      subKey="children"
-                      selectText="Select Industry"
-                      showDropDowns={true}
-                      expandDropDowns
-                      showCancelButton
-                      readOnlyHeadings={true}
-                      onSelectedItemsChange={onSelectedItemsChange}
-                      selectedItems={selectedItems}
-                    />
-                  </View>
-                </View>
-                {errors.industry ? (
-                  <Text style={styles.error}>{errors.industry}</Text>
-                ) : null}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.experience ? 'red' : '#e6e6e6',
-                  }}>
-                  <Eicon
-                    name="envelope-open-text"
-                    size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
-                  />
-                  <TextInput
-                    style={styles.inputText}
-                    placeholder="Experience"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="numeric"
-                    autoCapitalize="sentences"
-                    // defaultValue={user.email}
-                    value={values.experience}
-                    onChangeText={handleChange('experience')}
-                    onBlur={handleBlur('experience')}
-                  />
-                </View>
-                {errors.experience ? (
-                  <Text style={styles.error}>{errors.experience}</Text>
-                ) : null}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.projects ? 'red' : '#e6e6e6',
-                  }}>
-                  <Eicon
-                    name="envelope-open-text"
-                    size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
-                  />
-                  <TextInput
-                    style={styles.inputText}
-                    placeholder="No.of Projects"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="numeric"
-                    autoCapitalize="sentences"
-                    // defaultValue={user.email}
-                    value={values.projects}
-                    onChangeText={handleChange('projects')}
-                    onBlur={handleBlur('projects')}
-                  />
-                </View>
-                {errors.projects ? (
-                  <Text style={styles.error}>{errors.projects}</Text>
-                ) : null}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: 'white',
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.description ? 'red' : '#e6e6e6',
-                  }}>
-                  <Cicon
-                    name="class"
-                    size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
-                  />
-                  <TextInput
-                    style={styles.inputTextDes}
-                    placeholder="Description"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="email-address"
-                    autoCapitalize="sentences"
-                    numberOfLines={3}
-                    multiline={true}
-                    // defaultValue={user.email}
-                    value={values.description}
-                    onChangeText={handleChange('description')}
-                    onBlur={handleBlur('description')}
-                  />
-                </View>
-                {errors.description ? (
-                  <Text style={styles.error}>{errors.description}</Text>
-                ) : null}
-                {isProfileImageMode && (
-                  <Fragment>
                     <View
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
-                        marginTop: 20,
-                        marginBottom: 10,
+                        // paddingLeft: 30,
+                        marginTop: 10,
                       }}>
-                      <View
-                        style={{
-                          // paddingLeft: 30,
-                          marginTop: 10,
+                      <TouchableOpacity
+                        onPress={() => {
+                          requestCameraPermission('head_shot');
                         }}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            requestCameraPermission('head_shot');
-                          }}>
-                          <ImageBackground
-                            source={
-                              !headimg
-                                ? require('../assets/headshot.jpg')
-                                : {
+                        <ImageBackground
+                          source={
+                            !headimg
+                              ? require('../assets/headshot.jpg')
+                              : {
                                   uri: headimg,
                                 }
-                            }
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
+                          <Image
+                            source={require('../assets/add-button.png')}
                             style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                              justifyContent: 'center',
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
                             }}>
-                            <Image
-                              source={require('../assets/add-button.png')}
-                              style={{
-                                alignSelf: 'center',
-                                height: 60,
-                                width: 60,
-                              }}
-                            />
-                            <Text
-                              style={{
-                                alignSelf: 'center',
-                                fontSize: 12,
-                                marginTop: 5,
-                              }}>
-                              Upload Head Shot
+                            Upload Head Shot
                           </Text>
-                          </ImageBackground>
-                        </TouchableOpacity>
-                      </View>
-                      <View
-                        style={{
-                          paddingLeft: 30,
-                          marginTop: 10,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => requestCameraPermission('left_profile')}>
-                          <ImageBackground
-                            source={
-                              !leftimg
-                                ? require('../assets/left_profile.jpg')
-                                : {
+                        </ImageBackground>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        paddingLeft: 30,
+                        marginTop: 10,
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => requestCameraPermission('left_profile')}>
+                        <ImageBackground
+                          source={
+                            !leftimg
+                              ? require('../assets/left_profile.jpg')
+                              : {
                                   uri: leftimg,
                                 }
-                            }
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
+                          <Image
+                            source={require('../assets/add-button.png')}
                             style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                              justifyContent: 'center',
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
                             }}>
-                            <Image
-                              source={require('../assets/add-button.png')}
-                              style={{
-                                alignSelf: 'center',
-                                height: 60,
-                                width: 60,
-                              }}
-                            />
-                            <Text
-                              style={{
-                                alignSelf: 'center',
-                                fontSize: 12,
-                                marginTop: 5,
-                              }}>
-                              Upload Left Side Shot
+                            Upload Left Side Shot
                           </Text>
-                          </ImageBackground>
-                        </TouchableOpacity>
-                      </View>
+                        </ImageBackground>
+                      </TouchableOpacity>
                     </View>
+                  </View>
 
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-evenly',
+                    }}>
                     <View
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-evenly',
+                        // paddingLeft: 30,
+                        marginTop: 10,
+                        marginBottom: 20,
                       }}>
-                      <View
-                        style={{
-                          // paddingLeft: 30,
-                          marginTop: 10,
-                          marginBottom: 20,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() =>
-                            requestCameraPermission('right_profile')
-                          }>
-                          <ImageBackground
-                            source={
-                              !rightimg
-                                ? require('../assets/right_profile.jpg')
-                                : {
+                      <TouchableOpacity
+                        onPress={() =>
+                          requestCameraPermission('right_profile')
+                        }>
+                        <ImageBackground
+                          source={
+                            !rightimg
+                              ? require('../assets/right_profile.jpg')
+                              : {
                                   uri: rightimg,
                                 }
-                            }
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
+                          <Image
+                            source={require('../assets/add-button.png')}
                             style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                              justifyContent: 'center',
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
                             }}>
-                            <Image
-                              source={require('../assets/add-button.png')}
-                              style={{
-                                alignSelf: 'center',
-                                height: 60,
-                                width: 60,
-                              }}
-                            />
-                            <Text
-                              style={{
-                                alignSelf: 'center',
-                                fontSize: 12,
-                                marginTop: 5,
-                              }}>
-                              Upload Right Side Shot
+                            Upload Right Side Shot
                           </Text>
-                          </ImageBackground>
-                        </TouchableOpacity>
-                      </View>
-                      <View
-                        style={{
-                          paddingLeft: 30,
-                          marginTop: 10,
-                        }}>
-                        <TouchableOpacity
-                          onPress={() => requestCameraPermission('fullsize')}>
-                          <ImageBackground
-                            source={
-                              !fullsizeimg
-                                ? require('../assets/fullsize.jpg')
-                                : {
+                        </ImageBackground>
+                      </TouchableOpacity>
+                    </View>
+                    <View
+                      style={{
+                        paddingLeft: 30,
+                        marginTop: 10,
+                      }}>
+                      <TouchableOpacity
+                        onPress={() => requestCameraPermission('fullsize')}>
+                        <ImageBackground
+                          source={
+                            !fullsizeimg
+                              ? require('../assets/fullsize.jpg')
+                              : {
                                   uri: fullsizeimg,
                                 }
-                            }
-                            //  source={require("../../assets/fullsize.jpg")}
+                          }
+                          //  source={require("../../assets/fullsize.jpg")}
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
+                          <Image
+                            source={require('../assets/add-button.png')}
                             style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                              justifyContent: 'center',
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
+                          />
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
                             }}>
-                            <Image
-                              source={require('../assets/add-button.png')}
-                              style={{
-                                alignSelf: 'center',
-                                height: 60,
-                                width: 60,
-                              }}
-                            />
-                            <Text
-                              style={{
-                                alignSelf: 'center',
-                                fontSize: 12,
-                                marginTop: 5,
-                              }}>
-                              Upload Full Size Shot
+                            Upload Full Size Shot
                           </Text>
-                          </ImageBackground>
-                        </TouchableOpacity>
-                      </View>
+                        </ImageBackground>
+                      </TouchableOpacity>
                     </View>
-                    <View
+                  </View>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.bodyType ? 'red' : '#e6e6e6',
+                    }}>
+                    <Picker
+                      selectedValue={bodyTypeValue}
                       style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        backgroundColor: 'white',
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.bodyType ? 'red' : '#e6e6e6',
+                        height: 50,
+                        width: '100%',
+                      }}
+                      onValueChange={(itemValue, itemIndex) => {
+                        setbodyTypeValue(itemValue);
+                        setFieldValue('bodyType', itemValue);
                       }}>
-                      <Picker
-                        selectedValue={bodyTypeValue}
-                        style={{
-                          height: 50,
-                          width: '100%',
-                        }}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setbodyTypeValue(itemValue);
-                          setFieldValue('bodyType', itemValue);
-                        }}>
-                        <Picker.Item label="Select BodyType" value="0" />
-                        <Picker.Item label="Athletic" value="Athletic" />
-                        <Picker.Item
-                          label="Average built"
-                          value="Average built"
-                        />
-                        <Picker.Item label="Fat" value="Fat" />
-                        <Picker.Item label="Hourglass" value="Hourglass" />
-                        <Picker.Item label="Slim" value="Slim" />
-                      </Picker>
-                    </View>
-
-                    {errors.bodyType ? (
-                      <Text style={styles.error}>{errors.bodyType}</Text>
-                    ) : null}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        backgroundColor: 'white',
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.complexion ? 'red' : '#e6e6e6',
-                      }}>
-                      <Picker
-                        selectedValue={complexionValue}
-                        style={{
-                          height: 50,
-                          width: '100%',
-                        }}
-                        onValueChange={(itemValue, itemIndex) => {
-                          setcomplexionValue(itemValue);
-                          setFieldValue('complexion', itemValue);
-                        }}>
-                        <Picker.Item label="Select Complexion" value="0" />
-                        <Picker.Item label="Brown" value="Brown" />
-                        <Picker.Item label="Dark" value="Dark" />
-                        <Picker.Item label="Fair" value="Fair" />
-                        <Picker.Item label="Wheatish" value="Wheatish" />
-                      </Picker>
-                    </View>
-                    {errors.complexion ? (
-                      <Text style={styles.error}>{errors.complexion}</Text>
-                    ) : null}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        backgroundColor: 'white',
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.height ? 'red' : '#e6e6e6',
-                      }}>
-                      <TextInput
-                        style={styles.inputText}
-                        placeholder="Height (cm)"
-                        placeholderTextColor="#003f5c"
-                        keyboardType="numeric"
-                        autoCapitalize="sentences"
-                        // defaultValue={user.email}
-                        onChangeText={handleChange('height')}
-                        onBlur={handleBlur('height')}
+                      <Picker.Item label="Select BodyType" value="0" />
+                      <Picker.Item label="Athletic" value="Athletic" />
+                      <Picker.Item
+                        label="Average built"
+                        value="Average built"
                       />
-                    </View>
-                    {errors.height ? (
-                      <Text style={styles.error}>{errors.height}</Text>
-                    ) : null}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderWidth: 1,
-                        backgroundColor: 'white',
-                        width: '90%',
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        marginTop: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.weight ? 'red' : '#e6e6e6',
-                      }}>
-                      <TextInput
-                        style={styles.inputText}
-                        placeholder="Weight (KGs)"
-                        placeholderTextColor="#003f5c"
-                        keyboardType="numeric"
-                        autoCapitalize="sentences"
-                        defaultValue={initialTalentValues.weight}
-                        onChangeText={handleChange('weight')}
-                        onBlur={handleBlur('weight')}
-                      />
-                    </View>
-                    {errors.weight ? (
-                      <Text style={styles.error}>{errors.weight}</Text>
-                    ) : null}
-                  </Fragment>
-                )}
+                      <Picker.Item label="Fat" value="Fat" />
+                      <Picker.Item label="Hourglass" value="Hourglass" />
+                      <Picker.Item label="Slim" value="Slim" />
+                    </Picker>
+                  </View>
 
-                <TouchableOpacity
-                  style={styles.registerBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.registerBtnText}>
-                    {loading ? (
-                      <ActivityIndicator size="small" color="#fff" />
-                    ) : (
-                        'Save Details'
-                      )}
-                  </Text>
-                </TouchableOpacity>
-              </React.Fragment>
-            )}
+                  {errors.bodyType ? (
+                    <Text style={styles.error}>{errors.bodyType}</Text>
+                  ) : null}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.complexion ? 'red' : '#e6e6e6',
+                    }}>
+                    <Picker
+                      selectedValue={complexionValue}
+                      style={{
+                        height: 50,
+                        width: '100%',
+                      }}
+                      onValueChange={(itemValue, itemIndex) => {
+                        setcomplexionValue(itemValue);
+                        setFieldValue('complexion', itemValue);
+                      }}>
+                      <Picker.Item label="Select Complexion" value="0" />
+                      <Picker.Item label="Brown" value="Brown" />
+                      <Picker.Item label="Dark" value="Dark" />
+                      <Picker.Item label="Fair" value="Fair" />
+                      <Picker.Item label="Wheatish" value="Wheatish" />
+                    </Picker>
+                  </View>
+                  {errors.complexion ? (
+                    <Text style={styles.error}>{errors.complexion}</Text>
+                  ) : null}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.height ? 'red' : '#e6e6e6',
+                    }}>
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Height (cm)"
+                      placeholderTextColor="#003f5c"
+                      keyboardType="numeric"
+                      autoCapitalize="sentences"
+                      // defaultValue={user.email}
+                      onChangeText={handleChange('height')}
+                      onBlur={handleBlur('height')}
+                    />
+                  </View>
+                  {errors.height ? (
+                    <Text style={styles.error}>{errors.height}</Text>
+                  ) : null}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      width: '90%',
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      marginTop: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.weight ? 'red' : '#e6e6e6',
+                    }}>
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Weight (KGs)"
+                      placeholderTextColor="#003f5c"
+                      keyboardType="numeric"
+                      autoCapitalize="sentences"
+                      defaultValue={initialTalentValues.weight}
+                      onChangeText={handleChange('weight')}
+                      onBlur={handleBlur('weight')}
+                    />
+                  </View>
+                  {errors.weight ? (
+                    <Text style={styles.error}>{errors.weight}</Text>
+                  ) : null}
+                </Fragment>
+              )}
+
+              <TouchableOpacity
+                style={styles.registerBtn}
+                onPress={handleSubmit}>
+                <Text style={styles.registerBtnText}>
+                  {loading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    'Save Details'
+                  )}
+                </Text>
+              </TouchableOpacity>
+            </React.Fragment>
+          )}
         </Formik>
       </ScrollView>
     </View>

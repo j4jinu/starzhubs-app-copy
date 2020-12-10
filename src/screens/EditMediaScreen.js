@@ -35,9 +35,10 @@ const EditMediaScreen = (props) => {
   const [visible, setVisible] = useState(false);
 
   const editMedia = async (values, {setSubmitting}) => {
+    console.log('Form data: ', values);
     var formData = new FormData();
     formData.append('talentId', talentId);
-    formData.append('description', values.description);
+    formData.append('caption', values.description);
     formData.append('title', values.caption);
     const requestOptions = {
       method: 'PUT',
