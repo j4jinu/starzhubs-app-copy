@@ -97,7 +97,9 @@ const CreatePosterScreen = (props, {navigation}) => {
         return;
       }
 
-      props.navigation.navigate('MyPosters');
+      props.navigation.navigate('MyPosters',{
+        content:'pending'
+      });
       showToastWithGravityAndOffset();
     } catch (error) {
       console.error('error', error);
@@ -518,7 +520,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingVertical: 8,
     paddingHorizontal: 5,
-    backgroundColor: 'tomato',
+    backgroundColor: theme.$primaryColor,
     alignItems: 'center',
     marginBottom: 10,
   },

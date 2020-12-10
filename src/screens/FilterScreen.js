@@ -235,7 +235,12 @@ const FilterScreen = (props) => {
   };
 
   const resetFields = () => {
+    console.log("hhhh");
     setSearch('');
+    setAgeToValue(0)
+    setAgeFromValue(0)
+    getCategory()
+    // setCategories()
   };
 
   const onDismissSnackBar = () => {

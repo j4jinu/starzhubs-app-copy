@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   ToastAndroid,
+  ActivityIndicator
 } from 'react-native';
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
@@ -22,11 +23,17 @@ import { Rating, AirbnbRating } from 'react-native-elements';
 const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [talents, setTalents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
     getUserTalents();
   });
+
+  useEffect(() => {
+    getUserTalents();
+    unsubscribe;
+  }, []);
 
   useEffect(() => {
     getUserTalents();
@@ -48,6 +55,7 @@ const TalentListScreen = (props) => {
           if (response.success === true) {
             setTalents(response.data.talents);
             console.log('talents', talents);
+            setLoading(false)
           } else {
             console.log('gggg', response.message);
           }
@@ -116,7 +124,15 @@ const TalentListScreen = (props) => {
       100,
     );
   };
-
+  if (loading) {
+    return (
+      <ActivityIndicator
+        style={{ marginTop: 20 }}
+        color={theme.$primaryColor}
+        size={'large'}
+      />
+    );
+  }
   if (talents.length === 0) {
     return (
       <>
@@ -166,7 +182,8 @@ const TalentListScreen = (props) => {
                       ratingCount={5}
                       imageSize={15}
                       style={{ paddingVertical: 5 }}
-                      defaultRating={t.level}
+                      startingValue={t.level}
+
                     />
                     <Text style={{ marginLeft: '5%', marginTop: 4 }}>
                       {t.level == '1'
@@ -256,7 +273,7 @@ const TalentListScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                <View style={{ flexDirection: 'row', bottom: '-2%' }}>
+                <View style={{ flexDirection: "row", bottom: 0 }}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate('EditTalents', {
@@ -271,14 +288,14 @@ const TalentListScreen = (props) => {
                       })
                     }
                     style={styles.EditBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: '700' }}>
                       EDIT
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => confirmDelete(t._id)}
                     style={styles.DeleteBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
+                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: '700' }}>
                       DELETE
                     </Text>
                   </TouchableOpacity>
@@ -289,7 +306,7 @@ const TalentListScreen = (props) => {
           <View
             style={{
               borderWidth: 0,
-              bottom: 25,
+              bottom: '10%',
               right: 10,
               alignSelf: 'flex-end',
             }}>
@@ -309,16 +326,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
+    marginBottom: '-12%'
   },
   EditBtn: {
+    // width: "150%",
+    // backgroundColor: 'lightgrey',
+    // height: 40,
+
     width: '150%',
     backgroundColor: '#00ba28',
     height: 50,
     marginRight: '25%',
     justifyContent: 'center',
     marginTop: 2,
+
   },
   DeleteBtn: {
+    // width: "69%",
+    // backgroundColor: "lightgrey",
+    // marginLeft: "25%",
+    // marginRight: "32%",
+    // height: 40,
     width: '70%',
     backgroundColor: '#db3000',
     marginLeft: '25%',
@@ -362,6 +390,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
+    elevation: 2,
+    paddingTop: 10
+
   },
   subHeadDiv: {
     marginTop: 8,

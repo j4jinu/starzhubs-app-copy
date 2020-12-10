@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import {color} from 'react-native-reanimated';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { color } from 'react-native-reanimated';
 import UserGridItem from '../components/UserGridItem';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const PortfolioListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -72,7 +72,7 @@ const PortfolioListScreen = (props) => {
   if (loading) {
     return (
       <ActivityIndicator
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
         color={theme.$primaryColor}
         size={'large'}
       />
@@ -83,7 +83,7 @@ const PortfolioListScreen = (props) => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{backgroundColor: 'white', marginTop: 12}}>
+        style={{ marginTop: 12, height: 40 }}>
         {category.map((c) => (
           <TouchableOpacity
             style={c._id === categoryId ? styles.chipActive : styles.chips}
@@ -93,8 +93,8 @@ const PortfolioListScreen = (props) => {
             <Text
               style={
                 c._id === categoryId
-                  ? {color: 'white', fontSize: 12}
-                  : {color: 'black', fontSize: 12}
+                  ? { color: 'white', fontSize: 12 }
+                  : { color: 'black', fontSize: 12 }
               }>
               {c.title}
             </Text>
@@ -105,12 +105,12 @@ const PortfolioListScreen = (props) => {
         <FlatList
           style={{
             backgroundColor: '#fafafa',
-            marginTop: 10,
+            marginTop: 5,
             marginBottom: 30,
           }}
           keyExtractor={(item, index) => item.id}
           data={users}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <UserGridItem
               userId={item._id}
               name={item.name}
@@ -129,7 +129,7 @@ const PortfolioListScreen = (props) => {
             alignItems: 'center',
             paddingVertical: '30%',
           }}>
-          <Text style={{fontSize: 18, color: 'tomato', marginTop: 10}}>
+          <Text style={{ fontSize: 18, color: 'tomato', marginTop: 10 }}>
             Sorry, No users available.
           </Text>
           <Image

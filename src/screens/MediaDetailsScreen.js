@@ -159,7 +159,7 @@ const MediaDetailsScreen = (props) => {
                     justifyContent: 'center',
                     marginLeft: 10,
                   }}>
-                  <Text style={{ fontSize: 9 }}>{'Posted By'}</Text>
+                  <Text style={{ fontSize: 9 }}>{'Posted By '}</Text>
                   <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                     {user.name}
                   </Text>

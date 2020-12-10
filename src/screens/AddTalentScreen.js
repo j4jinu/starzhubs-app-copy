@@ -239,6 +239,73 @@ export default function AddTalentScreen(props) {
       setSubmitting(false);
       return;
     }
+    if (isProfileImageMode === true) {
+      if (bodyTypeValue === undefined || bodyTypeValue === '') {
+        Alert.alert(
+          '',
+          'Select any one of the Body Type',
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+        setLoading(false);
+        setSubmitting(false);
+        return;
+
+      }
+      if (complexionValue === undefined || complexionValue === '') {
+        Alert.alert(
+          '',
+          'Select any one of the Complexion',
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+        setLoading(false);
+        setSubmitting(false);
+        return;
+      }
+      if (values.height === 0) {
+        Alert.alert(
+          '',
+          'Enter your height',
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+        setLoading(false);
+        setSubmitting(false);
+        return;
+      }
+      if (values.weight === 0) {
+        Alert.alert(
+          '',
+          'Enter your Weight',
+          [
+            {
+              text: 'Ok',
+              style: 'cancel',
+            },
+          ],
+          { cancelable: false },
+        );
+        setLoading(false);
+        setSubmitting(false);
+        return;
+      }
+    }
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -899,9 +966,9 @@ export default function AddTalentScreen(props) {
                       </Picker>
                     </View>
 
-                    {errors.bodyType ? (
+                    {/* {errors.bodyType ? (
                       <Text style={styles.error}>{errors.bodyType}</Text>
-                    ) : null}
+                    ) : null} */}
                     <View
                       style={{
                         alignSelf: 'center',
@@ -932,9 +999,9 @@ export default function AddTalentScreen(props) {
                         <Picker.Item label="Wheatish" value="Wheatish" />
                       </Picker>
                     </View>
-                    {errors.complexion ? (
+                    {/* {errors.complexion ? (
                       <Text style={styles.error}>{errors.complexion}</Text>
-                    ) : null}
+                    ) : null} */}
                     <View
                       style={{
                         alignSelf: 'center',
@@ -959,9 +1026,9 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('height')}
                       />
                     </View>
-                    {errors.height ? (
+                    {/* {errors.height ? (
                       <Text style={styles.error}>{errors.height}</Text>
-                    ) : null}
+                    ) : null} */}
                     <View
                       style={{
                         alignSelf: 'center',
@@ -986,9 +1053,9 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('weight')}
                       />
                     </View>
-                    {errors.weight ? (
+                    {/* {errors.weight ? (
                       <Text style={styles.error}>{errors.weight}</Text>
-                    ) : null}
+                    ) : null} */}
                   </Fragment>
                 )}
 

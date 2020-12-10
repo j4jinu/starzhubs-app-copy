@@ -33,7 +33,7 @@ const MediaItem = (props) => {
           }>
           {props.media[0].fileType === 'image' ? (
             <Image
-              style={{width: '100%', height: deviceWidth / 2}}
+              style={{ width: '100%', height: deviceWidth / 2 }}
               // style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
               resizeMode="cover"
               source={{
@@ -41,18 +41,18 @@ const MediaItem = (props) => {
               }}
             />
           ) : (
-            <WebView
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              source={{
-                uri:
-                  'https://www.youtube.com/embed/' +
-                  props.media[0].file.substring(
-                    props.media[0].file.lastIndexOf('=') + 1,
-                  ),
-              }}
-            />
-          )}
+              <WebView
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                source={{
+                  uri:
+                    'https://www.youtube.com/embed/' +
+                    props.media[0].file.substring(
+                      props.media[0].file.lastIndexOf('=') + 1,
+                    ),
+                }}
+              />
+            )}
           {/* <Image
                             style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                             source={{
@@ -60,13 +60,15 @@ const MediaItem = (props) => {
                             }}
                         /> */}
           <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
+          {/* // <Text style={styles.mediaDescription}>{props.media[0].description.substring(0, 100)}...</Text>
+          // <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>Posted by: */}
           <Text style={styles.mediaDescription}>
             {props.media[0].description}
           </Text>
-          <Text style={{color: theme.$primaryColorText, marginLeft: 10}}>
+          <Text style={{ color: theme.$primaryColorText, marginLeft: 10, marginTop: 10 }}>
             Posted by:
             {props.user[0] !== undefined && (
-              <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
+              <Text style={styles.mediaAuthor}> {props.user[0].name}</Text>
             )}
             {props.user !== undefined && (
               <Text style={styles.mediaAuthor}>{props.user.name}</Text>
@@ -89,12 +91,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 3,
     shadowColor: 'black',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 1,
     borderRadius: 2,
     marginBottom: 10,
+    paddingBottom: 10
     // elevation: 3,
     // borderRadius: 2,
     // marginBottom: "3%"

@@ -59,7 +59,9 @@ const BuddyRequestItem = (props) => {
       .then(
         (response) => {
           if (response.success === true) {
-            alert(response.message);
+            props.getConnectionRequests()
+
+
           } else {
             alert(response.message);
           }
@@ -80,9 +82,9 @@ const BuddyRequestItem = (props) => {
       .then((response) => response.json())
       .then((response) => {
         alert(response.message);
-        props.navigation.navigate('MyConnectionScreen', {
-          navigation: props.navigation,
-        });
+        props.getRequests()
+        props.navigation.navigate('MyConnectionScreen');
+        //navigation: props.navigation,
       })
       .catch((error) => {
         alert(error);

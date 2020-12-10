@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect, Fragment} from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,16 +13,16 @@ import {
   PermissionsAndroid,
   ScrollView,
 } from 'react-native';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Gicon from 'react-native-vector-icons/FontAwesome';
 import Eicon from 'react-native-vector-icons/FontAwesome5';
 // import * as ImagePicker from 'expo-image-picker';
-import {Rating, AirbnbRating} from 'react-native-elements';
+import { Rating, AirbnbRating } from 'react-native-elements';
 // import MultiSelect from 'react-native-multiple-select';
-import {Snackbar} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
+import { Snackbar } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
@@ -106,7 +106,7 @@ const EditTalentScreen = (props) => {
   const [rightimg, setRightImage] = useState();
   const [leftimg, setLeftImage] = useState();
   const [fullsizeimg, setFullImage] = useState();
-  const [user, setUser] = useState({image: {}});
+  const [user, setUser] = useState({ image: {} });
 
   const initialTalentValues = {
     talentId: talentId,
@@ -151,7 +151,7 @@ const EditTalentScreen = (props) => {
 
           setUser(response.data.user);
         })
-        .catch((error) => {});
+        .catch((error) => { });
       // setIsProfileImageMode(true);
       // setTalent(tid);
       // return;
@@ -197,12 +197,12 @@ const EditTalentScreen = (props) => {
         .then((response) => {
           setCategories(response.categories);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     };
     getCategory();
   }, []);
 
-  const handleSubmit = (values, {setSubmitting}) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     values.level = level;
     // values.industry = selectedItems;
     if (selectedItems === undefined || selectedItems.length === 0) {
@@ -215,7 +215,7 @@ const EditTalentScreen = (props) => {
             style: 'cancel',
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
       // alert('Please choose the languages you known');
       setSubmitting(false);
@@ -251,7 +251,7 @@ const EditTalentScreen = (props) => {
             setVisible(true);
           }
         },
-        (error) => {},
+        (error) => { },
       );
   };
 
@@ -281,7 +281,7 @@ const EditTalentScreen = (props) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -391,8 +391,8 @@ const EditTalentScreen = (props) => {
           enableReinitialize={true}
           initialValues={initialTalentValues}
           validationSchema={talentValidationSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            handleSubmit(values, {setSubmitting})
+          onSubmit={(values, { setSubmitting }) =>
+            handleSubmit(values, { setSubmitting })
           }>
           {({
             handleChange,
@@ -403,32 +403,32 @@ const EditTalentScreen = (props) => {
             values,
             errors,
           }) => (
-            <React.Fragment>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '96%',
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  // marginBottom: 5,
-                  borderColor: errors.link ? 'red' : 'white',
-                }}>
-                <Cicon name="merge-type" size={20} style={{color: '#fd9242'}} />
-                <Text
-                  style={{color: 'black', paddingVertical: 15, marginLeft: 15}}>
-                  {category}
-                </Text>
-              </View>
-              {errors.talentId ? (
-                <Text style={styles.error}>{errors.talentId}</Text>
-              ) : null}
+              <React.Fragment>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // marginBottom: 5,
+                    borderColor: errors.link ? 'red' : 'white',
+                  }}>
+                  <Cicon name="merge-type" size={20} style={{ color: '#fd9242' }} />
+                  <Text
+                    style={{ color: 'black', paddingVertical: 15, marginLeft: 15 }}>
+                    {category}
+                  </Text>
+                </View>
+                {errors.talentId ? (
+                  <Text style={styles.error}>{errors.talentId}</Text>
+                ) : null}
 
-              {/* <View
+                {/* <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
@@ -444,383 +444,383 @@ const EditTalentScreen = (props) => {
                     paddingLeft: '5%',
                   }}> */}
 
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '96%',
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                  paddingVertical: 12,
-                  // marginBottom: 5,
-                  borderColor: errors.link ? 'red' : 'white',
-                  flexDirection: 'column',
-                }}>
-                <Text>Select Confidence Level</Text>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
+                    paddingVertical: 12,
+                    // marginBottom: 5,
+                    borderColor: errors.link ? 'red' : 'white',
+                    flexDirection: 'column',
+                  }}>
+                  <Text>Select Confidence Level</Text>
 
-                <AirbnbRating
-                  reviews={[
-                    'Beginner',
-                    'Average',
-                    'Good',
-                    'Excellent',
-                    'Experienced',
-                  ]}
-                  defaultRating={level}
-                  size={20}
-                  count={5}
-                  showRating={false}
-                  onFinishRating={handleLevelChange}
-                  selectedColor={theme.$primaryColor}
-                />
-              </View>
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '96%',
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  marginTop: 8,
-
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderColor: errors.link ? 'red' : 'white',
-                }}>
-                <View style={{width: '7%'}}>
-                  <Gicon
-                    name="industry"
-                    size={15}
-                    style={
-                      selectedItems.length === 0
-                        ? styles.noIndustry
-                        : styles.industry
-                    }
+                  <AirbnbRating
+                    reviews={[
+                      'Beginner',
+                      'Average',
+                      'Good',
+                      'Excellent',
+                      'Experienced',
+                    ]}
+                    defaultRating={level}
+                    size={20}
+                    count={5}
+                    showRating={false}
+                    onFinishRating={handleLevelChange}
+                    selectedColor={theme.$primaryColor}
                   />
                 </View>
 
                 <View
-                  style={{width: '96%', marginLeft: '-2%', paddingBottom: 12}}>
-                  <SectionedMultiSelect
-                    items={industryNames}
-                    IconRenderer={Icon}
-                    uniqueKey="id"
-                    subKey="children"
-                    selectText="Select Industry"
-                    showDropDowns={true}
-                    expandDropDowns
-                    showCancelButton
-                    readOnlyHeadings={true}
-                    onSelectedItemsChange={onSelectedItemsChange}
-                    selectedItems={selectedItems}
-                  />
-                </View>
-              </View>
-              {errors.industry ? (
-                <Text style={styles.error}>{errors.industry}</Text>
-              ) : null}
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '96%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : 'white',
-                }}>
-                <Eicon
-                  name="envelope-open-text"
-                  size={15}
                   style={{
-                    color: '#fd9242',
-                  }}
-                />
-                <TextInput
-                  style={styles.inputText}
-                  defaultValue={String(years)}
-                  placeholder="Experience"
-                  placeholderTextColor="#003f5c"
-                  keyboardType="numeric"
-                  autoCapitalize="sentences"
-                  // defaultValue={user.email}
-                  onChangeText={handleChange('experience')}
-                  onBlur={handleBlur('experience')}
-                />
-              </View>
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '96%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
 
-              {errors.experience ? (
-                <Text style={styles.error}>{errors.experience}</Text>
-              ) : null}
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '96%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : 'white',
-                }}>
-                <Eicon
-                  name="envelope-open-text"
-                  size={15}
-                  style={{
-                    color: '#fd9242',
-                  }}
-                />
-                <TextInput
-                  style={styles.inputText}
-                  defaultValue={String(films)}
-                  placeholder="No. of Projects"
-                  placeholderTextColor="#003f5c"
-                  keyboardType="numeric"
-                  autoCapitalize="sentences"
-                  // defaultValue={user.email}
-                  onChangeText={handleChange('films')}
-                  onBlur={handleBlur('films')}
-                />
-              </View>
-              {errors.films ? (
-                <Text style={styles.error}>{errors.films}</Text>
-              ) : null}
-
-              {isProfileImageMode && (
-                <>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginTop: 10,
-                      marginBottom: 10,
-                    }}>
-                    <View
-                      style={{
-                        paddingLeft: '6%',
-                        paddingRight: '2%',
-                        marginTop: 10,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          requestCameraPermission('head_shot');
-                        }}>
-                        {!headimg &&
-                          user.image &&
-                          user.image.head_shot !== undefined && (
-                            <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
-                              }}
-                            />
-                          )}
-                        {!headimg && user.image.head_shot === undefined && (
-                          <Image
-                            source={require('../assets/headshot.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                          />
-                        )}
-                        {headimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: headimg}}
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </View>
-                    <View
-                      style={{
-                        paddingLeft: '2%',
-                        paddingRight: '6%',
-                        marginTop: 10,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => requestCameraPermission('left_profile')}>
-                        {!leftimg &&
-                          user.image &&
-                          user.image.left_profile !== undefined && (
-                            <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
-                              }}
-                            />
-                          )}
-                        {!leftimg && user.image.left_profile === undefined && (
-                          <Image
-                            source={require('../assets/left_profile.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                          />
-                        )}
-                        {leftimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: leftimg}}
-                          />
-                        )}
-                      </TouchableOpacity>
-                    </View>
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderColor: errors.link ? 'red' : 'white',
+                  }}>
+                  <View style={{ width: '7%' }}>
+                    <Gicon
+                      name="industry"
+                      size={15}
+                      style={
+                        selectedItems.length === 0
+                          ? styles.noIndustry
+                          : styles.industry
+                      }
+                    />
                   </View>
 
                   <View
+                    style={{ width: '96%', marginLeft: '-2%', paddingBottom: 12 }}>
+                    <SectionedMultiSelect
+                      items={industryNames}
+                      IconRenderer={Icon}
+                      uniqueKey="id"
+                      subKey="children"
+                      selectText="Select Industry"
+                      showDropDowns={true}
+                      expandDropDowns
+                      showCancelButton
+                      readOnlyHeadings={true}
+                      onSelectedItemsChange={onSelectedItemsChange}
+                      selectedItems={selectedItems}
+                    />
+                  </View>
+                </View>
+                {errors.industry ? (
+                  <Text style={styles.error}>{errors.industry}</Text>
+                ) : null}
+
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '96%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.experience ? 'red' : 'white',
+                  }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
                     style={{
-                      flexDirection: 'row',
-                    }}>
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={String(years)}
+                    placeholder="Experience"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="numeric"
+                    autoCapitalize="sentences"
+                    // defaultValue={user.email}
+                    onChangeText={handleChange('experience')}
+                    onBlur={handleBlur('experience')}
+                  />
+                </View>
+
+                {errors.experience ? (
+                  <Text style={styles.error}>{errors.experience}</Text>
+                ) : null}
+
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '96%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.experience ? 'red' : 'white',
+                  }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={String(films)}
+                    placeholder="No. of Projects"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="numeric"
+                    autoCapitalize="sentences"
+                    // defaultValue={user.email}
+                    onChangeText={handleChange('films')}
+                    onBlur={handleBlur('films')}
+                  />
+                </View>
+                {errors.films ? (
+                  <Text style={styles.error}>{errors.films}</Text>
+                ) : null}
+
+                {isProfileImageMode && (
+                  <>
                     <View
                       style={{
-                        paddingLeft: '6%',
-                        paddingRight: '2%',
+                        flexDirection: 'row',
                         marginTop: 10,
                         marginBottom: 10,
                       }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          requestCameraPermission('right_profile')
-                        }>
-                        {!rightimg &&
-                          user.image &&
-                          user.image.right_profile !== undefined && (
+                      <View
+                        style={{
+                          paddingLeft: '6%',
+                          paddingRight: '2%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            requestCameraPermission('head_shot');
+                          }}>
+                          {!headimg &&
+                            user.image &&
+                            user.image.head_shot !== undefined && (
+                              <Image
+                                style={{
+                                  borderRadius: 50,
+                                  height: 140,
+                                  width: 140,
+                                }}
+                                source={{
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+                                }}
+                              />
+                            )}
+                          {!headimg && user.image.head_shot === undefined && (
                             <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
-                              }}
+                              source={require('../assets/headshot.jpg')}
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
                             />
                           )}
-                        {!rightimg && user.image.right_profile === undefined && (
-                          <Image
-                            source={require('../assets/right_profile.jpg')}
-                            style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
-                            }}
-                          />
-                        )}
-                        {rightimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: rightimg}}
-                          />
-                        )}
-                      </TouchableOpacity>
+                          {headimg && (
+                            <Image
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
+                              source={{ uri: headimg }}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: '2%',
+                          paddingRight: '6%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => requestCameraPermission('left_profile')}>
+                          {!leftimg &&
+                            user.image &&
+                            user.image.left_profile !== undefined && (
+                              <Image
+                                style={{
+                                  borderRadius: 50,
+                                  height: 140,
+                                  width: 140,
+                                }}
+                                source={{
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+                                }}
+                              />
+                            )}
+                          {!leftimg && user.image.left_profile === undefined && (
+                            <Image
+                              source={require('../assets/left_profile.jpg')}
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
+                            />
+                          )}
+                          {leftimg && (
+                            <Image
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
+                              source={{ uri: leftimg }}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
                     </View>
+
                     <View
                       style={{
-                        paddingLeft: '2%',
-                        paddingRight: '6%',
-                        marginTop: 10,
+                        flexDirection: 'row',
                       }}>
-                      <TouchableOpacity
-                        onPress={() => requestCameraPermission('fullsize')}>
-                        {!fullsizeimg &&
-                          user.image &&
-                          user.image.fullsize !== undefined && (
+                      <View
+                        style={{
+                          paddingLeft: '6%',
+                          paddingRight: '2%',
+                          marginTop: 10,
+                          marginBottom: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            requestCameraPermission('right_profile')
+                          }>
+                          {!rightimg &&
+                            user.image &&
+                            user.image.right_profile !== undefined && (
+                              <Image
+                                style={{
+                                  borderRadius: 50,
+                                  height: 140,
+                                  width: 140,
+                                }}
+                                source={{
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+                                }}
+                              />
+                            )}
+                          {!rightimg && user.image.right_profile === undefined && (
                             <Image
+                              source={require('../assets/right_profile.jpg')}
                               style={{
                                 borderRadius: 50,
                                 height: 140,
                                 width: 140,
                               }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
-                              }}
                             />
                           )}
-                        {!fullsizeimg && user.image.fullsize === undefined && (
-                          <Image
-                            source={require('../assets/fullsize.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                          />
-                        )}
-                        {fullsizeimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: fullsizeimg}}
-                          />
-                        )}
-                      </TouchableOpacity>
+                          {rightimg && (
+                            <Image
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
+                              source={{ uri: rightimg }}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: '2%',
+                          paddingRight: '6%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => requestCameraPermission('fullsize')}>
+                          {!fullsizeimg &&
+                            user.image &&
+                            user.image.fullsize !== undefined && (
+                              <Image
+                                style={{
+                                  borderRadius: 50,
+                                  height: 140,
+                                  width: 140,
+                                }}
+                                source={{
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+                                }}
+                              />
+                            )}
+                          {!fullsizeimg && user.image.fullsize === undefined && (
+                            <Image
+                              source={require('../assets/fullsize.jpg')}
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
+                            />
+                          )}
+                          {fullsizeimg && (
+                            <Image
+                              style={{ borderRadius: 50, height: 140, width: 140 }}
+                              source={{ uri: fullsizeimg }}
+                            />
+                          )}
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                  </View>
-                </>
-              )}
+                  </>
+                )}
 
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '96%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : 'white',
-                }}>
-                <Eicon
-                  name="envelope-open-text"
-                  size={15}
+                <View
                   style={{
-                    color: '#fd9242',
-                  }}
-                />
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '96%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.experience ? 'red' : 'white',
+                  }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
 
-                <TextInput
-                  style={styles.inputText}
-                  defaultValue={description}
-                  placeholder="Description"
-                  placeholderTextColor="#003f5c"
-                  keyboardType="email-address"
-                  autoCapitalize="sentences"
-                  numberOfLines={3}
-                  multiline={true}
-                  // defaultValue={user.email}
-                  onChangeText={handleChange('description')}
-                  onBlur={handleBlur('description')}
-                />
-              </View>
-              {/* </View> */}
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={description}
+                    placeholder="Description"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="email-address"
+                    autoCapitalize="sentences"
+                    numberOfLines={3}
+                    multiline={true}
+                    // defaultValue={user.email}
+                    onChangeText={handleChange('description')}
+                    onBlur={handleBlur('description')}
+                  />
+                </View>
+                {/* </View> */}
 
-              <TouchableOpacity
-                style={styles.registerBtn}
-                onPress={handleSubmit}>
-                <Text style={styles.registerBtnText}>
-                  {loading ? (
-                    <ActivityIndicator size="small" color="#fff" />
-                  ) : (
-                    'Save Details'
-                  )}
-                </Text>
-              </TouchableOpacity>
-            </React.Fragment>
-          )}
+                <TouchableOpacity
+                  style={styles.registerBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>
+                    {loading ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                        'Save Details'
+                      )}
+                  </Text>
+                </TouchableOpacity>
+              </React.Fragment>
+            )}
         </Formik>
       </ScrollView>
     </View>

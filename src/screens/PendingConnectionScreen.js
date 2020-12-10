@@ -5,9 +5,15 @@ import { AuthContext } from '../context/authContext';
 const PendingConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [requests, setRequests] = useState([]);
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+    getRequests();
+  });
   useEffect(() => {
     getRequests();
+    unsubscribe;
   }, []);
+
 
   const getRequests = () => {
     fetch('http://13.232.190.226/api/talent/req/received', {
@@ -49,8 +55,9 @@ const PendingConnectionScreen = (props) => {
           image={item.fromUser.image}
           talent={item.talent}
           userId={item.fromUser._id}
+          getRequests={getRequests}
           reqType="received"
-          // navigation={props.navigation}
+          navigation={props.navigation}
           onSelect={() =>
             props.navigation.navigate('UserDetails', {
               userId: item.fromUser._id
