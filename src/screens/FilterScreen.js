@@ -23,12 +23,12 @@ import theme from '../config/theme';
 
 const FilterScreen = (props) => {
   const auth = useContext(AuthContext);
-  const [ageToValue, setAgeToValue] = useState(0);
+  const [ageToValue, setAgeToValue] = useState(100);
   const [ageFromValue, setAgeFromValue] = useState(0);
   const [heightFromValue, setHeightFromValue] = useState(0);
-  const [heightToValue, setHeightToValue] = useState(0);
+  const [heightToValue, setHeightToValue] = useState(200);
   const [weightFromValue, setWeightFromValue] = useState(0);
-  const [weightToValue, setWeightToValue] = useState(0);
+  const [weightToValue, setWeightToValue] = useState(250);
 
   const [search, setSearch] = useState('');
 
