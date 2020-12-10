@@ -109,8 +109,8 @@ export default function AddTalentScreen(props) {
     projects: '',
     complexion: 'Brown',
     bodyType: 'Athletic',
-    height: 0,
-    weight: 0,
+    height: '',
+    weight: '',
     description: '',
   };
 

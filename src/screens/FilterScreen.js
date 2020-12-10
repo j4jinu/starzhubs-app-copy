@@ -235,7 +235,6 @@ const FilterScreen = (props) => {
   };
 
   const resetFields = () => {
-    console.log('hhhh');
     setSearch('');
     setAgeToValue(100);
     setAgeFromValue(0);

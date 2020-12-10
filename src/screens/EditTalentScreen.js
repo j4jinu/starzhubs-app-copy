@@ -137,7 +137,7 @@ const EditTalentScreen = (props) => {
   });
 
   const userInfo = () => {
-    if (talentId === '5fc4ddd488613013dcef6434') {
+    if (category.toLowerCase() === 'actor') {
       setIsProfileImageMode(true);
       fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
         method: 'PATCH',
@@ -605,13 +605,12 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       flexDirection: 'row',
+                      justifyContent: 'space-evenly',
                       marginTop: 10,
                       marginBottom: 10,
                     }}>
                     <View
                       style={{
-                        paddingLeft: '6%',
-                        paddingRight: '2%',
                         marginTop: 10,
                       }}>
                       <TouchableOpacity
@@ -623,7 +622,7 @@ const EditTalentScreen = (props) => {
                           user.image.head_shot !== undefined && (
                             <Image
                               style={{
-                                borderRadius: 50,
+                                borderRadius: 5,
                                 height: 140,
                                 width: 140,
                               }}
@@ -635,12 +634,12 @@ const EditTalentScreen = (props) => {
                         {!headimg && user.image.head_shot === undefined && (
                           <Image
                             source={require('../assets/headshot.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                           />
                         )}
                         {headimg && (
                           <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                             source={{uri: headimg}}
                           />
                         )}
@@ -659,7 +658,7 @@ const EditTalentScreen = (props) => {
                           user.image.left_profile !== undefined && (
                             <Image
                               style={{
-                                borderRadius: 50,
+                                borderRadius: 5,
                                 height: 140,
                                 width: 140,
                               }}
@@ -671,12 +670,12 @@ const EditTalentScreen = (props) => {
                         {!leftimg && user.image.left_profile === undefined && (
                           <Image
                             source={require('../assets/left_profile.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                           />
                         )}
                         {leftimg && (
                           <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                             source={{uri: leftimg}}
                           />
                         )}
@@ -687,11 +686,10 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       flexDirection: 'row',
+                      justifyContent: 'space-evenly',
                     }}>
                     <View
                       style={{
-                        paddingLeft: '6%',
-                        paddingRight: '2%',
                         marginTop: 10,
                         marginBottom: 10,
                       }}>
@@ -704,7 +702,7 @@ const EditTalentScreen = (props) => {
                           user.image.right_profile !== undefined && (
                             <Image
                               style={{
-                                borderRadius: 50,
+                                borderRadius: 5,
                                 height: 140,
                                 width: 140,
                               }}
@@ -717,7 +715,7 @@ const EditTalentScreen = (props) => {
                           <Image
                             source={require('../assets/right_profile.jpg')}
                             style={{
-                              borderRadius: 50,
+                              borderRadius: 5,
                               height: 140,
                               width: 140,
                             }}
@@ -725,7 +723,7 @@ const EditTalentScreen = (props) => {
                         )}
                         {rightimg && (
                           <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                             source={{uri: rightimg}}
                           />
                         )}
@@ -744,7 +742,7 @@ const EditTalentScreen = (props) => {
                           user.image.fullsize !== undefined && (
                             <Image
                               style={{
-                                borderRadius: 50,
+                                borderRadius: 5,
                                 height: 140,
                                 width: 140,
                               }}
@@ -756,12 +754,12 @@ const EditTalentScreen = (props) => {
                         {!fullsizeimg && user.image.fullsize === undefined && (
                           <Image
                             source={require('../assets/fullsize.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                           />
                         )}
                         {fullsizeimg && (
                           <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            style={{borderRadius: 5, height: 140, width: 140}}
                             source={{uri: fullsizeimg}}
                           />
                         )}

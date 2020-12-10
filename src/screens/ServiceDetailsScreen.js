@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Image,
@@ -11,10 +11,10 @@ import {
   ToastAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
-import { Snackbar } from 'react-native-paper';
-import { AuthContext } from '../context/authContext';
+import {Snackbar} from 'react-native-paper';
+import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
 const ServiceDetailsScreen = (props) => {
   const serviceId = props.navigation.getParam('serviceId');
@@ -32,12 +32,12 @@ const ServiceDetailsScreen = (props) => {
         .then((response) => {
           setServices(response.services);
         })
-        .catch((error) => { });
+        .catch((error) => {});
     };
     getServiceDetails();
   }, []);
 
-  const initialValues = { message: '' };
+  const initialValues = {message: ''};
   const validationSchema = Yup.object({
     message: Yup.string().required('Enter your feedback'),
   });
@@ -50,7 +50,7 @@ const ServiceDetailsScreen = (props) => {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + auth.token,
       },
-      body: JSON.stringify({ message: values.message }),
+      body: JSON.stringify({message: values.message}),
     };
 
     fetch(`http://13.232.190.226/api/services/${serviceId}`, requestOptions)
@@ -60,8 +60,8 @@ const ServiceDetailsScreen = (props) => {
           if (response.success === true) {
             setLoading(false);
             setVisible(!visible);
-            showToastWithGravityAndOffset()
-            props.navigation.navigate('OurServices')
+            showToastWithGravityAndOffset();
+            props.navigation.navigate('OurServices');
 
             // props.navigation.goBack()
           } else {
@@ -81,17 +81,17 @@ const ServiceDetailsScreen = (props) => {
   };
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
-      "  Thanks for your feedback!",
+      '  Thanks for your feedback!',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
-      100
+      100,
     );
   };
   return (
     <View style={styles.container}>
       <Snackbar
-        style={{ marginBottom: 10 }}
+        style={{marginBottom: 10}}
         visible={visible}
         duration={4000}
         onDismiss={onDismissSnackBar}>
@@ -104,8 +104,6 @@ const ServiceDetailsScreen = (props) => {
             flexDirection: 'column',
             width: '100%',
           }}>
-
-
           <View style={styles.img}>
             <Image
               source={{
@@ -114,11 +112,11 @@ const ServiceDetailsScreen = (props) => {
                     ? null
                     : `http://13.232.190.226/api/services/view/${services.image}`,
               }}
-              style={{ borderRadius: 50, height: 200, width: 200 }}
+              style={{borderRadius: 50, height: 200, width: 200}}
             />
           </View>
-          <View style={{ marginBottom: 15 }}>
-            <Text style={{ fontSize: 28, color: 'orange', fontWeight: 'bold' }}>
+          <View style={{marginBottom: 15}}>
+            <Text style={{fontSize: 28, color: 'orange', fontWeight: 'bold'}}>
               {services.title}
             </Text>
           </View>
@@ -134,7 +132,7 @@ const ServiceDetailsScreen = (props) => {
               color={theme.$primaryColor}
               style={{ marginTop: 4, marginRight: '4%' }}
             /> */}
-            <Text style={{ textAlign: 'center', alignSelf: 'center' }}>
+            <Text style={{textAlign: 'center', alignSelf: 'center'}}>
               {services.description}
             </Text>
           </View>
@@ -153,45 +151,44 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-                <View style={{ width: '90%', marginLeft: 0 }}>
-                  <View style={styles.inputView}>
-
-                    <TextInput
-                      style={styles.inputText}
-                      placeholder="Write Your Feedback"
-                      placeholderTextColor="#003f5c"
-                      keyboardType="default"
-                      autoCapitalize="sentences"
-                      numberOfLines={5}
-                      multiline={true}
-                      onChangeText={handleChange('message')}
-                      onBlur={handleBlur('message')}
-                    />
-                  </View>
-                  {touched.message && errors.message && (
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        color: 'red',
-                        alignSelf: 'center',
-                        marginBottom: 2,
-                      }}>
-                      {errors.message}
-                    </Text>
-                  )}
-
-                  <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
-                    <Text style={styles.BtnText}>
-                      {loading ? (
-                        <ActivityIndicator size="small" color="#fff" />
-                      ) : (
-                          'SUBMIT'
-                        )}
-                    </Text>
-                  </TouchableOpacity>
+              <View style={{width: '90%', marginLeft: 0}}>
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.inputText}
+                    placeholder="Write Your Feedback"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="default"
+                    autoCapitalize="sentences"
+                    numberOfLines={5}
+                    multiline={true}
+                    onChangeText={handleChange('message')}
+                    onBlur={handleBlur('message')}
+                  />
                 </View>
-                // </Fragment>
-              )}
+                {touched.message && errors.message && (
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color: 'red',
+                      alignSelf: 'center',
+                      marginBottom: 2,
+                    }}>
+                    {errors.message}
+                  </Text>
+                )}
+
+                <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
+                  <Text style={styles.BtnText}>
+                    {loading ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                      'SUBMIT'
+                    )}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              // </Fragment>
+            )}
           </Formik>
         </View>
       </ScrollView>
@@ -203,11 +200,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     zIndex: 1,
-    backgroundColor: "ivory"
+    backgroundColor: '#fff',
   },
   posterTitle: {
     fontSize: 18,
-    color: 'orange',
+    color: theme.$primaryColor,
     fontWeight: 'bold',
     alignItems: 'center',
   },
@@ -226,8 +223,8 @@ const styles = StyleSheet.create({
     marginTop: '7%',
     justifyContent: 'flex-start',
     padding: 5,
-    borderColor: "#707070",
-    backgroundColor: "#F6F6F6",
+    borderColor: '#707070',
+    backgroundColor: '#F6F6F6',
     borderRadius: 8,
     marginBottom: 5,
   },
@@ -237,7 +234,7 @@ const styles = StyleSheet.create({
   Btn: {
     width: '30%',
     backgroundColor: '#fd9242',
-    marginLeft: "70%",
+    marginLeft: '70%',
     height: 40,
     borderRadius: 5,
     alignItems: 'center',

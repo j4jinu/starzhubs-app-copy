@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View, Image } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {FlatList, Text, View, Image} from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 
 const SentConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [isFriends, setIsFriends] = useState([]);
   useEffect(() => {
     getConnectionRequests();
-  },[]);
+  }, []);
   const getConnectionRequests = () => {
     fetch(`http://13.232.190.226/api/talent/req/sent`, {
       method: 'GET',
@@ -20,7 +20,7 @@ const SentConnectionScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         setIsFriends(response.data.requests);
-        console.log("sent req", response.data.requests);
+        console.log('sent req', response.data.requests);
       })
       .catch((error) => {
         alert(error);
@@ -29,13 +29,18 @@ const SentConnectionScreen = (props) => {
 
   if (isFriends === undefined) {
     return (
-      <View style={{ alignItems: 'center', marginTop: '35%' }}>
-        <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
+      <View style={{alignItems: 'center', marginTop: '35%'}}>
+        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
           No Requests
-          </Text>
+        </Text>
         <Image
           source={require('../assets/broke.png')}
-          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+          style={{
+            width: '41%',
+            height: 160,
+            marginHorizontal: 100,
+            marginTop: '5%',
+          }}
         />
       </View>
     );
@@ -43,11 +48,11 @@ const SentConnectionScreen = (props) => {
 
   return (
     <FlatList
-      style={{ backgroundColor: '#efefef' }}
+      style={{backgroundColor: '#fff'}}
       keyExtractor={(item) => item.id}
       data={isFriends}
       extraData={getConnectionRequests}
-      renderItem={({ item }) =>
+      renderItem={({item}) =>
         item.fromUser === auth.userId ? (
           <BuddyRequestItem
             reqId={item._id}
@@ -55,7 +60,7 @@ const SentConnectionScreen = (props) => {
             image={item.toUser.image}
             onSelect={() =>
               props.navigation.navigate('UserDetails', {
-                userId: item.toUser._id
+                userId: item.toUser._id,
               })
             }
           />
