@@ -46,6 +46,7 @@ import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
 import MyPosterDetailsScreen from '../screens/MyPosterDetailsScreen';
 import MyPosterRequests from '../screens/MyPosterRequests';
+import ImageViewScreen from '../screens/ImageViewScreen';
 
 const HomeNavigator = createStackNavigator(
   {
@@ -64,6 +65,9 @@ const HomeNavigator = createStackNavigator(
       navigationOptions: {
         title: 'User Details',
       },
+    },
+    ImageView: {
+      screen: ImageViewScreen,
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
@@ -340,6 +344,12 @@ const AccountNavigator = createStackNavigator(
       screen: UserDetailsScreen,
       navigationOptions: {
         title: 'User Details',
+      },
+    },
+    MediaDetails: {
+      screen: MediaDetailsScreen,
+      navigationOptions: {
+        title: 'Media Details',
       },
     },
   },
