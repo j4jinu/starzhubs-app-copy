@@ -115,22 +115,38 @@ export default function AddTalentScreen(props) {
   };
 
   const phoneRegExp = /^[0-9]*$/;
-  const talentValidationSchema = Yup.object({
-    talentId: Yup.string().required('Select one category'),
-    // level: Yup.string().required('Select your level'),
-    // industry: Yup.string().required('Select one industry'),
-    complexion: Yup.string().required('Select one complexion'),
-    bodyType: Yup.string().required('Please choose one'),
-    experience: Yup.string()
-      .matches(phoneRegExp, 'Invalid input')
-      .required('Enter experience details'),
-    projects: Yup.string()
-      .matches(phoneRegExp, 'Invalid input')
-      .required('Enter no. of projects'),
-    height: Yup.string().required('Enter height'),
-    weight: Yup.string().required('Enter weight'),
-    description: Yup.string().required('Enter talent  details'),
-  });
+  let talentValidationSchema;
+  if (isProfileImageMode) {
+    talentValidationSchema = Yup.object({
+      talentId: Yup.string().required('Select one category'),
+      // level: Yup.string().required('Select your level'),
+      // industry: Yup.string().required('Select one industry'),
+      complexion: Yup.string().required('Select one complexion'),
+      bodyType: Yup.string().required('Please choose one'),
+      experience: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter experience details'),
+      projects: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter no. of projects'),
+      height: Yup.string().required('Enter height'),
+      weight: Yup.string().required('Enter weight'),
+      description: Yup.string().required('Enter talent  details'),
+    });
+  } else {
+    talentValidationSchema = Yup.object({
+      talentId: Yup.string().required('Select one category'),
+      // level: Yup.string().required('Select your level'),
+      // industry: Yup.string().required('Select one industry'),
+      experience: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter experience details'),
+      projects: Yup.string()
+        .matches(phoneRegExp, 'Invalid input')
+        .required('Enter no. of projects'),
+      description: Yup.string().required('Enter talent  details'),
+    });
+  }
 
   useEffect(() => {
     const getUserTalents = () => {
@@ -966,9 +982,9 @@ export default function AddTalentScreen(props) {
                       </Picker>
                     </View>
 
-                    {/* {errors.bodyType ? (
+                    {errors.bodyType ? (
                       <Text style={styles.error}>{errors.bodyType}</Text>
-                    ) : null} */}
+                    ) : null}
                     <View
                       style={{
                         alignSelf: 'center',
@@ -999,9 +1015,9 @@ export default function AddTalentScreen(props) {
                         <Picker.Item label="Wheatish" value="Wheatish" />
                       </Picker>
                     </View>
-                    {/* {errors.complexion ? (
+                    {errors.complexion ? (
                       <Text style={styles.error}>{errors.complexion}</Text>
-                    ) : null} */}
+                    ) : null}
                     <View
                       style={{
                         alignSelf: 'center',
@@ -1026,9 +1042,9 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('height')}
                       />
                     </View>
-                    {/* {errors.height ? (
+                    {errors.height ? (
                       <Text style={styles.error}>{errors.height}</Text>
-                    ) : null} */}
+                    ) : null}
                     <View
                       style={{
                         alignSelf: 'center',
@@ -1053,9 +1069,9 @@ export default function AddTalentScreen(props) {
                         onBlur={handleBlur('weight')}
                       />
                     </View>
-                    {/* {errors.weight ? (
+                    {errors.weight ? (
                       <Text style={styles.error}>{errors.weight}</Text>
-                    ) : null} */}
+                    ) : null}
                   </Fragment>
                 )}
 

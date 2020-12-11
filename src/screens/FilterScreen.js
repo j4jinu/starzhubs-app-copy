@@ -235,11 +235,25 @@ const FilterScreen = (props) => {
   };
 
   const resetFields = () => {
-    console.log("hhhh");
+    console.log('hhhh');
     setSearch('');
-    setAgeToValue(0)
-    setAgeFromValue(0)
-    getCategory()
+    setAgeToValue(100);
+    setAgeFromValue(0);
+    setMale(false);
+    setFemale(false);
+    setOthers(false);
+    setSelectedItems([]);
+    setDark(false);
+    setBrown(false);
+    setWheatish(false);
+    setFair(false);
+    setFit(false);
+    setAthletic(false);
+    setHourglass(false);
+    setSlim(false);
+    setFatty(false);
+    setAverageBuild(false);
+    handleAgeValueChange(0, 100);
     // setCategories()
   };
 
