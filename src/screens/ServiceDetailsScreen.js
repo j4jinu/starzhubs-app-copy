@@ -151,19 +151,42 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-              <View style={{width: '90%', marginLeft: 0}}>
-                <View style={styles.inputView}>
-                  <TextInput
-                    style={styles.inputText}
-                    placeholder="Write Your Feedback"
-                    placeholderTextColor="#003f5c"
-                    keyboardType="default"
-                    autoCapitalize="sentences"
-                    numberOfLines={5}
-                    multiline={true}
-                    onChangeText={handleChange('message')}
-                    onBlur={handleBlur('message')}
-                  />
+                <View style={{ width: '90%', marginLeft: 0 }}>
+                  <View style={styles.inputView}>
+
+                    <TextInput
+                      style={styles.inputText}
+                      placeholder="Mention Your Requirements"
+                      placeholderTextColor="#003f5c"
+                      keyboardType="default"
+                      autoCapitalize="sentences"
+                      numberOfLines={5}
+                      multiline={true}
+                      onChangeText={handleChange('message')}
+                      onBlur={handleBlur('message')}
+                    />
+                  </View>
+                  {touched.message && errors.message && (
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        color: 'red',
+                        alignSelf: 'center',
+                        marginBottom: 2,
+                      }}>
+                      {errors.message}
+                    </Text>
+                  )}
+
+                  <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
+                    <Text style={styles.BtnText}>
+                      {loading ? (
+                        <ActivityIndicator size="small" color="#fff" />
+                      ) : (
+                          'SUBMIT'
+                        )}
+                    </Text>
+                  </TouchableOpacity>
                 </View>
                 {touched.message && errors.message && (
                   <Text

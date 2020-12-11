@@ -40,6 +40,7 @@ const UserDetailsScreen = (props) => {
   const [categoryId, setCategoryId] = useState('');
   const [showModal, setshowModal] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
+  const [actorMode, setActorMode] = useState(false);
   const images = [];
 
   if (user.image !== undefined) {
@@ -99,6 +100,7 @@ const UserDetailsScreen = (props) => {
           setTalents(response.data.talents);
           setUserLocation(response.data.user.location);
           setPosters(response.data.posters);
+          checkActorMode(response.data.talents);
         })
         .catch((error) => {});
     };
@@ -112,6 +114,16 @@ const UserDetailsScreen = (props) => {
   useEffect(() => {
     getLoggedUser();
   }, []);
+
+  const checkActorMode = (talents) => {
+    talents.forEach((talent) => {
+      const category = talent.category;
+      if (category.title === 'Actor' || category.title === 'Model') {
+        setActorMode(true);
+        return;
+      }
+    });
+  };
 
   const getLoggedUser = () => {
     fetch(`http://13.232.190.226/api/user/profile`, {
@@ -277,7 +289,7 @@ const UserDetailsScreen = (props) => {
 
   const handleClickOpenDecline = () => {
     Alert.alert(
-      'Decline Request',
+      'Remove Connection',
       'Are you sure to remove this connection?',
       [
         {
@@ -519,31 +531,51 @@ const UserDetailsScreen = (props) => {
               : (userLocation.place, userLocation.state)}
           </Text>
           <Text style={styles.otherText}>{user.bio}</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginVertical: 15,
-              backgroundColor: '#fff',
-              paddingVertical: 8,
-            }}>
-            <View>
-              <Text style={styles.subtitle}>Height</Text>
-              <Text>{user.height}</Text>
+          {actorMode && (
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginVertical: 15,
+                backgroundColor: '#fff',
+                paddingVertical: 8,
+              }}>
+              <View>
+                <Text style={styles.subtitle}>Height</Text>
+                <Text>{user.height}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Weight</Text>
+                <Text>{user.weight}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Complexion</Text>
+                <Text>{user.complexion}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Body</Text>
+                <Text>{user.bodyType}</Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.subtitle}>Weight</Text>
-              <Text>{user.weight}</Text>
+          )}
+          {isFriends.status === 'Connected' && (
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: '#fff',
+                paddingVertical: 8,
+                paddingLeft: '6%',
+              }}>
+              <View style={{width: '50%'}}>
+                <Text style={styles.subtitle}>Email</Text>
+                <Text>{user.email}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Contact no</Text>
+                <Text>{user.phone}</Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.subtitle}>Complexion</Text>
-              <Text>{user.complexion}</Text>
-            </View>
-            <View>
-              <Text style={styles.subtitle}>Body</Text>
-              <Text>{user.bodyType}</Text>
-            </View>
-          </View>
+          )}
           <View style={styles.row}>
             <TouchableOpacity
               onPress={() => setContent('T')}

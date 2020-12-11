@@ -55,6 +55,7 @@ const UserPosterSection = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingBottom:10
     },
     row: {
         flexDirection: 'row',

@@ -28,7 +28,7 @@ const BuddyItem = (props) => {
           {props.name}
         </Text>
         <Text style={{fontSize: 13, color: 'gray'}}>
-          {/* {props.location.place}, {props.location.state} */}
+          {props.location.place}, {props.location.state}
         </Text>
       </View>
     </TouchableOpacity>

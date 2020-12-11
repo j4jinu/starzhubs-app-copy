@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   ToastAndroid,
+  ActivityIndicator,
 } from 'react-native';
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
@@ -22,6 +23,7 @@ import {Rating, AirbnbRating} from 'react-native-elements';
 const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [talents, setTalents] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState(false);
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
@@ -35,6 +37,7 @@ const TalentListScreen = (props) => {
 
   useEffect(() => {
     getUserTalents();
+    unsubscribe;
   }, []);
 
   const getUserTalents = () => {
@@ -51,6 +54,7 @@ const TalentListScreen = (props) => {
           if (response.success === true) {
             setTalents(response.data.talents);
             console.log('talents', talents);
+            setLoading(false);
           } else {
             console.log('gggg', response.message);
           }
@@ -119,7 +123,15 @@ const TalentListScreen = (props) => {
       100,
     );
   };
-
+  if (loading) {
+    return (
+      <ActivityIndicator
+        style={{marginTop: 20}}
+        color={theme.$primaryColor}
+        size={'large'}
+      />
+    );
+  }
   if (talents.length === 0) {
     return (
       <>
@@ -169,7 +181,7 @@ const TalentListScreen = (props) => {
                       ratingCount={5}
                       imageSize={15}
                       style={{paddingVertical: 5}}
-                      defaultRating={t.level}
+                      startingValue={t.level}
                     />
                     <Text style={{marginLeft: '5%', marginTop: 4}}>
                       {t.level == '1'
@@ -325,28 +337,28 @@ const styles = StyleSheet.create({
     marginBottom: '-12%',
   },
   EditBtn: {
-    // width: "150%",
-    // backgroundColor: 'lightgrey',
-    // height: 40,
-
     width: '150%',
-    backgroundColor: '#00ba28',
-    height: 50,
+    backgroundColor: '#0086b3',
+    height: 40,
+
+    // width: '150%',
+    // backgroundColor: '#00ba28',
+    // height: 50,
     marginRight: '25%',
     justifyContent: 'center',
     marginTop: 2,
   },
   DeleteBtn: {
-    // width: "69%",
-    // backgroundColor: "lightgrey",
-    // marginLeft: "25%",
-    // marginRight: "32%",
-    // height: 40,
-    width: '70%',
-    backgroundColor: '#db3000',
+    width: '69%',
+    backgroundColor: '#ff6633',
     marginLeft: '25%',
     marginRight: '32%',
-    height: 50,
+    height: 40,
+    // width: '70%',
+    // backgroundColor: '#db3000',
+    // marginLeft: '25%',
+    // marginRight: '32%',
+    // height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
@@ -381,8 +393,8 @@ const styles = StyleSheet.create({
     // padding: 8,
     marginBottom: '3%',
     marginTop: 10,
-    paddingHorizontal: 5,
-    paddingVertical: 10,
+    // paddingHorizontal: 5,
+    // paddingVertical: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
     elevation: 2,

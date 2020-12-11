@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
   Dimensions,
+  ToastAndroid
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {useSelector} from 'react-redux';
@@ -143,9 +144,9 @@ const PosterDetailsScreen = (props) => {
           console.log(response);
           if (response.success) {
             if (status === 1) {
-              setmsg('Request approved');
+              showToastWithGravityAndOffset1()
             } else {
-              setmsg('Request Rejected');
+              showToastWithGravityAndOffset2()
             }
             setVisible(!visible);
             getPosterById();
@@ -159,14 +160,33 @@ const PosterDetailsScreen = (props) => {
         },
       );
   };
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset1 = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Request Approved",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
+  const showToastWithGravityAndOffset2 = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Request Rejected",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
   return (
     <>
+<<<<<<< HEAD
       <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
         {msg}
       </Snackbar>
+=======
+      
+>>>>>>> d1d768ae77d493c33c55d4df6bc6f6052c3be516
       <View style={styles.container}>
         <ScrollView>
           <TouchableOpacity
@@ -289,7 +309,8 @@ const PosterDetailsScreen = (props) => {
                     fontSize: 17,
                     fontWeight: 'bold',
                     marginLeft: 15,
-                    marginTop: 20,
+                    marginTop: 10,
+                    marginBottom:10
                   }}>
                   Requests:
                 </Text>
@@ -366,7 +387,11 @@ const PosterDetailsScreen = (props) => {
                           marginHorizontal: 5,
                         }}
                         onPress={() => updatePosterReq(s._id, 1)}>
+<<<<<<< HEAD
                         <AIcon name="check" size={25} color="green" />
+=======
+                        <EIcon name="check" size={25} color="orange" />
+>>>>>>> d1d768ae77d493c33c55d4df6bc6f6052c3be516
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={{
@@ -376,7 +401,11 @@ const PosterDetailsScreen = (props) => {
                           marginHorizontal: 5,
                         }}
                         onPress={() => updatePosterReq(s._id, 2)}>
+<<<<<<< HEAD
                         <DIcon name="delete" size={25} color="red" />
+=======
+                        <DIcon name="delete" size={25} color="#e34000" />
+>>>>>>> d1d768ae77d493c33c55d4df6bc6f6052c3be516
                       </TouchableOpacity>
                     </View>
                   </View>

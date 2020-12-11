@@ -28,45 +28,43 @@ const MyConnectionScreen = (props) => {
 
   if (!isFriends === undefined || isFriends.length !== 0) {
     return (
-      <View style={{flex: 1, backgroundColor: 'white'}}>
-        <FlatList
-          style={{backgroundColor: '#fff'}}
-          keyExtractor={(item) => item.id}
-          data={isFriends}
-          renderItem={({item}) => (
-            <BuddyItem
-              id={item._id}
-              name={
-                item.fromUser._id === auth.userId
-                  ? item.toUser.name
-                  : item.fromUser.name
-              }
-              image={
-                item.fromUser._id === auth.userId
-                  ? item.toUser.image
-                  : item.fromUser.image
-              }
-              location={
-                item.fromUser._id === auth.userId
-                  ? item.toUser.location !== undefined
-                    ? item.toUser.location.place
-                    : ''
-                  : item.fromUser.location !== undefined
-                  ? item.fromUser.location.place
+      <FlatList
+        style={{backgroundColor: '#efefef'}}
+        keyExtractor={(item) => item.id}
+        data={isFriends}
+        renderItem={({item}) => (
+          <BuddyItem
+            id={item._id}
+            name={
+              item.fromUser._id === auth.userId
+                ? item.toUser.name
+                : item.fromUser.name
+            }
+            image={
+              item.fromUser._id === auth.userId
+                ? item.toUser.image
+                : item.fromUser.image
+            }
+            location={
+              item.fromUser._id === auth.userId
+                ? item.toUser.location !== undefined
+                  ? item.toUser.location
                   : ''
-              }
-              onSelect={() =>
-                props.navigation.navigate('UserDetails', {
-                  userId:
-                    item.fromUser._id === auth.userId
-                      ? item.toUser._id
-                      : item.fromUser._id,
-                })
-              }
-            />
-          )}
-        />
-      </View>
+                : item.fromUser.location !== undefined
+                ? item.fromUser.location
+                : ''
+            }
+            onSelect={() =>
+              props.navigation.navigate('UserDetails', {
+                userId:
+                  item.fromUser._id === auth.userId
+                    ? item.toUser._id
+                    : item.fromUser._id,
+              })
+            }
+          />
+        )}
+      />
     );
   } else {
     return (
