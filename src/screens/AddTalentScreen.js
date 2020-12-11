@@ -107,10 +107,10 @@ export default function AddTalentScreen(props) {
     experience: '',
     // industry:[],
     projects: '',
-    complexion: 'Brown',
-    bodyType: 'Athletic',
-    height: 0,
-    weight: 0,
+    complexion: '',
+    bodyType: '',
+    height: '',
+    weight: '',
     description: '',
   };
 
@@ -564,10 +564,11 @@ export default function AddTalentScreen(props) {
                   <Gicon
                     name="industry"
                     size={15}
-                    style={{
-                      color: '#fd9242',
-                      marginTop: -10,
-                    }}
+                    style={
+                      selectedItems.length === 0
+                        ? styles.noIndustry
+                        : styles.industry
+                    }
                   />
                 </View>
 
@@ -1128,4 +1129,13 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-medium',
     textTransform: 'capitalize',
   },
+  noIndustry: {
+    color: '#fd9242',
+    marginTop: '-80%',
+  },
+  industry: {
+    color: '#fd9242',
+    marginTop: '-160%',
+  },
+
 });

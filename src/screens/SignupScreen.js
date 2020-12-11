@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import * as yup from 'yup';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
 const emailRegExp = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[ \t]$/;
@@ -26,15 +26,15 @@ const profileSchema = yup.object({
     .required('Enter Your Email ID'),
   phone: yup
     .string()
-    .min(10, ({min}) => `Phone Number must be at least ${min} characters`)
-    .max(10, ({max}) => `Phone Number should not be  more ${max} characters`)
+    .min(10, ({ min }) => `Phone Number must be at least ${min} characters`)
+    .max(10, ({ max }) => `Phone Number should not be  more ${max} characters`)
     .matches(phoneRegExp, 'Phone number is not valid')
     .required('Enter Your Phone Number'),
   password: yup
     .string()
-    .min(8, ({min}) => `Password must be atleast ${min} characters`)
+    .min(8, ({ min }) => `Password must be atleast ${min} characters`)
     .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
-    .max(20, ({max}) => `Password should not be  more than ${max} `)
+    .max(20, ({ max }) => `Password should not be  more than ${max} `)
     .required('Enter Password'),
   confPassword: yup
     .string()
@@ -45,7 +45,7 @@ const profileSchema = yup.object({
 
 const SignupScreen = (props) => {
   // Register new user
-  const register = async (values, {setSubmitting}) => {
+  const register = async (values, { setSubmitting }) => {
     if (values.password !== values.confPassword) {
       setSubmitting(false);
       alert('Passords do not match. Try again.');
@@ -54,7 +54,7 @@ const SignupScreen = (props) => {
     // API request options
     const requestOptions = {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: values.email,
         name: values.name,
@@ -96,8 +96,8 @@ const SignupScreen = (props) => {
             confPassword: '',
           }}
           validationSchema={profileSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            register(values, {setSubmitting})
+          onSubmit={(values, { setSubmitting }) =>
+            register(values, { setSubmitting })
           }>
           {({
             handleChange,
@@ -108,166 +108,166 @@ const SignupScreen = (props) => {
             errors,
             values,
           }) => (
-            <>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '95%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.name ? 'red' : 'gray',
-                }}>
-                <Icon name="user" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  autoCapitalize
-                  textContentType={'name'}
-                  style={styles.inputField}
-                  placeholder={'Full Name'}
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
-                />
-              </View>
-              {touched.name && errors.name && (
-                <Text style={styles.errorText}>
-                  {touched.name && errors.name}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '95%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.email ? 'red' : 'gray',
-                }}>
-                <Icon name="envelope" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'Email address'}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                />
-              </View>
-              {touched.email && errors.email && (
-                <Text style={styles.errorText}>
-                  {touched.email && errors.email}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '95%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.phone ? 'red' : 'gray',
-                }}>
-                <Icon name="phone" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'number-pad'}
-                  style={styles.inputField}
-                  placeholder={'Phone Number'}
-                  onChangeText={handleChange('phone')}
-                  onBlur={handleBlur('phone')}
-                  value={values.phone}
-                />
-              </View>
-              {touched.phone && errors.phone && (
-                <Text style={styles.errorText}>
-                  {touched.phone && errors.phone}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '95%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.password ? 'red' : 'gray',
-                }}>
-                <Icon name="lock" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  secureTextEntry={true}
-                  style={styles.inputField}
-                  placeholder={'New Password'}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                />
-              </View>
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>
-                  {touched.password && errors.password}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  width: '95%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 12,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.confPassword ? 'red' : 'gray',
-                }}>
-                <Icon name="lock" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  secureTextEntry={true}
-                  style={styles.inputField}
-                  placeholder={'Confirm Password'}
-                  onChangeText={handleChange('confPassword')}
-                  onBlur={handleBlur('confPassword')}
-                  value={values.confPassword}
-                />
-              </View>
-              {touched.confPassword && errors.confPassword && (
-                <Text style={styles.errorText}>
-                  {touched.confPassword && errors.confPassword}
-                </Text>
-              )}
-              {!isSubmitting && (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.registerBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.registerBtnText}>REGISTER</Text>
-                </TouchableOpacity>
-              )}
-              {isSubmitting && (
-                <ActivityIndicator
-                  style={{marginTop: 10}}
-                  size={'large'}
-                  color={theme.$primaryColor}
-                />
-              )}
-            </>
-          )}
+              <>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '95%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.name ? 'red' : 'gray',
+                  }}>
+                  <Icon name="user" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    autoCapitalize
+                    textContentType={'name'}
+                    style={styles.inputField}
+                    placeholder={'Full Name'}
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                  />
+                </View>
+                {touched.name && errors.name && (
+                  <Text style={styles.errorText}>
+                    {touched.name && errors.name}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '95%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.email ? 'red' : 'gray',
+                  }}>
+                  <Icon name="envelope" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'Email address'}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                  />
+                </View>
+                {touched.email && errors.email && (
+                  <Text style={styles.errorText}>
+                    {touched.email && errors.email}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '95%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.phone ? 'red' : 'gray',
+                  }}>
+                  <Icon name="phone" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'number-pad'}
+                    style={styles.inputField}
+                    placeholder={'Phone Number'}
+                    onChangeText={handleChange('phone')}
+                    onBlur={handleBlur('phone')}
+                    value={values.phone}
+                  />
+                </View>
+                {touched.phone && errors.phone && (
+                  <Text style={styles.errorText}>
+                    {touched.phone && errors.phone}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '95%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.password ? 'red' : 'gray',
+                  }}>
+                  <Icon name="lock" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    secureTextEntry={true}
+                    style={styles.inputField}
+                    placeholder={'New Password'}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                  />
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>
+                    {touched.password && errors.password}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    width: '95%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.confPassword ? 'red' : 'gray',
+                  }}>
+                  <Icon name="lock" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    secureTextEntry={true}
+                    style={styles.inputField}
+                    placeholder={'Confirm Password'}
+                    onChangeText={handleChange('confPassword')}
+                    onBlur={handleBlur('confPassword')}
+                    value={values.confPassword}
+                  />
+                </View>
+                {touched.confPassword && errors.confPassword && (
+                  <Text style={styles.errorText}>
+                    {touched.confPassword && errors.confPassword}
+                  </Text>
+                )}
+                {!isSubmitting && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.registerBtn}
+                    onPress={handleSubmit}>
+                    <Text style={styles.registerBtnText}>REGISTER</Text>
+                  </TouchableOpacity>
+                )}
+                {isSubmitting && (
+                  <ActivityIndicator
+                    style={{ marginTop: 10 }}
+                    size={'large'}
+                    color={theme.$primaryColor}
+                  />
+                )}
+              </>
+            )}
         </Formik>
         <View
           style={{
@@ -280,7 +280,7 @@ const SignupScreen = (props) => {
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('Login')}>
             <Text
-              style={{fontSize: 17, marginTop: 8, color: theme.$primaryColor}}>
+              style={{ fontSize: 17, marginTop: 8, color: theme.$primaryColor }}>
               Login
             </Text>
           </TouchableOpacity>
@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginVertical: 12,
+    marginTop: 25
   },
   registerBtnText: {
     fontSize: 18,

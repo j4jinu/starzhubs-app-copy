@@ -158,7 +158,7 @@ const ServiceDetailsScreen = (props) => {
 
                     <TextInput
                       style={styles.inputText}
-                      placeholder="Write Your Feedback"
+                      placeholder="Mention Your Requirements"
                       placeholderTextColor="#003f5c"
                       keyboardType="default"
                       autoCapitalize="sentences"

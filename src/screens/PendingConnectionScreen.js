@@ -56,6 +56,8 @@ const PendingConnectionScreen = (props) => {
               userId: item.fromUser._id
             })
           }
+          getConnection = {getRequests}
+          navigation={props.navigation}
         />
       )}
     />

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,20 +9,19 @@ import {
   Image,
   ActivityIndicator,
   Alert,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import WebView from 'react-native-webview';
 import MediaGrid from '../components/MediaGrid';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
-import {Snackbar} from 'react-native-paper';
 
 const MyMediaScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [talents, setTalents] = useState([]);
-  const [visible, setVisible] = useState(false);
   const [isNoMedia, setNoMedia] = useState(false);
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
@@ -48,23 +47,24 @@ const MyMediaScreen = (props) => {
         return;
       } else {
         setTalents(resData.data.talents);
-        checkMediaMode(resData.data.talents);
+        console.log("talents", resData.data.talents);
+        checkMediaMode(resData.data.talents)
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
-      alert('Something ');
+      // alert('Something ');
     }
   };
 
   const checkMediaMode = (talents) => {
-    talents.forEach((c) => {
-      console.log('media', c.media);
+    talents.forEach(c => {
+      console.log("media", c.media);
       if (c.media === [] || c.media === undefined || c.media.length === 0) {
-        setNoMedia(true);
+        setNoMedia(true)
       }
     });
-  };
+  }
 
   if (loading) {
     return (
@@ -93,7 +93,7 @@ const MyMediaScreen = (props) => {
           onPress: () => onDelteMedia(tid, mid),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
 
   const onDelteMedia = (talentId, mediaId) => {
@@ -113,7 +113,7 @@ const MyMediaScreen = (props) => {
         (response) => {
           if (response.success === true) {
             getTalents();
-            setVisible(!visible);
+            showToastWithGravityAndOffset()
           } else {
             alert(response.message);
           }
@@ -124,9 +124,16 @@ const MyMediaScreen = (props) => {
       );
   };
 
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Media deleted successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
+
 
   if (talents.length === 0) {
     return (
@@ -134,33 +141,20 @@ const MyMediaScreen = (props) => {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          width: '100%',
-          marginTop: '35%',
+          width: "100%",
+          marginTop: "35%"
         }}>
-        <Image
-          source={require('../assets/broke.png')}
-          style={{
-            width: '41%',
-            height: 160,
-            marginHorizontal: 100,
-            marginTop: '5%',
-          }}
-        />
-        <Text style={{fontSize: 18, color: 'tomato'}}>
-          {' '}
-          No Medias Added Yet.
-        </Text>
+
+        <Image source={require("../assets/broke.png")}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
+        <Text style={{ fontSize: 18, color: 'tomato' }}> No Medias Added Yet.</Text>
       </View>
-    );
-  } else {
+    )
+  }
+
+  else {
     return (
       <View style={styles.container}>
-        <Snackbar
-          visible={visible}
-          duration={5000}
-          onDismiss={onDismissSnackBar}>
-          Media Deleted Successfully
-        </Snackbar>
         <ScrollView style={styles.container}>
           {talents.map((t) => (
             <>
@@ -173,11 +167,12 @@ const MyMediaScreen = (props) => {
                   marginTop: 10,
                   // backgroundColor:'gainsboro'
                 }}>
-                <Text style={{fontWeight: 'bold', fontSize: 17}}>
+
+                <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
                   {t.category.title}
                 </Text>
 
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() =>
@@ -197,12 +192,12 @@ const MyMediaScreen = (props) => {
                       marginRight: 10,
                     }}>
                     <Icon
-                      style={{marginRight: 10}}
+                      style={{ marginRight: 10 }}
                       name="camera"
                       size={15}
                       color={theme.$primaryColor}
                     />
-                    <Text style={{fontSize: 14}}>Photo</Text>
+                    <Text style={{ fontSize: 14 }}>Photo</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -222,25 +217,25 @@ const MyMediaScreen = (props) => {
                       alignItems: 'center',
                     }}>
                     <Icon
-                      style={{marginRight: 10}}
+                      style={{ marginRight: 10 }}
                       name="video-camera"
                       size={15}
                       color={theme.$primaryColor}
                     />
-                    <Text style={{fontSize: 14}}>Video</Text>
+                    <Text style={{ fontSize: 14 }}>Video</Text>
                   </TouchableOpacity>
                 </View>
               </View>
 
-              <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+              <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+
                 {t.media.map((m) => (
                   <>
                     <View style={styles.gridItem}>
                       {m.fileType === 'image' ? (
                         <Image
                           style={{
-                            width: '98%',
-                            marginHorizontal: 5,
+                            width: '100%',
                             height: 220,
                             resizeMode: 'cover',
                           }}
@@ -249,42 +244,35 @@ const MyMediaScreen = (props) => {
                           }}
                         />
                       ) : (
-                        //   <WebView
-                        //   javaScriptEnabled={true}
-                        //   domStorageEnabled={true}
-                        //   source={{
-                        //     uri:  m.file,
-                        //   }}
-                        // />
+                          //   <WebView
+                          //   javaScriptEnabled={true}
+                          //   domStorageEnabled={true}
+                          //   source={{
+                          //     uri:  m.file,
+                          //   }}
+                          // />
 
-                        <WebView
-                          javaScriptEnabled={true}
-                          domStorageEnabled={true}
-                          source={{
-                            uri:
-                              'https://www.youtube.com/embed/' +
-                              m.file.substring(m.file.lastIndexOf('=') + 1),
-                          }}
-                        />
-                      )}
+                          <WebView
+                            javaScriptEnabled={true}
+                            domStorageEnabled={true}
+                            source={{
+                              uri:
+                                'https://www.youtube.com/embed/' +
+                                m.file.substring(m.file.lastIndexOf('=') + 1),
+                            }}
+                          />
+                        )}
 
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          backgroundColor: 'black',
-                          marginTop: '-10%',
-                          opacity: 0.7,
-                          width: '98%',
-                          alignSelf: 'center',
-                        }}>
+                      <View style={{
+                        flexDirection: 'row',
+                        backgroundColor: 'black', marginTop: '-10%',
+                        opacity: 0.7, width: '100%'
+                      }}
+                      >
                         <TouchableOpacity
                           style={{
-                            borderRightWidth: 1,
-                            borderRightColor: 'white',
-                            width: '50%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            paddingVertical: 10,
+                            borderRightWidth: 1, borderRightColor: 'white',
+                            width: '50%', alignItems: 'center', justifyContent: 'center', paddingVertical: 10
                           }}
                           onPress={() =>
                             props.navigation.navigate('EditMedia', {
@@ -296,42 +284,20 @@ const MyMediaScreen = (props) => {
                               mediaId: m._id,
                             })
                           }>
-                          <Text
-                            style={{
-                              color: 'white',
-                              fontWeight: 'bold',
-                              textTransform: 'uppercase',
-                            }}>
-                            Edit
-                          </Text>
+                          <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={{
-                            borderRightWidth: 1,
-                            borderRightColor: 'white',
-                            width: '50%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            borderRightWidth: 1, borderRightColor: 'white',
+                            width: '50%', alignItems: 'center', justifyContent: 'center'
                           }}
                           onPress={() => confirmDelete(t._id, m._id)}>
-                          <Text
-                            style={{
-                              color: 'white',
-                              fontWeight: 'bold',
-                              textTransform: 'uppercase',
-                            }}>
-                            Delete
-                          </Text>
+                          <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Delete</Text>
                         </TouchableOpacity>
                       </View>
 
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          width: '100%',
-                          paddingHorizontal: 5,
-                        }}>
-                        <View style={{width: '100%', flexDirection: 'column'}}>
+                      <View style={{ flexDirection: 'row', width: '100%' }}>
+                        <View style={{ width: '100%', flexDirection: 'column' }}>
                           <TouchableOpacity
                             activeOpacity={0.7}
                             onPress={() =>
@@ -341,7 +307,7 @@ const MyMediaScreen = (props) => {
                                 caption: m.caption,
                                 description: m.description,
                                 user: t._id,
-                                status: 0,
+                                status: 0
                               })
                             }>
                             <Text style={styles.mediaTitle}>{m.caption}</Text>
@@ -375,10 +341,12 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignSelf: 'center',
     width: '98%',
-    marginHorizontal: 5,
+    height: 300,
+    backgroundColor: '#f1f1f1',
+    marginHorizontal: 3,
     marginVertical: 3,
     shadowColor: 'black',
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 3.26,
     shadowRadius: 5,
     elevation: 5,
@@ -399,7 +367,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 5,
     marginHorizontal: 10,
-    textTransform: 'uppercase',
+    textTransform: 'uppercase'
   },
   mediaDescription: {
     color: theme.$primaryColorText,

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   FlatList,
@@ -7,14 +7,17 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import Moment from 'moment';
+import theme from '../config/theme';
 
 const NotificationListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [alerts, setAlerts] = useState([]);
+  const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
     getNotifications();
@@ -29,16 +32,45 @@ const NotificationListScreen = (props) => {
       });
       const resData = await res.json();
       if (!resData.success) {
-        alert(resData.message);
+        //alert(resData.message);
         return;
       }
+      setLoading(false)
       setAlerts(resData.data.notifications);
-      console.log('notifications', resData.data.notifications);
+      
     } catch (error) {
       alert('Something went wrong. Try again later.');
     }
   };
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        style={{ marginTop: 20 }}
+        color={theme.$primaryColor}
+        size={'large'}
+      />
+    );
+  }
+  if (alerts.length === 0) {
+    return (
 
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 25,
+          marginTop: "35%"
+        }}>
+
+        <Image
+          source={require('../assets/empty.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        /><Text style={{ fontSize: 18, color: 'tomato' }}>
+          No new Notification.
+  </Text>
+      </View>
+    )
+  }
   return (
     <>
       <FlatList

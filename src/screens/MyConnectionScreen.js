@@ -48,10 +48,10 @@ const MyConnectionScreen = (props) => {
             location={
               item.fromUser._id === auth.userId
                 ? item.toUser.location !== undefined
-                  ? item.toUser.location.place
+                  ? item.toUser.location
                   : ''
                 : item.fromUser.location !== undefined
-                ? item.fromUser.location.place
+                ? item.fromUser.location
                 : ''
             }
             onSelect={() =>

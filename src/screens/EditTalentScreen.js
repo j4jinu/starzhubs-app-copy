@@ -12,6 +12,7 @@ import {
   ToastAndroid,
   PermissionsAndroid,
   ScrollView,
+  ImageBackground
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -137,7 +138,7 @@ const EditTalentScreen = (props) => {
   });
 
   const userInfo = () => {
-    if (talentId === '5fc4ddd488613013dcef6434') {
+    if (category.toLowerCase() === 'actor') {
       setIsProfileImageMode(true);
       fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
         method: 'PATCH',
@@ -245,7 +246,7 @@ const EditTalentScreen = (props) => {
             setMessage('Data updated successfully');
             setVisible(true);
             props.navigation.navigate('Account');
-            showToastWithGravityAndOffset();
+            showToastWithGravityAndOffset1();
           } else {
             setMessage('Something went wrong. Try again !');
             setVisible(true);
@@ -352,9 +353,8 @@ const EditTalentScreen = (props) => {
         setVisible(!visible);
         return;
       }
-      alert(uploadResData.message);
-      setMessage('Image uploaded successfully');
-      setVisible(!visible);
+      // setMessage('Image uploaded successfully');
+      showToastWithGravityAndOffset2()
     } catch (error) {
       console.error('error', error);
     }
@@ -369,9 +369,18 @@ const EditTalentScreen = (props) => {
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
   };
-  const showToastWithGravityAndOffset = () => {
+  const showToastWithGravityAndOffset1 = () => {
     ToastAndroid.showWithGravityAndOffset(
       ' Data updated successfully',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100,
+    );
+  };
+  const showToastWithGravityAndOffset2 = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      ' Image uploaded successfully',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
@@ -409,14 +418,14 @@ const EditTalentScreen = (props) => {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '96%',
+                  width: '90%',
                   paddingLeft: 10,
                   paddingRight: 10,
                   marginTop: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
                   // marginBottom: 5,
-                  borderColor: errors.link ? 'red' : 'white',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
                 }}>
                 <Cicon name="merge-type" size={20} style={{color: '#fd9242'}} />
                 <Text
@@ -449,16 +458,16 @@ const EditTalentScreen = (props) => {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '96%',
+                  width: '90%',
                   paddingLeft: 10,
                   paddingRight: 10,
+                  paddingBottom: 10,
+                  paddingTop: 10,
                   marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'flex-start',
-                  paddingVertical: 12,
-                  // marginBottom: 5,
-                  borderColor: errors.link ? 'red' : 'white',
+                  alignItems: 'center',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
                   flexDirection: 'column',
+                  alignItems: 'flex-start',
                 }}>
                 <Text>Select Confidence Level</Text>
 
@@ -484,15 +493,13 @@ const EditTalentScreen = (props) => {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '96%',
+                  width: '90%',
                   paddingLeft: 10,
                   paddingRight: 10,
                   marginTop: 8,
-
                   flexDirection: 'row',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  borderColor: errors.link ? 'red' : 'white',
+                  borderColor: errors.link ? 'red' : '#e6e6e6',
                 }}>
                 <View style={{width: '7%'}}>
                   <Gicon
@@ -532,13 +539,13 @@ const EditTalentScreen = (props) => {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '96%',
+                  width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : 'white',
+                  borderColor: errors.experience ? 'red' : '#e6e6e6',
                 }}>
                 <Eicon
                   name="envelope-open-text"
@@ -569,13 +576,13 @@ const EditTalentScreen = (props) => {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '96%',
+                  width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : 'white',
+                  borderColor: errors.projects ? 'red' : '#e6e6e6',
                 }}>
                 <Eicon
                   name="envelope-open-text"
@@ -601,49 +608,59 @@ const EditTalentScreen = (props) => {
               ) : null}
 
               {isProfileImageMode && (
-                <>
+                
+                <Fragment>
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginTop: 10,
+                      justifyContent: 'space-evenly',
+                      marginTop: 20,
                       marginBottom: 10,
                     }}>
                     <View
                       style={{
-                        paddingLeft: '6%',
-                        paddingRight: '2%',
+                        // paddingLeft: 30,
                         marginTop: 10,
                       }}>
                       <TouchableOpacity
                         onPress={() => {
                           requestCameraPermission('head_shot');
                         }}>
-                        {!headimg &&
-                          user.image &&
-                          user.image.head_shot !== undefined && (
-                            <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
-                              }}
-                            />
-                          )}
-                        {!headimg && user.image.head_shot === undefined && (
+                        <ImageBackground
+                          source={
+                            !headimg &&
+                            user.image &&
+                            user.image.head_shot !== undefined?
+                              {
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`
+                              }:
+                            !headimg && user.image.head_shot === undefined?
+                              require('../assets/headshot.jpg'):
+                              {uri: headimg}
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
                           <Image
-                            source={require('../assets/headshot.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            source={require('../assets/add-button.png')}
+                            style={{
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
                           />
-                        )}
-                        {headimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: headimg}}
-                          />
-                        )}
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
+                            }}>
+                            Upload Head Shot
+                          </Text>
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                     <View
@@ -654,32 +671,41 @@ const EditTalentScreen = (props) => {
                       }}>
                       <TouchableOpacity
                         onPress={() => requestCameraPermission('left_profile')}>
-                        {!leftimg &&
+                        <ImageBackground
+                          source={
+                            !leftimg &&
                           user.image &&
-                          user.image.left_profile !== undefined && (
-                            <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
-                              }}
-                            />
-                          )}
-                        {!leftimg && user.image.left_profile === undefined && (
+                          user.image.left_profile !== undefined?
+                              {
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`
+                              }:
+                              !leftimg && user.image.left_profile === undefined?
+                              require('../assets/left_profile.jpg'):
+                              {uri: leftimg}
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
                           <Image
-                            source={require('../assets/left_profile.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            source={require('../assets/add-button.png')}
+                            style={{
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
                           />
-                        )}
-                        {leftimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: leftimg}}
-                          />
-                        )}
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
+                            }}>
+                            Upload Left Side Shot
+                          </Text>
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -687,48 +713,53 @@ const EditTalentScreen = (props) => {
                   <View
                     style={{
                       flexDirection: 'row',
+                      justifyContent: 'space-evenly',
                     }}>
                     <View
                       style={{
-                        paddingLeft: '6%',
-                        paddingRight: '2%',
+                        // paddingLeft: 30,
                         marginTop: 10,
-                        marginBottom: 10,
+                        marginBottom: 20,
                       }}>
                       <TouchableOpacity
                         onPress={() =>
                           requestCameraPermission('right_profile')
                         }>
-                        {!rightimg &&
+                        <ImageBackground
+                          source={
+                            !rightimg &&
                           user.image &&
-                          user.image.right_profile !== undefined && (
-                            <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
-                              }}
-                            />
-                          )}
-                        {!rightimg && user.image.right_profile === undefined && (
+                          user.image.right_profile !== undefined?
+                              {
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`
+                              }:
+                              !rightimg && user.image.right_profile === undefined?
+                              require('../assets/right_profile.jpg'):
+                              {uri: rightimg}
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
                           <Image
-                            source={require('../assets/right_profile.jpg')}
+                            source={require('../assets/add-button.png')}
                             style={{
-                              borderRadius: 50,
-                              height: 140,
-                              width: 140,
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
                             }}
                           />
-                        )}
-                        {rightimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: rightimg}}
-                          />
-                        )}
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
+                            }}>
+                            Upload Right Side Shot
+                          </Text>
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                     <View
@@ -739,36 +770,45 @@ const EditTalentScreen = (props) => {
                       }}>
                       <TouchableOpacity
                         onPress={() => requestCameraPermission('fullsize')}>
-                        {!fullsizeimg &&
+                        <ImageBackground
+                          source={
+                            !fullsizeimg &&
                           user.image &&
-                          user.image.fullsize !== undefined && (
-                            <Image
-                              style={{
-                                borderRadius: 50,
-                                height: 140,
-                                width: 140,
-                              }}
-                              source={{
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
-                              }}
-                            />
-                          )}
-                        {!fullsizeimg && user.image.fullsize === undefined && (
+                          user.image.fullsize !== undefined?
+                              {
+                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`
+                              }:
+                              !fullsizeimg && user.image.fullsize === undefined?
+                              require('../assets/fullsize.jpg'):
+                              {uri: fullsizeimg}
+                          }
+                          style={{
+                            borderRadius: 50,
+                            height: 140,
+                            width: 140,
+                            justifyContent: 'center',
+                          }}>
                           <Image
-                            source={require('../assets/fullsize.jpg')}
-                            style={{borderRadius: 50, height: 140, width: 140}}
+                            source={require('../assets/add-button.png')}
+                            style={{
+                              alignSelf: 'center',
+                              height: 60,
+                              width: 60,
+                            }}
                           />
-                        )}
-                        {fullsizeimg && (
-                          <Image
-                            style={{borderRadius: 50, height: 140, width: 140}}
-                            source={{uri: fullsizeimg}}
-                          />
-                        )}
+                          <Text
+                            style={{
+                              alignSelf: 'center',
+                              fontSize: 12,
+                              marginTop: 5,
+                            }}>
+                            Upload Full Size Shot
+                          </Text>
+                        </ImageBackground>
                       </TouchableOpacity>
                     </View>
                   </View>
-                </>
+                </Fragment>
               )}
 
               <View
@@ -776,13 +816,13 @@ const EditTalentScreen = (props) => {
                   alignSelf: 'center',
                   borderWidth: 1,
                   backgroundColor: 'white',
-                  width: '96%',
+                  width: '90%',
                   paddingLeft: 8,
                   paddingRight: 8,
                   marginTop: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : 'white',
+                  borderColor: errors.description ? 'red' : '#e6e6e6',
                 }}>
                 <Eicon
                   name="envelope-open-text"
@@ -793,7 +833,7 @@ const EditTalentScreen = (props) => {
                 />
 
                 <TextInput
-                  style={styles.inputText}
+                  style={styles.inputTextDes}
                   defaultValue={description}
                   placeholder="Description"
                   placeholderTextColor="#003f5c"
@@ -881,7 +921,7 @@ const styles = StyleSheet.create({
   },
   inputTextDes: {
     // height: 50,
-    width: '100%',
+    width: '80%',
     color: '#000000',
     marginLeft: 15,
     marginBottom: 5,

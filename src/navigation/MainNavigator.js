@@ -342,6 +342,12 @@ const AccountNavigator = createStackNavigator(
         title: 'User Details',
       },
     },
+    MediaDetails: {
+      screen: MediaDetailsScreen,
+      navigationOptions: {
+        title: 'Media Details',
+      },
+    },
   },
   {
     defaultNavigationOptions: {

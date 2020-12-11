@@ -5,7 +5,6 @@ import { Rating, AirbnbRating } from 'react-native-elements';
 
 const UserTalentSection = (props) => {
     const { talents } = props
-    console.log("talents",talents);
     const [level, setLevel] = useState();
 
     if (talents.length === 0 || talents === undefined) {
@@ -45,7 +44,7 @@ const UserTalentSection = (props) => {
                                 ratingCount={5}
                                 imageSize={15}
                                 style={{ paddingVertical: 5 }}
-                                defaultRating={t.level}
+                                startingValue={t.level}
                                 />
                   <Text style={{marginLeft:'5%', marginTop:4}}>
                     {t.level == '1'
@@ -120,7 +119,8 @@ const UserTalentSection = (props) => {
                     <Text
                         style={{
                             color: "darkgrey",
-                            marginBottom: 15
+                            marginBottom: 15,
+                            justifyContent:'center'
                         }}
                     >
                         {t.description}
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingVertical: 8,
-        marginBottom: 15
+        marginBottom: -5
     },
     row: {
         flexDirection: 'row',
