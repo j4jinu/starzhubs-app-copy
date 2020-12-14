@@ -10,6 +10,7 @@ import {
   TextInput,
   Alert,
   Dimensions,
+  ToastAndroid
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { useSelector } from 'react-redux';
@@ -143,9 +144,9 @@ const PosterDetailsScreen = (props) => {
           console.log(response);
           if (response.success) {
             if (status === 1) {
-              setmsg('Request approved');
+              showToastWithGravityAndOffset1()
             } else {
-              setmsg('Request Rejected');
+              showToastWithGravityAndOffset2()
             }
             setVisible(!visible);
             getPosterById();
@@ -159,14 +160,27 @@ const PosterDetailsScreen = (props) => {
         },
       );
   };
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset1 = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Request Approved",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
+  };
+  const showToastWithGravityAndOffset2 = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Request Rejected",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
   return (
     <>
-      <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
-        {msg}
-      </Snackbar>
+
       <View style={styles.container}>
         <ScrollView>
           <TouchableOpacity
@@ -367,7 +381,7 @@ const PosterDetailsScreen = (props) => {
                             marginHorizontal: 5,
                           }}
                           onPress={() => updatePosterReq(s._id, 1)}>
-                          <AIcon name="check" size={25} color="orange" />
+                          <EIcon name="check" size={25} color="orange" />
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={{

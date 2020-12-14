@@ -59,7 +59,7 @@ const EditMediaScreen = (props) => {
         return;
       }
 
-      props.navigation.navigate('Account');
+      props.navigation.navigate('MyMedia');
       showToastWithGravityAndOffset();
     } catch (error) {
       console.error('error', error);
@@ -68,7 +68,7 @@ const EditMediaScreen = (props) => {
 
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
-      ' Media Details Updated Successfully.Check Your Media Screen.',
+      ' Media Details Updated Successfully',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,

@@ -607,9 +607,11 @@ export default function AddTalentScreen(props) {
                   <Eicon
                     name="envelope-open-text"
                     size={15}
-                    style={{
-                      color: '#fd9242',
-                    }}
+                    style={
+                      selectedItems.length === 0
+                        ? styles.noIndustry
+                        : styles.industry
+                    }
                   />
                   <TextInput
                     style={styles.inputText}

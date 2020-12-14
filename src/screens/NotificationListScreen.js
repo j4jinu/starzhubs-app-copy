@@ -7,14 +7,17 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
 import { AuthContext } from '../context/authContext';
 import Moment from 'moment';
+import theme from '../config/theme';
 
 const NotificationListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [alerts, setAlerts] = useState([]);
+  const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
     getNotifications();
@@ -32,12 +35,22 @@ const NotificationListScreen = (props) => {
         //alert(resData.message);
         return;
       }
+      setLoading(false)
       setAlerts(resData.data.notifications);
-      console.log('notifications', resData.data.notifications);
+
     } catch (error) {
       alert('Something went wrong. Try again later.');
     }
   };
+  if (isLoading) {
+    return (
+      <ActivityIndicator
+        style={{ marginTop: 20 }}
+        color={theme.$primaryColor}
+        size={'large'}
+      />
+    );
+  }
   if (alerts.length === 0) {
     return (
 
@@ -54,7 +67,7 @@ const NotificationListScreen = (props) => {
           style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
         /><Text style={{ fontSize: 18, color: 'tomato' }}>
           No new Notification.
-    </Text>
+  </Text>
       </View>
     )
   }

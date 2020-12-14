@@ -9,6 +9,7 @@ import {
   Image,
   ActivityIndicator,
   Alert,
+  ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import WebView from 'react-native-webview';
@@ -16,13 +17,11 @@ import MediaGrid from '../components/MediaGrid';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
-import { Snackbar } from 'react-native-paper';
 
 const MyMediaScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [talents, setTalents] = useState([]);
-  const [visible, setVisible] = useState(false);
   const [isNoMedia, setNoMedia] = useState(false);
   const unsubscribe = props.navigation.addListener('didFocus', () => {
     console.log('focussed');
@@ -114,7 +113,7 @@ const MyMediaScreen = (props) => {
         (response) => {
           if (response.success === true) {
             getTalents();
-            setVisible(!visible);
+            showToastWithGravityAndOffset()
           } else {
             alert(response.message);
           }
@@ -125,8 +124,14 @@ const MyMediaScreen = (props) => {
       );
   };
 
-  const onDismissSnackBar = () => {
-    setVisible(false);
+  const showToastWithGravityAndOffset = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      "Media deleted successfully",
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      50,
+      100
+    );
   };
 
 
@@ -150,9 +155,6 @@ const MyMediaScreen = (props) => {
   else {
     return (
       <View style={styles.container}>
-        <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
-          Media Deleted Successfully
-      </Snackbar>
         <ScrollView style={styles.container}>
           {talents.map((t) => (
             <>

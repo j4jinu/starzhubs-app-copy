@@ -13,6 +13,8 @@ import WebView from 'react-native-webview';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
+import SIcon from 'react-native-vector-icons/Fontisto';
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 const MediaDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -24,32 +26,44 @@ const MediaDetailsScreen = (props) => {
   const user = props.navigation.getParam('user');
   const [enlargeModal, setEnlargeModal] = useState(false);
   const deviceWidth = Dimensions.get('window').width;
+  const [showModal, setshowModal] = useState(false);
+  const [imageIndex, setimageIndex] = useState(0);
+
+  const images = [
+    {
+      url: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+      props: {
+        source: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+      },
+    },
+  ];
 
   return (
     // <View>
     <>
+      <Modal visible={showModal} transparent={true}>
+        <ImageViewer
+          imageUrls={images}
+          enableSwipeDown
+          onSwipeDown={() => setshowModal(false)}
+        />
+      </Modal>
+
+
       <Modal transparent visible={enlargeModal} animationType="slide">
         <View
           style={{
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 22,
+            // marginTop: 22,
+            backgroundColor: '#000000d2'
           }}
         // onPress={() => setVisible(false)}
         >
           <View
             style={{
-              //     flex: 1,
-              //     justifyContent: 'center',
-              //     alignItems: 'center',
-              //     // marginTop: 22,
-              //     backgroundColor:'#000000aa'
-              //   }}
-              //   onPress={() => setEnlargeModal(false)}
-              // >
               margin: 5,
-              backgroundColor: 'white',
               borderRadius: 3,
               width: '95%',
               shadowColor: '#000',
@@ -67,7 +81,7 @@ const MediaDetailsScreen = (props) => {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 // borderBottomWidth: 1,
-                paddingVertical: 12,
+                // paddingVertical: 12,
                 // backgroundColor: '#f5f5f5',
                 // borderColor: 'gray',
               }}>
@@ -78,15 +92,18 @@ const MediaDetailsScreen = (props) => {
                   color: theme.$primaryColorText,
                   fontSize: 17,
                 }}></Text>
-              <TouchableOpacity onPress={() => setEnlargeModal(false)}>
+              <TouchableOpacity onPress={() => setEnlargeModal(false)} style={{ flexDirection: 'row' }}>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 12,
                     fontWeight: 'bold',
                     marginRight: 12,
+                    color: 'white',
+                    marginTop: 5
                   }}>
-                  X
+                  close
                 </Text>
+                <SIcon name="close" size={22} color='white' style={{ marginRight: 12 }} />
               </TouchableOpacity>
             </View>
             <View
@@ -96,8 +113,8 @@ const MediaDetailsScreen = (props) => {
                 paddingVertical: 15,
               }}>
               <Image
-                style={styles.media}
-                // style={{ width: '100%',height: deviceWidth/2 }}
+                // style={styles.media}
+                style={{ width: '100%', height: deviceWidth / 2 }}
                 resizeMode="cover"
                 source={{
                   uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
@@ -119,7 +136,12 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
-          <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+          // <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+          <TouchableOpacity
+            onPress={() => {
+              setimageIndex(0);
+              setshowModal(true);
+            }}>
             <Image
               // style={styles.media}
               style={{ width: '100%', height: deviceWidth / 2 }}

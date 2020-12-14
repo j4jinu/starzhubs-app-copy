@@ -135,7 +135,7 @@ const PhotoUploadScreen = (props) => {
 
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
-      "Image Uploaded Successfully. Check Your Media Screen.",
+      "Image Uploaded Successfully.",
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,

@@ -75,7 +75,7 @@ const VideoUploadScreen = (props) => {
           // setVisible(!visible);
           setYtLink('');
           resetForm({ values: '' });
-          props.navigation.navigate('Account')
+          props.navigation.navigate('MyMedia');
           showToastWithGravityAndOffset()
 
         } else {
@@ -94,7 +94,7 @@ const VideoUploadScreen = (props) => {
   };
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
-      " Video Updated Successfully.Check Your Media Screen.",
+      " Video Updated Successfully.",
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
