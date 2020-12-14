@@ -99,7 +99,6 @@ const EditPosterScreen = (props) => {
       props.navigation.goBack();
       showToastWithGravityAndOffset();
     } catch (error) {
-      console.error('error', error);
     }
   };
 
@@ -128,7 +127,7 @@ const EditPosterScreen = (props) => {
   };
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
-      'Poster Edited Successfully. Check your poster screen.',
+      'Poster Edited Successfully',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
