@@ -31,10 +31,8 @@ const EditMediaScreen = (props) => {
   const description = props.navigation.getParam('description');
   const mediaType = props.navigation.getParam('mediaType');
   const auth = useContext(AuthContext);
-  const [visible, setVisible] = useState(false);
 
   const editMedia = async (values, { setSubmitting }) => {
-    console.log('Form data: ', values);
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('caption', values.description);

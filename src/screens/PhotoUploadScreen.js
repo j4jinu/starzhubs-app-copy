@@ -49,7 +49,6 @@ const PhotoUploadScreen = (props) => {
         console.log('Camera permission denied');
       }
     } catch (err) {
-      console.warn(err);
     }
   };
 
