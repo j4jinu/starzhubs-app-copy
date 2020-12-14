@@ -166,13 +166,13 @@ const FilterScreen = (props) => {
   const handleSubmit = () => {
     if (selectedItems.length === 0) {
       setCategoryOn(true);
-      return
+      return;
     } else {
       setCategoryOn(false);
     }
     if (gender.length === 0) {
       setGenderOn(true);
-      return
+      return;
     } else {
       setGenderOn(false);
     }
@@ -183,13 +183,13 @@ const FilterScreen = (props) => {
       ) {
         if (bodyType.length === 0) {
           setBodyTypeOn(true);
-          return
+          return;
         } else {
           setBodyTypeOn(false);
         }
         if (skinTone.length === 0) {
           setSkinToneOn(true);
-          return
+          return;
         } else {
           setSkinToneOn(false);
         }
@@ -239,7 +239,6 @@ const FilterScreen = (props) => {
   };
 
   const resetFields = () => {
-    console.log('hhhh');
     setSearch('');
     setAgeToValue(100);
     setAgeFromValue(0);

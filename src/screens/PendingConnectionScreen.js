@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View, Image } from 'react-native';
+import { FlatList, Text, View, Image, ActivityIndicator } from 'react-native';
 import BuddyRequestItem from '../components/BuddyRequestItem';
+import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 const PendingConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [requests, setRequests] = useState([]);
-  const unsubscribe = props.navigation.addListener('didFocus', () => {
-    console.log('focussed');
-    getRequests();
-  });
   useEffect(() => {
     getRequests();
     unsubscribe;
@@ -27,18 +25,41 @@ const PendingConnectionScreen = (props) => {
         console.log('rqs', response.data.requests);
         setRequests(response.data.requests);
         setUserImages(response.data.requests.fromUser.image);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         alert(response.message);
       });
   };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          paddingTop: 50,
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
+
   if (requests.length === 0) {
     return (
       <View style={{ alignItems: 'center', marginTop: '35%' }}>
         <Text style={{ color: '#F98644', fontWeight: 'bold' }}>No Requests</Text>
         <Image
           source={require('../assets/broke.png')}
-          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+          style={{
+            width: '41%',
+            height: 160,
+            marginHorizontal: 100,
+            marginTop: '5%',
+          }}
         />
       </View>
     );
@@ -60,10 +81,10 @@ const PendingConnectionScreen = (props) => {
           navigation={props.navigation}
           onSelect={() =>
             props.navigation.navigate('UserDetails', {
-              userId: item.fromUser._id
+              userId: item.fromUser._id,
             })
           }
-          getConnection = {getRequests}
+          getConnection={getRequests}
           navigation={props.navigation}
         />
       )}

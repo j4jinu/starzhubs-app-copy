@@ -10,7 +10,7 @@ import {
   TextInput,
   Alert,
   Dimensions,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import { useSelector } from 'react-redux';
@@ -144,9 +144,9 @@ const PosterDetailsScreen = (props) => {
           console.log(response);
           if (response.success) {
             if (status === 1) {
-              showToastWithGravityAndOffset1()
+              showToastWithGravityAndOffset1();
             } else {
-              showToastWithGravityAndOffset2()
+              showToastWithGravityAndOffset2();
             }
             setVisible(!visible);
             getPosterById();
@@ -162,25 +162,24 @@ const PosterDetailsScreen = (props) => {
   };
   const showToastWithGravityAndOffset1 = () => {
     ToastAndroid.showWithGravityAndOffset(
-      "Request Approved",
+      'Request Approved',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
-      100
+      100,
     );
   };
   const showToastWithGravityAndOffset2 = () => {
     ToastAndroid.showWithGravityAndOffset(
-      "Request Rejected",
+      'Request Rejected',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       50,
-      100
+      100,
     );
   };
   return (
     <>
-
       <View style={styles.container}>
         <ScrollView>
           <TouchableOpacity
@@ -304,7 +303,7 @@ const PosterDetailsScreen = (props) => {
                     fontWeight: 'bold',
                     marginLeft: 15,
                     marginTop: 10,
-                    marginBottom: 10
+                    marginBottom: 10,
                   }}>
                   Requests:
                 </Text>

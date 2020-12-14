@@ -15,6 +15,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import Moment from 'moment';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as yup from 'yup';
@@ -260,7 +261,6 @@ const EditProfileScreen = (props) => {
   };
 
   if (actorMode) {
-    console.log('Actor mode');
     initialProfileValues.height = userInfo.height.toString() || 0;
     initialProfileValues.weight = userInfo.weight.toString() || 0;
     initialProfileValues.complexion = userInfo.complexion || '';
@@ -631,6 +631,7 @@ const EditProfileScreen = (props) => {
                     date={dob}
                     mode="date"
                     placeholder="DOB"
+                    maxDate={Moment().format('YYYY-MM-DD')}
                     format="YYYY-MM-DD"
                     // minDate="01-01-2016"
                     // maxDate="01-01-2019"

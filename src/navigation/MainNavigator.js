@@ -45,6 +45,7 @@ import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
 import MyPosterRequests from '../screens/MyPosterRequests';
+import ImageViewScreen from '../screens/ImageViewScreen';
 
 const HomeNavigator = createStackNavigator(
   {
@@ -61,44 +62,47 @@ const HomeNavigator = createStackNavigator(
     UserDetails: {
       screen: UserDetailsScreen,
       navigationOptions: {
-        title: 'User Details',
+        title: '',
       },
+    },
+    ImageView: {
+      screen: ImageViewScreen,
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
       navigationOptions: {
-        title: 'Poster Details',
+        title: '',
       },
     },
     EditPoster: {
       screen: EditPosterScreen,
       navigationOptions: {
-        title: 'Edit Poster',
+        title: 'Edit poster',
       },
     },
     Filter: {
       screen: FilterScreen,
-      title: '',
+      title: 'Search',
     },
     FilterResult: {
       screen: FilterResultScreen,
       navigationOptions: {
-        title: 'Filter Result',
+        title: 'Search results',
       },
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
       navigationOptions: {
-        title: 'Media Details',
+        title: '',
       },
     },
     UsersList: {
       screen: PortfolioListScreen,
-      title: 'Trending profiles',
+      title: 'Portfolios',
     },
     MediaList: {
       screen: MediaListSceen,
-      title: 'Trending media',
+      title: 'Media',
     },
   },
   {
@@ -129,12 +133,12 @@ const UserNavigator = createStackNavigator(
     UserDetails: {
       screen: UserDetailsScreen,
       navigationOptions: {
-        title: 'User Details',
+        title: '',
       },
     },
     Filter: {
       screen: FilterScreen,
-      title: '',
+      title: 'Search',
     },
   },
   {
@@ -153,29 +157,29 @@ const PosterNavigator = createStackNavigator(
     PosterDetails: {
       screen: PosterDetailsScreen,
       navigationOptions: {
-        title: 'Poster Details',
+        title: '',
       },
     },
     PosterRequest: {
       screen: PosterRequestScreen,
       navigationOptions: {
-        title: 'Poster Request',
+        title: 'Poster requsts',
       },
     },
     EditPoster: {
       screen: EditPosterScreen,
       navigationOptions: {
-        title: 'Edit Poster',
+        title: 'Edit poster',
       },
     },
     CreatePosters: {
       screen: CreatePosterScreen,
-      title: '',
+      title: 'New poster',
     },
     UserDetails: {
       screen: UserDetailsScreen,
       navigationOptions: {
-        title: 'User Details',
+        title: '',
       },
     },
   },
@@ -214,7 +218,7 @@ const AccountNavigator = createStackNavigator(
     Edit: {
       screen: EditProfileScreen,
       navigationOptions: {
-        title: 'Edit Profile',
+        title: 'Edit profile',
       },
     },
     OurServices: {
@@ -226,37 +230,35 @@ const AccountNavigator = createStackNavigator(
     ServiceDetails: {
       screen: ServiceDetailsScreen,
       navigationOptions: {
-        title: 'Services',
+        title: '',
       },
     },
     Talents: {
       screen: TalentListScreen,
       navigationOptions: {
-        title: 'Your Talents',
+        title: 'Talents',
       },
     },
     EditTalents: {
       screen: EditTalentScreen,
-      navigationOptions: {
-        title: 'Edit Talents',
-      },
+      title: 'Edit talent',
     },
     AddTalents: {
       screen: AddTalentScreen,
       navigationOptions: {
-        title: 'Add Talents',
+        title: '',
       },
     },
     Help: {
       screen: HelpScreen,
       navigationOptions: {
-        title: 'Help',
+        title: 'About',
       },
     },
     Policy: {
       screen: PoliciesScreen,
       navigationOptions: {
-        title: 'Terms of Policy',
+        title: 'Terms and Policy',
       },
     },
     Feedback: {
@@ -268,25 +270,25 @@ const AccountNavigator = createStackNavigator(
     MyPosters: {
       screen: MyPostersScreen,
       navigationOptions: {
-        title: 'Your posters',
+        title: 'Posterss',
       },
     },
     MyPosterRequest: {
       screen: MyPosterRequests,
       navigationOptions: {
-        title: 'Your poster requests',
+        title: 'Poster requests',
       },
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
       navigationOptions: {
-        title: 'Poster Details',
+        title: '',
       },
     },
     MyMedia: {
       screen: MyMediaScreen,
       navigationOptions: {
-        title: 'Your media',
+        title: '',
       },
     },
     MediaDetails: {
@@ -298,55 +300,61 @@ const AccountNavigator = createStackNavigator(
     Photo: {
       screen: PhotoUploadScreen,
       navigationOptions: {
-        title: 'Upload a photo',
+        title: 'Upload photo',
       },
     },
     Video: {
       screen: VideoUploadScreen,
       navigationOptions: {
-        title: 'Upload a video',
+        title: 'Upload video',
       },
     },
     MyBuddy: {
       screen: BuddyTopNavigator,
       navigationOptions: {
-        title: 'Your connections',
+        title: 'Connections',
       },
     },
     EditPoster: {
       screen: EditPosterScreen,
       navigationOptions: {
-        title: 'Edit Poster',
+        title: 'Edit poster',
       },
     },
+    // MyPosterDetailsScreen: {
+    //   screen: MyPosterDetailsScreen,
+    //   navigationOptions: {
+    //     title: '',
+    //   },
+    // },
     UserPosterDetails: {
       screen: PosterDetailsScreen,
       navigationOptions: {
-        title: 'Poster Details',
+        title: '',
       },
     },
     EditMedia: {
       screen: EditMediaScreen,
       navigationOptions: {
-        title: 'Update Media',
+        title: '',
       },
     },
     CreatePosters: {
       screen: CreatePosterScreen,
       navigationOptions: {
-        title: 'Create Poster',
+        title: 'New poster',
       },
     },
     UserDetails: {
       screen: UserDetailsScreen,
       navigationOptions: {
-        title: 'User Details',
+        title: '',
       },
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
       navigationOptions: {
-        title: 'Media Details',
+        title: '',
       },
     },
   },
@@ -364,30 +372,30 @@ const FilterNavigator = createStackNavigator(
   {
     Search: {
       screen: FilterScreen,
-      title: '',
+      title: 'Search',
     },
     FilterResult: {
       screen: FilterResultScreen,
       navigationOptions: {
-        title: 'Filter Result',
+        title: 'Search results',
       },
     },
     UserDetails: {
       screen: UserDetailsScreen,
       navigationOptions: {
-        title: 'User Details',
+        title: '',
       },
     },
     PosterDetails: {
       screen: PosterDetailsScreen,
       navigationOptions: {
-        title: 'Poster Details',
+        title: '',
       },
     },
     MediaDetails: {
       screen: MediaDetailsScreen,
       navigationOptions: {
-        title: 'Media Details',
+        title: '',
       },
     },
   },

@@ -9,7 +9,7 @@ import {
   Alert,
   Image,
   ToastAndroid,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 import theme from '../config/theme';
 import DIcon from 'react-native-vector-icons/MaterialIcons';
@@ -40,7 +40,6 @@ const TalentListScreen = (props) => {
     unsubscribe;
   }, []);
 
-
   const getUserTalents = () => {
     const requestOptions = {
       method: 'GET',
@@ -55,7 +54,7 @@ const TalentListScreen = (props) => {
           if (response.success === true) {
             setTalents(response.data.talents);
             console.log('talents', talents);
-            setLoading(false)
+            setLoading(false);
           } else {
             console.log('gggg', response.message);
           }
@@ -183,7 +182,6 @@ const TalentListScreen = (props) => {
                       imageSize={15}
                       style={{ paddingVertical: 5 }}
                       startingValue={t.level}
-
                     />
                     <Text style={{ marginLeft: '5%', marginTop: 4 }}>
                       {t.level == '1'
@@ -273,7 +271,7 @@ const TalentListScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                <View style={{ flexDirection: "row", }}>
+                <View style={{ flexDirection: 'row', bottom: 0 }}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate('EditTalents', {
@@ -288,14 +286,24 @@ const TalentListScreen = (props) => {
                       })
                     }
                     style={styles.EditBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: '700' }}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontWeight: '700',
+                      }}>
                       EDIT
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => confirmDelete(t._id)}
                     style={styles.DeleteBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center', fontWeight: '700' }}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontWeight: '700',
+                      }}>
                       DELETE
                     </Text>
                   </TouchableOpacity>
@@ -326,10 +334,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fafafa',
-    marginBottom: '-12%'
+    marginBottom: '-12%',
   },
   EditBtn: {
-    width: "150%",
+    width: '150%',
     backgroundColor: '#0086b3',
     height: 40,
 
@@ -342,10 +350,10 @@ const styles = StyleSheet.create({
 
   },
   DeleteBtn: {
-    width: "69%",
-    backgroundColor: "#ff6633",
-    marginLeft: "25%",
-    marginRight: "32%",
+    width: '69%',
+    backgroundColor: '#ff6633',
+    marginLeft: '25%',
+    marginRight: '32%',
     height: 40,
     // width: '70%',
     // backgroundColor: '#db3000',
@@ -391,8 +399,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
     elevation: 2,
-    paddingTop: 10
-
+    paddingTop: 10,
   },
   subHeadDiv: {
     marginTop: 8,
