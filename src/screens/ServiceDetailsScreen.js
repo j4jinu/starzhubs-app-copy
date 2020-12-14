@@ -39,7 +39,7 @@ const ServiceDetailsScreen = (props) => {
 
   const initialValues = {message: ''};
   const validationSchema = Yup.object({
-    message: Yup.string().required('Enter your feedback'),
+    message: Yup.string().required('Pleaase write a mssage'),
   });
 
   const handleSubmit = (values) => {
@@ -112,11 +112,17 @@ const ServiceDetailsScreen = (props) => {
                     ? null
                     : `http://13.232.190.226/api/services/view/${services.image}`,
               }}
-              style={{borderRadius: 50, height: 200, width: 200}}
+              style={{borderRadius: 50, height: 180, width: 180}}
             />
           </View>
           <View style={{marginBottom: 15}}>
-            <Text style={{fontSize: 28, color: 'orange', fontWeight: 'bold'}}>
+            <Text
+              style={{
+                fontSize: 20,
+                textTransform: 'capitalize',
+                color: theme.$primaryColor,
+                fontWeight: 'bold',
+              }}>
               {services.title}
             </Text>
           </View>
@@ -132,7 +138,12 @@ const ServiceDetailsScreen = (props) => {
               color={theme.$primaryColor}
               style={{ marginTop: 4, marginRight: '4%' }}
             /> */}
-            <Text style={{textAlign: 'center', alignSelf: 'center'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                alignSelf: 'center',
+                color: theme.$primaryColorText,
+              }}>
               {services.description}
             </Text>
           </View>
@@ -151,49 +162,26 @@ const ServiceDetailsScreen = (props) => {
               handleSubmit,
               touched,
             }) => (
-                <View style={{ width: '90%', marginLeft: 0 }}>
-                  <View style={styles.inputView}>
-
-                    <TextInput
-                      style={styles.inputText}
-                      placeholder="Mention Your Requirements"
-                      placeholderTextColor="#003f5c"
-                      keyboardType="default"
-                      autoCapitalize="sentences"
-                      numberOfLines={5}
-                      multiline={true}
-                      onChangeText={handleChange('message')}
-                      onBlur={handleBlur('message')}
-                    />
-                  </View>
-                  {touched.message && errors.message && (
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        color: 'red',
-                        alignSelf: 'center',
-                        marginBottom: 2,
-                      }}>
-                      {errors.message}
-                    </Text>
-                  )}
-
-                  <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
-                    <Text style={styles.BtnText}>
-                      {loading ? (
-                        <ActivityIndicator size="small" color="#fff" />
-                      ) : (
-                          'SUBMIT'
-                        )}
-                    </Text>
-                  </TouchableOpacity>
+              <View style={{width: '90%', marginLeft: 0}}>
+                <View style={styles.inputView}>
+                  <TextInput
+                    style={styles.inputText}
+                    placeholder="Mention Your Requirements"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="default"
+                    autoCapitalize="sentences"
+                    numberOfLines={5}
+                    multiline={true}
+                    onChangeText={handleChange('message')}
+                    onBlur={handleBlur('message')}
+                  />
                 </View>
                 {touched.message && errors.message && (
                   <Text
                     style={{
                       fontSize: 13,
                       color: 'red',
-                      alignSelf: 'center',
+                      alignSelf: 'flex-start',
                       marginBottom: 2,
                     }}>
                     {errors.message}

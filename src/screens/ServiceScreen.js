@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {Card} from 'react-native-paper';
+import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 const ServiceScreen = ({navigation}) => {
   const auth = useContext(AuthContext);
@@ -73,11 +74,22 @@ const ServiceScreen = ({navigation}) => {
                 {/* </View> */}
                 <View
                   style={{
-                    marginLeft: '5%',
-                    marginBottom: '5%',
+                    marginHorizontal: 5,
+                    justifyContent: 'center',
                     alignItems: 'center',
+                    alignItems: 'center',
+                    marginTop: 15,
                   }}>
-                  <Text style={{color: 'brown'}}>{s.title}</Text>
+                  <Text
+                    style={{
+                      color: theme.$primaryColorText,
+                      textTransform: 'capitalize',
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                    }}>
+                    {s.title}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </Card>

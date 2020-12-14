@@ -9,6 +9,7 @@ import {
   Modal,
   Alert,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
@@ -25,6 +26,7 @@ import {Snackbar} from 'react-native-paper';
 
 const UserDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const userId = props.navigation.getParam('userId');
   const [user, setUser] = useState({image: {}});
   const [talents, setTalents] = useState([]);
@@ -101,8 +103,11 @@ const UserDetailsScreen = (props) => {
           setUserLocation(response.data.user.location);
           setPosters(response.data.posters);
           checkActorMode(response.data.talents);
+          setLoading(false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setLoading(false);
+        });
     };
     getUserDetails();
   }, []);
@@ -379,6 +384,20 @@ const UserDetailsScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
 
   return (
     <>
@@ -845,6 +864,7 @@ const UserDetailsScreen = (props) => {
           <ImageViewer
             imageUrls={images}
             enableSwipeDown
+            onPress={() => setshowModal(false)}
             onSwipeDown={() => setshowModal(false)}
           />
         </Modal>
