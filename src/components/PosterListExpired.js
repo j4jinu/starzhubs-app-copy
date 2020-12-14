@@ -13,6 +13,7 @@ const PosterListExpired = (props) => {
   useEffect(() => {
     getPosters();
   }, []);
+
   const getPosters = async (status) => {
     setLoading(true);
     setPosters([]);
@@ -69,6 +70,7 @@ const PosterListExpired = (props) => {
       </View>
     );
   }
+
   return (
     <View>
       <FlatList
@@ -92,4 +94,5 @@ const PosterListExpired = (props) => {
     </View>
   );
 };
+
 export default PosterListExpired;

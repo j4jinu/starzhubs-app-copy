@@ -4,6 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 const UserGridItem = (props) => {
   const {image, location, talents, userId} = props;
+
   return (
     <>
       <ScrollView>
@@ -30,9 +31,6 @@ const UserGridItem = (props) => {
                 {props.location !== undefined ? props.location.place : ''},{' '}
                 {props.location !== undefined ? props.location.state : ''}
               </Text>
-              {/* <Text style={{marginLeft: 10, marginTop: 1}}>
-              {'Actor, Singer'}
-            </Text> */}
             </View>
           </TouchableOpacity>
         }

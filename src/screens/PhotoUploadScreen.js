@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
   ScrollView,
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -13,13 +12,11 @@ import {
   ToastAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import IIcon from 'react-native-vector-icons/Ionicons';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import ImagePicker from 'react-native-image-picker';
 import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
-import { Snackbar } from 'react-native-paper';
 
 const mediaSchema = yup.object({
   caption: yup.string().required('Enter caption about this media'),
@@ -31,7 +28,6 @@ const PhotoUploadScreen = (props) => {
   const auth = useContext(AuthContext);
   const [image, setImage] = useState('');
   const [isImage, setIsImage] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   const requestCameraPermission = async () => {
     try {
@@ -123,7 +119,6 @@ const PhotoUploadScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
-
       setImage('');
       showToastWithGravityAndOffset()
       resetForm({ values: '' });
@@ -132,7 +127,6 @@ const PhotoUploadScreen = (props) => {
       console.error('error', error);
     }
   };
-
 
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
@@ -143,6 +137,7 @@ const PhotoUploadScreen = (props) => {
       100
     );
   };
+
   return (
     <View style={styles.container}>
       <ScrollView>

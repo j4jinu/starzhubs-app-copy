@@ -2,11 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   FlatList,
-  Image,
-  Text,
   StyleSheet,
-  ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import PosterGridItem from '../components/PosterGridItem';
@@ -15,9 +11,11 @@ import {AuthContext} from '../context/authContext';
 const PosterListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [posters, setPosters] = useState([]);
+
   useEffect(() => {
     getPosters();
   }, []);
+  
   const getPosters = async (status) => {
     try {
       const response = await fetch(`http://13.232.190.226/api/poster`, {

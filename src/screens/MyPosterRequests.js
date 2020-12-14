@@ -9,11 +9,12 @@ import {
   Image,
 } from 'react-native';
 import {AuthContext} from '../context/authContext';
-import theme from '../config/theme';
+
 const MyPosterRequests = (props) => {
   const auth = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [requests, setRequests] = useState([]);
+
   useEffect(() => {
     getPosterRequest();
   }, []);
@@ -31,7 +32,6 @@ const MyPosterRequests = (props) => {
       );
       let userData = await response.json();
       setRequests(userData.requests);
-      console.log('poster request', userData);
     } catch (error) {}
   };
 
@@ -106,37 +106,10 @@ const MyPosterRequests = (props) => {
                             Approved
                           </Text>
                         )}
-                        {/* <View style={styles.authorInfo}>
-                          <Image
-                            style={{
-                              width: 30,
-                              height: 30,
-                              borderRadius: 100,
-                            }}
-                            source={{
-                              uri: `http://13.232.190.226/api/user/avatar/${item.posterId.userId.image.avatar}`,
-                            }}
-                          />
-                          <View
-                            style={{
-                              flex: 1,
-                              flexDirection: 'column',
-                              justifyContent: 'center',
-                              marginLeft: 10,
-                            }}>
-                            <Text style={{fontSize: 13}}>{'Posted By'}</Text>
-                            <Text style={{fontSize: 13, fontWeight: 'bold'}}>
-                              {item.posterId.userId.name}
-                            </Text>
-                          </View>
-                        </View> */}
                       </View>
                     </View>
                   </TouchableOpacity>
                 ) : null
-              // <View style={styles.listItem}>
-              //   <Text>This poster is deleted or currently unavailable</Text>
-              // </View>
             }
           />
         ) : (
@@ -165,6 +138,7 @@ const MyPosterRequests = (props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   actor: {
     marginLeft: 10,
@@ -188,11 +162,10 @@ const styles = StyleSheet.create({
   },
   authorInfo: {
     backgroundColor: 'white',
-    // marginHorizontal: 10,
-    // padding: 8,
     marginTop: 15,
     flexDirection: 'row',
     alignItems: 'flex-end',
   },
 });
+
 export default MyPosterRequests;

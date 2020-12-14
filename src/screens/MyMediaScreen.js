@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  FlatList,
   ScrollView,
   Image,
   ActivityIndicator,
@@ -13,18 +12,16 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import WebView from 'react-native-webview';
-import MediaGrid from '../components/MediaGrid';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
-import DIcon from 'react-native-vector-icons/MaterialIcons';
 
 const MyMediaScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [talents, setTalents] = useState([]);
   const [isNoMedia, setNoMedia] = useState(false);
+
   const unsubscribe = props.navigation.addListener('didFocus', () => {
-    console.log('focussed');
     getTalents();
   });
 
@@ -32,6 +29,7 @@ const MyMediaScreen = (props) => {
     getTalents();
     unsubscribe;
   }, []);
+
   const getTalents = async () => {
     try {
       const res = await fetch('http://13.232.190.226/api/user/talent', {
@@ -47,19 +45,16 @@ const MyMediaScreen = (props) => {
         return;
       } else {
         setTalents(resData.data.talents);
-        console.log("talents", resData.data.talents);
         checkMediaMode(resData.data.talents)
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
-      // alert('Something ');
     }
   };
 
   const checkMediaMode = (talents) => {
     talents.forEach(c => {
-      console.log("media", c.media);
       if (c.media === [] || c.media === undefined || c.media.length === 0) {
         setNoMedia(true)
       }
@@ -94,7 +89,7 @@ const MyMediaScreen = (props) => {
         },
       ],
       { cancelable: false },
-    );
+  );
 
   const onDelteMedia = (talentId, mediaId) => {
     const requestOptions = {
@@ -134,7 +129,6 @@ const MyMediaScreen = (props) => {
     );
   };
 
-
   if (talents.length === 0) {
     return (
       <View
@@ -144,7 +138,6 @@ const MyMediaScreen = (props) => {
           width: "100%",
           marginTop: "35%"
         }}>
-
         <Image source={require("../assets/broke.png")}
           style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }} />
         <Text style={{ fontSize: 18, color: 'tomato' }}> No Medias Added Yet.</Text>
@@ -165,13 +158,10 @@ const MyMediaScreen = (props) => {
                   paddingHorizontal: 10,
                   paddingVertical: 8,
                   marginTop: 10,
-                  // backgroundColor:'gainsboro'
                 }}>
-
                 <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
                   {t.category.title}
                 </Text>
-
                 <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     activeOpacity={0.7}
@@ -228,7 +218,6 @@ const MyMediaScreen = (props) => {
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-
                 {t.media.map((m) => (
                   <>
                     <View style={styles.gridItem}>
@@ -244,14 +233,6 @@ const MyMediaScreen = (props) => {
                           }}
                         />
                       ) : (
-                          //   <WebView
-                          //   javaScriptEnabled={true}
-                          //   domStorageEnabled={true}
-                          //   source={{
-                          //     uri:  m.file,
-                          //   }}
-                          // />
-
                           <WebView
                             javaScriptEnabled={true}
                             domStorageEnabled={true}
@@ -262,7 +243,6 @@ const MyMediaScreen = (props) => {
                             }}
                           />
                         )}
-
                       <View style={{
                         flexDirection: 'row',
                         backgroundColor: 'black', marginTop: '-10%',
@@ -295,7 +275,6 @@ const MyMediaScreen = (props) => {
                           <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Delete</Text>
                         </TouchableOpacity>
                       </View>
-
                       <View style={{ flexDirection: 'row', width: '100%' }}>
                         <View style={{ width: '100%', flexDirection: 'column' }}>
                           <TouchableOpacity
@@ -338,7 +317,6 @@ const styles = StyleSheet.create({
     paddingBottom: 25,
   },
   gridItem: {
-    // flex: 1,
     alignSelf: 'center',
     width: '98%',
     height: 300,

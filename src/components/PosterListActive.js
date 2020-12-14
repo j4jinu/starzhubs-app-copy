@@ -3,13 +3,13 @@ import {FlatList, Text, View, Image, ActivityIndicator} from 'react-native';
 import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
+
 const PosterListActive = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [posters, setPosters] = useState([]);
 
   const unsubscribe = props.navigation.addListener('didFocus', () => {
-    console.log('focussed');
     getPosters();
   });
 
@@ -17,6 +17,7 @@ const PosterListActive = (props) => {
     getPosters();
     unsubscribe;
   }, []);
+
   const getPosters = async (status) => {
     setLoading(true);
     setPosters([]);
@@ -73,6 +74,7 @@ const PosterListActive = (props) => {
       </View>
     );
   }
+
   return (
     <View>
       <FlatList

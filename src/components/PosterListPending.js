@@ -3,12 +3,10 @@ import {Text, View, Image, ActivityIndicator} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
-import {Snackbar} from 'react-native-paper';
 import theme from '../config/theme';
 
 const PosterListPending = (props) => {
   const unsubscribe = props.navigation.addListener('didFocus', () => {
-    console.log('focussed');
     getPosters();
   });
 
@@ -16,12 +14,12 @@ const PosterListPending = (props) => {
     getPosters();
     unsubscribe;
   }, []);
+
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [posters, setPosters] = useState([]);
 
   const getPosters = async (status) => {
-    // setLoading(true);
     setPosters([]);
     try {
       const response = await fetch(`http://13.232.190.226/api/poster/pending`, {

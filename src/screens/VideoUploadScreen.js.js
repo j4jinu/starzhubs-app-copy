@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react';
 import {
   ScrollView,
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   ActivityIndicator,
   ToastAndroid
@@ -31,18 +29,13 @@ const VideoUploadScreen = (props) => {
   const [ytLink, setYtLink] = useState('');
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
-
   const transformYoutubeLinks = (text) => {
-    const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
-    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
-    const match = text.match(fullreg);
+  const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
+  const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
+  const match = text.match(fullreg);
     if (match && match.length > 0) {
       for (var i = 0; i < match.length; i++) {
         let matchParts = match[i].split(regex);
-        console.log(
-          'match part: ',
-          'https://www.youtube.com/watch?v=' + matchParts[1],
-        );
         setYtLink(matchParts[1]);
       }
     }
@@ -70,14 +63,10 @@ const VideoUploadScreen = (props) => {
         );
         const resData = await response.json();
         if (resData.success) {
-          // const msg = 'Video Uploaded Successfully. Check Your Media Screen.';
-          // setMessage(msg);
-          // setVisible(!visible);
           setYtLink('');
           resetForm({ values: '' });
           props.navigation.navigate('MyMedia');
           showToastWithGravityAndOffset()
-
         } else {
           const msg = 'Something went wrong. Try again!';
           setMessage(msg);
@@ -92,6 +81,7 @@ const VideoUploadScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
       " Video Updated Successfully.",
@@ -101,6 +91,7 @@ const VideoUploadScreen = (props) => {
       100
     );
   };
+
   return (
     <View style={styles.container}>
       <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
@@ -166,7 +157,7 @@ const VideoUploadScreen = (props) => {
                         }}>
                         Preview not available
                       </Text>
-                    )}
+                  )}
                 </View>
                 <View
                   style={{

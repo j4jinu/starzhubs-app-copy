@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -58,7 +57,6 @@ const PosterGridItem = (props) => {
                       : `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`,
                 }}
               />
-
               <View style={styles.ownerDetails}>
                 <Text style={{ fontSize: 13 }}>{userId.name}</Text>
                 <Text style={{ fontSize: 10, color: 'gray' }}>

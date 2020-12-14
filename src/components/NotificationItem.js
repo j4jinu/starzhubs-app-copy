@@ -1,16 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
-import Moment from 'moment';
+import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../config/theme';
 
 const NotificationItem = (props) => {
-  // var a = Moment();
-  // var b = Moment(alerts.item.createdAt);
-  // var d = a.diff(b)
   const divider = (
     <View style={{width: '100%', height: 1, backgroundColor: '#e6e6e6'}} />
   );
+  
   return (
     <>
       {

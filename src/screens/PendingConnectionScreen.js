@@ -21,7 +21,6 @@ const PendingConnectionScreen = (props) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('rqs', response.data.requests);
         setRequests(response.data.requests);
         setUserImages(response.data.requests.fromUser.image);
         setLoading(false);
@@ -63,6 +62,7 @@ const PendingConnectionScreen = (props) => {
       </View>
     );
   }
+
   return (
     <FlatList
       style={{backgroundColor: '#efefef'}}
@@ -76,7 +76,6 @@ const PendingConnectionScreen = (props) => {
           talent={item.talent}
           userId={item.fromUser._id}
           reqType="received"
-          // navigation={props.navigation}
           onSelect={() =>
             props.navigation.navigate('UserDetails', {
               userId: item.fromUser._id,

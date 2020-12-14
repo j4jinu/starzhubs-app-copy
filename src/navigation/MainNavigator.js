@@ -44,7 +44,6 @@ import ServiceDetailsScreen from '../screens/ServiceDetailsScreen';
 import BuddyTopNavigator from './BuddyTopNavigator';
 import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
-import MyPosterDetailsScreen from '../screens/MyPosterDetailsScreen';
 import MyPosterRequests from '../screens/MyPosterRequests';
 import ImageViewScreen from '../screens/ImageViewScreen';
 
@@ -316,12 +315,6 @@ const AccountNavigator = createStackNavigator(
         title: 'Edit poster',
       },
     },
-    MyPosterDetailsScreen: {
-      screen: MyPosterDetailsScreen,
-      navigationOptions: {
-        title: '',
-      },
-    },
     UserPosterDetails: {
       screen: PosterDetailsScreen,
       navigationOptions: {
@@ -453,11 +446,9 @@ const FriendsNavigator = createMaterialTopTabNavigator(
 
 const MainNavigator = createBottomTabNavigator(
   {
-    // Users: UserNavigator,
     Posters: PosterNavigator,
     Search: FilterNavigator,
     Home: HomeNavigator,
-    // Friends: BuddyNavigator,
     Notification: NotificationNavigator,
     Profile: AccountNavigator,
   },
@@ -483,7 +474,6 @@ const MainNavigator = createBottomTabNavigator(
           iconName = focused ? 'person' : 'person-outline';
         }
 
-        // You can return any component that you like here!
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
       tabBarOnPress: ({navigation}) => {

@@ -5,8 +5,6 @@ import {
   Image,
   Text,
   StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
@@ -22,6 +20,7 @@ const NotificationListScreen = (props) => {
   useEffect(() => {
     getNotifications();
   }, []);
+
   const getNotifications = async () => {
     try {
       const res = await fetch(`http://13.232.190.226/api/alert`, {
@@ -32,16 +31,15 @@ const NotificationListScreen = (props) => {
       });
       const resData = await res.json();
       if (!resData.success) {
-        //alert(resData.message);
         return;
       }
       setLoading(false)
       setAlerts(resData.data.notifications);
-      
     } catch (error) {
       alert('Something went wrong. Try again later.');
     }
   };
+
   if (isLoading) {
     return (
       <ActivityIndicator
@@ -51,9 +49,9 @@ const NotificationListScreen = (props) => {
       />
     );
   }
+
   if (alerts.length === 0) {
     return (
-
       <View
         style={{
           justifyContent: 'center',
@@ -61,16 +59,17 @@ const NotificationListScreen = (props) => {
           paddingVertical: 25,
           marginTop: "35%"
         }}>
-
         <Image
           source={require('../assets/empty.png')}
           style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
-        /><Text style={{ fontSize: 18, color: 'tomato' }}>
-          No new Notification.
-  </Text>
+        />
+          <Text style={{ fontSize: 18, color: 'tomato' }}>
+            No new Notification.
+          </Text>
       </View>
     )
   }
+  
   return (
     <>
       <FlatList

@@ -171,7 +171,6 @@ const UserDetailsScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         setIsFriends(response.data);
-        console.log('friends', isFriends);
       })
       .catch((error) => {});
   };
@@ -232,7 +231,6 @@ const UserDetailsScreen = (props) => {
           }
         },
         (error) => {
-          console.warn(error);
         },
       );
   };
@@ -399,6 +397,7 @@ const UserDetailsScreen = (props) => {
       </View>
     );
   }
+
   const footerModal = () =>{
     return(
       <View style={{width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center', marginBottom:'10%'}}>
@@ -415,7 +414,6 @@ const UserDetailsScreen = (props) => {
       <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
         {message}
       </Snackbar>
-
       <View style={styles.container}>
         <ScrollView>
           <Swiper height={300} showsPagination={true}>
@@ -554,7 +552,6 @@ const UserDetailsScreen = (props) => {
             {user.gender}, {calculateAge(user.dob)} yrs,{' '}
             {Moment(user.dob).format('DD/MM/YYYY')}
           </Text>
-
           <Text style={styles.otherText}>
             {userLocation === undefined
               ? null
@@ -679,7 +676,6 @@ const UserDetailsScreen = (props) => {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              // marginTop: 22,
               backgroundColor: '#000000aa',
             }}
             onPress={() => setVisible(false)}>
@@ -728,13 +724,6 @@ const UserDetailsScreen = (props) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              {/* <View style={{flexDirection: 'row-reverse', marginBottom: 40}}>
-                <TouchableOpacity
-                  onPress={() => setRequestModal(false)}
-                  activeOpacity={0.7}>
-                  <Icon name="close-circle" size={35} color={'black'} />
-                </TouchableOpacity>
-              </View> */}
               <View
                 style={{
                   justifyContent: 'center',
@@ -742,24 +731,6 @@ const UserDetailsScreen = (props) => {
                   paddingVertical: 15,
                   width: '100%',
                 }}>
-                {/* <View style={{alignItems: 'center', width: '100%'}}>
-                  {/* <View style={{width: '100%', height: 'auto'}}>
-                    <Image
-                      style={{width: '100%', height: 200}}
-                      source={{
-                        uri:
-                          user.image !== undefined
-                            ? `http://13.232.190.226/api/user/avatar/${user.image.avatar}`
-                            : 'https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVID19_SECVPF.gif',
-                      }}
-                    />
-                  </View> 
-                  <View style={{margin: 10}}>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                      {user.name}
-                    </Text>
-                  </View>
-                </View> */}
                 <View style={{marginBottom: 5}}>
                   <View
                     style={{
@@ -773,7 +744,6 @@ const UserDetailsScreen = (props) => {
                         <TouchableOpacity
                           key={item._id}
                           onPress={() => {
-                            // setChecked(item._id);
                             handleToggle(item._id);
                           }}
                           style={
@@ -827,7 +797,6 @@ const UserDetailsScreen = (props) => {
                           placeholder="Message"
                           numberOfLines={6}
                           multiline={true}
-                          // value={values.notes}
                           onChangeText={handleChange('notes')}
                           onBlur={() => setFieldTouched('notes')}
                         />

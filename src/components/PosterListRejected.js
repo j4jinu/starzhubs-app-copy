@@ -4,6 +4,7 @@ import {FlatList} from 'react-native-gesture-handler';
 import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
+
 const PosterListRejected = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ const PosterListRejected = (props) => {
   useEffect(() => {
     getPosters();
   }, []);
+
   const getPosters = async (status) => {
     setLoading(true);
     setPosters([]);
@@ -70,6 +72,7 @@ const PosterListRejected = (props) => {
       </View>
     );
   }
+  
   return (
     <View>
       <FlatList

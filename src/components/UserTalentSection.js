@@ -26,7 +26,6 @@ const UserTalentSection = (props) => {
         )
     }
 
-
     return (
         <View style={styles.container}>
             {talents.map((t, key) => (
@@ -46,87 +45,82 @@ const UserTalentSection = (props) => {
                                 style={{ paddingVertical: 5 }}
                                 startingValue={t.level}
                                 />
-                  <Text style={{marginLeft:'5%', marginTop:4}}>
-                    {t.level == '1'
-                        ? "Beginner"
-                        : t.level == '2'
-                        ? "Average"
-                        : t.level == '3'
-                        ? "Good"
-                        : t.level == '4'
-                        ? "Excellent"
-                        : "Experienced"
-                    }
-                  </Text>
-                  </View>
-                    <View style={styles.subrow}>
-                        <View
-                            style={{
-                                padding: 5,
-                                alignItems: 'flex-start',
-                                justifyContent: 'center',
-                                width:'60%'
-                            }}
-                        >
-                            <Text style={{fontWeight:'bold',color: "black",}}>Type</Text>
-                            <Text style={{color: "darkgrey",}}>
-                                {t.chars.type
+                            <Text style={{marginLeft:'5%', marginTop:4}}>
+                                {t.level == '1'
+                                    ? "Beginner"
+                                    : t.level == '2'
+                                    ? "Average"
+                                    : t.level == '3'
+                                    ? "Good"
+                                    : t.level == '4'
+                                    ? "Excellent"
+                                    : "Experienced"
                                 }
                             </Text>
                         </View>
-                        <View
-                            style={{
-                                padding: 5,
-                                alignItems: 'flex-start',
-                                justifyContent: 'center',
-                                width:'40%'
-                            }}
-                        >
-                            <Text style={{fontWeight:'bold',color: "black",}}>Industries</Text>
-                            <Text style={{color: "darkgrey",}}>{t.chars.industry.toString()}</Text>
+                        <View style={styles.subrow}>
+                            <View
+                                style={{
+                                    padding: 5,
+                                    alignItems: 'flex-start',
+                                    justifyContent: 'center',
+                                    width:'60%'
+                                }}
+                            >
+                                <Text style={{fontWeight:'bold',color: "black",}}>Type</Text>
+                                <Text style={{color: "darkgrey"}}>{t.chars.type}</Text>
+                            </View>
+                            <View
+                                style={{
+                                    padding: 5,
+                                    alignItems: 'flex-start',
+                                    justifyContent: 'center',
+                                    width:'40%'
+                                }}
+                            >
+                                <Text style={{fontWeight:'bold',color: "black",}}>Industries</Text>
+                                <Text style={{color: "darkgrey",}}>{t.chars.industry.toString()}</Text>
+                            </View>
                         </View>
-                        
-                    </View>
-                    <View style={styles.subrow}>
-                        
-                        <View
-                            style={{
-                                padding: 5,
-                                alignItems: 'flex-start',
-                                justifyContent: 'center',
-                                width:'60%'
-                            }}
-                        >
-                            <Text style={{fontWeight:'bold',color: "black",}}>Experience</Text>
-                            <Text style={{color: "darkgrey",}}>{t.chars.years} Year Experienced</Text>
+                        <View style={styles.subrow}>
+                            <View
+                                style={{
+                                    padding: 5,
+                                    alignItems: 'flex-start',
+                                    justifyContent: 'center',
+                                    width:'60%'
+                                }}
+                            >
+                                <Text style={{fontWeight:'bold',color: "black",}}>Experience</Text>
+                                <Text style={{color: "darkgrey",}}>{t.chars.years} Year Experienced</Text>
+                            </View>
+                            <View
+                                style={{
+                                    padding: 5,
+                                    alignItems: 'flex-start',
+                                    justifyContent: 'center',
+                                    width:'40%'
+                                }}
+                            >
+                                <Text style={{color: "black",fontWeight:'bold',}}>Works</Text>
+                                <Text style={{color: "darkgrey",}}>{t.chars.films} work(s) completed</Text>
+                            </View>
                         </View>
-                        <View
-                            style={{
-                                padding: 5,
-                                alignItems: 'flex-start',
-                                justifyContent: 'center',
-                                width:'40%'
-                            }}
-                        >
-                            <Text style={{color: "black",fontWeight:'bold',}}>Works</Text>
-                            <Text style={{color: "darkgrey",}}>{t.chars.films} work(s) completed</Text>
+                        <View style={{paddingHorizontal:5}}>
+                            <Text style={{marginTop: 10,color: "black",fontWeight:'bold' }}>
+                                Description
+                            </Text>
+                            <Text
+                                style={{
+                                    color: "darkgrey",
+                                    marginBottom: 15,
+                                    justifyContent:'center'
+                                }}
+                            >
+                                {t.description}
+                            </Text>
                         </View>
                     </View>
-                    <View style={{paddingHorizontal:5}}>
-                    <Text style={{marginTop: 10,color: "black",fontWeight:'bold' }}>
-                        Description
-                    </Text>
-                    <Text
-                        style={{
-                            color: "darkgrey",
-                            marginBottom: 15,
-                            justifyContent:'center'
-                        }}
-                    >
-                        {t.description}
-                    </Text>
-                    </View>
-                </View>
                 </View>
             ))}
         </View>
@@ -148,7 +142,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width:'100%'
-        // marginVertical:'1%'
     },
     title: {
         fontWeight: 'bold',

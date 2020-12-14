@@ -6,13 +6,13 @@ import {
   StyleSheet,
   TextInput,
   Text,
-  SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
+
 const emailRegExp = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[ \t]$/;
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 const passRegExp = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
@@ -44,14 +44,12 @@ const profileSchema = yup.object({
 });
 
 const SignupScreen = (props) => {
-  // Register new user
   const register = async (values, { setSubmitting }) => {
     if (values.password !== values.confPassword) {
       setSubmitting(false);
       alert('Passords do not match. Try again.');
       return;
     }
-    // API request options
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -72,7 +70,6 @@ const SignupScreen = (props) => {
         props.navigation.navigate('otp', {
           userId: responseData.data.userId,
         });
-        console.log('sign up page', responseData);
       } else {
         alert(responseData.message);
       }

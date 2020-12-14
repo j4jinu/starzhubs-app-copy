@@ -10,7 +10,6 @@ const SentConnectionScreen = (props) => {
   const [isFriends, setIsFriends] = useState([]);
 
   const unsubscribe = props.navigation.addListener('didFocus', () => {
-    console.log('focussed');
     getConnectionRequests();
   });
 
@@ -18,6 +17,7 @@ const SentConnectionScreen = (props) => {
     getConnectionRequests();
     unsubscribe;
   }, []);
+
   const getConnectionRequests = () => {
     fetch(`http://13.232.190.226/api/talent/req/sent`, {
       method: 'GET',

@@ -10,6 +10,7 @@ import {
 import {Card} from 'react-native-paper';
 import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
+
 const ServiceScreen = ({navigation}) => {
   const auth = useContext(AuthContext);
   const [service, setService] = useState([]);
@@ -32,11 +33,9 @@ const ServiceScreen = ({navigation}) => {
           if (response.success === true) {
             setService(response.services);
           } else {
-            console.warn(response.message);
           }
         },
         (error) => {
-          console.warn('Service fetch failed: ' + error);
         },
       );
   };
@@ -72,7 +71,6 @@ const ServiceScreen = ({navigation}) => {
                 />
                 <View
                   style={{
-                    // marginBottom: '5%',
                     marginHorizontal: 5,
                     justifyContent: 'center',
                     alignItems: 'center',

@@ -10,12 +10,12 @@ import {
   ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {Snackbar} from 'react-native-paper';
 import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
+
 const ServiceDetailsScreen = (props) => {
   const serviceId = props.navigation.getParam('serviceId');
   const auth = useContext(AuthContext);
@@ -52,7 +52,6 @@ const ServiceDetailsScreen = (props) => {
       },
       body: JSON.stringify({message: values.message}),
     };
-
     fetch(`http://13.232.190.226/api/services/${serviceId}`, requestOptions)
       .then((response) => response.json())
       .then(
@@ -62,8 +61,6 @@ const ServiceDetailsScreen = (props) => {
             setVisible(!visible);
             showToastWithGravityAndOffset();
             props.navigation.navigate('OurServices');
-
-            // props.navigation.goBack()
           } else {
             setVisible(!visible);
           }
@@ -79,6 +76,7 @@ const ServiceDetailsScreen = (props) => {
   const onDismissSnackBar = () => {
     setVisible(false);
   };
+
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
       '  Thanks for your feedback!',
@@ -88,6 +86,7 @@ const ServiceDetailsScreen = (props) => {
       100,
     );
   };
+
   return (
     <View style={styles.container}>
       <Snackbar
@@ -132,12 +131,6 @@ const ServiceDetailsScreen = (props) => {
               marginRight: '10%',
               marginLeft: '10%',
             }}>
-            {/* <Icon
-              name="infocirlce"
-              size={15}
-              color={theme.$primaryColor}
-              style={{ marginTop: 4, marginRight: '4%' }}
-            /> */}
             <Text
               style={{
                 textAlign: 'center',
@@ -147,7 +140,6 @@ const ServiceDetailsScreen = (props) => {
               {services.description}
             </Text>
           </View>
-
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -187,7 +179,6 @@ const ServiceDetailsScreen = (props) => {
                     {errors.message}
                   </Text>
                 )}
-
                 <TouchableOpacity style={styles.Btn} onPress={handleSubmit}>
                   <Text style={styles.BtnText}>
                     {loading ? (
@@ -198,7 +189,6 @@ const ServiceDetailsScreen = (props) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              // </Fragment>
             )}
           </Formik>
         </View>
@@ -219,7 +209,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center',
   },
-
   error: {
     color: 'red',
     fontSize: 10,

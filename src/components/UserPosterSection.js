@@ -1,14 +1,9 @@
 import React from 'react'
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo'
-import theme from '../config/theme';
-import MediaGrid from './MediaGrid';
 import PosterGrid from './PosterGrid';
-import PosterGridItem from './PosterGridItem';
 
 const UserPosterSection = (props) => {
     const { posters } = props
-    console.log("posters", posters);
 
     if (posters.length === 0 || posters === undefined) {
         return (

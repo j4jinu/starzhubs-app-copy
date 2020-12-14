@@ -3,8 +3,6 @@ import {
   View,
   Text,
   ScrollView,
-  TextInput,
-  Button,
   StyleSheet,
   Alert,
   Image,
@@ -12,9 +10,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import theme from '../config/theme';
-import DIcon from 'react-native-vector-icons/MaterialIcons';
-import EIcon from 'react-native-vector-icons/FontAwesome5';
-import {Snackbar} from 'react-native-paper';
 import {AuthContext} from '../context/authContext';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import GIcon from 'react-native-vector-icons/FontAwesome';
@@ -24,9 +19,7 @@ const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
   const [talents, setTalents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visible, setVisible] = useState(false);
   const unsubscribe = props.navigation.addListener('didFocus', () => {
-    console.log('focussed');
     getUserTalents();
   });
 
@@ -53,14 +46,11 @@ const TalentListScreen = (props) => {
         (response) => {
           if (response.success === true) {
             setTalents(response.data.talents);
-            console.log('talents', talents);
             setLoading(false);
           } else {
-            console.log('gggg', response.message);
           }
         },
         (error) => {
-          console.warn('Talents fetch failed: ' + error);
         },
       );
   };
@@ -103,7 +93,6 @@ const TalentListScreen = (props) => {
         (response) => {
           if (response.success === true) {
             getUserTalents();
-            // setVisible(!visible);
             showToastWithGravityAndOffset();
           } else {
             alert(response.message);
@@ -114,6 +103,7 @@ const TalentListScreen = (props) => {
         },
       );
   };
+
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
       'Deleted Successfully',
@@ -123,6 +113,7 @@ const TalentListScreen = (props) => {
       100,
     );
   };
+
   if (loading) {
     return (
       <ActivityIndicator
@@ -132,6 +123,7 @@ const TalentListScreen = (props) => {
       />
     );
   }
+
   if (talents.length === 0) {
     return (
       <>
@@ -147,7 +139,6 @@ const TalentListScreen = (props) => {
             No talents added yet
           </Text>
         </View>
-
         <TouchableOpacity
           onPress={() => props.navigation.navigate('AddTalents')}>
           <Image
@@ -158,6 +149,7 @@ const TalentListScreen = (props) => {
       </>
     );
   }
+
   if (talents.length > 0) {
     return (
       <>
@@ -340,10 +332,6 @@ const styles = StyleSheet.create({
     width: '150%',
     backgroundColor: '#0086b3',
     height: 40,
-
-    // width: '150%',
-    // backgroundColor: '#00ba28',
-    // height: 50,
     marginRight: '25%',
     justifyContent: 'center',
     marginTop: 2,
@@ -354,11 +342,6 @@ const styles = StyleSheet.create({
     marginLeft: '25%',
     marginRight: '32%',
     height: 40,
-    // width: '70%',
-    // backgroundColor: '#db3000',
-    // marginLeft: '25%',
-    // marginRight: '32%',
-    // height: 50,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
@@ -372,7 +355,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    //marginVertical:'1%'
   },
   title: {
     fontWeight: 'bold',
@@ -390,11 +372,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     marginHorizontal: 10,
-    // padding: 8,
     marginBottom: '3%',
     marginTop: 10,
-    // paddingHorizontal: 5,
-    // paddingVertical: 10,
     flexDirection: 'column',
     borderRadius: theme.$borderRadius,
     elevation: 2,

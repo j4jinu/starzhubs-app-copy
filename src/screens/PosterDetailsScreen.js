@@ -7,7 +7,6 @@ import {
   View,
   Modal,
   TouchableOpacity,
-  TextInput,
   Alert,
   Dimensions,
   ToastAndroid,
@@ -22,9 +21,7 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 import SIcon from 'react-native-vector-icons/FontAwesome';
 import EIcon from 'react-native-vector-icons/Entypo';
 import * as Yup from 'yup';
-import {Formik} from 'formik';
 import {AuthContext} from '../context/authContext';
-import {Snackbar} from 'react-native-paper';
 
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -37,14 +34,13 @@ const PosterDetailsScreen = (props) => {
   const [selectedPoster, setSelectedPoster] = useState([]);
   const user = props.navigation.getParam('user');
   const status = props.navigation.getParam('status');
-  const [isRequestModal, setRequestModal] = useState(false);
-  const [msg, setmsg] = useState();
   const [visible, setVisible] = useState(false);
   const [enlargeModal, setEnlargeModal] = useState(false);
   const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
   const [showModal, setshowModal] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
+
   const images = [
     {
       url: `http://13.232.190.226/api/poster/view/${image}`,
@@ -57,12 +53,15 @@ const PosterDetailsScreen = (props) => {
   const initialValues = {
     notes: `I'm very much inetersted in your post`,
   };
+
   const validation = Yup.object({
     notes: Yup.string().required('Please enter  some introductory text'),
   });
+
   useEffect(() => {
     getPosterById();
   }, []);
+
   const getPosterById = () => {
     fetch(`http://13.232.190.226/api/poster/${posterId}`, {
       method: 'PATCH',
@@ -76,6 +75,7 @@ const PosterDetailsScreen = (props) => {
       })
       .catch((error) => {});
   };
+
   const onSubmitRequest = () => {
     fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
       method: 'POST',
@@ -87,7 +87,6 @@ const PosterDetailsScreen = (props) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('response', response.success);
         if (response.success === false) {
           Alert.alert('Alert', 'You have already sent a request', [
             {
@@ -107,8 +106,8 @@ const PosterDetailsScreen = (props) => {
         alert(error);
       });
   };
+
   const updatePosterReq = (id, status) => {
-    console.log(id);
     Alert.alert(
       `${status === 1 ? 'Approve' : 'Delete'} Request`,
       `Are you sure to ${status === 1 ? 'Approve' : 'Reject'} this request?`,
@@ -141,7 +140,6 @@ const PosterDetailsScreen = (props) => {
       .then((response) => response.json())
       .then(
         (response) => {
-          console.log(response);
           if (response.success) {
             if (status === 1) {
               showToastWithGravityAndOffset1();
@@ -160,6 +158,7 @@ const PosterDetailsScreen = (props) => {
         },
       );
   };
+
   const showToastWithGravityAndOffset1 = () => {
     ToastAndroid.showWithGravityAndOffset(
       'Request Approved',
@@ -169,6 +168,7 @@ const PosterDetailsScreen = (props) => {
       100,
     );
   };
+
   const showToastWithGravityAndOffset2 = () => {
     ToastAndroid.showWithGravityAndOffset(
       'Request Rejected',
@@ -178,6 +178,7 @@ const PosterDetailsScreen = (props) => {
       100,
     );
   };
+
   const footerModal = () =>{
     return(
       <View style={{width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center', marginBottom:'10%'}}>
@@ -188,6 +189,7 @@ const PosterDetailsScreen = (props) => {
       </View>
     )
   }
+
   return (
     <>
       <View style={styles.container}>
@@ -230,7 +232,6 @@ const PosterDetailsScreen = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                // marginHorizontal: 5,
                 marginVertical: 15,
               }}>
               <View style={{flexDirection: 'row'}}>
@@ -278,7 +279,6 @@ const PosterDetailsScreen = (props) => {
                   uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                 }}
               />
-
               <TouchableOpacity
                 onPress={() =>
                   props.navigation.navigate('UserDetails', {
@@ -302,7 +302,6 @@ const PosterDetailsScreen = (props) => {
               </TouchableOpacity>
             </View>
           )}
-
           {user._id === auth.userId ? (
             <>
               <View>
@@ -359,10 +358,8 @@ const PosterDetailsScreen = (props) => {
                         }}
                         source={{
                           uri: `http://13.232.190.226/api/user/avatar/${s.requestBy.image.avatar}`,
-                          // uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
                         }}
                       />
-
                       <View
                         style={{
                           flex: 1,
@@ -408,93 +405,9 @@ const PosterDetailsScreen = (props) => {
               )}
             </>
           ) : null}
-          {/* {(user._id === auth.userId || status !== undefined) ? null : (
-            <TouchableOpacity
-              onPress={onSubmitRequest}
-              activeOpacity={0.7}
-              style={styles.requestBtn}>
-              <Text style={{ fontSize: 17, color: 'white' }}>
-                {'Show Interest'}
-              </Text>
-            </TouchableOpacity>
-          )} */}
         </ScrollView>
       </View>
 
-      {/* Poster image modal */}
-
-      <Modal transparent visible={enlargeModal} animationType="slide">
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            // marginTop: 22,
-            backgroundColor: '#000000aa',
-          }}
-          // onPress={() => setVisible(false)}
-        >
-          <View
-            style={{
-              margin: 5,
-              backgroundColor: 'white',
-              borderRadius: 3,
-              width: '95%',
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                paddingVertical: 5,
-              }}>
-              <Text
-                style={{
-                  color: theme.$primaryColorText,
-                  marginLeft: 15,
-                  color: theme.$primaryColorText,
-                  fontSize: 17,
-                }}></Text>
-              <TouchableOpacity onPress={() => setEnlargeModal(false)}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    marginRight: 12,
-                  }}>
-                  X
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                justifyContent: 'center',
-                paddingHorizontal: 5,
-                paddingVertical: 5,
-              }}>
-              <Image
-                // style={styles.media}
-                style={{
-                  width: '100%',
-                  height: deviceWidth / 2,
-                  backgroundColor: '#e6e6e6',
-                }}
-                source={{
-                  uri: `http://13.232.190.226/api/poster/view/${image}`,
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
       <Modal visible={showModal} transparent={true}>
         <ImageViewer
           imageUrls={images}
@@ -513,45 +426,20 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   description: {
-    // marginHorizontal: 5,
-    // marginVertical: 5,
     lineHeight: 20,
     textAlign: 'justify',
     width: '95%',
   },
   posterInfo: {
     backgroundColor: 'white',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // elevation: 5,
-    // marginHorizontal: 10,
     padding: 20,
-    // paddingBottom:20
-    // marginTop: -10,
-    // borderRadius: theme.$borderRadius,
   },
   authorInfo: {
     backgroundColor: 'white',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 3.84,
-    // elevation: 5,
-    // marginHorizontal: 10,
-    // padding: 8,
     marginTop: 1,
     flexDirection: 'row',
     borderRadius: theme.$borderRadius,
     padding: 20,
-    // flex:1
   },
   requestBtn: {
     backgroundColor: theme.$primaryColor,
@@ -574,7 +462,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textTransform: 'capitalize',
     color: 'black',
-    // alignSelf: 'center',
     fontWeight: 'bold',
   },
   error: {
@@ -593,10 +480,8 @@ const styles = StyleSheet.create({
     width: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    // alignSelf: 'flex-end',
     marginTop: '-12%',
     elevation: 5,
-    // marginRight: 15,
     alignSelf: 'flex-end',
   },
 });

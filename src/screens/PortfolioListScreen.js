@@ -78,6 +78,7 @@ const PortfolioListScreen = (props) => {
       />
     );
   }
+  
   return (
     <View>
       <ScrollView

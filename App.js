@@ -6,12 +6,6 @@ import {createStore, combineReducers} from 'redux';
 import {AuthContext} from './src/context/authContext';
 import {StatusBar} from 'react-native';
 
-// const rootReducer = combineReducers({
-//   posters: posterReducer
-// })
-
-// const store = createStore(rootReducer)
-
 const App = () => {
   const {token, userId, login, logout} = useAuth();
   return (
