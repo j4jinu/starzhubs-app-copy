@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   FlatList,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import NotificationItem from '../components/NotificationItem';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import Moment from 'moment';
 
 const NotificationListScreen = (props) => {
@@ -29,7 +29,7 @@ const NotificationListScreen = (props) => {
       });
       const resData = await res.json();
       if (!resData.success) {
-        alert(resData.message);
+        //alert(resData.message);
         return;
       }
       setAlerts(resData.data.notifications);
@@ -38,7 +38,26 @@ const NotificationListScreen = (props) => {
       alert('Something went wrong. Try again later.');
     }
   };
+  if (alerts.length === 0) {
+    return (
 
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 25,
+          marginTop: "35%"
+        }}>
+
+        <Image
+          source={require('../assets/empty.png')}
+          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+        /><Text style={{ fontSize: 18, color: 'tomato' }}>
+          No new Notification.
+    </Text>
+      </View>
+    )
+  }
   return (
     <>
       <FlatList

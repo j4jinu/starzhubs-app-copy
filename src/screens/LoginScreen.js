@@ -11,10 +11,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const loginSchema = yup.object({
   username: yup.string().required('Enter email address'),
@@ -50,10 +50,10 @@ const LoginScreen = (props) => {
             marginLeft: 20,
             marginBottom: 20,
           }}>
-          Sign in to your account,
+          Sign in to your account
         </Text>
         <Formik
-          initialValues={{username: '', password: ''}}
+          initialValues={{ username: '', password: '' }}
           validationSchema={loginSchema}
           onSubmit={(values) => loginUser(values)}>
           {({
@@ -65,81 +65,81 @@ const LoginScreen = (props) => {
             errors,
             values,
           }) => (
-            <>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 8,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.username ? 'red' : 'gray',
-                }}>
-                <Icon name="mail" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  keyboardType={'email-address'}
-                  textContentType={'emailAddress'}
-                  style={styles.inputField}
-                  placeholder={'Email address'}
-                  onChangeText={handleChange('username')}
-                  onBlur={handleBlur('username')}
-                  value={values.username}
-                />
-              </View>
-              {touched.username && errors.username && (
-                <Text style={styles.errorText}>
-                  {touched.username && errors.username}
-                </Text>
-              )}
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  borderRadius: 8,
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.password ? 'red' : 'gray',
-                }}>
-                <Icon name="lock" size={20} color={theme.$primaryColor} />
-                <TextInput
-                  secureTextEntry={true}
-                  style={styles.inputField}
-                  placeholder={'Password'}
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                />
-              </View>
-              {touched.password && errors.password && (
-                <Text style={styles.errorText}>
-                  {touched.password && errors.password}
-                </Text>
-              )}
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate('PasswordRecovery')}>
-                <Text style={styles.forgotText}>Forgot Password?</Text>
-              </TouchableOpacity>
-              {!isSubmitting && (
+              <>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.username ? 'red' : 'gray',
+                  }}>
+                  <Icon name="mail" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    keyboardType={'email-address'}
+                    textContentType={'emailAddress'}
+                    style={styles.inputField}
+                    placeholder={'Email address'}
+                    onChangeText={handleChange('username')}
+                    onBlur={handleBlur('username')}
+                    value={values.username}
+                  />
+                </View>
+                {touched.username && errors.username && (
+                  <Text style={styles.errorText}>
+                    {touched.username && errors.username}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 8,
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 20,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.password ? 'red' : 'gray',
+                  }}>
+                  <Icon name="lock" size={20} color={theme.$primaryColor} />
+                  <TextInput
+                    secureTextEntry={true}
+                    style={styles.inputField}
+                    placeholder={'Password'}
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                  />
+                </View>
+                {touched.password && errors.password && (
+                  <Text style={styles.errorText}>
+                    {touched.password && errors.password}
+                  </Text>
+                )}
                 <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.loginBtn}
-                  onPress={handleSubmit}>
-                  <Text style={styles.loginBtnText}>Sign In</Text>
+                  onPress={() => props.navigation.navigate('PasswordRecovery')}>
+                  <Text style={styles.forgotText}>Forgot Password?</Text>
                 </TouchableOpacity>
-              )}
-              {isSubmitting && (
-                <ActivityIndicator size={'large'} color={theme.$primaryColor} />
-              )}
-            </>
-          )}
+                {!isSubmitting && (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.loginBtn}
+                    onPress={handleSubmit}>
+                    <Text style={styles.loginBtnText}>Sign In</Text>
+                  </TouchableOpacity>
+                )}
+                {isSubmitting && (
+                  <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+                )}
+              </>
+            )}
         </Formik>
         <View style={styles.registerLayout}>
           <Text style={styles.registerLayoutText1}>Don't have an account?</Text>
@@ -164,10 +164,10 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   forgotText: {
-    color: '#3446eb',
+    color: 'tomato',
     alignSelf: 'flex-end',
     marginRight: '8%',
-    fontWeight: 'bold',
+
     marginTop: 12,
     marginBottom: 12,
     fontSize: 14,
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   registerLayoutText2: {
     color: theme.$primaryColor,
     fontSize: 14,
-    fontWeight: 'bold',
+
     fontFamily: 'montserrat-regular',
   },
   welcomeText: {

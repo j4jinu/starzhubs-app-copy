@@ -273,7 +273,7 @@ const TalentListScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                <View style={{ flexDirection: "row", bottom: 0 }}>
+                <View style={{ flexDirection: "row", }}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate('EditTalents', {

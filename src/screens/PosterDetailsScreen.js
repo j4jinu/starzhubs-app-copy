@@ -11,6 +11,7 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import { useSelector } from 'react-redux';
 import theme from '../config/theme';
 import Moment from 'moment';
@@ -23,7 +24,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { AuthContext } from '../context/authContext';
 import { Snackbar } from 'react-native-paper';
-
 
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -39,9 +39,19 @@ const PosterDetailsScreen = (props) => {
   const [isRequestModal, setRequestModal] = useState(false);
   const [msg, setmsg] = useState();
   const [visible, setVisible] = useState(false);
-  const [enlargeModal, setEnlargeModal] = useState(false)
+  const [enlargeModal, setEnlargeModal] = useState(false);
   const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
+  const [showModal, setshowModal] = useState(false);
+  const [imageIndex, setimageIndex] = useState(0);
+  const images = [
+    {
+      url: `http://13.232.190.226/api/poster/view/${image}`,
+      props: {
+        source: `http://13.232.190.226/api/poster/view/${image}`,
+      },
+    },
+  ];
 
   const initialValues = {
     notes: `I'm very much inetersted in your post`,
@@ -76,7 +86,7 @@ const PosterDetailsScreen = (props) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log("response", response.success)
+        console.log('response', response.success);
         if (response.success === false) {
           Alert.alert('Alert', 'You have already sent a request', [
             {
@@ -84,9 +94,7 @@ const PosterDetailsScreen = (props) => {
               onPress: () => props.navigation.navigate('Posters'),
             },
           ]);
-        }
-
-        else {
+        } else {
           props.navigation.navigate('PosterRequest', {
             posterId: posterId,
             image: image,
@@ -159,9 +167,13 @@ const PosterDetailsScreen = (props) => {
       <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
         {msg}
       </Snackbar>
-      <ScrollView>
-        <View style={styles.container}>
-          <TouchableOpacity onPress={() => setEnlargeModal(true)}>
+      <View style={styles.container}>
+        <ScrollView>
+          <TouchableOpacity
+            onPress={() => {
+              setimageIndex(0);
+              setshowModal(true);
+            }}>
             <Image
               style={{
                 width: deviceWidth,
@@ -175,7 +187,7 @@ const PosterDetailsScreen = (props) => {
             />
           </TouchableOpacity>
           <View style={styles.posterInfo}>
-            {(user._id === auth.userId || status !== undefined) ? null : (
+            {user._id === auth.userId || status !== undefined ? null : (
               <TouchableOpacity
                 style={styles.sendBtn}
                 onPress={onSubmitRequest}
@@ -189,7 +201,6 @@ const PosterDetailsScreen = (props) => {
                   {title}
                 </Text>
               </View>
-
             </View>
             <View
               style={{
@@ -200,20 +211,35 @@ const PosterDetailsScreen = (props) => {
                 marginVertical: 15,
               }}>
               <View style={{ flexDirection: 'row' }}>
-                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{ marginTop: 1 }} />
+                <SIcon
+                  name="calendar"
+                  size={12}
+                  color={theme.$primaryColor}
+                  style={{ marginTop: 1 }}
+                />
                 <Text style={{ fontSize: 12, marginLeft: '5%' }}>
                   Starts : {Moment(startDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
-              <View style={{ flexDirection: 'row', }}>
-                <SIcon name="calendar" size={12} color={theme.$primaryColor} style={{ marginTop: 1 }} />
+              <View style={{ flexDirection: 'row' }}>
+                <SIcon
+                  name="calendar"
+                  size={12}
+                  color={theme.$primaryColor}
+                  style={{ marginTop: 1 }}
+                />
                 <Text style={{ fontSize: 12, marginLeft: 8 }}>
                   Ends: {Moment(endDate).format('DD/MM/YYYY')}
                 </Text>
               </View>
             </View>
             <View style={{ flexDirection: 'row', width: '100%' }}>
-              <EIcon name="info-with-circle" size={12} color={theme.$primaryColor} style={{ marginTop: 3, width: '5%' }} />
+              <EIcon
+                name="info-with-circle"
+                size={12}
+                color={theme.$primaryColor}
+                style={{ marginTop: 3, width: '5%' }}
+              />
               <Text style={styles.description}>{description}</Text>
             </View>
           </View>
@@ -243,7 +269,9 @@ const PosterDetailsScreen = (props) => {
                     justifyContent: 'center',
                     marginLeft: 10,
                   }}>
-                  <Text style={{ fontSize: 13, color: 'grey' }}>{'Posted By'}</Text>
+                  <Text style={{ fontSize: 13, color: 'grey' }}>
+                    {'Posted By'}
+                  </Text>
                   <Text style={{ fontSize: 14, fontWeight: '700' }}>
                     {user.name}
                   </Text>
@@ -251,7 +279,6 @@ const PosterDetailsScreen = (props) => {
               </TouchableOpacity>
             </View>
           )}
-
 
           {user._id === auth.userId ? (
             <>
@@ -262,7 +289,8 @@ const PosterDetailsScreen = (props) => {
                     fontSize: 17,
                     fontWeight: 'bold',
                     marginLeft: 15,
-                    marginTop: 20,
+                    marginTop: 10,
+                    marginBottom: 10
                   }}>
                   Requests:
                 </Text>
@@ -339,7 +367,7 @@ const PosterDetailsScreen = (props) => {
                             marginHorizontal: 5,
                           }}
                           onPress={() => updatePosterReq(s._id, 1)}>
-                          <AIcon name="check" size={25} color="green" />
+                          <AIcon name="check" size={25} color="orange" />
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={{
@@ -349,7 +377,7 @@ const PosterDetailsScreen = (props) => {
                             marginHorizontal: 5,
                           }}
                           onPress={() => updatePosterReq(s._id, 2)}>
-                          <DIcon name="delete" size={25} color="red" />
+                          <DIcon name="delete" size={25} color="#e34000" />
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -367,8 +395,8 @@ const PosterDetailsScreen = (props) => {
               </Text>
             </TouchableOpacity>
           )} */}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
 
       {/* Poster image modal */}
 
@@ -379,7 +407,7 @@ const PosterDetailsScreen = (props) => {
             justifyContent: 'center',
             alignItems: 'center',
             // marginTop: 22,
-            backgroundColor: '#000000aa'
+            backgroundColor: '#000000aa',
           }}
         // onPress={() => setVisible(false)}
         >
@@ -411,9 +439,7 @@ const PosterDetailsScreen = (props) => {
                   marginLeft: 15,
                   color: theme.$primaryColorText,
                   fontSize: 17,
-                }}>
-
-              </Text>
+                }}></Text>
               <TouchableOpacity onPress={() => setEnlargeModal(false)}>
                 <Text
                   style={{
@@ -422,7 +448,7 @@ const PosterDetailsScreen = (props) => {
                     marginRight: 12,
                   }}>
                   X
-                  </Text>
+                </Text>
               </TouchableOpacity>
             </View>
             <View
@@ -446,7 +472,13 @@ const PosterDetailsScreen = (props) => {
           </View>
         </View>
       </Modal>
-
+      <Modal visible={showModal} transparent={true}>
+        <ImageViewer
+          imageUrls={images}
+          enableSwipeDown
+          onSwipeDown={() => setshowModal(false)}
+        />
+      </Modal>
     </>
   );
 };
@@ -461,7 +493,7 @@ const styles = StyleSheet.create({
     // marginVertical: 5,
     lineHeight: 20,
     textAlign: 'justify',
-    width: '95%'
+    width: '95%',
   },
   posterInfo: {
     backgroundColor: 'white',
@@ -517,7 +549,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     textTransform: 'capitalize',
-    color: "black",
+    color: 'black',
     // alignSelf: 'center',
     fontWeight: 'bold',
   },
@@ -541,10 +573,8 @@ const styles = StyleSheet.create({
     marginTop: '-12%',
     elevation: 5,
     // marginRight: 15,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
-
-
 });
 
 export default PosterDetailsScreen;

@@ -107,10 +107,10 @@ export default function AddTalentScreen(props) {
     experience: '',
     // industry:[],
     projects: '',
-    complexion: 'Brown',
-    bodyType: 'Athletic',
-    height: 0,
-    weight: 0,
+    complexion: '',
+    bodyType: '',
+    height: '',
+    weight: '',
     description: '',
   };
 
@@ -254,73 +254,6 @@ export default function AddTalentScreen(props) {
       setLoading(false);
       setSubmitting(false);
       return;
-    }
-    if (isProfileImageMode === true) {
-      if (bodyTypeValue === undefined || bodyTypeValue === '') {
-        Alert.alert(
-          '',
-          'Select any one of the Body Type',
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
-          { cancelable: false },
-        );
-        setLoading(false);
-        setSubmitting(false);
-        return;
-
-      }
-      if (complexionValue === undefined || complexionValue === '') {
-        Alert.alert(
-          '',
-          'Select any one of the Complexion',
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
-          { cancelable: false },
-        );
-        setLoading(false);
-        setSubmitting(false);
-        return;
-      }
-      if (values.height === 0) {
-        Alert.alert(
-          '',
-          'Enter your height',
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
-          { cancelable: false },
-        );
-        setLoading(false);
-        setSubmitting(false);
-        return;
-      }
-      if (values.weight === 0) {
-        Alert.alert(
-          '',
-          'Enter your Weight',
-          [
-            {
-              text: 'Ok',
-              style: 'cancel',
-            },
-          ],
-          { cancelable: false },
-        );
-        setLoading(false);
-        setSubmitting(false);
-        return;
-      }
     }
     const requestOptions = {
       method: 'POST',
@@ -631,10 +564,11 @@ export default function AddTalentScreen(props) {
                     <Gicon
                       name="industry"
                       size={15}
-                      style={{
-                        color: '#fd9242',
-                        marginTop: -10,
-                      }}
+                      style={
+                        selectedItems.length === 0
+                          ? styles.noIndustry
+                          : styles.industry
+                      }
                     />
                   </View>
 
@@ -1195,4 +1129,13 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-medium',
     textTransform: 'capitalize',
   },
+  noIndustry: {
+    color: '#fd9242',
+    marginTop: '-80%',
+  },
+  industry: {
+    color: '#fd9242',
+    marginTop: '-160%',
+  },
+
 });

@@ -121,7 +121,9 @@ const UserTalentSection = (props) => {
                             <Text
                                 style={{
                                     color: "darkgrey",
-                                    marginBottom: 15
+                                    marginBottom: 15,
+                                    justifyContent: "center",
+
                                 }}
                             >
                                 {t.description}

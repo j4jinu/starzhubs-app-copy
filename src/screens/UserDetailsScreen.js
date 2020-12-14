@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Swiper from 'react-native-swiper';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import theme from '../config/theme';
 import UserTalentSection from '../components/UserTalentSection';
 import UserMediaSection from '../components/UserMediaSection';
@@ -37,6 +38,52 @@ const UserDetailsScreen = (props) => {
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
   const [categoryId, setCategoryId] = useState('');
+  const [showModal, setshowModal] = useState(false);
+  const [imageIndex, setimageIndex] = useState(0);
+  const images = [];
+
+  if (user.image !== undefined) {
+    if (user.image.avatar !== undefined) {
+      images.push({
+        url: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+        props: {
+          source: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+        },
+      });
+    }
+    if (user.image.head_shot !== undefined) {
+      images.push({
+        url: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+        props: {
+          source: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+        },
+      });
+    }
+    if (user.image.left_profile !== undefined) {
+      images.push({
+        url: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+        props: {
+          source: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+        },
+      });
+    }
+    if (user.image.right_profile !== undefined) {
+      images.push({
+        url: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+        props: {
+          source: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+        },
+      });
+    }
+    if (user.image.fullsize !== undefined) {
+      images.push({
+        url: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+        props: {
+          source: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+        },
+      });
+    }
+  }
 
   useEffect(() => {
     const getUserDetails = () => {
@@ -230,7 +277,7 @@ const UserDetailsScreen = (props) => {
 
   const handleClickOpenDecline = () => {
     Alert.alert(
-      'Decline Request',
+      'Remove Connection',
       'Are you sure to remove this connection?',
       [
         {
@@ -327,50 +374,80 @@ const UserDetailsScreen = (props) => {
         {message}
       </Snackbar>
 
-      <ScrollView style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={styles.container}>
-          <Swiper style={styles.wrapper} loop={true} showsPagination={false}>
+      <View style={styles.container}>
+        <ScrollView>
+          <Swiper height={300} showsPagination={true}>
             {user.image && user.image.avatar !== undefined && (
-              <Image
-                key={user.image.avatar}
-                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
-                  cache: 'reload',
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setimageIndex(0);
+                  setshowModal(true);
+                }}>
+                <Image
+                  key={user.image.avatar}
+                  style={{ width: '100%', height: 300, resizeMode: 'cover' }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                    cache: 'reload',
+                  }}
+                />
+              </TouchableOpacity>
             )}
             {user.image && user.image.head_shot !== undefined && (
-              <Image
-                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setimageIndex(1);
+                  setshowModal(true);
+                }}>
+                <Image
+                  style={{ width: '100%', height: 300, resizeMode: 'cover' }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+                  }}
+                />
+              </TouchableOpacity>
             )}
             {user.image && user.image.left_profile !== undefined && (
-              <Image
-                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setimageIndex(2);
+                  setshowModal(true);
+                }}>
+                <Image
+                  style={{ width: '100%', height: 300, resizeMode: 'cover' }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+                  }}
+                />
+              </TouchableOpacity>
             )}
             {user.image && user.image.right_profile !== undefined && (
-              <Image
-                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setimageIndex(3);
+                  setshowModal(true);
+                }}>
+                <Image
+                  style={{ width: '100%', height: 300, resizeMode: 'cover' }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+                  }}
+                />
+              </TouchableOpacity>
             )}
             {user.image && user.image.fullsize !== undefined && (
-              <Image
-                style={{ width: '100%', height: 300, resizeMode: 'cover' }}
-                source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
-                }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  setimageIndex(4);
+                  setshowModal(true);
+                }}>
+                <Image
+                  style={{ width: '100%', height: 300, resizeMode: 'cover' }}
+                  source={{
+                    uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+                  }}
+                />
+              </TouchableOpacity>
             )}
           </Swiper>
           {userId !== auth.userId &&
@@ -389,7 +466,14 @@ const UserDetailsScreen = (props) => {
                         size={25}
                         color={'white'}
                       />
-                      <Text style={{ color: 'white', paddingLeft: '3%', fontWeight: 'bold' }}>Request Sent</Text>
+                      <Text
+                        style={{
+                          color: 'white',
+                          paddingLeft: '3%',
+                          fontWeight: 'bold',
+                        }}>
+                        Request Sent
+                      </Text>
                     </TouchableOpacity>
                   )}
                 {isFriends.status === 'Strangers' && (
@@ -430,7 +514,9 @@ const UserDetailsScreen = (props) => {
           </Text>
 
           <Text style={styles.otherText}>
-            {userLocation === undefined ? null : (userLocation.place, userLocation.state)}
+            {userLocation === undefined
+              ? null
+              : (userLocation.place, userLocation.state)}
           </Text>
           <Text style={styles.otherText}>{user.bio}</Text>
           <View
@@ -521,7 +607,7 @@ const UserDetailsScreen = (props) => {
               navigation={props.navigation}
             />
           )}
-        </View>
+        </ScrollView>
 
         {/* Request Modal */}
 
@@ -532,7 +618,7 @@ const UserDetailsScreen = (props) => {
               justifyContent: 'center',
               alignItems: 'center',
               // marginTop: 22,
-              backgroundColor: '#000000aa'
+              backgroundColor: '#000000aa',
             }}
             onPress={() => setVisible(false)}>
             <View
@@ -592,7 +678,7 @@ const UserDetailsScreen = (props) => {
                   justifyContent: 'center',
                   paddingHorizontal: 15,
                   paddingVertical: 15,
-                  width: '100%'
+                  width: '100%',
                 }}>
                 {/* <View style={{alignItems: 'center', width: '100%'}}>
                   {/* <View style={{width: '100%', height: 'auto'}}>
@@ -616,9 +702,11 @@ const UserDetailsScreen = (props) => {
                   <View
                     style={{
                       flexDirection: 'row',
-                      width: '100%'
+                      width: '100%',
                     }}>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}>
                       {talents.map((item) => (
                         <TouchableOpacity
                           key={item._id}
@@ -721,7 +809,14 @@ const UserDetailsScreen = (props) => {
             </View>
           </View>
         </Modal>
-      </ScrollView>
+        <Modal visible={showModal} transparent={true}>
+          <ImageViewer
+            imageUrls={images}
+            enableSwipeDown
+            onSwipeDown={() => setshowModal(false)}
+          />
+        </Modal>
+      </View>
     </>
   );
 };

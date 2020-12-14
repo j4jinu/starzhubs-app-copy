@@ -137,7 +137,7 @@ const EditTalentScreen = (props) => {
   });
 
   const userInfo = () => {
-    if (talentId === '5fc4ddd488613013dcef6434') {
+    if (category.toLowerCase() === 'actor') {
       setIsProfileImageMode(true);
       fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
         method: 'PATCH',
@@ -866,7 +866,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   inputText: {
-    width: '100%',
+    width: '90%',
     color: '#000000',
     marginLeft: 15,
   },
@@ -881,7 +881,7 @@ const styles = StyleSheet.create({
   },
   inputTextDes: {
     // height: 50,
-    width: '100%',
+    width: '90%',
     color: '#000000',
     marginLeft: 15,
     marginBottom: 5,
