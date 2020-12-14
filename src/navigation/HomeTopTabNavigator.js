@@ -1,9 +1,6 @@
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer } from "react-navigation";
-import LoginScreen from '../screens/LoginScreen';
-import SignupScreen from '../screens/SignupScreen';
 import PortfolioListScreen from '../screens/PortfolioListScreen';
-import HomePortfolioList from '../components/HomePortfolioList';
 import HomePosterList from '../components/HomePosterList';
 import theme from '../config/theme';
 import PosterListScreen from '../screens/PosterListScreen';

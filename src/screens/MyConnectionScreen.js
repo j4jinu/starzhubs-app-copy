@@ -1,18 +1,15 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View, Image, ActivityIndicator} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View, Image, ActivityIndicator } from 'react-native';
 import BuddyItem from '../components/BuddyItem';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
-
 const MyConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [isFriends, setIsFriends] = useState([]);
-
   useEffect(() => {
     getConnectionRequests();
   }, []);
-
   const getConnectionRequests = () => {
     fetch(`http://13.232.190.226/api/talent/req/approved`, {
       method: 'GET',
@@ -30,7 +27,6 @@ const MyConnectionScreen = (props) => {
         alert(error);
       });
   };
-
   if (loading) {
     return (
       <View
@@ -45,14 +41,13 @@ const MyConnectionScreen = (props) => {
       </View>
     );
   }
-
   if (!isFriends === undefined || isFriends.length !== 0) {
     return (
       <FlatList
-        style={{backgroundColor: '#fff'}}
+        style={{ backgroundColor: '#fff' }}
         keyExtractor={(item) => item.id}
         data={isFriends}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <BuddyItem
             id={item._id}
             name={
@@ -71,8 +66,8 @@ const MyConnectionScreen = (props) => {
                   ? item.toUser.location
                   : ''
                 : item.fromUser.location !== undefined
-                ? item.fromUser.location
-                : ''
+                  ? item.fromUser.location
+                  : ''
             }
             onSelect={() =>
               props.navigation.navigate('UserDetails', {
@@ -88,8 +83,8 @@ const MyConnectionScreen = (props) => {
     );
   } else {
     return (
-      <View style={{alignItems: 'center', marginTop: '35%'}}>
-        <Text style={{color: theme.$primaryColor, fontWeight: 'bold'}}>
+      <View style={{ alignItems: 'center', marginTop: '35%' }}>
+        <Text style={{ color: theme.$primaryColor, fontWeight: 'bold' }}>
           No Connections
         </Text>
         <Image

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Image,
   StyleSheet,
@@ -6,13 +6,11 @@ import {
   View,
   Modal,
   TouchableOpacity,
-  ScrollView,
   Dimensions,
 } from 'react-native';
 import WebView from 'react-native-webview';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import SIcon from 'react-native-vector-icons/Fontisto';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import AIcon from 'react-native-vector-icons/AntDesign';
@@ -29,7 +27,6 @@ const MediaDetailsScreen = (props) => {
   const deviceWidth = Dimensions.get('window').width;
   const [showModal, setshowModal] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
-
   const images = [
     {
       url: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
@@ -38,19 +35,18 @@ const MediaDetailsScreen = (props) => {
       },
     },
   ];
-  const footerModal = () =>{
-    return(
-      <View style={{width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center', marginBottom:'10%'}}>
-        <View style={{ flexDirection:'column', width:'100%'}}>
-          <Text style={{color:'white',textAlign:'center', textAlignVertical:'center', width:'100%' }}>Swipe down to close</Text>
-          <AIcon name="arrowdown" size={20} color="white" style={{alignSelf:'center'}} />
+  const footerModal = () => {
+    return (
+      <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: '10%' }}>
+        <View style={{ flexDirection: 'column', width: '100%' }}>
+          <Text style={{ color: 'white', textAlign: 'center', textAlignVertical: 'center', width: '100%' }}>Swipe down to close</Text>
+          <AIcon name="arrowdown" size={20} color="white" style={{ alignSelf: 'center' }} />
         </View>
       </View>
     )
   }
 
   return (
-    // <View>
     <>
       <Modal visible={showModal} transparent={true}>
         <ImageViewer
@@ -60,18 +56,14 @@ const MediaDetailsScreen = (props) => {
           renderFooter={footerModal}
         />
       </Modal>
-
-
       <Modal transparent visible={enlargeModal} animationType="slide">
         <View
           style={{
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginTop: 22,
             backgroundColor: '#000000d2'
           }}
-          // onPress={() => setVisible(false)}
         >
           <View
             style={{
@@ -92,10 +84,6 @@ const MediaDetailsScreen = (props) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                // borderBottomWidth: 1,
-                // paddingVertical: 12,
-                // backgroundColor: '#f5f5f5',
-                // borderColor: 'gray',
               }}>
               <Text
                 style={{
@@ -103,19 +91,20 @@ const MediaDetailsScreen = (props) => {
                   marginLeft: 15,
                   color: theme.$primaryColorText,
                   fontSize: 17,
-                }}></Text>
-              <TouchableOpacity onPress={() => setEnlargeModal(false)} style={{flexDirection:'row'}}>
+                }}>
+              </Text>
+              <TouchableOpacity onPress={() => setEnlargeModal(false)} style={{ flexDirection: 'row' }}>
                 <Text
                   style={{
                     fontSize: 12,
                     fontWeight: 'bold',
                     marginRight: 12,
-                    color:'white',
-                    marginTop:5
+                    color: 'white',
+                    marginTop: 5
                   }}>
                   close
                 </Text>
-                <SIcon name="close" size={22} color='white' style={{marginRight: 12}} />
+                <SIcon name="close" size={22} color='white' style={{ marginRight: 12 }} />
               </TouchableOpacity>
             </View>
             <View
@@ -125,8 +114,7 @@ const MediaDetailsScreen = (props) => {
                 paddingVertical: 15,
               }}>
               <Image
-                // style={styles.media}
-                style={{ width: '100%',height: deviceWidth/2 }}
+                style={{ width: '100%', height: deviceWidth / 2 }}
                 resizeMode="cover"
                 source={{
                   uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
@@ -136,7 +124,6 @@ const MediaDetailsScreen = (props) => {
           </View>
         </View>
       </Modal>
-
       {mediaType === 'video' ? (
         <WebView
           javaScriptEnabled={true}
@@ -148,63 +135,58 @@ const MediaDetailsScreen = (props) => {
           }}
         />
       ) : (
-        // <TouchableOpacity onPress={() => setEnlargeModal(true)}>
-        <TouchableOpacity
+          <TouchableOpacity
             onPress={() => {
               setimageIndex(0);
               setshowModal(true);
             }}>
-          <Image
-            // style={styles.media}
-            style={{width: '100%', height: deviceWidth / 2}}
-            source={{
-              uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
-            }}
-          />
-        </TouchableOpacity>
-      )}
-      <View style={{backgroundColor: 'white'}}>
+            <Image
+              style={{ width: '100%', height: deviceWidth / 2 }}
+              source={{
+                uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+              }}
+            />
+          </TouchableOpacity>
+        )}
+      <View style={{ backgroundColor: 'white' }}>
         <Text style={styles.title}>{caption}</Text>
         <Text style={styles.content}>{description}</Text>
         {status === 1
           ? user._id !== auth.userId && (
-              <View style={styles.authorInfo}>
-                <Image
+            <View style={styles.authorInfo}>
+              <Image
+                style={{
+                  width: 45,
+                  height: 45,
+                  borderRadius: 100,
+                }}
+                source={{
+                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                }}
+              />
+              <TouchableOpacity
+                onPress={() =>
+                  props.navigation.navigate('UserDetails', {
+                    userId: user._id,
+                  })
+                }>
+                <View
                   style={{
-                    width: 45,
-                    height: 45,
-                    borderRadius: 100,
-                  }}
-                  source={{
-                    uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
-                  }}
-                />
-
-                <TouchableOpacity
-                  onPress={() =>
-                    props.navigation.navigate('UserDetails', {
-                      userId: user._id,
-                    })
-                  }>
-                  <View
-                    style={{
-                      flex: 1,
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      marginLeft: 10,
-                    }}>
-                    <Text style={{fontSize: 9}}>{'Posted By'}</Text>
-                    <Text style={{fontSize: 15, fontWeight: 'bold'}}>
-                      {user.name}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            )
+                    flex: 1,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginLeft: 10,
+                  }}>
+                  <Text style={{ fontSize: 9 }}>{'Posted By '}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
+                    {user.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          )
           : null}
       </View>
-
-      {/* Enlarge Modal */}
     </>
   );
 };
@@ -244,5 +226,4 @@ const styles = StyleSheet.create({
     borderRadius: theme.$borderRadius,
   },
 });
-
 export default MediaDetailsScreen;

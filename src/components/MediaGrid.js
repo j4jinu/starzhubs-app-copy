@@ -10,7 +10,6 @@ const MediaGrid = (props) => {
   }
   return (
     <>
-
       {props.media.map((media) => (
         <TouchableOpacity
           style={styles.gridItem}
@@ -42,12 +41,6 @@ const MediaGrid = (props) => {
                   }}
                 />
               )}
-            {/* <Image
-                            style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-                            source={{
-                                uri: props.image
-                            }}
-                        /> */}
           </View>
         </TouchableOpacity>
       ))}

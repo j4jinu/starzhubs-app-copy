@@ -29,17 +29,17 @@ const UserTalentSection = (props) => {
     return (
         <View style={styles.container}>
             {talents.map((t, key) => (
-                <View style={{marginBottom:12, borderBottomColor:'#eee', borderBottomWidth:6}}>
-                    <View style={{paddingHorizontal:'5%', }}>
+                <View style={{ marginBottom: 12, borderBottomColor: '#eee', borderBottomWidth: 6 }}>
+                    <View style={{ paddingHorizontal: '5%', }}>
                         <Text style={styles.title}>
                             {t.category.title}
                         </Text>
-                        <View style={{alignItems:'flex-start', flexDirection:'row', marginBottom:10}}>
+                        <View style={{ alignItems: 'flex-start', flexDirection: 'row', marginBottom: 10 }}>
                             <Rating
-                                type='custom'
+                                type="custom"
                                 readonly
                                 ratingColor={theme.$primaryColor}
-                                ratingBackgroundColor='#c8c7c8'
+                                ratingBackgroundColor="#c8c7c8"
                                 ratingCount={5}
                                 imageSize={15}
                                 style={{ paddingVertical: 5 }}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical:'1%'
+        marginVertical: '1%'
     },
     subrow: {
         flexDirection: 'row',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         color: "#555",
-        textTransform:'uppercase'
+        textTransform: 'uppercase'
     }
 })
 

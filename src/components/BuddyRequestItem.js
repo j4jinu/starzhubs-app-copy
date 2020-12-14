@@ -12,7 +12,6 @@ import { AuthContext } from '../context/authContext';
 
 const BuddyRequestItem = (props) => {
   const auth = useContext(AuthContext);
-
   const confirmApprove = () =>
     Alert.alert(
       '',
@@ -20,7 +19,6 @@ const BuddyRequestItem = (props) => {
       [
         {
           text: 'Cancel',
-          // onPress: () => {navigation.navigate('My Media')},
           style: 'cancel',
         },
         {
@@ -38,7 +36,6 @@ const BuddyRequestItem = (props) => {
       [
         {
           text: 'No',
-          // onPress: () => {navigation.navigate('My Media')},
           style: 'cancel',
         },
         {
@@ -71,7 +68,6 @@ const BuddyRequestItem = (props) => {
       );
   };
   const requestHandler = () => {
-    // console.warn(status)
     fetch(`http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`, {
       method: 'PUT',
       headers: {
@@ -83,9 +79,7 @@ const BuddyRequestItem = (props) => {
         alert(response.message);
         props.getConnection()
         props.navigation.navigate('MyConnectionScreen', {
-          // navigation: props.navigation,
         });
-        
       })
       .catch((error) => {
         alert(error);
@@ -95,36 +89,36 @@ const BuddyRequestItem = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-       onPress={props.onSelect}>
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-        <Image
-          style={{
-            width: 75,
-            height: 75,
-            borderRadius: 100,
-          }}
-          source={{
-            uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
-          }}
-        />
-        <View style={styles.details}>
-          <Text
+        onPress={props.onSelect}>
+        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+          <Image
             style={{
-              fontSize: 17,
-              marginBottom: 5,
-              color: theme.$primaryColorText,
-              fontWeight: 'bold',
-            }}>
-            {props.name}
-          </Text>
-          <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>
-            {'Talent(s) Requested'}
-          </Text>
-          <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>
-            {props.talents}
-          </Text>
+              width: 75,
+              height: 75,
+              borderRadius: 100,
+            }}
+            source={{
+              uri: `http://13.232.190.226/api/user/avatar/${props.image.avatar}`,
+            }}
+          />
+          <View style={styles.details}>
+            <Text
+              style={{
+                fontSize: 17,
+                marginBottom: 5,
+                color: theme.$primaryColorText,
+                fontWeight: 'bold',
+              }}>
+              {props.name}
+            </Text>
+            <Text style={{ fontSize: 13, color: 'gray', marginTop: 10 }}>
+              {'Talent(s) Requested'}
+            </Text>
+            <Text style={{ fontSize: 15, color: theme.$primaryColorText }}>
+              {props.talents}
+            </Text>
+          </View>
         </View>
-      </View>
       </TouchableOpacity>
       <View
         style={{

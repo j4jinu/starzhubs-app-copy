@@ -35,7 +35,6 @@ const PosterDetailsScreen = (props) => {
   const user = props.navigation.getParam('user');
   const status = props.navigation.getParam('status');
   const [visible, setVisible] = useState(false);
-  const [enlargeModal, setEnlargeModal] = useState(false);
   const deviceHeight = Dimensions.get('window').height;
   const deviceWidth = Dimensions.get('window').width;
   const [showModal, setshowModal] = useState(false);

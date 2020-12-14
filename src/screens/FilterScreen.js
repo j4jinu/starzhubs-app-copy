@@ -1,18 +1,17 @@
 import React, {
   useState,
   useEffect,
-  useRef,
   useContext,
   useCallback,
 } from 'react';
-import {Searchbar} from 'react-native-paper';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {Snackbar} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
+import { Searchbar } from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Snackbar } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Checkbox} from 'react-native-paper';
+import { Checkbox } from 'react-native-paper';
 import RangeSlider from 'rn-range-slider';
 import Thumb from '../components/slider/Thumb';
 import Rail from '../components/slider/Rail';
@@ -29,36 +28,28 @@ const FilterScreen = (props) => {
   const [heightToValue, setHeightToValue] = useState(200);
   const [weightFromValue, setWeightFromValue] = useState(0);
   const [weightToValue, setWeightToValue] = useState(250);
-
   const [search, setSearch] = useState('');
-
   const [isDark, setDark] = useState(false);
   const [isBrown, setBrown] = useState(false);
   const [isWheatish, setWheatish] = useState(false);
   const [isFair, setFair] = useState(false);
-
   const [isFit, setFit] = useState(false);
   const [isAthletic, setAthletic] = useState(false);
   const [isHourglass, setHourglass] = useState(false);
   const [isSlim, setSlim] = useState(false);
   const [isFatty, setFatty] = useState(false);
   const [isAverageBuild, setAverageBuild] = useState(false);
-
   const [isFemale, setFemale] = useState(false);
   const [isMale, setMale] = useState(false);
   const [isOthers, setOthers] = useState(false);
-
   const [selectedItems, setSelectedItems] = useState([]);
-  const [isActor, setActor] = useState(false);
   const [gender, setGender] = useState([]);
   const [skinTone, setSkinTone] = useState([]);
   const [bodyType, setBodyType] = useState([]);
-
   const [isCategoryOn, setCategoryOn] = useState(false);
   const [isGenderOn, setGenderOn] = useState(false);
   const [isBodyTypeOn, setBodyTypeOn] = useState(false);
   const [isSkinToneOn, setSkinToneOn] = useState(false);
-
   const [visible, setVisible] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -72,16 +63,13 @@ const FilterScreen = (props) => {
         } else {
           setCategories([]);
         }
-        console.log('Category array: ', categories);
       } catch (error) {
-        console.log('Error: ', error);
       }
     };
     getCategory();
   }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
-    console.log(selectedItem);
     setSelectedItems(selectedItem);
     if (selectedItems === []) {
       setCategoryOn(true);
@@ -225,7 +213,6 @@ const FilterScreen = (props) => {
       .then(
         (response) => {
           if (response.success === true) {
-            console.warn(response.data.users);
             props.navigation.navigate('FilterResult', {
               filter: response.data.users,
             });
@@ -234,7 +221,7 @@ const FilterScreen = (props) => {
           }
           resetFields();
         },
-        (error) => {},
+        (error) => { },
       );
   };
 
@@ -258,32 +245,23 @@ const FilterScreen = (props) => {
     setFatty(false);
     setAverageBuild(false);
     handleAgeValueChange(0, 100);
-    // setCategories()
   };
-
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
   const renderLabel = useCallback((value) => <Label text={value} />, []);
   const renderNotch = useCallback(() => <Notch />, []);
-
-  // Age slider
   const handleAgeValueChange = useCallback((low, high) => {
     setAgeFromValue(low);
     setAgeToValue(high);
   }, []);
-
-  // Weight slider
   const handleWeightValueChange = useCallback((low, high) => {
     setWeightFromValue(low);
     setWeightToValue(high);
   }, []);
-
-  // Height slider
   const handleHeightValueChange = useCallback((low, high) => {
     setHeightFromValue(low);
     setHeightToValue(high);
@@ -313,7 +291,6 @@ const FilterScreen = (props) => {
             {' '}
             Category
           </Text>
-
           <View
             style={{
               width: '95%',
@@ -494,9 +471,9 @@ const FilterScreen = (props) => {
             }}>
             Skin Tone
           </Text>
-          <View style={{flexDirection: 'row', width: '100%', marginLeft: '5%'}}>
-            <View style={{width: '50%'}}>
-              <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row', width: '100%', marginLeft: '5%' }}>
+            <View style={{ width: '50%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isDark ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -515,7 +492,7 @@ const FilterScreen = (props) => {
                   Dark
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isBrown ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -534,8 +511,8 @@ const FilterScreen = (props) => {
                 </Text>
               </View>
             </View>
-            <View style={{width: '50%', marginLeft: '8%'}}>
-              <View style={{flexDirection: 'row'}}>
+            <View style={{ width: '50%', marginLeft: '8%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isWheatish ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -553,7 +530,7 @@ const FilterScreen = (props) => {
                   Wheatish
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isFair ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -595,9 +572,9 @@ const FilterScreen = (props) => {
             }}>
             Body Type
           </Text>
-          <View style={{flexDirection: 'row', width: '100%', marginLeft: '5%'}}>
-            <View style={{width: '50%'}}>
-              <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row', width: '100%', marginLeft: '5%' }}>
+            <View style={{ width: '50%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isFit ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -616,7 +593,7 @@ const FilterScreen = (props) => {
                   Fit
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isHourglass ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -634,7 +611,7 @@ const FilterScreen = (props) => {
                   Hourglass
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isAverageBuild ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -654,8 +631,8 @@ const FilterScreen = (props) => {
                 </Text>
               </View>
             </View>
-            <View style={{width: '50%', marginLeft: '8%'}}>
-              <View style={{flexDirection: 'row'}}>
+            <View style={{ width: '50%', marginLeft: '8%' }}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isSlim ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -673,7 +650,7 @@ const FilterScreen = (props) => {
                   Slim
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isFatty ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -691,7 +668,7 @@ const FilterScreen = (props) => {
                   Fatty
                 </Text>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <Checkbox
                   status={isAthletic ? 'checked' : 'unchecked'}
                   onPress={() => {
@@ -723,11 +700,11 @@ const FilterScreen = (props) => {
               Select bodytype
             </Text>
           )}
-          <View style={{width: '100%', alignItems: 'center', marginTop: '5%'}}>
+          <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>
             <TouchableOpacity
               style={styles.filterbutton}
               onPress={handleSubmit}>
-              <Text style={{color: 'white', fontWeight: 'bold'}}>
+              <Text style={{ color: 'white', fontWeight: 'bold' }}>
                 Apply Filter
               </Text>
             </TouchableOpacity>

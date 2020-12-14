@@ -2,10 +2,8 @@ import React from 'react';
 import {
   View,
   FlatList,
-  Image,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import UserGridItem from '../components/UserGridItem';
@@ -23,7 +21,7 @@ const renderGridItem = (user) => {
 const HomePortfolioList = (props) => {
   return (
     <FlatList
-      style={{ backgroundColor: '#fafafa', marginTop: 0, paddingHorizontal:6, marginBottom:5 }}
+      style={{ backgroundColor: '#fafafa', paddingHorizontal: 6, marginBottom: 5 }}
       keyExtractor={(item, index) => item.id}
       data={props.users}
       renderItem={({ item }) => (

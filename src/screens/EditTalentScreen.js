@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect, Fragment} from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,24 +6,21 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Picker,
   Alert,
   Image,
   ToastAndroid,
   PermissionsAndroid,
   ScrollView,
-  ImageBackground,
+  ImageBackground
 } from 'react-native';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Gicon from 'react-native-vector-icons/FontAwesome';
 import Eicon from 'react-native-vector-icons/FontAwesome5';
-// import * as ImagePicker from 'expo-image-picker';
-import {Rating, AirbnbRating} from 'react-native-elements';
-// import MultiSelect from 'react-native-multiple-select';
-import {Snackbar} from 'react-native-paper';
-import {AuthContext} from '../context/authContext';
+import { AirbnbRating } from 'react-native-elements';
+import { Snackbar } from 'react-native-paper';
+import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
@@ -87,8 +84,6 @@ const EditTalentScreen = (props) => {
   const description = props.navigation.getParam('description');
   const levels = props.navigation.getParam('levels');
   const auth = useContext(AuthContext);
-  const [selectedValue, setSelectedValue] = useState('');
-  const [industryValue, setIndustryValue] = useState();
   const [value, setValue] = useState('first');
   const [talent, setTalent] = useState();
   const [categories, setCategories] = useState([]);
@@ -107,23 +102,18 @@ const EditTalentScreen = (props) => {
   const [rightimg, setRightImage] = useState();
   const [leftimg, setLeftImage] = useState();
   const [fullsizeimg, setFullImage] = useState();
-  const [user, setUser] = useState({image: {}});
-
+  const [user, setUser] = useState({ image: {} });
   const initialTalentValues = {
     talentId: talentId,
     level: levels,
     experience: years,
-    // industry: industry,
     films: films,
     description: description,
-    // height:''
   };
-
   const phoneRegExp = /^[0-9]*$/;
   const talentValidationSchema = Yup.object({
     talentId: Yup.string().required('Select one category'),
     level: Yup.string().required('Select your level'),
-    // industry: Yup.string().required('Select atleast one industry'),
     experience: Yup.string()
       .matches(phoneRegExp, 'Invalid input')
       .required('Enter experience details'),
@@ -148,18 +138,11 @@ const EditTalentScreen = (props) => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log('userinfo', response);
-
           setUser(response.data.user);
         })
-        .catch((error) => {});
-      // setIsProfileImageMode(true);
-      // setTalent(tid);
-      // return;
+        .catch((error) => { });
     } else {
       setIsProfileImageMode(false);
-      // setTalent(tid);
-      // return;
     }
   };
 
@@ -198,14 +181,13 @@ const EditTalentScreen = (props) => {
         .then((response) => {
           setCategories(response.categories);
         })
-        .catch((error) => {});
+        .catch((error) => { });
     };
     getCategory();
   }, []);
 
-  const handleSubmit = (values, {setSubmitting}) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     values.level = level;
-    // values.industry = selectedItems;
     if (selectedItems === undefined || selectedItems.length === 0) {
       Alert.alert(
         '',
@@ -216,9 +198,8 @@ const EditTalentScreen = (props) => {
             style: 'cancel',
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
-      // alert('Please choose the languages you known');
       setSubmitting(false);
       return;
     }
@@ -252,7 +233,7 @@ const EditTalentScreen = (props) => {
             setVisible(true);
           }
         },
-        (error) => {},
+        (error) => { },
       );
   };
 
@@ -275,14 +256,13 @@ const EditTalentScreen = (props) => {
       } else {
       }
     } catch (err) {
-      console.warn(err);
     }
   };
   const chooseFile = async (imgType) => {
     var options = {
       title: 'Select Image',
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose Photo from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -308,7 +288,6 @@ const EditTalentScreen = (props) => {
         } else {
           setFullImage(response.uri);
         }
-        // imgurl = response.uri;
         uploadAvatar(imgType, response.uri);
       }
     });
@@ -353,8 +332,7 @@ const EditTalentScreen = (props) => {
         setVisible(!visible);
         return;
       }
-      // setMessage('Image uploaded successfully');
-      showToastWithGravityAndOffset2();
+      showToastWithGravityAndOffset2()
     } catch (error) {
       console.error('error', error);
     }
@@ -400,8 +378,8 @@ const EditTalentScreen = (props) => {
           enableReinitialize={true}
           initialValues={initialTalentValues}
           validationSchema={talentValidationSchema}
-          onSubmit={(values, {setSubmitting}) =>
-            handleSubmit(values, {setSubmitting})
+          onSubmit={(values, { setSubmitting }) =>
+            handleSubmit(values, { setSubmitting })
           }>
           {({
             handleChange,
@@ -412,457 +390,420 @@ const EditTalentScreen = (props) => {
             values,
             errors,
           }) => (
-            <React.Fragment>
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '90%',
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  // marginBottom: 5,
-                  borderColor: errors.link ? 'red' : '#e6e6e6',
-                }}>
-                <Cicon name="merge-type" size={20} style={{color: '#fd9242'}} />
-                <Text
-                  style={{color: 'black', paddingVertical: 15, marginLeft: 15}}>
-                  {category}
-                </Text>
-              </View>
-              {errors.talentId ? (
-                <Text style={styles.error}>{errors.talentId}</Text>
-              ) : null}
-
-              {/* <View
+              <React.Fragment>
+                <View
                   style={{
                     alignSelf: 'center',
                     borderWidth: 1,
-                    backgroundColor: "white",
+                    backgroundColor: 'white',
+                    width: '90%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.link ? 'red' : '#e6e6e6',
+                  }}>
+                  <Cicon name="merge-type" size={20} style={{ color: '#fd9242' }} />
+                  <Text
+                    style={{ color: 'black', paddingVertical: 15, marginLeft: 15 }}>
+                    {category}
+                  </Text>
+                </View>
+                {errors.talentId ? (
+                  <Text style={styles.error}>{errors.talentId}</Text>
+                ) : null}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '90%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    paddingBottom: 10,
+                    paddingTop: 10,
+                    marginTop: 8,
+                    alignItems: 'center',
+                    borderColor: errors.link ? 'red' : '#e6e6e6',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                  }}>
+                  <Text>Select Confidence Level</Text>
+
+                  <AirbnbRating
+                    reviews={[
+                      'Beginner',
+                      'Average',
+                      'Good',
+                      'Excellent',
+                      'Experienced',
+                    ]}
+                    defaultRating={level}
+                    size={20}
+                    count={5}
+                    showRating={false}
+                    onFinishRating={handleLevelChange}
+                    selectedColor={theme.$primaryColor}
+                  />
+                </View>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '90%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.link ? 'red' : '#e6e6e6',
+                  }}>
+                  <View style={{ width: '7%' }}>
+                    <Gicon
+                      name="industry"
+                      size={15}
+                      style={
+                        selectedItems.length === 0
+                          ? styles.noIndustry
+                          : styles.industry
+                      }
+                    />
+                  </View>
+                  <View
+                    style={{ width: '96%', marginLeft: '-2%', paddingBottom: 12 }}>
+                    <SectionedMultiSelect
+                      items={industryNames}
+                      IconRenderer={Icon}
+                      uniqueKey="id"
+                      subKey="children"
+                      selectText="Select Industry"
+                      showDropDowns={true}
+                      expandDropDowns
+                      showCancelButton
+                      readOnlyHeadings={true}
+                      onSelectedItemsChange={onSelectedItemsChange}
+                      selectedItems={selectedItems}
+                    />
+                  </View>
+                </View>
+                {errors.industry ? (
+                  <Text style={styles.error}>{errors.industry}</Text>
+                ) : null}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
                     width: '90%',
                     paddingLeft: 8,
                     paddingRight: 8,
-                    marginTop: '3%',
+                    marginTop: 8,
+                    flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    paddingLeft: '5%',
-                  }}> */}
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '90%',
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  paddingBottom: 10,
-                  paddingTop: 10,
-                  marginTop: 8,
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : '#e6e6e6',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                }}>
-                <Text>Select Confidence Level</Text>
-
-                <AirbnbRating
-                  reviews={[
-                    'Beginner',
-                    'Average',
-                    'Good',
-                    'Excellent',
-                    'Experienced',
-                  ]}
-                  defaultRating={level}
-                  size={20}
-                  count={5}
-                  showRating={false}
-                  onFinishRating={handleLevelChange}
-                  selectedColor={theme.$primaryColor}
-                />
-              </View>
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '90%',
-                  paddingLeft: 10,
-                  paddingRight: 10,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.link ? 'red' : '#e6e6e6',
-                }}>
-                <View style={{width: '7%'}}>
-                  <Gicon
-                    name="industry"
+                    borderColor: errors.experience ? 'red' : '#e6e6e6',
+                  }}>
+                  <Eicon
+                    name="envelope-open-text"
                     size={15}
-                    style={
-                      selectedItems.length === 0
-                        ? styles.noIndustry
-                        : styles.industry
-                    }
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={String(years)}
+                    placeholder="Experience"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="numeric"
+                    autoCapitalize="sentences"
+                    onChangeText={handleChange('experience')}
+                    onBlur={handleBlur('experience')}
                   />
                 </View>
-
+                {errors.experience ? (
+                  <Text style={styles.error}>{errors.experience}</Text>
+                ) : null}
                 <View
-                  style={{width: '96%', marginLeft: '-2%', paddingBottom: 12}}>
-                  <SectionedMultiSelect
-                    items={industryNames}
-                    IconRenderer={Icon}
-                    uniqueKey="id"
-                    subKey="children"
-                    selectText="Select Industry"
-                    showDropDowns={true}
-                    expandDropDowns
-                    showCancelButton
-                    readOnlyHeadings={true}
-                    onSelectedItemsChange={onSelectedItemsChange}
-                    selectedItems={selectedItems}
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.projects ? 'red' : '#e6e6e6',
+                  }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputText}
+                    defaultValue={String(films)}
+                    placeholder="No. of Projects"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="numeric"
+                    autoCapitalize="sentences"
+                    onChangeText={handleChange('films')}
+                    onBlur={handleBlur('films')}
                   />
                 </View>
-              </View>
-              {errors.industry ? (
-                <Text style={styles.error}>{errors.industry}</Text>
-              ) : null}
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.experience ? 'red' : '#e6e6e6',
-                }}>
-                <Eicon
-                  name="envelope-open-text"
-                  size={15}
-                  style={{
-                    color: '#fd9242',
-                  }}
-                />
-                <TextInput
-                  style={styles.inputText}
-                  defaultValue={String(years)}
-                  placeholder="Experience"
-                  placeholderTextColor="#003f5c"
-                  keyboardType="numeric"
-                  autoCapitalize="sentences"
-                  // defaultValue={user.email}
-                  onChangeText={handleChange('experience')}
-                  onBlur={handleBlur('experience')}
-                />
-              </View>
-
-              {errors.experience ? (
-                <Text style={styles.error}>{errors.experience}</Text>
-              ) : null}
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.projects ? 'red' : '#e6e6e6',
-                }}>
-                <Eicon
-                  name="envelope-open-text"
-                  size={15}
-                  style={{
-                    color: '#fd9242',
-                  }}
-                />
-                <TextInput
-                  style={styles.inputText}
-                  defaultValue={String(films)}
-                  placeholder="No. of Projects"
-                  placeholderTextColor="#003f5c"
-                  keyboardType="numeric"
-                  autoCapitalize="sentences"
-                  // defaultValue={user.email}
-                  onChangeText={handleChange('films')}
-                  onBlur={handleBlur('films')}
-                />
-              </View>
-              {errors.films ? (
-                <Text style={styles.error}>{errors.films}</Text>
-              ) : null}
-
-              {isProfileImageMode && (
-                <Fragment>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                      marginTop: 20,
-                      marginBottom: 10,
-                    }}>
+                {errors.films ? (
+                  <Text style={styles.error}>{errors.films}</Text>
+                ) : null}
+                {isProfileImageMode && (
+                  <Fragment>
                     <View
                       style={{
-                        // paddingLeft: 30,
-                        marginTop: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                        marginTop: 20,
+                        marginBottom: 10,
                       }}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          requestCameraPermission('head_shot');
+                      <View
+                        style={{
+                          marginTop: 10,
                         }}>
-                        <ImageBackground
-                          source={
-                            !headimg &&
-                            user.image &&
-                            user.image.head_shot !== undefined
-                              ? {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
-                                }
-                              : !headimg && user.image.head_shot === undefined
-                              ? require('../assets/headshot.jpg')
-                              : {uri: headimg}
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent: 'center',
+                        <TouchableOpacity
+                          onPress={() => {
+                            requestCameraPermission('head_shot');
                           }}>
-                          <Image
-                            source={require('../assets/add-button.png')}
+                          <ImageBackground
+                            source={
+                              !headimg &&
+                                user.image &&
+                                user.image.head_shot !== undefined ?
+                                {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`
+                                } :
+                                !headimg && user.image.head_shot === undefined ?
+                                  require('../assets/headshot.jpg') :
+                                  { uri: headimg }
+                            }
                             style={{
-                              alignSelf: 'center',
-                              height: 60,
-                              width: 60,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              alignSelf: 'center',
-                              fontSize: 12,
-                              marginTop: 5,
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
                             }}>
-                            Upload Head Shot
+                            <Image
+                              source={require('../assets/add-button.png')}
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                alignSelf: 'center',
+                                fontSize: 12,
+                                marginTop: 5,
+                              }}>
+                              Upload Head Shot
                           </Text>
-                        </ImageBackground>
-                      </TouchableOpacity>
+                          </ImageBackground>
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: '2%',
+                          paddingRight: '6%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => requestCameraPermission('left_profile')}>
+                          <ImageBackground
+                            source={
+                              !leftimg &&
+                                user.image &&
+                                user.image.left_profile !== undefined ?
+                                {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`
+                                } :
+                                !leftimg && user.image.left_profile === undefined ?
+                                  require('../assets/left_profile.jpg') :
+                                  { uri: leftimg }
+                            }
+                            style={{
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
+                            }}>
+                            <Image
+                              source={require('../assets/add-button.png')}
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                alignSelf: 'center',
+                                fontSize: 12,
+                                marginTop: 5,
+                              }}>
+                              Upload Left Side Shot
+                          </Text>
+                          </ImageBackground>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                     <View
                       style={{
-                        paddingLeft: '2%',
-                        paddingRight: '6%',
-                        marginTop: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
                       }}>
-                      <TouchableOpacity
-                        onPress={() => requestCameraPermission('left_profile')}>
-                        <ImageBackground
-                          source={
-                            !leftimg &&
-                            user.image &&
-                            user.image.left_profile !== undefined
-                              ? {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
-                                }
-                              : !leftimg &&
-                                user.image.left_profile === undefined
-                              ? require('../assets/left_profile.jpg')
-                              : {uri: leftimg}
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent: 'center',
-                          }}>
-                          <Image
-                            source={require('../assets/add-button.png')}
+                      <View
+                        style={{
+                          marginTop: 10,
+                          marginBottom: 20,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            requestCameraPermission('right_profile')
+                          }>
+                          <ImageBackground
+                            source={
+                              !rightimg &&
+                                user.image &&
+                                user.image.right_profile !== undefined ?
+                                {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`
+                                } :
+                                !rightimg && user.image.right_profile === undefined ?
+                                  require('../assets/right_profile.jpg') :
+                                  { uri: rightimg }
+                            }
                             style={{
-                              alignSelf: 'center',
-                              height: 60,
-                              width: 60,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              alignSelf: 'center',
-                              fontSize: 12,
-                              marginTop: 5,
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
                             }}>
-                            Upload Left Side Shot
+                            <Image
+                              source={require('../assets/add-button.png')}
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                alignSelf: 'center',
+                                fontSize: 12,
+                                marginTop: 5,
+                              }}>
+                              Upload Right Side Shot
                           </Text>
-                        </ImageBackground>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-evenly',
-                    }}>
-                    <View
-                      style={{
-                        // paddingLeft: 30,
-                        marginTop: 10,
-                        marginBottom: 20,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() =>
-                          requestCameraPermission('right_profile')
-                        }>
-                        <ImageBackground
-                          source={
-                            !rightimg &&
-                            user.image &&
-                            user.image.right_profile !== undefined
-                              ? {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
-                                }
-                              : !rightimg &&
-                                user.image.right_profile === undefined
-                              ? require('../assets/right_profile.jpg')
-                              : {uri: rightimg}
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent: 'center',
-                          }}>
-                          <Image
-                            source={require('../assets/add-button.png')}
+                          </ImageBackground>
+                        </TouchableOpacity>
+                      </View>
+                      <View
+                        style={{
+                          paddingLeft: '2%',
+                          paddingRight: '6%',
+                          marginTop: 10,
+                        }}>
+                        <TouchableOpacity
+                          onPress={() => requestCameraPermission('fullsize')}>
+                          <ImageBackground
+                            source={
+                              !fullsizeimg &&
+                                user.image &&
+                                user.image.fullsize !== undefined ?
+                                {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`
+                                } :
+                                !fullsizeimg && user.image.fullsize === undefined ?
+                                  require('../assets/fullsize.jpg') :
+                                  { uri: fullsizeimg }
+                            }
                             style={{
-                              alignSelf: 'center',
-                              height: 60,
-                              width: 60,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              alignSelf: 'center',
-                              fontSize: 12,
-                              marginTop: 5,
+                              borderRadius: 50,
+                              height: 140,
+                              width: 140,
+                              justifyContent: 'center',
                             }}>
-                            Upload Right Side Shot
+                            <Image
+                              source={require('../assets/add-button.png')}
+                              style={{
+                                alignSelf: 'center',
+                                height: 60,
+                                width: 60,
+                              }}
+                            />
+                            <Text
+                              style={{
+                                alignSelf: 'center',
+                                fontSize: 12,
+                                marginTop: 5,
+                              }}>
+                              Upload Full Size Shot
                           </Text>
-                        </ImageBackground>
-                      </TouchableOpacity>
+                          </ImageBackground>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                    <View
-                      style={{
-                        paddingLeft: '2%',
-                        paddingRight: '6%',
-                        marginTop: 10,
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => requestCameraPermission('fullsize')}>
-                        <ImageBackground
-                          source={
-                            !fullsizeimg &&
-                            user.image &&
-                            user.image.fullsize !== undefined
-                              ? {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
-                                }
-                              : !fullsizeimg &&
-                                user.image.fullsize === undefined
-                              ? require('../assets/fullsize.jpg')
-                              : {uri: fullsizeimg}
-                          }
-                          style={{
-                            borderRadius: 50,
-                            height: 140,
-                            width: 140,
-                            justifyContent: 'center',
-                          }}>
-                          <Image
-                            source={require('../assets/add-button.png')}
-                            style={{
-                              alignSelf: 'center',
-                              height: 60,
-                              width: 60,
-                            }}
-                          />
-                          <Text
-                            style={{
-                              alignSelf: 'center',
-                              fontSize: 12,
-                              marginTop: 5,
-                            }}>
-                            Upload Full Size Shot
-                          </Text>
-                        </ImageBackground>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </Fragment>
-              )}
-
-              <View
-                style={{
-                  alignSelf: 'center',
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  width: '90%',
-                  paddingLeft: 8,
-                  paddingRight: 8,
-                  marginTop: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  borderColor: errors.description ? 'red' : '#e6e6e6',
-                }}>
-                <Eicon
-                  name="envelope-open-text"
-                  size={15}
+                  </Fragment>
+                )}
+                <View
                   style={{
-                    color: '#fd9242',
-                  }}
-                />
-
-                <TextInput
-                  style={styles.inputTextDes}
-                  defaultValue={description}
-                  placeholder="Description"
-                  placeholderTextColor="#003f5c"
-                  keyboardType="email-address"
-                  autoCapitalize="sentences"
-                  numberOfLines={3}
-                  multiline={true}
-                  // defaultValue={user.email}
-                  onChangeText={handleChange('description')}
-                  onBlur={handleBlur('description')}
-                />
-              </View>
-              {/* </View> */}
-
-              <TouchableOpacity
-                style={styles.registerBtn}
-                onPress={handleSubmit}>
-                <Text style={styles.registerBtnText}>
-                  {loading ? (
-                    <ActivityIndicator size="small" color="#fff" />
-                  ) : (
-                    'Save Details'
-                  )}
-                </Text>
-              </TouchableOpacity>
-            </React.Fragment>
-          )}
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    backgroundColor: 'white',
+                    width: '90%',
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    marginTop: 8,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.description ? 'red' : '#e6e6e6',
+                  }}>
+                  <Eicon
+                    name="envelope-open-text"
+                    size={15}
+                    style={{
+                      color: '#fd9242',
+                    }}
+                  />
+                  <TextInput
+                    style={styles.inputTextDes}
+                    defaultValue={description}
+                    placeholder="Description"
+                    placeholderTextColor="#003f5c"
+                    keyboardType="email-address"
+                    autoCapitalize="sentences"
+                    numberOfLines={3}
+                    multiline={true}
+                    onChangeText={handleChange('description')}
+                    onBlur={handleBlur('description')}
+                  />
+                </View>
+                <TouchableOpacity
+                  style={styles.registerBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>
+                    {loading ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                        'Save Details'
+                      )}
+                  </Text>
+                </TouchableOpacity>
+              </React.Fragment>
+            )}
         </Formik>
       </ScrollView>
     </View>
@@ -915,14 +856,12 @@ const styles = StyleSheet.create({
   inputViewDes: {
     flexDirection: 'row',
     width: '80%',
-    // height: 40,
     marginTop: '5%',
     justifyContent: 'flex-start',
     backgroundColor: 'white',
     borderRadius: 10,
   },
   inputTextDes: {
-    // height: 50,
     width: '80%',
     color: '#000000',
     marginLeft: 15,
@@ -950,7 +889,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: '5%',
   },
-
   registerBtnText: {
     fontSize: 18,
     marginVertical: 5,

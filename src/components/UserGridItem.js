@@ -1,10 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const UserGridItem = (props) => {
-  const {image, location, talents, userId} = props;
-
+  const { image, location, talents, userId } = props;
   return (
     <>
       <ScrollView>
@@ -19,7 +18,7 @@ const UserGridItem = (props) => {
             activeOpacity={0.7}>
             <View style={styles.container}>
               <Image
-                style={{width: '100%', height: '75%', resizeMode: 'cover'}}
+                style={{ width: '100%', height: '75%', resizeMode: 'cover' }}
                 source={{
                   uri: props.image
                     ? `http://13.232.190.226/api/user/avatar/${props.image.avatar}`
@@ -27,7 +26,7 @@ const UserGridItem = (props) => {
                 }}
               />
               <Text style={styles.gridItemText}>{props.name}</Text>
-              <Text style={{marginLeft: 10, marginTop: 1}}>
+              <Text style={{ marginLeft: 10, marginTop: 1 }}>
                 {props.location !== undefined ? props.location.place : ''},{' '}
                 {props.location !== undefined ? props.location.state : ''}
               </Text>
@@ -43,6 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 10,
+
   },
   gridItem: {
     flex: 1,
@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 1,
     marginVertical: 1,
+
+
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',

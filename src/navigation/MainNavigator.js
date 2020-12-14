@@ -1,6 +1,6 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator,
@@ -51,7 +51,7 @@ const HomeNavigator = createStackNavigator(
   {
     Portfolio: {
       screen: HomeScreenSingle,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         title: 'Explore',
         headerTitleStyle: {
           fontWeight: '100',
@@ -119,10 +119,10 @@ const UserNavigator = createStackNavigator(
   {
     Users: {
       screen: PortfolioListScreen,
-      navigationOptions: ({navigate, navigation}) => ({
+      navigationOptions: ({ navigate, navigation }) => ({
         headerRight: () => (
           <MaterialCommunityIcons
-            style={{marginRight: 15}}
+            style={{ marginRight: 15 }}
             size={25}
             name="filter-outline"
             onPress={() => navigation.navigate('Filter')}
@@ -291,6 +291,12 @@ const AccountNavigator = createStackNavigator(
         title: '',
       },
     },
+    MediaDetails: {
+      screen: MediaDetailsScreen,
+      navigationOptions: {
+        title: 'Media Details',
+      },
+    },
     Photo: {
       screen: PhotoUploadScreen,
       navigationOptions: {
@@ -453,9 +459,9 @@ const MainNavigator = createBottomTabNavigator(
     Profile: AccountNavigator,
   },
   {
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({focused, horizontal, tintColor}) => {
-        const {routeName} = navigation.state;
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        const { routeName } = navigation.state;
         let IconComponent = Ionicons;
         let iconName;
         if (routeName === 'Home') {
@@ -476,7 +482,7 @@ const MainNavigator = createBottomTabNavigator(
 
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
-      tabBarOnPress: ({navigation}) => {
+      tabBarOnPress: ({ navigation }) => {
         navigation.popToTop();
         navigation.navigate(navigation.state.routeName);
       },

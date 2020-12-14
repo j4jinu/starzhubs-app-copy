@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   Image,
 } from 'react-native';
 const FilterResultScreen = (props) => {
@@ -23,29 +22,15 @@ const FilterResultScreen = (props) => {
           console.error(error);
         });
     };
-
     getCategory();
   }, []);
 
   return (
-    <View style={{flex: 1, backgroundColor: '#fafafa'}}>
-      {/* <View style={{height: 90}} >
-             <ScrollView horizontal>
-                <View style={{flexDirection:"row"}}>
-                {filter.map((d) => (
-                <TouchableOpacity 
-                onPress={()=> {getUser(d._id)}}
-                  style={styles.actor}> 
-                  <Text style = {{color:'blue',textAlign:"center",paddingTop:10,fontWeight:"bold"}}>{d.title}</Text>
-                </TouchableOpacity>
-                ))}
-                </View> 
-            </ScrollView>
-            </View> */}
+    <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
       <FlatList
         data={filter}
-        keyExtractor={({id}, index) => id}
-        renderItem={({item}) => (
+        keyExtractor={({ id }, index) => id}
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('UserDetails', {
@@ -73,7 +58,7 @@ const FilterResultScreen = (props) => {
                   }}
                 />
               </View>
-              <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
+              <View style={{ flex: 1, flexDirection: 'column', marginLeft: 25 }}>
                 <Text
                   style={{
                     fontWeight: 'bold',
@@ -83,7 +68,7 @@ const FilterResultScreen = (props) => {
                   }}>
                   {item.name}
                 </Text>
-                <Text style={{fontSize: 12, alignSelf: 'flex-start'}}>
+                <Text style={{ fontSize: 12, alignSelf: 'flex-start' }}>
                   {item.location !== undefined ? item.location.place : ''}{' '}
                 </Text>
                 <Text
@@ -97,7 +82,6 @@ const FilterResultScreen = (props) => {
                     ? item.bio.substring(0, 120) + '...'
                     : item.bio}
                 </Text>
-                {/* <Text style={{fontSize:18,color:"gray",alignSelf:"center"}} >{item.education}</Text>  */}
               </View>
             </View>
           </TouchableOpacity>

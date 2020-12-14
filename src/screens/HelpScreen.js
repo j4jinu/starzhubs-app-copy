@@ -14,7 +14,6 @@ const HelpScreen = ({ navigation }) => {
 					}}
 				>
 					<Image
-						// source={require("../assets/img.png")}
 						source={require('../assets/aboutus.png')}
 					/>
 				</View>
@@ -23,14 +22,14 @@ const HelpScreen = ({ navigation }) => {
 						flexDirection: 'row',
 						width: '95%',
 						marginTop: '10%',
-						paddingHorizontal:"5%"
+						paddingHorizontal: "5%"
 					}}
 				>
 					<Icon
 						name="ios-information-circle"
 						size={20}
 						color="#F98644"
-						
+
 					/>
 					<Text
 						style={{

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import GIcon from 'react-native-vector-icons/FontAwesome';
-import {Rating, AirbnbRating} from 'react-native-elements';
+import { Rating, AirbnbRating } from 'react-native-elements';
 
 const TalentListScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -69,7 +69,7 @@ const TalentListScreen = (props) => {
           onPress: () => onDelteMedia(tid),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -117,7 +117,7 @@ const TalentListScreen = (props) => {
   if (loading) {
     return (
       <ActivityIndicator
-        style={{marginTop: 20}}
+        style={{ marginTop: 20 }}
         color={theme.$primaryColor}
         size={'large'}
       />
@@ -127,7 +127,7 @@ const TalentListScreen = (props) => {
   if (talents.length === 0) {
     return (
       <>
-        <View style={{alignItems: 'center', marginTop: '50%'}}>
+        <View style={{ alignItems: 'center', marginTop: '50%' }}>
           <Text
             style={{
               color: theme.$primaryColor,
@@ -143,7 +143,7 @@ const TalentListScreen = (props) => {
           onPress={() => props.navigation.navigate('AddTalents')}>
           <Image
             source={require('../assets/add.png')}
-            style={{width: '41%', height: 160, marginHorizontal: 100}}
+            style={{ width: '41%', height: 160, marginHorizontal: 100 }}
           />
         </TouchableOpacity>
       </>
@@ -157,7 +157,7 @@ const TalentListScreen = (props) => {
           <ScrollView>
             {talents.map((t, key) => (
               <View style={styles.card}>
-                <View style={{paddingHorizontal: '5%'}}>
+                <View style={{ paddingHorizontal: '5%' }}>
                   <Text style={styles.title}>{t.category.title}</Text>
                   <View
                     style={{
@@ -172,19 +172,19 @@ const TalentListScreen = (props) => {
                       ratingBackgroundColor="#c8c7c8"
                       ratingCount={5}
                       imageSize={15}
-                      style={{paddingVertical: 5}}
+                      style={{ paddingVertical: 5 }}
                       startingValue={t.level}
                     />
-                    <Text style={{marginLeft: '5%', marginTop: 4}}>
+                    <Text style={{ marginLeft: '5%', marginTop: 4 }}>
                       {t.level == '1'
                         ? 'Beginner'
                         : t.level == '2'
-                        ? 'Average'
-                        : t.level == '3'
-                        ? 'Good'
-                        : t.level == '4'
-                        ? 'Excellent'
-                        : 'Experienced'}
+                          ? 'Average'
+                          : t.level == '3'
+                            ? 'Good'
+                            : t.level == '4'
+                              ? 'Excellent'
+                              : 'Experienced'}
                     </Text>
                   </View>
                   <View style={styles.subrow}>
@@ -195,10 +195,10 @@ const TalentListScreen = (props) => {
                         justifyContent: 'center',
                         width: '50%',
                       }}>
-                      <Text style={{fontWeight: 'bold', color: 'black'}}>
+                      <Text style={{ fontWeight: 'bold', color: 'black' }}>
                         Type
                       </Text>
-                      <Text style={{color: 'darkgrey'}}>{t.chars.type}</Text>
+                      <Text style={{ color: 'darkgrey' }}>{t.chars.type}</Text>
                     </View>
                     <View
                       style={{
@@ -207,10 +207,10 @@ const TalentListScreen = (props) => {
                         justifyContent: 'center',
                         width: '50%',
                       }}>
-                      <Text style={{fontWeight: 'bold', color: 'black'}}>
+                      <Text style={{ fontWeight: 'bold', color: 'black' }}>
                         Industries
                       </Text>
-                      <Text style={{color: 'darkgrey'}}>
+                      <Text style={{ color: 'darkgrey' }}>
                         {t.chars.industry.toString()}
                       </Text>
                     </View>
@@ -223,10 +223,10 @@ const TalentListScreen = (props) => {
                         justifyContent: 'center',
                         width: '50%',
                       }}>
-                      <Text style={{fontWeight: 'bold', color: 'black'}}>
+                      <Text style={{ fontWeight: 'bold', color: 'black' }}>
                         Experience
                       </Text>
-                      <Text style={{color: 'darkgrey'}}>
+                      <Text style={{ color: 'darkgrey' }}>
                         {t.chars.years} Year Experienced
                       </Text>
                     </View>
@@ -237,15 +237,15 @@ const TalentListScreen = (props) => {
                         justifyContent: 'center',
                         width: '50%',
                       }}>
-                      <Text style={{color: 'black', fontWeight: 'bold'}}>
+                      <Text style={{ color: 'black', fontWeight: 'bold' }}>
                         Works
                       </Text>
-                      <Text style={{color: 'darkgrey'}}>
+                      <Text style={{ color: 'darkgrey' }}>
                         {t.chars.films} work(s) completed
                       </Text>
                     </View>
                   </View>
-                  <View style={{paddingHorizontal: 5}}>
+                  <View style={{ paddingHorizontal: 5 }}>
                     <Text
                       style={{
                         marginTop: 10,
@@ -263,7 +263,7 @@ const TalentListScreen = (props) => {
                     </Text>
                   </View>
                 </View>
-                <View style={{flexDirection: 'row', bottom: 0}}>
+                <View style={{ flexDirection: 'row', bottom: 0 }}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate('EditTalents', {
@@ -335,6 +335,7 @@ const styles = StyleSheet.create({
     marginRight: '25%',
     justifyContent: 'center',
     marginTop: 2,
+
   },
   DeleteBtn: {
     width: '69%',
