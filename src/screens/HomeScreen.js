@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import {
   View,
-  FlatList,
   Image,
   Text,
   StyleSheet,
@@ -9,43 +8,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import UserGridItem from '../components/UserGridItem';
-import Axios from 'axios';
-
-const users = [
-  { name: 'A', id: 1 },
-  { name: 'B', id: 2 },
-  { name: 'C', id: 3 },
-  { name: 'D', id: 4 },
-  { name: 'E', id: 5 },
-  { name: 'F', id: 6 },
-  { name: 'G', id: 7 },
-  { name: 'H', id: 8 },
-];
-
 const category = [
   { id: 1, title: 'Actor' },
   { id: 2, title: 'Model' },
   { id: 3, title: 'Singer' },
 ];
-
 const HomeScreen = (props) => {
   useEffect(() => {
     getRandomUsers();
   });
-
   const getRandomUsers = async () => {
     axios
       .get('http://13.232.190.226/api/talent/random')
       .then((response) => {
-        // handle success
-        console.warn(response);
       })
       .catch((error) => {
-        // handle error
-        console.warn(error);
       });
   };
-
   const renderCategoryGrid = (category) => {
     return (
       <TouchableOpacity>

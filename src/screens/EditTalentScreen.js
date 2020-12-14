@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Picker,
   Alert,
   Image,
   ToastAndroid,
@@ -19,9 +18,7 @@ import * as Yup from 'yup';
 import Cicon from 'react-native-vector-icons/MaterialIcons';
 import Gicon from 'react-native-vector-icons/FontAwesome';
 import Eicon from 'react-native-vector-icons/FontAwesome5';
-// import * as ImagePicker from 'expo-image-picker';
-import { Rating, AirbnbRating } from 'react-native-elements';
-// import MultiSelect from 'react-native-multiple-select';
+import { AirbnbRating } from 'react-native-elements';
 import { Snackbar } from 'react-native-paper';
 import { AuthContext } from '../context/authContext';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
@@ -87,8 +84,6 @@ const EditTalentScreen = (props) => {
   const description = props.navigation.getParam('description');
   const levels = props.navigation.getParam('levels');
   const auth = useContext(AuthContext);
-  const [selectedValue, setSelectedValue] = useState('');
-  const [industryValue, setIndustryValue] = useState();
   const [value, setValue] = useState('first');
   const [talent, setTalent] = useState();
   const [categories, setCategories] = useState([]);
@@ -108,22 +103,17 @@ const EditTalentScreen = (props) => {
   const [leftimg, setLeftImage] = useState();
   const [fullsizeimg, setFullImage] = useState();
   const [user, setUser] = useState({ image: {} });
-
   const initialTalentValues = {
     talentId: talentId,
     level: levels,
     experience: years,
-    // industry: industry,
     films: films,
     description: description,
-    // height:''
   };
-
   const phoneRegExp = /^[0-9]*$/;
   const talentValidationSchema = Yup.object({
     talentId: Yup.string().required('Select one category'),
     level: Yup.string().required('Select your level'),
-    // industry: Yup.string().required('Select atleast one industry'),
     experience: Yup.string()
       .matches(phoneRegExp, 'Invalid input')
       .required('Enter experience details'),
@@ -148,18 +138,11 @@ const EditTalentScreen = (props) => {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log('userinfo', response);
-
           setUser(response.data.user);
         })
         .catch((error) => { });
-      // setIsProfileImageMode(true);
-      // setTalent(tid);
-      // return;
     } else {
       setIsProfileImageMode(false);
-      // setTalent(tid);
-      // return;
     }
   };
 
@@ -205,7 +188,6 @@ const EditTalentScreen = (props) => {
 
   const handleSubmit = (values, { setSubmitting }) => {
     values.level = level;
-    // values.industry = selectedItems;
     if (selectedItems === undefined || selectedItems.length === 0) {
       Alert.alert(
         '',
@@ -218,7 +200,6 @@ const EditTalentScreen = (props) => {
         ],
         { cancelable: false },
       );
-      // alert('Please choose the languages you known');
       setSubmitting(false);
       return;
     }
@@ -275,7 +256,6 @@ const EditTalentScreen = (props) => {
       } else {
       }
     } catch (err) {
-      console.warn(err);
     }
   };
   const chooseFile = async (imgType) => {
@@ -308,7 +288,6 @@ const EditTalentScreen = (props) => {
         } else {
           setFullImage(response.uri);
         }
-        // imgurl = response.uri;
         uploadAvatar(imgType, response.uri);
       }
     });
@@ -353,7 +332,6 @@ const EditTalentScreen = (props) => {
         setVisible(!visible);
         return;
       }
-      // setMessage('Image uploaded successfully');
       showToastWithGravityAndOffset2()
     } catch (error) {
       console.error('error', error);
@@ -424,7 +402,6 @@ const EditTalentScreen = (props) => {
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    // marginBottom: 5,
                     borderColor: errors.link ? 'red' : '#e6e6e6',
                   }}>
                   <Cicon name="merge-type" size={20} style={{ color: '#fd9242' }} />
@@ -436,23 +413,6 @@ const EditTalentScreen = (props) => {
                 {errors.talentId ? (
                   <Text style={styles.error}>{errors.talentId}</Text>
                 ) : null}
-
-                {/* <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    backgroundColor: "white",
-                    width: '90%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: '3%',
-                    alignItems: 'center',
-                    borderColor: errors.link ? 'red' : 'gray',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    paddingLeft: '5%',
-                  }}> */}
-
                 <View
                   style={{
                     alignSelf: 'center',
@@ -487,7 +447,6 @@ const EditTalentScreen = (props) => {
                     selectedColor={theme.$primaryColor}
                   />
                 </View>
-
                 <View
                   style={{
                     alignSelf: 'center',
@@ -512,7 +471,6 @@ const EditTalentScreen = (props) => {
                       }
                     />
                   </View>
-
                   <View
                     style={{ width: '96%', marginLeft: '-2%', paddingBottom: 12 }}>
                     <SectionedMultiSelect
@@ -533,7 +491,6 @@ const EditTalentScreen = (props) => {
                 {errors.industry ? (
                   <Text style={styles.error}>{errors.industry}</Text>
                 ) : null}
-
                 <View
                   style={{
                     alignSelf: 'center',
@@ -561,16 +518,13 @@ const EditTalentScreen = (props) => {
                     placeholderTextColor="#003f5c"
                     keyboardType="numeric"
                     autoCapitalize="sentences"
-                    // defaultValue={user.email}
                     onChangeText={handleChange('experience')}
                     onBlur={handleBlur('experience')}
                   />
                 </View>
-
                 {errors.experience ? (
                   <Text style={styles.error}>{errors.experience}</Text>
                 ) : null}
-
                 <View
                   style={{
                     alignSelf: 'center',
@@ -598,7 +552,6 @@ const EditTalentScreen = (props) => {
                     placeholderTextColor="#003f5c"
                     keyboardType="numeric"
                     autoCapitalize="sentences"
-                    // defaultValue={user.email}
                     onChangeText={handleChange('films')}
                     onBlur={handleBlur('films')}
                   />
@@ -606,9 +559,7 @@ const EditTalentScreen = (props) => {
                 {errors.films ? (
                   <Text style={styles.error}>{errors.films}</Text>
                 ) : null}
-
                 {isProfileImageMode && (
-
                   <Fragment>
                     <View
                       style={{
@@ -619,7 +570,6 @@ const EditTalentScreen = (props) => {
                       }}>
                       <View
                         style={{
-                          // paddingLeft: 30,
                           marginTop: 10,
                         }}>
                         <TouchableOpacity
@@ -709,7 +659,6 @@ const EditTalentScreen = (props) => {
                         </TouchableOpacity>
                       </View>
                     </View>
-
                     <View
                       style={{
                         flexDirection: 'row',
@@ -717,7 +666,6 @@ const EditTalentScreen = (props) => {
                       }}>
                       <View
                         style={{
-                          // paddingLeft: 30,
                           marginTop: 10,
                           marginBottom: 20,
                         }}>
@@ -810,7 +758,6 @@ const EditTalentScreen = (props) => {
                     </View>
                   </Fragment>
                 )}
-
                 <View
                   style={{
                     alignSelf: 'center',
@@ -831,7 +778,6 @@ const EditTalentScreen = (props) => {
                       color: '#fd9242',
                     }}
                   />
-
                   <TextInput
                     style={styles.inputTextDes}
                     defaultValue={description}
@@ -841,13 +787,10 @@ const EditTalentScreen = (props) => {
                     autoCapitalize="sentences"
                     numberOfLines={3}
                     multiline={true}
-                    // defaultValue={user.email}
                     onChangeText={handleChange('description')}
                     onBlur={handleBlur('description')}
                   />
                 </View>
-                {/* </View> */}
-
                 <TouchableOpacity
                   style={styles.registerBtn}
                   onPress={handleSubmit}>
@@ -913,14 +856,12 @@ const styles = StyleSheet.create({
   inputViewDes: {
     flexDirection: 'row',
     width: '80%',
-    // height: 40,
     marginTop: '5%',
     justifyContent: 'flex-start',
     backgroundColor: 'white',
     borderRadius: 10,
   },
   inputTextDes: {
-    // height: 50,
     width: '80%',
     color: '#000000',
     marginLeft: 15,
@@ -948,7 +889,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: '5%',
   },
-
   registerBtnText: {
     fontSize: 18,
     marginVertical: 5,

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   ScrollView,
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -15,12 +14,10 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
-
 const loginSchema = yup.object({
   username: yup.string().required('Enter email address'),
   password: yup.string().required('Enter your password'),
 });
-
 const LoginScreen = (props) => {
   const auth = React.useContext(AuthContext);
   const loginUser = async (values) => {
@@ -37,7 +34,6 @@ const LoginScreen = (props) => {
     }
     auth.login(loginData.data.userId, loginData.data.token);
     props.navigation.navigate('Home');
-    console.log('logintoken', loginData.data.token);
   };
   return (
     <View style={styles.container}>
@@ -196,7 +192,6 @@ const styles = StyleSheet.create({
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    // textTransform: 'lowercase',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 8,
@@ -232,7 +227,6 @@ const styles = StyleSheet.create({
   registerLayoutText2: {
     color: theme.$primaryColor,
     fontSize: 14,
-
     fontFamily: 'montserrat-regular',
   },
   welcomeText: {
@@ -245,5 +239,4 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-medium',
   },
 });
-
 export default LoginScreen;

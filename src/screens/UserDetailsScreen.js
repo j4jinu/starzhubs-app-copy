@@ -12,6 +12,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AIcon from 'react-native-vector-icons/AntDesign';
 import Swiper from 'react-native-swiper';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import theme from '../config/theme';
@@ -397,6 +398,16 @@ const UserDetailsScreen = (props) => {
         <ActivityIndicator size={'large'} color={theme.$primaryColor} />
       </View>
     );
+  }
+  const footerModal = () => {
+    return (
+      <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: '10%' }}>
+        <View style={{ flexDirection: 'column', width: '100%' }}>
+          <Text style={{ color: 'white', textAlign: 'center', textAlignVertical: 'center', width: '100%' }}>Swipe down to close</Text>
+          <AIcon name="arrowdown" size={20} color="white" style={{ alignSelf: 'center' }} />
+        </View>
+      </View>
+    )
   }
 
   return (
@@ -864,8 +875,8 @@ const UserDetailsScreen = (props) => {
           <ImageViewer
             imageUrls={images}
             enableSwipeDown
-            onPress={() => setshowModal(false)}
             onSwipeDown={() => setshowModal(false)}
+            renderFooter={footerModal}
           />
         </Modal>
       </View>

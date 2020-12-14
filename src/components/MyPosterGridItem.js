@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Image,
   Text,
@@ -13,7 +12,6 @@ import theme from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Moment from 'moment';
 import { AuthContext } from '../context/authContext';
-import { Snackbar } from 'react-native-paper';
 const MyPosterGridItem = (props) => {
   const { userId } = props;
   const auth = useContext(AuthContext);
@@ -112,13 +110,11 @@ const MyPosterGridItem = (props) => {
                     : `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`,
               }}
             />
-
             <View
               style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                //paddingHorizontal: 15,
               }}>
               <View style={styles.ownerDetails}>
                 <Text style={{ fontSize: 13 }}>{userId.name}</Text>
@@ -183,7 +179,6 @@ const MyPosterGridItem = (props) => {
 const styles = StyleSheet.create({
   containerSnackbar: {
     flex: 1,
-    // justifyContent: 'space-between',
   },
   container: {
     flex: 1,
@@ -200,14 +195,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderWidth: 1,
     borderColor: 'gray',
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //     width: 0,
-    //     height: 3,
-    // },
-    // shadowOpacity: 0.26,
-    // shadowRadius: 1,
-    // elevation: 1,
     paddingBottom: 20,
   },
   gridItemText: {

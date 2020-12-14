@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Image,
-  FlatList,
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
@@ -21,8 +19,6 @@ const HomeScreenSingle = (props) => {
   const [media, setMedia] = React.useState([]);
   const [talent, setTalent] = React.useState([]);
   const deviceWidth = Dimensions.get('window').width;
-
-
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
@@ -44,15 +40,12 @@ const HomeScreenSingle = (props) => {
         resData.success ? setPoster(resData.data.posters) : setPoster([]);
         setIsLoading(false);
       } catch (error) {
-        console.error(error);
         setIsLoading(false);
       }
     };
     fetchHomeData();
   }, []);
-
   const renderMedia = (data) => {
-    console.log(('DATA: ', data));
     if (data.length === 0) {
       setMedia([]);
       return;
@@ -62,9 +55,7 @@ const HomeScreenSingle = (props) => {
         media.push(t.media);
       }
     });
-    console.log('Media files: ', media);
   };
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -72,7 +63,6 @@ const HomeScreenSingle = (props) => {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -98,7 +88,6 @@ const HomeScreenSingle = (props) => {
                   width: deviceWidth,
                   height: deviceWidth / 2,
                 }}
-                // style={{ width: '100%', height:200 }}
                 source={{
                   uri: `http://13.232.190.226/api/poster/view/${p.image}`,
                 }}
@@ -112,17 +101,13 @@ const HomeScreenSingle = (props) => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-
-
   },
   wrapper: {
     height: 300,
   },
 });
-
 export default HomeScreenSingle;

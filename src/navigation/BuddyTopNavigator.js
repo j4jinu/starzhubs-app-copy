@@ -36,7 +36,7 @@ const TabNavigatorConfig = {
             backgroundColor: 'white',
             elevation: 0,
             width: '100%',
-            
+
         },
         indicatorStyle: {
             backgroundColor: theme.$primaryColor,

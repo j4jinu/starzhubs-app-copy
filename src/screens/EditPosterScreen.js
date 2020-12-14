@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
-  Alert,
   Image,
   Text,
   StyleSheet,
@@ -55,7 +54,6 @@ const EditPosterScreen = (props) => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    // const handleSubmit = (values, {resetForm}) => {
     if (startDate === '') {
       setIsStartDate(true);
     } else {
@@ -75,19 +73,11 @@ const EditPosterScreen = (props) => {
     setEndDate(ed);
     const sd = Moment(startDate, 'DD-MM-YYYY').format('yyyy-MM-DD');
     setStartDate(sd);
-
     var formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('startDate', startDate);
     formData.append('endDate', endDate);
-    // const uri = image;
-    // let fileType = uri.substring(uri.lastIndexOf('.') + 1);
-    // formData.append('poster', {
-    //   uri,
-    //   name: `photo.${fileType}`,
-    //   type: `image/${fileType}`,
-    // });
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -96,7 +86,6 @@ const EditPosterScreen = (props) => {
       },
       body: formData,
     };
-
     try {
       const uploadRes = await fetch(
         `http://13.232.190.226/api/poster/${posterId}`,
@@ -107,43 +96,11 @@ const EditPosterScreen = (props) => {
         alert(uploadResData.message);
         return;
       }
-      // const msg = 'Poster Edited Successfully. Check your poster screen.';
-      // setMessage(msg);
-      // setVisible(!visible);
-      props.navigation.navigate('Account');
+      props.navigation.goBack();
       showToastWithGravityAndOffset();
-      // setStartDate('');
-      // setEndDate('');
-      // setImage(null);
-      // resetForm();
     } catch (error) {
       console.error('error', error);
     }
-
-    // fetch(`http://13.232.190.226/api/poster/${posterId}`, requestOptions)
-    //   .then((response) => response.json())
-    //   .then(
-    //     (response) => {
-    //       if (response.success === true) {
-    //         const msg = 'Poster Edited Successfully. Check your poster screen.';
-    //         setMessage(msg);
-    //         setVisible(!visible);
-    //         values.title = '';
-    //         resetForm({values: ''});
-    //         setStartDate('');
-    //         setEndDate('');
-    //         setSDate('')
-    //         setEDate('')
-    //         setImage(null);
-
-    //       } else {
-    //         alert('Error: ', response);
-    //       }
-    //     },
-    //     (error) => {
-    //       alert('Poster upload failed: ' + error);
-    //     },
-    //   );
   };
 
   const handleStartDate = (date) => {
@@ -157,7 +114,6 @@ const EditPosterScreen = (props) => {
       setIsStartDate(false);
     }
   };
-
   const handleEndDate = (date) => {
     setEDate(date);
     if (date === '') {
@@ -198,7 +154,6 @@ const EditPosterScreen = (props) => {
       } else {
       }
     } catch (err) {
-      console.warn(err);
     }
   };
 
@@ -235,7 +190,7 @@ const EditPosterScreen = (props) => {
           {message}
         </Snackbar>
         <ScrollView>
-          <View style={{ justifyContent: 'center' }}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View>
               <Formik
                 initialValues={posterInitValues}
@@ -281,7 +236,7 @@ const EditPosterScreen = (props) => {
                           borderWidth: 1,
                           backgroundColor: 'white',
                           width: '100%',
-                          paddingLeft: 8,
+                          paddingLeft: 3,
                           paddingRight: 8,
                           marginTop: 8,
                           flexDirection: 'row',
@@ -290,8 +245,8 @@ const EditPosterScreen = (props) => {
                         }}>
                         <Cicon
                           name="subtitles"
-                          size={25}
-                          style={{ color: theme.$primaryColor, marginRight: '2%' }}
+                          size={15}
+                          style={{ color: theme.$primaryColor, marginRight: '2%', alignSelf: 'center' }}
                         />
                         <TextInput
                           style={{ paddingVertical: 5, width: '100%' }}
@@ -321,7 +276,7 @@ const EditPosterScreen = (props) => {
                           borderWidth: 1,
                           backgroundColor: 'white',
                           width: '100%',
-                          paddingLeft: 8,
+                          paddingLeft: 3,
                           paddingRight: 8,
                           marginTop: 8,
                           flexDirection: 'row',
@@ -330,8 +285,8 @@ const EditPosterScreen = (props) => {
                         }}>
                         <Icon
                           name="ios-information-circle"
-                          size={25}
-                          style={{ color: theme.$primaryColor, marginRight: '2%' }}
+                          size={15}
+                          style={{ color: theme.$primaryColor, marginRight: '2%', alignSelf: 'center' }}
                         />
                         <TextInput
                           style={{ width: '100%' }}
@@ -363,7 +318,6 @@ const EditPosterScreen = (props) => {
                           backgroundColor: 'white',
                           alignSelf: 'center',
                           width: '100%',
-
                           paddingLeft: 3,
                           borderColor: errors.projects ? 'red' : '#e6e6e6',
                           marginTop: 5,
@@ -381,11 +335,11 @@ const EditPosterScreen = (props) => {
                         iconComponent={
                           <Cicon
                             name="date-range"
-                            size={23}
+                            size={15}
                             style={{
                               position: 'absolute',
                               left: 0,
-                              top: 8,
+                              alignSelf: 'center',
                               color: theme.$primaryColor,
                             }}
                           />
@@ -393,7 +347,7 @@ const EditPosterScreen = (props) => {
                         customStyles={{
                           dateInput: {
                             borderWidth: 0,
-                            marginLeft: '10%',
+                            marginLeft: '7%',
                             alignItems: 'flex-start',
                           },
                         }}
@@ -419,7 +373,6 @@ const EditPosterScreen = (props) => {
                           backgroundColor: 'white',
                           alignSelf: 'center',
                           width: '100%',
-
                           paddingLeft: 3,
                           borderColor: errors.projects ? 'red' : '#e6e6e6',
                           marginTop: 5,
@@ -430,25 +383,24 @@ const EditPosterScreen = (props) => {
                         placeholder="End Date"
                         format="DD/MM/YYYY"
                         minDate={sDate}
-                        // maxDate="01-01-2019"
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         iconComponent={
                           <Cicon
                             name="date-range"
-                            size={23}
+                            size={15}
                             style={{
                               position: 'absolute',
                               left: 0,
-                              top: 8,
                               color: theme.$primaryColor,
+                              alignSelf: 'center',
                             }}
                           />
                         }
                         customStyles={{
                           dateInput: {
                             borderWidth: 0,
-                            marginLeft: '10%',
+                            marginLeft: '7%',
                             alignItems: 'flex-start',
                           },
                         }}
@@ -467,7 +419,6 @@ const EditPosterScreen = (props) => {
                           Choose End Date
                         </Text>
                       )}
-
                       <View
                         style={{
                           marginTop: 10,
@@ -507,7 +458,7 @@ export default EditPosterScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: 'white'
   },
   posterTitle: {
     fontSize: 18,
@@ -559,7 +510,7 @@ const styles = StyleSheet.create({
   },
   imageBtn: {
     elevation: 5,
-    borderRadius: 18,
+    borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 5,
     backgroundColor: theme.$primaryColor,

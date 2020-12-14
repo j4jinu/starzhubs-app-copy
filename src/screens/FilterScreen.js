@@ -1,7 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useRef,
   useContext,
   useCallback,
 } from 'react';
@@ -29,36 +28,28 @@ const FilterScreen = (props) => {
   const [heightToValue, setHeightToValue] = useState(200);
   const [weightFromValue, setWeightFromValue] = useState(0);
   const [weightToValue, setWeightToValue] = useState(250);
-
   const [search, setSearch] = useState('');
-
   const [isDark, setDark] = useState(false);
   const [isBrown, setBrown] = useState(false);
   const [isWheatish, setWheatish] = useState(false);
   const [isFair, setFair] = useState(false);
-
   const [isFit, setFit] = useState(false);
   const [isAthletic, setAthletic] = useState(false);
   const [isHourglass, setHourglass] = useState(false);
   const [isSlim, setSlim] = useState(false);
   const [isFatty, setFatty] = useState(false);
   const [isAverageBuild, setAverageBuild] = useState(false);
-
   const [isFemale, setFemale] = useState(false);
   const [isMale, setMale] = useState(false);
   const [isOthers, setOthers] = useState(false);
-
   const [selectedItems, setSelectedItems] = useState([]);
-  const [isActor, setActor] = useState(false);
   const [gender, setGender] = useState([]);
   const [skinTone, setSkinTone] = useState([]);
   const [bodyType, setBodyType] = useState([]);
-
   const [isCategoryOn, setCategoryOn] = useState(false);
   const [isGenderOn, setGenderOn] = useState(false);
   const [isBodyTypeOn, setBodyTypeOn] = useState(false);
   const [isSkinToneOn, setSkinToneOn] = useState(false);
-
   const [visible, setVisible] = useState(false);
   const [categories, setCategories] = useState([]);
 
@@ -72,16 +63,13 @@ const FilterScreen = (props) => {
         } else {
           setCategories([]);
         }
-        console.log('Category array: ', categories);
       } catch (error) {
-        console.log('Error: ', error);
       }
     };
     getCategory();
   }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
-    console.log(selectedItem);
     setSelectedItems(selectedItem);
     if (selectedItems === []) {
       setCategoryOn(true);
@@ -225,7 +213,6 @@ const FilterScreen = (props) => {
       .then(
         (response) => {
           if (response.success === true) {
-            console.warn(response.data.users);
             props.navigation.navigate('FilterResult', {
               filter: response.data.users,
             });
@@ -258,39 +245,30 @@ const FilterScreen = (props) => {
     setFatty(false);
     setAverageBuild(false);
     handleAgeValueChange(0, 100);
-    // setCategories()
   };
-
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-
   const renderThumb = useCallback(() => <Thumb />, []);
   const renderRail = useCallback(() => <Rail />, []);
   const renderRailSelected = useCallback(() => <RailSelected />, []);
   const renderLabel = useCallback((value) => <Label text={value} />, []);
   const renderNotch = useCallback(() => <Notch />, []);
-
-  // Age slider
   const handleAgeValueChange = useCallback((low, high) => {
     setAgeFromValue(low);
     setAgeToValue(high);
   }, []);
-
-  // Weight slider
   const handleWeightValueChange = useCallback((low, high) => {
     setWeightFromValue(low);
     setWeightToValue(high);
   }, []);
-
-  // Height slider
   const handleHeightValueChange = useCallback((low, high) => {
     setHeightFromValue(low);
     setHeightToValue(high);
   }, []);
   return (
     <View style={styles.container}>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+      <Snackbar visible={visible} duration={1000} onDismiss={onDismissSnackBar}>
         {' '}
         No Users Found !
       </Snackbar>
@@ -313,7 +291,6 @@ const FilterScreen = (props) => {
             {' '}
             Category
           </Text>
-
           <View
             style={{
               width: '95%',

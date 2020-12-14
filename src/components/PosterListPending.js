@@ -7,13 +7,19 @@ import {Snackbar} from 'react-native-paper';
 import theme from '../config/theme';
 
 const PosterListPending = (props) => {
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+    getPosters();
+  });
+
+  useEffect(() => {
+    getPosters();
+    unsubscribe;
+  }, []);
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [posters, setPosters] = useState([]);
 
-  useEffect(() => {
-    getPosters();
-  }, []);
   const getPosters = async (status) => {
     // setLoading(true);
     setPosters([]);

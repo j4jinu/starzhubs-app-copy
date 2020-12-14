@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
   Image,
   Dimensions,
 } from 'react-native';
@@ -12,7 +11,6 @@ import theme from '../config/theme';
 
 const MediaItem = (props) => {
   const deviceWidth = Dimensions.get('window').width;
-
   if (props.user === null) {
     return null;
   } else {
@@ -34,7 +32,6 @@ const MediaItem = (props) => {
           {props.media[0].fileType === 'image' ? (
             <Image
               style={{ width: '100%', height: deviceWidth / 2 }}
-              // style={{ width: '100%', height: '60%', resizeMode: 'cover' }}
               resizeMode="cover"
               source={{
                 uri: `http://13.232.190.226/api/user/view/media/?${props.media[0].file}`,
@@ -53,21 +50,10 @@ const MediaItem = (props) => {
                 }}
               />
             )}
-          {/* <Image
-                            style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-                            source={{
-                                uri: props.image
-                            }}
-                        /> */}
-          {/* {props.user !== undefined && (
-            <Text style={styles.mediaAuthor}>{props.user.name}</Text>
-          )} */}
           {props.user[0] !== undefined && (
             <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
           )}
           <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
-          {/* // <Text style={styles.mediaDescription}>{props.media[0].description.substring(0, 100)}...</Text>
-          // <Text style={{ color: theme.$primaryColorText, marginLeft: 10 }}>Posted by: */}
           <Text numberOfLines={3} style={styles.mediaDescription}>
             {props.media[0].description}
           </Text>
@@ -94,9 +80,6 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginBottom: 10,
     paddingBottom: 10,
-    // elevation: 3,
-    // borderRadius: 2,
-    // marginBottom: "3%"
   },
   gridItemText: {
     fontFamily: 'montserrat-medium',
@@ -116,7 +99,6 @@ const styles = StyleSheet.create({
     color: theme.$primaryColorText,
     fontSize: 13,
     marginHorizontal: 10,
-    // marginBottom: 10,
   },
   mediaAuthor: {
     color: theme.$primaryColor,

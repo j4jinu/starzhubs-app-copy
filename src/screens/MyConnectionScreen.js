@@ -3,16 +3,13 @@ import { FlatList, Text, View, Image, ActivityIndicator } from 'react-native';
 import BuddyItem from '../components/BuddyItem';
 import { AuthContext } from '../context/authContext';
 import theme from '../config/theme';
-
 const MyConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [isFriends, setIsFriends] = useState([]);
-
   useEffect(() => {
     getConnectionRequests();
   }, []);
-
   const getConnectionRequests = () => {
     fetch(`http://13.232.190.226/api/talent/req/approved`, {
       method: 'GET',
@@ -30,7 +27,6 @@ const MyConnectionScreen = (props) => {
         alert(error);
       });
   };
-
   if (loading) {
     return (
       <View
@@ -45,7 +41,6 @@ const MyConnectionScreen = (props) => {
       </View>
     );
   }
-
   if (!isFriends === undefined || isFriends.length !== 0) {
     return (
       <FlatList

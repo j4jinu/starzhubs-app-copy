@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import {
-  ActivityIndicator,
   StyleSheet,
   Image,
   Text,

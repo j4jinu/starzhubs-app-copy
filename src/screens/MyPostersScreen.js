@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingVertical: 12,
     paddingHorizontal: 5,
-    backgroundColor: 'tomato',
+    backgroundColor: '#F98644',
     marginRight: 20,
     alignItems: 'center',
   },

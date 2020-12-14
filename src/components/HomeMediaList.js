@@ -5,15 +5,12 @@ import MediaItem from './MediaItem';
 
 const HomeMediaList = (props) => {
   const { talents } = props;
-
   if (talents === undefined || talents.length === 0) {
     return <Text>No media files</Text>;
   }
-
   return (
     <View style={styles.container}>
       <FlatList
-        // style={{marginBottom:20}}
         keyExtractor={(item) => item._id}
         data={talents}
         renderItem={({ item }) => (

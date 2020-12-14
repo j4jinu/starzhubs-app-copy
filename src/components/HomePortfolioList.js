@@ -2,10 +2,8 @@ import React from 'react';
 import {
   View,
   FlatList,
-  Image,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import UserGridItem from '../components/UserGridItem';

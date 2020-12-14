@@ -1,15 +1,19 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View, Image, ActivityIndicator} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { FlatList, Text, View, Image, ActivityIndicator } from 'react-native';
 import theme from '../config/theme';
-import {AuthContext} from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [posters, setPosters] = useState([]);
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    getPosters();
+  });
 
   useEffect(() => {
     getPosters();
+    unsubscribe;
   }, []);
   const getPosters = async (status) => {
     setLoading(true);
@@ -54,7 +58,7 @@ const PosterListActive = (props) => {
           paddingVertical: 25,
           marginTop: '35%',
         }}>
-        <Text style={{fontSize: 18, color: 'tomato'}}>No Active Posters.</Text>
+        <Text style={{ fontSize: 18, color: 'tomato' }}>No Active Posters.</Text>
         <Image
           source={require('../assets/box.png')}
           style={{
@@ -73,7 +77,7 @@ const PosterListActive = (props) => {
         keyExtractor={(item) => item.id}
         data={posters}
         extraData={posters}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <MyPosterGridItem
             id={item._id}
             poster={item.title}

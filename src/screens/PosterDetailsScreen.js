@@ -178,6 +178,16 @@ const PosterDetailsScreen = (props) => {
       100,
     );
   };
+  const footerModal = () => {
+    return (
+      <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: '10%' }}>
+        <View style={{ flexDirection: 'column', width: '100%' }}>
+          <Text style={{ color: 'white', textAlign: 'center', textAlignVertical: 'center', width: '100%' }}>Swipe down to close</Text>
+          <AIcon name="arrowdown" size={20} color="white" style={{ alignSelf: 'center' }} />
+        </View>
+      </View>
+    )
+  }
   return (
     <>
       <View style={styles.container}>
@@ -490,6 +500,7 @@ const PosterDetailsScreen = (props) => {
           imageUrls={images}
           enableSwipeDown
           onSwipeDown={() => setshowModal(false)}
+          renderFooter={footerModal}
         />
       </Modal>
     </>

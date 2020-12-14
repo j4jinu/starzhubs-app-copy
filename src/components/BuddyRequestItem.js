@@ -12,7 +12,6 @@ import { AuthContext } from '../context/authContext';
 
 const BuddyRequestItem = (props) => {
   const auth = useContext(AuthContext);
-
   const confirmApprove = () =>
     Alert.alert(
       '',
@@ -20,7 +19,6 @@ const BuddyRequestItem = (props) => {
       [
         {
           text: 'Cancel',
-          // onPress: () => {navigation.navigate('My Media')},
           style: 'cancel',
         },
         {
@@ -38,7 +36,6 @@ const BuddyRequestItem = (props) => {
       [
         {
           text: 'No',
-          // onPress: () => {navigation.navigate('My Media')},
           style: 'cancel',
         },
         {
@@ -71,7 +68,6 @@ const BuddyRequestItem = (props) => {
       );
   };
   const requestHandler = () => {
-    // console.warn(status)
     fetch(`http://13.232.190.226/api/talent/user/approve/${props.reqId}/1`, {
       method: 'PUT',
       headers: {
@@ -83,9 +79,7 @@ const BuddyRequestItem = (props) => {
         alert(response.message);
         props.getConnection()
         props.navigation.navigate('MyConnectionScreen', {
-          // navigation: props.navigation,
         });
-
       })
       .catch((error) => {
         alert(error);

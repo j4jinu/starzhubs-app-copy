@@ -59,7 +59,6 @@ const ServiceScreen = ({navigation}) => {
                     serviceName: s.title,
                   });
                 }}>
-                {/* <View style={styles.img}> */}
                 <Image
                   source={{
                     uri: `http://13.232.190.226/api/services/view/${s.image}`,
@@ -71,12 +70,11 @@ const ServiceScreen = ({navigation}) => {
                     alignSelf: 'center',
                   }}
                 />
-                {/* </View> */}
                 <View
                   style={{
+                    // marginBottom: '5%',
                     marginHorizontal: 5,
                     justifyContent: 'center',
-                    alignItems: 'center',
                     alignItems: 'center',
                     marginTop: 15,
                   }}>
@@ -106,7 +104,6 @@ const styles = StyleSheet.create({
     paddingVertical: '3%',
     paddingHorizontal: '3%',
     backgroundColor: '#fff',
-    // alignItems:'center',
   },
   cardleft: {
     elevation: 1,
@@ -118,10 +115,6 @@ const styles = StyleSheet.create({
     marginBottom: '1%',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  img: {
-    // marginTop: '8%',
-    // marginBottom: '8%',
   },
 });
 export default ServiceScreen;

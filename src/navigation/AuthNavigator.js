@@ -4,8 +4,6 @@ import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import LoginScreen from "../screens/LoginScreen";
 import OtpScreen from "../screens/OtpScreen";
 import SignupScreen from "../screens/SignupScreen";
-import HomeTopTabNavigator from "./HomeTopTabNavigator";
-import MainNavigator from "./MainNavigator";
 
 const AuthNavigator = createStackNavigator({
     Login: {

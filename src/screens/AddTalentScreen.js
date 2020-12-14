@@ -26,8 +26,6 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../config/theme';
 import { ScrollView } from 'react-native-gesture-handler';
-import UserDetailsScreen from './UserDetailsScreen';
-
 const industryNames = [
   {
     name: 'Industry',
@@ -76,7 +74,6 @@ const industryNames = [
     ],
   },
 ];
-
 export default function AddTalentScreen(props) {
   const auth = useContext(AuthContext);
   const [selectedValue, setSelectedValue] = useState();
@@ -99,13 +96,10 @@ export default function AddTalentScreen(props) {
   const [level, setLevel] = useState(2);
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
-
   const initialTalentValues = {
     talentId: talent,
-    // level: '',
     type: 'Aspirant',
     experience: '',
-    // industry:[],
     projects: '',
     complexion: '',
     bodyType: '',
@@ -113,14 +107,11 @@ export default function AddTalentScreen(props) {
     weight: '',
     description: '',
   };
-
   const phoneRegExp = /^[0-9]*$/;
   let talentValidationSchema;
   if (isProfileImageMode) {
     talentValidationSchema = Yup.object({
       talentId: Yup.string().required('Select one category'),
-      // level: Yup.string().required('Select your level'),
-      // industry: Yup.string().required('Select one industry'),
       complexion: Yup.string().required('Select one complexion'),
       bodyType: Yup.string().required('Please choose one'),
       experience: Yup.string()
@@ -136,8 +127,6 @@ export default function AddTalentScreen(props) {
   } else {
     talentValidationSchema = Yup.object({
       talentId: Yup.string().required('Select one category'),
-      // level: Yup.string().required('Select your level'),
-      // industry: Yup.string().required('Select one industry'),
       experience: Yup.string()
         .matches(phoneRegExp, 'Invalid input')
         .required('Enter experience details'),
@@ -147,7 +136,6 @@ export default function AddTalentScreen(props) {
       description: Yup.string().required('Enter talent  details'),
     });
   }
-
   useEffect(() => {
     const getUserTalents = () => {
       const requestOptions = {
@@ -162,23 +150,17 @@ export default function AddTalentScreen(props) {
           (response) => {
             if (response.success === true) {
               setTalent(response.data.talents);
-              // setIsLoading(false)
             } else {
               alert('Error: ', response.message);
             }
-            // setIsLoading(false)
           },
           (error) => {
             alert('Talent fetching failed: ' + error);
-            // setIsLoading(false)
           },
         );
     };
-
     getUserTalents();
-    // getUserTalents()
   }, []);
-
   useEffect(() => {
     const getCategory = () => {
       fetch('http://13.232.190.226/api/category', {
@@ -187,23 +169,15 @@ export default function AddTalentScreen(props) {
         .then((response) => response.json())
         .then((response) => {
           setCategories(response.categories);
-          // handleBackdropClose()
         })
         .catch((error) => {
-          // handleBackdropClose()
         });
     };
     getCategory();
   }, []);
 
-  // const handleSubmit = (values) => {
-  //   console.warn(values);
-
-  // }
-
   const isProfileImageModeHandler = (tid) => {
-    // var index = e.nativeEvent.target.selectedIndex;
-    // const cat = e.nativeEvent.target[itemIndex].text.toLowerCase();
+    cat = e.nativeEvent.target[itemIndex].text.toLowerCase();
     if (tid === '5f5b2b8e96b2173a30948ac6' || tid === '') {
       setIsProfileImageMode(true);
       setTalent(tid);
@@ -214,15 +188,8 @@ export default function AddTalentScreen(props) {
       return;
     }
   };
-
   const handleSubmit = (values, { resetForm, setSubmitting }) => {
     setLoading(true);
-    // console.warn(JSON.stringify(values));
-    // if (industries.length === 0) {
-    //     alert("Choose atleast one industry")
-    //     return
-    // }
-    // setOpenBackdrop(true)
     if (selectedValue === undefined || selectedValue === '') {
       Alert.alert(
         '',
@@ -285,16 +252,9 @@ export default function AddTalentScreen(props) {
           if (response.success === true) {
             setLoading(false);
             resetForm({ values: '' });
-            // const msg =
-            //   'New Talent added successfully. Check your profile page and add medias.';
-            // setMessage(msg);
-            // setVisible(!visible);
-
             props.navigation.navigate('Talents');
-            //props.navigation.navigate('MyMedia');
             showToastWithGravityAndOffset();
           } else {
-            // alert(response.message);
             props.navigation.navigate('Account');
             showToast();
           }
@@ -306,15 +266,12 @@ export default function AddTalentScreen(props) {
         },
       );
   };
-
   const onDismissSnackBar = () => {
     setVisible(false);
   };
-
   const showToast = () => {
     ToastAndroid.show('Talent already added by the user', ToastAndroid.SHORT);
   };
-
   const showToastWithGravityAndOffset = () => {
     ToastAndroid.showWithGravityAndOffset(
       'New Talent added successfully.',
@@ -324,7 +281,6 @@ export default function AddTalentScreen(props) {
       100,
     );
   };
-
   const uploadAvatar = async (imgType, imgurl) => {
     let image;
     if (imgType === 'head_shot') {
@@ -391,7 +347,6 @@ export default function AddTalentScreen(props) {
       } else {
       }
     } catch (err) {
-      console.warn(err);
     }
   };
 
@@ -442,7 +397,6 @@ export default function AddTalentScreen(props) {
   const handleReset = (resetForm) => {
     resetForm();
   };
-
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -452,7 +406,6 @@ export default function AddTalentScreen(props) {
           onDismiss={onDismissSnackBar}>
           {message}
         </Snackbar>
-
         <Formik
           enableReinitialize={true}
           initialValues={initialTalentValues}
@@ -465,7 +418,6 @@ export default function AddTalentScreen(props) {
             handleBlur,
             handleSubmit,
             setFieldValue,
-            resetForm,
             values,
             errors,
           }) => (
@@ -481,7 +433,6 @@ export default function AddTalentScreen(props) {
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    // marginBottom: 5,
                     borderColor: errors.link ? 'red' : '#e6e6e6',
                   }}>
                   <Cicon
@@ -619,7 +570,6 @@ export default function AddTalentScreen(props) {
                     placeholderTextColor="#003f5c"
                     keyboardType="numeric"
                     autoCapitalize="sentences"
-                    // defaultValue={user.email}
                     value={values.experience}
                     onChangeText={handleChange('experience')}
                     onBlur={handleBlur('experience')}
@@ -654,7 +604,6 @@ export default function AddTalentScreen(props) {
                     placeholderTextColor="#003f5c"
                     keyboardType="numeric"
                     autoCapitalize="sentences"
-                    // defaultValue={user.email}
                     value={values.projects}
                     onChangeText={handleChange('projects')}
                     onBlur={handleBlur('projects')}
@@ -691,7 +640,6 @@ export default function AddTalentScreen(props) {
                     autoCapitalize="sentences"
                     numberOfLines={3}
                     multiline={true}
-                    // defaultValue={user.email}
                     value={values.description}
                     onChangeText={handleChange('description')}
                     onBlur={handleBlur('description')}
@@ -711,7 +659,6 @@ export default function AddTalentScreen(props) {
                       }}>
                       <View
                         style={{
-                          // paddingLeft: 30,
                           marginTop: 10,
                         }}>
                         <TouchableOpacity
@@ -856,7 +803,6 @@ export default function AddTalentScreen(props) {
                                   uri: fullsizeimg,
                                 }
                             }
-                            //  source={require("../../assets/fullsize.jpg")}
                             style={{
                               borderRadius: 50,
                               height: 140,
@@ -973,7 +919,6 @@ export default function AddTalentScreen(props) {
                         placeholderTextColor="#003f5c"
                         keyboardType="numeric"
                         autoCapitalize="sentences"
-                        // defaultValue={user.email}
                         onChangeText={handleChange('height')}
                         onBlur={handleBlur('height')}
                       />
@@ -1049,7 +994,6 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     marginHorizontal: '5%',
-    //marginBottom: -15,
   },
   logo: {
     fontWeight: 'bold',
