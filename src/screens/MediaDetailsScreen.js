@@ -15,6 +15,7 @@ import theme from '../config/theme';
 import {AuthContext} from '../context/authContext';
 import SIcon from 'react-native-vector-icons/Fontisto';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import AIcon from 'react-native-vector-icons/AntDesign';
 
 const MediaDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -37,6 +38,16 @@ const MediaDetailsScreen = (props) => {
       },
     },
   ];
+  const footerModal = () =>{
+    return(
+      <View style={{width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center', marginBottom:'10%'}}>
+        <View style={{ flexDirection:'column', width:'100%'}}>
+          <Text style={{color:'white',textAlign:'center', textAlignVertical:'center', width:'100%' }}>Swipe down to close</Text>
+          <AIcon name="arrowdown" size={20} color="white" style={{alignSelf:'center'}} />
+        </View>
+      </View>
+    )
+  }
 
   return (
     // <View>
@@ -46,6 +57,7 @@ const MediaDetailsScreen = (props) => {
           imageUrls={images}
           enableSwipeDown
           onSwipeDown={() => setshowModal(false)}
+          renderFooter={footerModal}
         />
       </Modal>
 

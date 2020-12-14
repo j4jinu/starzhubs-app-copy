@@ -1,15 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View, Image} from 'react-native';
+import {FlatList, Text, View, Image, ActivityIndicator} from 'react-native';
 import BuddyItem from '../components/BuddyItem';
 import {AuthContext} from '../context/authContext';
 import theme from '../config/theme';
 
 const MyConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const [isFriends, setIsFriends] = useState([]);
+
   useEffect(() => {
     getConnectionRequests();
-  });
+  }, []);
+
   const getConnectionRequests = () => {
     fetch(`http://13.232.190.226/api/talent/req/approved`, {
       method: 'GET',
@@ -20,16 +23,33 @@ const MyConnectionScreen = (props) => {
       .then((response) => response.json())
       .then((response) => {
         setIsFriends(response.data.connections);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         alert(error);
       });
   };
 
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          paddingTop: 50,
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
+
   if (!isFriends === undefined || isFriends.length !== 0) {
     return (
       <FlatList
-        style={{backgroundColor: '#efefef'}}
+        style={{backgroundColor: '#fff'}}
         keyExtractor={(item) => item.id}
         data={isFriends}
         renderItem={({item}) => (

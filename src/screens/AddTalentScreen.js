@@ -1137,5 +1137,4 @@ const styles = StyleSheet.create({
     color: '#fd9242',
     marginTop: '-160%',
   },
-
 });

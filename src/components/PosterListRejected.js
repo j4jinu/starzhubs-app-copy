@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, Image } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { AuthContext } from '../context/authContext';
+import React, {useContext, useEffect, useState} from 'react';
+import {Text, View, Image, ActivityIndicator} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import theme from '../config/theme';
+import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListRejected = (props) => {
   const auth = useContext(AuthContext);
@@ -30,6 +31,21 @@ const PosterListRejected = (props) => {
     }
   };
 
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          paddingTop: 50,
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
+
   if (posters.length === 0) {
     return (
       <View
@@ -39,7 +55,7 @@ const PosterListRejected = (props) => {
           paddingVertical: 25,
           marginTop: '35%',
         }}>
-        <Text style={{ fontSize: 18, color: 'tomato' }}>
+        <Text style={{fontSize: 18, color: 'tomato'}}>
           No Rejected Posters.
         </Text>
         <Image
@@ -59,7 +75,7 @@ const PosterListRejected = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <MyPosterGridItem
             id={item._id}
             poster={item.title}
@@ -70,7 +86,7 @@ const PosterListRejected = (props) => {
             userId={item.userId}
             navigation={props.navigation}
             getPosters={getPosters}
-            status='rejected'
+            status="rejected"
           />
         )}
       />

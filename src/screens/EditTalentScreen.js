@@ -12,7 +12,7 @@ import {
   ToastAndroid,
   PermissionsAndroid,
   ScrollView,
-  ImageBackground
+  ImageBackground,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -354,7 +354,7 @@ const EditTalentScreen = (props) => {
         return;
       }
       // setMessage('Image uploaded successfully');
-      showToastWithGravityAndOffset2()
+      showToastWithGravityAndOffset2();
     } catch (error) {
       console.error('error', error);
     }
@@ -608,7 +608,6 @@ const EditTalentScreen = (props) => {
               ) : null}
 
               {isProfileImageMode && (
-                
                 <Fragment>
                   <View
                     style={{
@@ -630,13 +629,13 @@ const EditTalentScreen = (props) => {
                           source={
                             !headimg &&
                             user.image &&
-                            user.image.head_shot !== undefined?
-                              {
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`
-                              }:
-                            !headimg && user.image.head_shot === undefined?
-                              require('../assets/headshot.jpg'):
-                              {uri: headimg}
+                            user.image.head_shot !== undefined
+                              ? {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`,
+                                }
+                              : !headimg && user.image.head_shot === undefined
+                              ? require('../assets/headshot.jpg')
+                              : {uri: headimg}
                           }
                           style={{
                             borderRadius: 50,
@@ -674,14 +673,15 @@ const EditTalentScreen = (props) => {
                         <ImageBackground
                           source={
                             !leftimg &&
-                          user.image &&
-                          user.image.left_profile !== undefined?
-                              {
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`
-                              }:
-                              !leftimg && user.image.left_profile === undefined?
-                              require('../assets/left_profile.jpg'):
-                              {uri: leftimg}
+                            user.image &&
+                            user.image.left_profile !== undefined
+                              ? {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`,
+                                }
+                              : !leftimg &&
+                                user.image.left_profile === undefined
+                              ? require('../assets/left_profile.jpg')
+                              : {uri: leftimg}
                           }
                           style={{
                             borderRadius: 50,
@@ -728,14 +728,15 @@ const EditTalentScreen = (props) => {
                         <ImageBackground
                           source={
                             !rightimg &&
-                          user.image &&
-                          user.image.right_profile !== undefined?
-                              {
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`
-                              }:
-                              !rightimg && user.image.right_profile === undefined?
-                              require('../assets/right_profile.jpg'):
-                              {uri: rightimg}
+                            user.image &&
+                            user.image.right_profile !== undefined
+                              ? {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`,
+                                }
+                              : !rightimg &&
+                                user.image.right_profile === undefined
+                              ? require('../assets/right_profile.jpg')
+                              : {uri: rightimg}
                           }
                           style={{
                             borderRadius: 50,
@@ -773,14 +774,15 @@ const EditTalentScreen = (props) => {
                         <ImageBackground
                           source={
                             !fullsizeimg &&
-                          user.image &&
-                          user.image.fullsize !== undefined?
-                              {
-                                uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`
-                              }:
-                              !fullsizeimg && user.image.fullsize === undefined?
-                              require('../assets/fullsize.jpg'):
-                              {uri: fullsizeimg}
+                            user.image &&
+                            user.image.fullsize !== undefined
+                              ? {
+                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`,
+                                }
+                              : !fullsizeimg &&
+                                user.image.fullsize === undefined
+                              ? require('../assets/fullsize.jpg')
+                              : {uri: fullsizeimg}
                           }
                           style={{
                             borderRadius: 50,

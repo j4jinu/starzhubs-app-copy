@@ -9,8 +9,10 @@ import {
   Modal,
   Alert,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AIcon from 'react-native-vector-icons/AntDesign';
 import Swiper from 'react-native-swiper';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import theme from '../config/theme';
@@ -25,6 +27,7 @@ import {Snackbar} from 'react-native-paper';
 
 const UserDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
   const userId = props.navigation.getParam('userId');
   const [user, setUser] = useState({image: {}});
   const [talents, setTalents] = useState([]);
@@ -101,8 +104,11 @@ const UserDetailsScreen = (props) => {
           setUserLocation(response.data.user.location);
           setPosters(response.data.posters);
           checkActorMode(response.data.talents);
+          setLoading(false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          setLoading(false);
+        });
     };
     getUserDetails();
   }, []);
@@ -118,10 +124,10 @@ const UserDetailsScreen = (props) => {
   const checkActorMode = (talents) => {
     talents.forEach((talent) => {
       const category = talent.category;
-        if (category.title === 'Actor' || category.title === 'Model') {
-          setActorMode(true);
-          return;
-        }
+      if (category.title === 'Actor' || category.title === 'Model') {
+        setActorMode(true);
+        return;
+      }
     });
   };
 
@@ -380,6 +386,30 @@ const UserDetailsScreen = (props) => {
     setVisible(false);
   };
 
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
+  const footerModal = () =>{
+    return(
+      <View style={{width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center', marginBottom:'10%'}}>
+        <View style={{ flexDirection:'column', width:'100%'}}>
+          <Text style={{color:'white',textAlign:'center', textAlignVertical:'center', width:'100%' }}>Swipe down to close</Text>
+          <AIcon name="arrowdown" size={20} color="white" style={{alignSelf:'center'}} />
+        </View>
+      </View>
+    )
+  }
+
   return (
     <>
       <Snackbar visible={visible} duration={7000} onDismiss={onDismissSnackBar}>
@@ -388,7 +418,7 @@ const UserDetailsScreen = (props) => {
 
       <View style={styles.container}>
         <ScrollView>
-          <Swiper height={300} showsPagination={false}>
+          <Swiper height={300} showsPagination={true}>
             {user.image && user.image.avatar !== undefined && (
               <TouchableOpacity
                 onPress={() => {
@@ -532,49 +562,49 @@ const UserDetailsScreen = (props) => {
           </Text>
           <Text style={styles.otherText}>{user.bio}</Text>
           {actorMode && (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginVertical: 15,
-              backgroundColor: '#fff',
-              paddingVertical: 8,
-            }}>
-            <View>
-              <Text style={styles.subtitle}>Height</Text>
-              <Text>{user.height}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginVertical: 15,
+                backgroundColor: '#fff',
+                paddingVertical: 8,
+              }}>
+              <View>
+                <Text style={styles.subtitle}>Height</Text>
+                <Text>{user.height}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Weight</Text>
+                <Text>{user.weight}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Complexion</Text>
+                <Text>{user.complexion}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Body</Text>
+                <Text>{user.bodyType}</Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.subtitle}>Weight</Text>
-              <Text>{user.weight}</Text>
-            </View>
-            <View>
-              <Text style={styles.subtitle}>Complexion</Text>
-              <Text>{user.complexion}</Text>
-            </View>
-            <View>
-              <Text style={styles.subtitle}>Body</Text>
-              <Text>{user.bodyType}</Text>
-            </View>
-          </View>
           )}
           {isFriends.status === 'Connected' && (
-          <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: '#fff',
-              paddingVertical: 8,
-              paddingLeft:'6%'
-            }}>
-            <View style={{width:'50%'}}>
-              <Text style={styles.subtitle}>Email</Text>
-              <Text>{user.email}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: '#fff',
+                paddingVertical: 8,
+                paddingLeft: '6%',
+              }}>
+              <View style={{width: '50%'}}>
+                <Text style={styles.subtitle}>Email</Text>
+                <Text>{user.email}</Text>
+              </View>
+              <View>
+                <Text style={styles.subtitle}>Contact no</Text>
+                <Text>{user.phone}</Text>
+              </View>
             </View>
-            <View>
-              <Text style={styles.subtitle}>Contact no</Text>
-              <Text>{user.phone}</Text>
-            </View>
-          </View>
           )}
           <View style={styles.row}>
             <TouchableOpacity
@@ -846,6 +876,7 @@ const UserDetailsScreen = (props) => {
             imageUrls={images}
             enableSwipeDown
             onSwipeDown={() => setshowModal(false)}
+            renderFooter={footerModal}
           />
         </Modal>
       </View>

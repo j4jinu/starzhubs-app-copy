@@ -1,14 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View, Image } from 'react-native';
-import { AuthContext } from '../context/authContext';
+import React, {useContext, useEffect, useState} from 'react';
+import {FlatList, Text, View, Image, ActivityIndicator} from 'react-native';
+import theme from '../config/theme';
+import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
 const PosterListActive = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [posters, setPosters] = useState([]);
 
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+    getPosters();
+  });
+
   useEffect(() => {
     getPosters();
+    unsubscribe;
   }, []);
   const getPosters = async (status) => {
     setLoading(true);
@@ -29,25 +36,42 @@ const PosterListActive = (props) => {
     }
   };
 
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          paddingTop: 50,
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
+
   if (posters.length === 0) {
     return (
-
       <View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
           paddingVertical: 25,
-          marginTop: "35%"
+          marginTop: '35%',
         }}>
-        <Text style={{ fontSize: 18, color: 'tomato' }}>
-          No Active Posters.
-    </Text>
+        <Text style={{fontSize: 18, color: 'tomato'}}>No Active Posters.</Text>
         <Image
           source={require('../assets/box.png')}
-          style={{ width: "41%", height: 160, marginHorizontal: 100, marginTop: "5%" }}
+          style={{
+            width: '41%',
+            height: 160,
+            marginHorizontal: 100,
+            marginTop: '5%',
+          }}
         />
       </View>
-    )
+    );
   }
   return (
     <View>
@@ -55,7 +79,7 @@ const PosterListActive = (props) => {
         keyExtractor={(item) => item.id}
         data={posters}
         extraData={posters}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <MyPosterGridItem
             id={item._id}
             poster={item.title}
@@ -66,7 +90,7 @@ const PosterListActive = (props) => {
             userId={item.userId}
             getPosters={getPosters}
             navigation={props.navigation}
-            status='active'
+            status="active"
           />
         )}
       />

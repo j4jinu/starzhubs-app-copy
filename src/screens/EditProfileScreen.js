@@ -261,7 +261,6 @@ const EditProfileScreen = (props) => {
   };
 
   if (actorMode) {
-    console.log('Actor mode');
     initialProfileValues.height = userInfo.height.toString() || 0;
     initialProfileValues.weight = userInfo.weight.toString() || 0;
     initialProfileValues.complexion = userInfo.complexion || '';

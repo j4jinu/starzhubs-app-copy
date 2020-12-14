@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
   Image,
@@ -8,23 +8,21 @@ import {
   View,
   Alert,
   Dimensions,
-  Modal
+  Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AIcon from 'react-native-vector-icons/AntDesign';
 import theme from '../config/theme';
-import { AuthContext } from '../context/authContext';
+import {AuthContext} from '../context/authContext';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
-
-
 const Divider = (
-  <View style={{ width: '100%', height: 1, backgroundColor: '#e6e6e6' }} />
+  <View style={{width: '100%', height: 1, backgroundColor: '#e6e6e6'}} />
 );
 
 const AccountScreen = (props) => {
-
   const auth = useContext(AuthContext);
-  const [user, setUser] = useState({ image: {}, location: {} });
+  const [user, setUser] = useState({image: {}, location: {}});
   const deviceWidth = Dimensions.get('window').width;
   const [imageIndex, setimageIndex] = useState(0);
   const [showModal, setshowModal] = useState(false);
@@ -54,7 +52,7 @@ const AccountScreen = (props) => {
       });
       let userData = await response.json();
       setUser(userData.data.user);
-    } catch (error) { }
+    } catch (error) {}
   };
   unsubscribe;
   const handlelogout = () => {
@@ -74,9 +72,20 @@ const AccountScreen = (props) => {
           },
         },
       ],
-      { cancelable: false },
+      {cancelable: false},
     );
   };
+
+  const footerModal = () =>{
+    return(
+      <View style={{width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center', marginBottom:'10%'}}>
+        <View style={{ flexDirection:'column', width:'100%'}}>
+          <Text style={{color:'white',textAlign:'center', textAlignVertical:'center', width:'100%' }}>Swipe down to close</Text>
+          <AIcon name="arrowdown" size={20} color="white" style={{alignSelf:'center'}} />
+        </View>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -93,7 +102,8 @@ const AccountScreen = (props) => {
                 loadingIndicatorSource={require('../assets/starz.png')}
                 style={{
                   width: deviceWidth,
-                  height: deviceWidth,
+                  height: 300,
+                  resizeMode: 'cover',
                 }}
                 source={{
                   uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
@@ -116,7 +126,7 @@ const AccountScreen = (props) => {
           </TouchableOpacity>
           <View style={styles.profileContainer}>
             <Text style={styles.profileTitle}>{user.name}</Text>
-            <Text style={{ fontSize: 12, marginLeft: 10, color: 'gray' }}>
+            <Text style={{fontSize: 12, marginLeft: 10, color: 'gray'}}>
               {user.email}
             </Text>
             <View
@@ -138,7 +148,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('OurServices')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon
                 name="view-list-outline"
                 size={24}
@@ -159,7 +169,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('Talents')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon name="filmstrip" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
                 <Text style={styles.sectionDetailsTitle}>Talents</Text>
@@ -175,7 +185,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('MyMedia')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon
                 name="checkbox-intermediate"
                 size={24}
@@ -195,7 +205,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('MyPosters')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon name="post-outline" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
                 <Text style={styles.sectionDetailsTitle}>Poster</Text>
@@ -211,7 +221,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('MyPosterRequest')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon name="post-outline" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
                 <Text style={styles.sectionDetailsTitle}>Poster Requests</Text>
@@ -232,7 +242,7 @@ const AccountScreen = (props) => {
                 type: 'edit',
               })
             }>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon
                 name="shield-account"
                 size={24}
@@ -252,7 +262,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('MyBuddy')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon
                 name="account-group"
                 size={24}
@@ -273,7 +283,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('Help')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon name="help-rhombus" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
                 <Text style={styles.sectionDetailsTitle}>Help Center</Text>
@@ -289,7 +299,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('Policy')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon
                 name="format-list-text"
                 size={24}
@@ -311,7 +321,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={() => props.navigation.navigate('Feedback')}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon name="comment-text" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
                 <Text style={styles.sectionDetailsTitle}>Feedback</Text>
@@ -335,7 +345,7 @@ const AccountScreen = (props) => {
             style={styles.section}
             activeOpacity={0.7}
             onPress={handlelogout}>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Icon name="logout" size={24} color={theme.$primaryColor} />
               <View style={styles.sectionDetails}>
                 <Text style={styles.sectionDetailsTitle}>Logout</Text>
@@ -344,7 +354,7 @@ const AccountScreen = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.appInfo}>
-          <Text style={{ color: 'black' }}>APP VERSION: 1.0.00</Text>
+          <Text style={{color: 'black'}}>APP VERSION: 1.0.00</Text>
         </View>
       </ScrollView>
       <Modal visible={showModal} transparent={true}>
@@ -352,6 +362,7 @@ const AccountScreen = (props) => {
           imageUrls={images}
           enableSwipeDown
           onSwipeDown={() => setshowModal(false)}
+          renderFooter={footerModal}
         />
       </Modal>
     </View>

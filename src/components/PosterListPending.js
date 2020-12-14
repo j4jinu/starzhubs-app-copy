@@ -1,18 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, Image } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { AuthContext } from '../context/authContext';
+import React, {useContext, useEffect, useState} from 'react';
+import {Text, View, Image, ActivityIndicator} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {AuthContext} from '../context/authContext';
 import MyPosterGridItem from './MyPosterGridItem';
-import { Snackbar } from 'react-native-paper';
+import {Snackbar} from 'react-native-paper';
+import theme from '../config/theme';
 
 const PosterListPending = (props) => {
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    console.log('focussed');
+    getPosters();
+  });
+
+  useEffect(() => {
+    getPosters();
+    unsubscribe;
+  }, []);
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [posters, setPosters] = useState([]);
 
-  useEffect(() => {
-    getPosters();
-  }, []);
   const getPosters = async (status) => {
     // setLoading(true);
     setPosters([]);
@@ -32,6 +39,21 @@ const PosterListPending = (props) => {
     }
   };
 
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+          paddingTop: 50,
+        }}>
+        <ActivityIndicator size={'large'} color={theme.$primaryColor} />
+      </View>
+    );
+  }
+
   if (posters.length === 0) {
     return (
       <View
@@ -41,7 +63,7 @@ const PosterListPending = (props) => {
           paddingVertical: 25,
           marginTop: '35%',
         }}>
-        <Text style={{ fontSize: 18, color: 'tomato' }}>No Pending Posters.</Text>
+        <Text style={{fontSize: 18, color: 'tomato'}}>No Pending Posters.</Text>
         <Image
           source={require('../assets/box.png')}
           style={{
@@ -60,7 +82,7 @@ const PosterListPending = (props) => {
       <FlatList
         keyExtractor={(item) => item.id}
         data={posters}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <MyPosterGridItem
             id={item._id}
             poster={item.title}
@@ -71,7 +93,7 @@ const PosterListPending = (props) => {
             userId={item.userId}
             getPosters={getPosters}
             navigation={props.navigation}
-            status='pending'
+            status="pending"
           />
         )}
       />

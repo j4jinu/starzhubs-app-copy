@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import theme from '../config/theme';
 
 const BuddyItem = (props) => {
@@ -27,7 +27,7 @@ const BuddyItem = (props) => {
           }}>
           {props.name}
         </Text>
-        <Text style={{ fontSize: 13, color: 'gray' }}>
+        <Text style={{fontSize: 13, color: 'gray'}}>
           {props.location.place}, {props.location.state}
         </Text>
       </View>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 10,
     paddingHorizontal: 15,
-    marginVertical: 5,
+    marginVertical: 10,
     marginHorizontal: 10,
     borderRadius: theme.$borderRadius,
     shadowColor: '#000',
