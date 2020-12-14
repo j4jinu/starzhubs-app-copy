@@ -70,21 +70,22 @@ const EditPosterScreen = (props) => {
     } else {
       setIsImage(false);
     }
+    
     const ed = Moment(endDate, 'DD-MM-YYYY').format('yyyy-MM-DD');
     setEndDate(ed);
+    const sd = Moment(startDate, 'DD-MM-YYYY').format('yyyy-MM-DD');
+    setStartDate(sd);
+
+    // if(startDate>endDate){
+    //   alert("Please Choose Valid End date")
+    //   return;
+    // }
 
     var formData = new FormData();
     formData.append('title', values.title);
     formData.append('description', values.description);
     formData.append('startDate', startDate);
     formData.append('endDate', endDate);
-    // const uri = image;
-    // let fileType = uri.substring(uri.lastIndexOf('.') + 1);
-    // formData.append('poster', {
-    //   uri,
-    //   name: `photo.${fileType}`,
-    //   type: `image/${fileType}`,
-    // });
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -368,7 +369,7 @@ const EditPosterScreen = (props) => {
                       placeholder="Start Date"
                       format="DD/MM/YYYY"
                       minDate={Moment().format('DD/MM/YYYY')}
-                      // maxDate="01-01-2019"
+                      maxDate={eDate}
                       confirmBtnText="Confirm"
                       cancelBtnText="Cancel"
                       iconComponent={

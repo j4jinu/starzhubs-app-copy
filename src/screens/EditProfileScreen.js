@@ -24,6 +24,7 @@ import {AuthContext} from '../context/authContext';
 import DatePicker from 'react-native-datepicker';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import {Snackbar} from 'react-native-paper';
+import Moment from 'moment';
 
 const languages = [
   {
@@ -633,6 +634,7 @@ const EditProfileScreen = (props) => {
                   format="YYYY-MM-DD"
                   // minDate="01-01-2016"
                   // maxDate="01-01-2019"
+                  maxDate={Moment().format('YYYY-MM-DD')}
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   iconComponent={

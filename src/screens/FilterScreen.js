@@ -291,7 +291,7 @@ const FilterScreen = (props) => {
   }, []);
   return (
     <View style={styles.container}>
-      <Snackbar visible={visible} duration={5000} onDismiss={onDismissSnackBar}>
+      <Snackbar visible={visible} duration={1000} onDismiss={onDismissSnackBar}>
         {' '}
         No Users Found !
       </Snackbar>
