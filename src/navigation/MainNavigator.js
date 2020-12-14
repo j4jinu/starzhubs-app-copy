@@ -270,7 +270,7 @@ const AccountNavigator = createStackNavigator(
     MyPosters: {
       screen: MyPostersScreen,
       navigationOptions: {
-        title: 'Posterss',
+        title: 'Posters',
       },
     },
     MyPosterRequest: {

@@ -7,6 +7,10 @@ const PendingConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [requests, setRequests] = useState([]);
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    getRequests();
+  });
+
   useEffect(() => {
     getRequests();
     unsubscribe;

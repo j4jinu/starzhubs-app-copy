@@ -655,6 +655,7 @@ const EditProfileScreen = (props) => {
                     onValueChange={(itemValue, itemIndex) =>
                       setGender(itemValue)
                     }>
+                    <Picker.Item label="Select Gender" value="" />
                     <Picker.Item label="Female" value="Female" />
                     <Picker.Item label="Male" value="Male" />
                     <Picker.Item label="Transgender" value="Transgender" />

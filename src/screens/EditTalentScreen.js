@@ -226,7 +226,7 @@ const EditTalentScreen = (props) => {
           if (response.success === true) {
             setMessage('Data updated successfully');
             setVisible(true);
-            props.navigation.navigate('Account');
+            props.navigation.navigate('Talents');
             showToastWithGravityAndOffset1();
           } else {
             setMessage('Something went wrong. Try again !');
@@ -536,7 +536,7 @@ const EditTalentScreen = (props) => {
                     marginTop: 8,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    borderColor: errors.projects ? 'red' : '#e6e6e6',
+                    borderColor: errors.films ? 'red' : '#e6e6e6',
                   }}>
                   <Eicon
                     name="envelope-open-text"
@@ -791,6 +791,9 @@ const EditTalentScreen = (props) => {
                     onBlur={handleBlur('description')}
                   />
                 </View>
+                {errors.description ? (
+                  <Text style={styles.error}>{errors.description}</Text>
+                ) : null}
                 <TouchableOpacity
                   style={styles.registerBtn}
                   onPress={handleSubmit}>
