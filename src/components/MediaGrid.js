@@ -27,7 +27,7 @@ const MediaGrid = (props) => {
               <Image
                 style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
                 source={{
-                  uri: `http://13.232.190.226/api/user/view/media/?${media.file}`,
+                  uri: `https://api.starzhubs.com/api/user/view/media/?${media.file}`,
                 }}
               />
             ) : (

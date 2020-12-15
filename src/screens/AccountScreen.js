@@ -26,9 +26,9 @@ const AccountScreen = (props) => {
   const [showModal, setshowModal] = useState(false);
   const images = [
     {
-      url: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+      url: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
       props: {
-        source: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+        source: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
       },
     },
   ];
@@ -41,7 +41,7 @@ const AccountScreen = (props) => {
 
   const getUserDetails = async () => {
     try {
-      let response = await fetch(`http://13.232.190.226/api/user/profile`, {
+      let response = await fetch(`https://api.starzhubs.com/api/user/profile`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -102,7 +102,7 @@ const AccountScreen = (props) => {
                   resizeMode: 'cover',
                 }}
                 source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
                 }}
               />
             </TouchableOpacity>

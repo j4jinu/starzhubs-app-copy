@@ -40,7 +40,7 @@ const MyPosterGridItem = (props) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`http://13.232.190.226/api/poster/${id}`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/poster/${id}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -92,7 +92,7 @@ const MyPosterGridItem = (props) => {
             }}
             resizeMode={'cover'}
             source={{
-              uri: `http://13.232.190.226/api/poster/view/${props.image}`,
+              uri: `https://api.starzhubs.com/api/poster/view/${props.image}`,
             }}
           />
           <View style={styles.owner}>
@@ -107,7 +107,7 @@ const MyPosterGridItem = (props) => {
                   userId.image === undefined
                     ? `https://img.dtnext.in/Articles/2020/Jun/202006031350583978_Prithviraj-Sukumaran-tests-negative-for-COVI
                                     D19_SECVPF.gif`
-                    : `http://13.232.190.226/api/user/avatar/${userId.image.avatar}`,
+                    : `https://api.starzhubs.com/api/user/avatar/${userId.image.avatar}`,
               }}
             />
             <View

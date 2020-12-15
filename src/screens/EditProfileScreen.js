@@ -230,7 +230,7 @@ const EditProfileScreen = (props) => {
   const [image, setImage] = useState('');
   const type = props.navigation.getParam('type');
   const [dob, setDob] = useState('');
-  const [country, setCountry] = useState('India');
+  const [country, setCountry] = useState();
   const [gender, setGender] = useState('');
   const [selectedItems, setSelectedItems] = useState();
   const [userInfo, setUserInfo] = useState({ image: {}, location: {} });
@@ -262,7 +262,7 @@ const EditProfileScreen = (props) => {
     name: yup.string().required('Enter your name'),
     bio: yup.string().required('Please fill this field'),
     phone: yup.string().required('Enter phone number'),
-    state: yup.string().required('Enter state of residence'),
+    state: yup.string().required('Enter state'),
     place: yup.string().required('Enter your city'),
     education: yup.string().required('Enter your Higher education'),
     country: yup.string().required('Country is Required'),
@@ -271,7 +271,7 @@ const EditProfileScreen = (props) => {
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
-        'http://13.232.190.226/api/user/profile',
+        'https://api.starzhubs.com/api/user/profile',
         {
           method: 'GET',
           headers: {
@@ -285,6 +285,12 @@ const EditProfileScreen = (props) => {
         setVisible(!visible);
       }
       setUserInfo(userData.data.user);
+      if(userData.data.user.location!==undefined){
+        setCountry(userData.data.user.location.country)
+      }
+      else{
+        setCountry('India')
+      }
       setDob(userData.data.user.dob);
       setGender(userData.data.user.gender);
       if (userData.data.user.languages !== '') {
@@ -329,10 +335,10 @@ const EditProfileScreen = (props) => {
       setSubmitting(false);
       return;
     }
-    if (gender === '') {
+    if (gender === undefined) {
       Alert.alert(
         '',
-        'Enter your gender',
+        'Select your gender',
         [
           {
             text: 'Ok',
@@ -363,7 +369,7 @@ const EditProfileScreen = (props) => {
     values.gender = gender;
     values.country = country;
     values.languages = selectedItems.toString();
-    const response = await fetch('http://13.232.190.226/api/user/update', {
+    const response = await fetch('https://api.starzhubs.com/api/user/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -460,7 +466,7 @@ const EditProfileScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/user/avatar`,
+        `https://api.starzhubs.com/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -499,7 +505,7 @@ const EditProfileScreen = (props) => {
               backgroundColor: 'gray',
             }}
             source={{
-              uri: `http://13.232.190.226/api/user/avatar/${userInfo.image.avatar}`,
+              uri: `https://api.starzhubs.com/api/user/avatar/${userInfo.image.avatar}`,
             }}
           />
         )}
@@ -651,7 +657,7 @@ const EditProfileScreen = (props) => {
                       fontWeight: 'normal',
                     }}
                     selectedValue={gender}
-                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6' }}
+                    style={{ height: 50, width: '100%', borderColor: '#e6e6e6'}}
                     onValueChange={(itemValue, itemIndex) =>
                       setGender(itemValue)
                     }>
@@ -756,11 +762,7 @@ const EditProfileScreen = (props) => {
                       defaultValue={initialProfileValues.state}
                     />
                   </View>
-                  {touched.state && errors.state && (
-                    <Text style={styles.errorText}>
-                      {touched.state && errors.state}
-                    </Text>
-                  )}
+                  
                   <View
                     style={{
                       flex: 1,
@@ -788,11 +790,23 @@ const EditProfileScreen = (props) => {
                     />
                   </View>
                 </View>
-                {touched.place && errors.place && (
-                  <Text style={styles.errorText}>
-                    {touched.place && errors.place}
-                  </Text>
-                )}
+                <View
+                  style={{
+                    flex: 1,
+                    width: '95%',
+                    flexDirection: 'row',
+                  }}>
+                  {touched.state && errors.state && (
+                      <Text style={styles.errorText2}>
+                        {touched.state && errors.state}
+                      </Text>
+                    )}
+                  {touched.place && errors.place && (
+                    <Text style={styles.errorText3}>
+                      {touched.place && errors.place}
+                    </Text>
+                  )}
+                </View>
                 <View
                   style={{
                     alignSelf: 'center',
@@ -1031,6 +1045,18 @@ const styles = StyleSheet.create({
     marginTop: 3,
     color: 'red',
     paddingLeft: '4%',
+  },
+  errorText2: {
+    marginHorizontal: 8,
+    marginTop: 3,
+    color: 'red',
+    paddingLeft: '4%',
+    width:'50%'
+  },
+  errorText3: {
+    marginHorizontal: 8,
+    marginTop: 3,
+    color: 'red',
   },
   forgotText: {
     color: 'purple',

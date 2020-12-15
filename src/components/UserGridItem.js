@@ -21,7 +21,7 @@ const UserGridItem = (props) => {
                 style={{ width: '100%', height: '75%', resizeMode: 'cover' }}
                 source={{
                   uri: props.image
-                    ? `http://13.232.190.226/api/user/avatar/${props.image.avatar}`
+                    ? `https://api.starzhubs.com/api/user/avatar/${props.image.avatar}`
                     : '',
                 }}
               />

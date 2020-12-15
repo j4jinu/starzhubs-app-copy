@@ -130,7 +130,7 @@ const EditTalentScreen = (props) => {
   const userInfo = () => {
     if (category.toLowerCase() === 'actor') {
       setIsProfileImageMode(true);
-      fetch(`http://13.232.190.226/api/user/${auth.userId}`, {
+      fetch(`https://api.starzhubs.com/api/user/${auth.userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -154,7 +154,7 @@ const EditTalentScreen = (props) => {
           Authorization: 'Bearer ' + auth.token,
         },
       };
-      fetch(`http://13.232.190.226/api/user/talent`, requestOptions)
+      fetch(`https://api.starzhubs.com/api/user/talent`, requestOptions)
         .then((response) => response.json())
         .then(
           (response) => {
@@ -174,7 +174,7 @@ const EditTalentScreen = (props) => {
 
   useEffect(() => {
     const getCategory = () => {
-      fetch('http://13.232.190.226/api/category', {
+      fetch('https://api.starzhubs.com/api/category', {
         method: 'GET',
       })
         .then((response) => response.json())
@@ -219,7 +219,7 @@ const EditTalentScreen = (props) => {
         level: values.level,
       }),
     };
-    fetch(`http://13.232.190.226/api/talent/user/${talentId}`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/talent/user/${talentId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -323,7 +323,7 @@ const EditTalentScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/user/avatar`,
+        `https://api.starzhubs.com/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -582,7 +582,7 @@ const EditTalentScreen = (props) => {
                                 user.image &&
                                 user.image.head_shot !== undefined ?
                                 {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.head_shot}`
+                                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`
                                 } :
                                 !headimg && user.image.head_shot === undefined ?
                                   require('../assets/headshot.jpg') :
@@ -627,7 +627,7 @@ const EditTalentScreen = (props) => {
                                 user.image &&
                                 user.image.left_profile !== undefined ?
                                 {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.left_profile}`
+                                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`
                                 } :
                                 !leftimg && user.image.left_profile === undefined ?
                                   require('../assets/left_profile.jpg') :
@@ -679,7 +679,7 @@ const EditTalentScreen = (props) => {
                                 user.image &&
                                 user.image.right_profile !== undefined ?
                                 {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.right_profile}`
+                                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`
                                 } :
                                 !rightimg && user.image.right_profile === undefined ?
                                   require('../assets/right_profile.jpg') :
@@ -724,7 +724,7 @@ const EditTalentScreen = (props) => {
                                 user.image &&
                                 user.image.fullsize !== undefined ?
                                 {
-                                  uri: `http://13.232.190.226/api/user/avatar/${user.image.fullsize}`
+                                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`
                                 } :
                                 !fullsizeimg && user.image.fullsize === undefined ?
                                   require('../assets/fullsize.jpg') :

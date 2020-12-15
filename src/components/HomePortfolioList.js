@@ -23,7 +23,7 @@ const HomePortfolioList = (props) => {
     <FlatList
       style={{ backgroundColor: '#fafafa', paddingHorizontal: 6, marginBottom: 5 }}
       keyExtractor={(item, index) => item.id}
-      data={props.users}
+      data={props.users.slice(0, 6)}
       renderItem={({ item }) => (
         <UserGridItem
           userId={item._id}

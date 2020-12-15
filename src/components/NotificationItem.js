@@ -30,7 +30,7 @@ const NotificationItem = (props) => {
                   {props.title}
                 </Text>
                 <Text
-                  style={{ fontSize: 13, marginHorizontal: 5, color: 'dimgray' }}>
+                  style={{ fontSize: 13, marginHorizontal: 1, color: 'dimgray' }}>
                   {props.notification}
                 </Text>
                 <Text style={{ fontSize: 12, color: 'silver', marginTop: 7 }}>

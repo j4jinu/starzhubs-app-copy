@@ -22,7 +22,7 @@ const MyPosterRequests = (props) => {
   const getPosterRequest = async () => {
     try {
       let response = await fetch(
-        `http://13.232.190.226/api/user/poster/request/sent`,
+        `https://api.starzhubs.com/api/user/poster/request/sent`,
         {
           method: 'GET',
           headers: {
@@ -72,7 +72,7 @@ const MyPosterRequests = (props) => {
                           source={{
                             uri:
                               item.posterId.image !== undefined
-                                ? `http://13.232.190.226/api/poster/view/${item.posterId.image}`
+                                ? `https://api.starzhubs.com/api/poster/view/${item.posterId.image}`
                                 : '',
                           }}
                         />
@@ -104,6 +104,11 @@ const MyPosterRequests = (props) => {
                         {item.isUserApproved === 1 && (
                           <Text style={{color: 'green', marginTop: 25}}>
                             Approved
+                          </Text>
+                        )}
+                        {item.isUserApproved === 2 && (
+                          <Text style={{color: 'red', marginTop: 25}}>
+                            Rejected
                           </Text>
                         )}
                       </View>

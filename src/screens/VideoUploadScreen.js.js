@@ -29,6 +29,8 @@ const VideoUploadScreen = (props) => {
   const [ytLink, setYtLink] = useState('');
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState();
+  const [link, setLink] = useState('');
+  const [isLink, setIsLink] = useState(false);
   const transformYoutubeLinks = (text) => {
   const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
   const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
@@ -41,7 +43,7 @@ const VideoUploadScreen = (props) => {
     }
   };
 
-  const uploadMedia = async (values, { resetForm }) => {
+  const uploadMedia = async (values, { setSubmitting,resetForm }) => {
     let text = values.link;
     const fullreg = /(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^& \n<]+)(?:[^ \n<]+)?/g;
@@ -51,7 +53,7 @@ const VideoUploadScreen = (props) => {
       values.link = 'https://www.youtube.com/watch?v=' + ytLink;
       try {
         const response = await fetch(
-          'http://13.232.190.226/api/talent/upload/media',
+          'https://api.starzhubs.com/api/talent/upload/media',
           {
             method: 'POST',
             headers: {

@@ -58,7 +58,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
     };
     try {
       const otpRes = await fetch(
-        'http://13.232.190.226/api/auth/reset',
+        'https://api.starzhubs.com/api/auth/reset',
         options,
       );
       const otpData = await otpRes.json();
@@ -82,7 +82,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
     };
     try {
       const resetRes = await fetch(
-        'http://13.232.190.226/api/auth/reset',
+        'https://api.starzhubs.com/api/auth/reset',
         options,
       );
       const resetData = await resetRes.json();
@@ -370,6 +370,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
         )}
         {isSuccessMode && (
           <React.Fragment>
+            <View style={{justifyContent:'center', flex:1, alignItems:'center'}}>
             <Image
               source={require('../assets/checked.png')}
               style={{
@@ -387,6 +388,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
               }}>
               <Text>Your password has been changed</Text>
             </TouchableOpacity>
+            </View>
           </React.Fragment>
         )}
       </ScrollView>

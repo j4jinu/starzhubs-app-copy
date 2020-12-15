@@ -18,7 +18,7 @@ const PosterListScreen = (props) => {
   
   const getPosters = async (status) => {
     try {
-      const response = await fetch(`http://13.232.190.226/api/poster`, {
+      const response = await fetch(`https://api.starzhubs.com/api/poster`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,

@@ -29,9 +29,9 @@ const MediaDetailsScreen = (props) => {
   const [imageIndex, setimageIndex] = useState(0);
   const images = [
     {
-      url: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+      url: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
       props: {
-        source: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+        source: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
       },
     },
   ];
@@ -117,7 +117,7 @@ const MediaDetailsScreen = (props) => {
                 style={{ width: '100%', height: deviceWidth / 2 }}
                 resizeMode="cover"
                 source={{
-                  uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+                  uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
                 }}
               />
             </View>
@@ -143,7 +143,7 @@ const MediaDetailsScreen = (props) => {
             <Image
               style={{ width: '100%', height: deviceWidth / 2 }}
               source={{
-                uri: `http://13.232.190.226/api/user/view/media/?${mediaFile}`,
+                uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
               }}
             />
           </TouchableOpacity>
@@ -161,7 +161,7 @@ const MediaDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
                 }}
               />
               <TouchableOpacity

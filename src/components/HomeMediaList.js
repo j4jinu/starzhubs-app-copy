@@ -12,7 +12,7 @@ const HomeMediaList = (props) => {
     <View style={styles.container}>
       <FlatList
         keyExtractor={(item) => item._id}
-        data={talents}
+        data={talents.slice(0, 4)}
         renderItem={({ item }) => (
           <MediaItem
             media={item.media}

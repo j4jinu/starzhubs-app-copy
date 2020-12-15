@@ -31,7 +31,7 @@ const EditPosterScreen = (props) => {
   const auth = useContext(AuthContext);
   const [message, setMessage] = useState();
   const [image, setImage] = useState(
-    `http://13.232.190.226/api/poster/view/${img}`,
+    `https://api.starzhubs.com/api/poster/view/${img}`,
   );
   const [startDate, setStartDate] = useState(
     Moment(stDate).format('YYYY/MM/DD'),
@@ -78,6 +78,13 @@ const EditPosterScreen = (props) => {
     formData.append('description', values.description);
     formData.append('startDate', startDate);
     formData.append('endDate', endDate);
+    const image_uri = image;
+    let fileType = image_uri.substring(image_uri.lastIndexOf('.') + 1);
+    formData.append('poster', {
+      uri: image_uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`,
+    });
     const requestOptions = {
       method: 'PUT',
       headers: {
@@ -88,7 +95,7 @@ const EditPosterScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/poster/${posterId}`,
+        `https://api.starzhubs.com/api/poster/${posterId}`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -240,7 +247,7 @@ const EditPosterScreen = (props) => {
                           marginTop: 8,
                           flexDirection: 'row',
                           alignItems: 'center',
-                          borderColor: errors.projects ? 'red' : '#e6e6e6',
+                          borderColor: errors.title ? 'red' : '#e6e6e6',
                         }}>
                         <Cicon
                           name="subtitles"
@@ -280,7 +287,7 @@ const EditPosterScreen = (props) => {
                           marginTop: 8,
                           flexDirection: 'row',
                           alignItems: 'center',
-                          borderColor: errors.projects ? 'red' : '#e6e6e6',
+                          borderColor: errors.description ? 'red' : '#e6e6e6',
                         }}>
                         <Icon
                           name="ios-information-circle"

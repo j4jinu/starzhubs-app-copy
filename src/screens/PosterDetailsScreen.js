@@ -10,6 +10,7 @@ import {
   Alert,
   Dimensions,
   ToastAndroid,
+  TextInput
 } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import {useSelector} from 'react-redux';
@@ -20,8 +21,9 @@ import DIcon from 'react-native-vector-icons/MaterialIcons';
 import AIcon from 'react-native-vector-icons/AntDesign';
 import SIcon from 'react-native-vector-icons/FontAwesome';
 import EIcon from 'react-native-vector-icons/Entypo';
-import * as Yup from 'yup';
 import {AuthContext} from '../context/authContext';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 const PosterDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
@@ -39,12 +41,54 @@ const PosterDetailsScreen = (props) => {
   const deviceWidth = Dimensions.get('window').width;
   const [showModal, setshowModal] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
+  const [loggedUser, setLoggedUser] = useState([]);
+  const [isRequestModal, setRequestModal] = useState(false);
+
+  useEffect(() => {
+    getLoggedUser();
+  }, []);
+
+  const getLoggedUser = () => {
+    fetch(`https://api.starzhubs.com/api/user/profile`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + auth.token,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log('====================================');
+        console.log("user",response.data.user);
+        console.log('====================================');
+        setLoggedUser(response.data.user);
+      })
+      .catch((error) => {});
+  };
+
+  const handleRequest = () => {
+    if (loggedUser.isAdminApproved === 0) {
+      Alert.alert(
+        '',
+        'Only Admin Approved User Can Sent Request. Your Profile is Under Validation.',
+        [
+          {
+            text: 'Ok',
+            style: 'cancel',
+          },
+        ],
+        {cancelable: false},
+      );
+    } else {
+      setRequestModal(true);
+      // onSubmitRequest()
+    }
+  };
 
   const images = [
     {
-      url: `http://13.232.190.226/api/poster/view/${image}`,
+      url: `https://api.starzhubs.com/api/poster/view/${image}`,
       props: {
-        source: `http://13.232.190.226/api/poster/view/${image}`,
+        source: `https://api.starzhubs.com/api/poster/view/${image}`,
       },
     },
   ];
@@ -62,7 +106,7 @@ const PosterDetailsScreen = (props) => {
   }, []);
 
   const getPosterById = () => {
-    fetch(`http://13.232.190.226/api/poster/${posterId}`, {
+    fetch(`https://api.starzhubs.com/api/poster/${posterId}`, {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -75,14 +119,14 @@ const PosterDetailsScreen = (props) => {
       .catch((error) => {});
   };
 
-  const onSubmitRequest = () => {
-    fetch(`http://13.232.190.226/api/poster/req/${posterId}`, {
+  const onSubmitRequest = (values) => {
+    fetch(`https://api.starzhubs.com/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
         'Content-type': 'Application/json',
         Authorization: 'Bearer ' + auth.token,
       },
-      body: JSON.stringify({notes: 'hai'}),
+      body: JSON.stringify(values),
     })
       .then((response) => response.json())
       .then((response) => {
@@ -94,11 +138,12 @@ const PosterDetailsScreen = (props) => {
             },
           ]);
         } else {
-          props.navigation.navigate('PosterRequest', {
-            posterId: posterId,
-            image: image,
-            description: description,
-          });
+          Alert.alert('Success', 'Request Sent Successfully ', [
+            {
+              Text: 'OK',
+              onPress: () => props.navigation.goBack(),
+            },
+          ]);
         }
       })
       .catch((error) => {
@@ -135,7 +180,7 @@ const PosterDetailsScreen = (props) => {
         status: status,
       }),
     };
-    fetch(`http://13.232.190.226/api/poster/req/${id}`, requestOptions)
+    fetch(`https://api.starzhubs.com/api/poster/req/${id}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -206,7 +251,7 @@ const PosterDetailsScreen = (props) => {
               }}
               resizeMode="cover"
               source={{
-                uri: `http://13.232.190.226/api/poster/view/${image}`,
+                uri: `https://api.starzhubs.com/api/poster/view/${image}`,
               }}
             />
           </TouchableOpacity>
@@ -214,7 +259,7 @@ const PosterDetailsScreen = (props) => {
             {user._id === auth.userId || status !== undefined ? null : (
               <TouchableOpacity
                 style={styles.sendBtn}
-                onPress={onSubmitRequest}
+                onPress={handleRequest}
                 activeOpacity={0.7}>
                 <SIcon name="send" size={25} color={'white'} />
               </TouchableOpacity>
@@ -275,7 +320,7 @@ const PosterDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `http://13.232.190.226/api/user/avatar/${user.image.avatar}`,
+                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
                 }}
               />
               <TouchableOpacity
@@ -356,7 +401,7 @@ const PosterDetailsScreen = (props) => {
                           borderRadius: 100,
                         }}
                         source={{
-                          uri: `http://13.232.190.226/api/user/avatar/${s.requestBy.image.avatar}`,
+                          uri: `https://api.starzhubs.com/api/user/avatar/${s.requestBy.image.avatar}`,
                         }}
                       />
                       <View
@@ -415,6 +460,155 @@ const PosterDetailsScreen = (props) => {
           renderFooter={footerModal}
         />
       </Modal>
+
+        {/* Request Modal */}
+
+        <Modal transparent visible={isRequestModal} animationType="slide">
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#000000aa',
+            }}
+            onPress={() => setVisible(false)}>
+            <View
+              style={{
+                margin: 5,
+                backgroundColor: 'white',
+                borderRadius: 3,
+                width: '95%',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  borderBottomWidth: 1,
+                  paddingVertical: 12,
+                  backgroundColor: '#f5f5f5',
+                  borderColor: 'gray',
+                }}>
+                <Text
+                  style={{
+                    color: theme.$primaryColorText,
+                    marginLeft: 15,
+                    color: theme.$primaryColorText,
+                    fontSize: 17,
+                  }}>
+                  Sent Interest
+                </Text>
+                <TouchableOpacity onPress={() => setRequestModal(false)}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      marginRight: 12,
+                    }}>
+                    X
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  paddingHorizontal: 15,
+                  paddingVertical: 15,
+                  width: '100%',
+                }}>
+                <View style={{marginBottom: 5}}>
+                  <Image
+                    style={{ width: '100%', height: 250 }}
+                    source={{
+                      uri: `https://api.starzhubs.com/api/poster/view/${image}`,
+                    }}
+                  />
+                </View>
+                <View style={{width: '100%'}}>
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={validation}
+                    onSubmit={(values) => {
+                      onSubmitRequest(values);
+                    }}>
+                    {({
+                      values,
+                      handleChange,
+                      handleBlur,
+                      errors,
+                      setFieldTouched,
+                      handleSubmit,
+                      touched
+                    }) => (
+                      <View
+                        style={{
+                          marginTop: 10,
+                          width: '100%',
+                        }}>
+                        <TextInput
+                          style={{
+                            borderWidth: 1,
+                            borderColor: 'orange',
+                            borderRadius: 4,
+                            paddingLeft: 10,
+                            width: '100%',
+                          }}
+                          underlineColorAndroid="transparent"
+                          placeholder="Message"
+                          numberOfLines={3}
+                          multiline={true}
+                          defaultValue={initialValues.notes}
+                          onChangeText={handleChange('notes')}
+                          onBlur={handleBlur('notes')}
+                        />
+                        {touched.notes && errors.notes && (
+                          <Text
+                            style={{
+                              fontSize: 14,
+                              color: 'tomato',
+                              alignSelf: 'flex-start',
+                              marginTop: 5,
+                            }}>
+                            {errors.notes}
+                          </Text>
+                        )}
+                        <View
+                          style={{
+                            marginTop: 20,
+                            width: '100%',
+                            alignItems: 'center',
+                          }}>
+                          <TouchableOpacity
+                            style={{
+                              borderRadius: 8,
+                              paddingHorizontal: 12,
+                              paddingVertical: 12,
+                              width: '100%',
+                              backgroundColor: theme.$primaryColor,
+                              alignItems: 'center',
+                            }}
+                            onPress={handleSubmit}>
+                            <Text style={{color: 'white', fontWeight: 'bold'}}>
+                              Send Request
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    )}
+                  </Formik>
+                </View>
+              </View>
+            </View>
+          </View>
+        </Modal>
     </>
   );
 };

@@ -83,7 +83,7 @@ const CreatePosterScreen = (props, { navigation }) => {
     };
     try {
       const uploadRes = await fetch(
-        `http://13.232.190.226/api/poster`,
+        `https://api.starzhubs.com/api/poster`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -305,6 +305,7 @@ const CreatePosterScreen = (props, { navigation }) => {
                       placeholder="Start Date"
                       format="DD/MM/YYYY"
                       minDate={Moment().format('DD/MM/YYYY')}
+                      maxDate={eDate}
                       confirmBtnText="Confirm"
                       cancelBtnText="Cancel"
                       iconComponent={
