@@ -18,6 +18,9 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 const MediaDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
   const mediaFile = props.navigation.getParam('mediaFile');
+  console.log('====================================');
+  console.log("file",mediaFile);
+  console.log('====================================');
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');
@@ -128,6 +131,7 @@ const MediaDetailsScreen = (props) => {
         <WebView
           javaScriptEnabled={true}
           domStorageEnabled={true}
+          style={{ width: '100%', height: deviceWidth / 2 }}
           source={{
             uri:
               'https://www.youtube.com/embed/' +

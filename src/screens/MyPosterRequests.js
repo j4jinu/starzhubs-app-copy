@@ -48,7 +48,7 @@ const MyPosterRequests = (props) => {
   return (
     <View style={{flex: 1}}>
       <ScrollView>
-        {requests !== undefined ? (
+        {requests !== undefined? (
           <FlatList
             data={requests}
             keyExtractor={({id}, index) => id}

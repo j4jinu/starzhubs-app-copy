@@ -29,7 +29,20 @@ const MediaItem = (props) => {
               status: 1,
             })
           }>
-          {props.media[0].fileType === 'image' ? (
+          {props.media[0].fileType === 'video' ? (
+            <WebView
+              javaScriptEnabled={true}
+              domStorageEnabled={true}
+              style={{ width: '100%', height: deviceWidth / 2 }}
+              source={{
+                uri:
+                  'https://www.youtube.com/embed/' +
+                  props.media[0].file.substring(
+                  props.media[0].file.lastIndexOf('=') + 1,
+                  ),
+              }}
+            />
+          ) : (
             <Image
               style={{ width: '100%', height: deviceWidth / 2 }}
               resizeMode="cover"
@@ -37,18 +50,6 @@ const MediaItem = (props) => {
                 uri: `http://13.233.216.36:3000/api/user/view/media/?${props.media[0].file}`,
               }}
             />
-          ) : (
-              <WebView
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                source={{
-                  uri:
-                    'https://www.youtube.com/embed/' +
-                    props.media[0].file.substring(
-                      props.media[0].file.lastIndexOf('=') + 1,
-                    ),
-                }}
-              />
             )}
           {props.user[0] !== undefined && (
             <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
