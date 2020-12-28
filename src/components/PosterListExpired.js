@@ -18,7 +18,7 @@ const PosterListExpired = (props) => {
     setLoading(true);
     setPosters([]);
     try {
-      const response = await fetch(`https://api.starzhubs.com/api/poster/expired`, {
+      const response = await fetch(`http://13.233.216.36:3000/api/poster/expired`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,

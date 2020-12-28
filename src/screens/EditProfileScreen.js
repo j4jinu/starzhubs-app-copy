@@ -271,7 +271,7 @@ const EditProfileScreen = (props) => {
   React.useEffect(() => {
     const getUserDetails = async () => {
       const userResponse = await fetch(
-        'https://api.starzhubs.com/api/user/profile',
+        'http://13.233.216.36:3000/api/user/profile',
         {
           method: 'GET',
           headers: {
@@ -335,7 +335,7 @@ const EditProfileScreen = (props) => {
       setSubmitting(false);
       return;
     }
-    if (gender === undefined) {
+    if (gender === undefined || gender === '') {
       Alert.alert(
         '',
         'Select your gender',
@@ -369,7 +369,7 @@ const EditProfileScreen = (props) => {
     values.gender = gender;
     values.country = country;
     values.languages = selectedItems.toString();
-    const response = await fetch('https://api.starzhubs.com/api/user/update', {
+    const response = await fetch('http://13.233.216.36:3000/api/user/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -466,7 +466,7 @@ const EditProfileScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `https://api.starzhubs.com/api/user/avatar`,
+        `http://13.233.216.36:3000/api/user/avatar`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -505,7 +505,7 @@ const EditProfileScreen = (props) => {
               backgroundColor: 'gray',
             }}
             source={{
-              uri: `https://api.starzhubs.com/api/user/avatar/${userInfo.image.avatar}`,
+              uri: `http://13.233.216.36:3000/api/user/avatar/${userInfo.image.avatar}`,
             }}
           />
         )}
@@ -793,18 +793,20 @@ const EditProfileScreen = (props) => {
                 <View
                   style={{
                     flex: 1,
-                    width: '95%',
-                    flexDirection: 'row',
                   }}>
                   {touched.state && errors.state && (
+                    <View style={{alignSelf:'flex-start', width:'45%', paddingLeft:'2%'}}>
                       <Text style={styles.errorText2}>
                         {touched.state && errors.state}
                       </Text>
+                      </View>
                     )}
                   {touched.place && errors.place && (
+                    <View style={touched.state && errors.state?styles.errorPlace1:styles.errorPlace2}>
                     <Text style={styles.errorText3}>
                       {touched.place && errors.place}
                     </Text>
+                    </View>
                   )}
                 </View>
                 <View
@@ -1051,12 +1053,21 @@ const styles = StyleSheet.create({
     marginTop: 3,
     color: 'red',
     paddingLeft: '4%',
-    width:'50%'
+    width:'100%'
   },
   errorText3: {
     marginHorizontal: 8,
     marginTop: 3,
     color: 'red',
+  },
+  errorPlace1:{
+    alignSelf:'flex-end',
+    width:'45%',
+    marginTop:'-6%'
+  },
+  errorPlace2:{
+    alignSelf:'flex-end',
+    width:'45%',
   },
   forgotText: {
     color: 'purple',

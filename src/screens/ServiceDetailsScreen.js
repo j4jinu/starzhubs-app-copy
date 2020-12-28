@@ -25,7 +25,7 @@ const ServiceDetailsScreen = (props) => {
 
   useEffect(() => {
     const getServiceDetails = () => {
-      fetch(`https://api.starzhubs.com/api/services/${serviceId}`, {
+      fetch(`http://13.233.216.36:3000/api/services/${serviceId}`, {
         method: 'PATCH',
       })
         .then((response) => response.json())
@@ -52,7 +52,7 @@ const ServiceDetailsScreen = (props) => {
       },
       body: JSON.stringify({message: values.message}),
     };
-    fetch(`https://api.starzhubs.com/api/services/${serviceId}`, requestOptions)
+    fetch(`http://13.233.216.36:3000/api/services/${serviceId}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -109,7 +109,7 @@ const ServiceDetailsScreen = (props) => {
                 uri:
                   services.image === undefined
                     ? null
-                    : `https://api.starzhubs.com/api/services/view/${services.image}`,
+                    : `http://13.233.216.36:3000/api/services/view/${services.image}`,
               }}
               style={{borderRadius: 50, height: 180, width: 180}}
             />

@@ -47,7 +47,7 @@ const EditMediaScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `https://api.starzhubs.com/api/talent/media/${mediaId}`,
+        `http://13.233.216.36:3000/api/talent/media/${mediaId}`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();
@@ -102,7 +102,7 @@ const EditMediaScreen = (props) => {
                       resizeMode: 'cover',
                     }}
                     source={{
-                      uri: `https://api.starzhubs.com/api/user/view/media/?${mediaFile}`,
+                      uri: `http://13.233.216.36:3000/api/user/view/media/?${mediaFile}`,
                     }}
                   />
                 ) : (

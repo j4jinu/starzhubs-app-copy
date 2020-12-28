@@ -49,7 +49,7 @@ const PosterDetailsScreen = (props) => {
   }, []);
 
   const getLoggedUser = () => {
-    fetch(`https://api.starzhubs.com/api/user/profile`, {
+    fetch(`http://13.233.216.36:3000/api/user/profile`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -86,9 +86,9 @@ const PosterDetailsScreen = (props) => {
 
   const images = [
     {
-      url: `https://api.starzhubs.com/api/poster/view/${image}`,
+      url: `http://13.233.216.36:3000/api/poster/view/${image}`,
       props: {
-        source: `https://api.starzhubs.com/api/poster/view/${image}`,
+        source: `http://13.233.216.36:3000/api/poster/view/${image}`,
       },
     },
   ];
@@ -106,7 +106,7 @@ const PosterDetailsScreen = (props) => {
   }, []);
 
   const getPosterById = () => {
-    fetch(`https://api.starzhubs.com/api/poster/${posterId}`, {
+    fetch(`http://13.233.216.36:3000/api/poster/${posterId}`, {
       method: 'PATCH',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -120,7 +120,7 @@ const PosterDetailsScreen = (props) => {
   };
 
   const onSubmitRequest = (values) => {
-    fetch(`https://api.starzhubs.com/api/poster/req/${posterId}`, {
+    fetch(`http://13.233.216.36:3000/api/poster/req/${posterId}`, {
       method: 'POST',
       headers: {
         'Content-type': 'Application/json',
@@ -180,7 +180,7 @@ const PosterDetailsScreen = (props) => {
         status: status,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/poster/req/${id}`, requestOptions)
+    fetch(`http://13.233.216.36:3000/api/poster/req/${id}`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -251,7 +251,7 @@ const PosterDetailsScreen = (props) => {
               }}
               resizeMode="cover"
               source={{
-                uri: `https://api.starzhubs.com/api/poster/view/${image}`,
+                uri: `http://13.233.216.36:3000/api/poster/view/${image}`,
               }}
             />
           </TouchableOpacity>
@@ -320,7 +320,7 @@ const PosterDetailsScreen = (props) => {
                   borderRadius: 100,
                 }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                  uri: `http://13.233.216.36:3000/api/user/avatar/${user.image.avatar}`,
                 }}
               />
               <TouchableOpacity
@@ -386,63 +386,69 @@ const PosterDetailsScreen = (props) => {
                 </View>
               ) : (
                 selectedPoster.map((s) => (
-                  <View style={styles.authorInfo}>
-                    <TouchableOpacity
-                      onPress={() =>
-                        props.navigation.navigate('UserDetails', {
-                          userId: s.requestBy._id,
-                        })
-                      }
-                      style={{flexDirection: 'row', width: '70%'}}>
-                      <Image
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 100,
-                        }}
-                        source={{
-                          uri: `https://api.starzhubs.com/api/user/avatar/${s.requestBy.image.avatar}`,
-                        }}
-                      />
+                  <View style={styles.rqstauthorInfo}>
+                    <View style={{flexDirection:'row'}}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          props.navigation.navigate('UserDetails', {
+                            userId: s.requestBy._id,
+                          })
+                        }
+                        style={{flexDirection: 'row', width: '70%'}}>
+                        <Image
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 100,
+                          }}
+                          source={{
+                            uri: `http://13.233.216.36:3000/api/user/avatar/${s.requestBy.image.avatar}`,
+                          }}
+                        />
+                        <View
+                          style={{
+                            flex: 1,
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            marginLeft: 10,
+                          }}>
+                          <Text style={{fontSize: 13}}>{'Requested By'}</Text>
+                          <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                            {s.requestBy.name}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
                       <View
                         style={{
-                          flex: 1,
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          marginLeft: 10,
+                          flexDirection: 'row',
+                          alignItems: 'flex-end',
+                          width: '30%',
                         }}>
-                        <Text style={{fontSize: 13}}>{'Requested By'}</Text>
-                        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-                          {s.requestBy.name}
-                        </Text>
+                        <TouchableOpacity
+                          style={{
+                            padding: 10,
+                            backgroundColor: '#f2f2f2',
+                            borderRadius: 100,
+                            marginHorizontal: 5,
+                          }}
+                          onPress={() => updatePosterReq(s._id, 1)}>
+                          <EIcon name="check" size={25} color="orange" />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={{
+                            padding: 10,
+                            backgroundColor: '#f2f2f2',
+                            borderRadius: 100,
+                            marginHorizontal: 5,
+                          }}
+                          onPress={() => updatePosterReq(s._id, 2)}>
+                          <DIcon name="delete" size={25} color="#e34000" />
+                        </TouchableOpacity>
                       </View>
-                    </TouchableOpacity>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'flex-end',
-                        width: '30%',
-                      }}>
-                      <TouchableOpacity
-                        style={{
-                          padding: 10,
-                          backgroundColor: '#f2f2f2',
-                          borderRadius: 100,
-                          marginHorizontal: 5,
-                        }}
-                        onPress={() => updatePosterReq(s._id, 1)}>
-                        <EIcon name="check" size={25} color="orange" />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={{
-                          padding: 10,
-                          backgroundColor: '#f2f2f2',
-                          borderRadius: 100,
-                          marginHorizontal: 5,
-                        }}
-                        onPress={() => updatePosterReq(s._id, 2)}>
-                        <DIcon name="delete" size={25} color="#e34000" />
-                      </TouchableOpacity>
+                    </View>
+                    <View style={{paddingLeft:'1%', paddingTop:5,flexDirection:'row', width:'100%'}}>
+                      <Text style={{color:'green'}}>Message:  <Text style={{color:'darkgrey'}}>{s.notes}</Text>
+                      </Text>
                     </View>
                   </View>
                 ))
@@ -528,7 +534,7 @@ const PosterDetailsScreen = (props) => {
                   <Image
                     style={{ width: '100%', height: 250 }}
                     source={{
-                      uri: `https://api.starzhubs.com/api/poster/view/${image}`,
+                      uri: `http://13.233.216.36:3000/api/poster/view/${image}`,
                     }}
                   />
                 </View>
@@ -616,7 +622,7 @@ const PosterDetailsScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   description: {
     lineHeight: 20,
@@ -630,7 +636,13 @@ const styles = StyleSheet.create({
   authorInfo: {
     backgroundColor: 'white',
     marginTop: 1,
-    flexDirection: 'row',
+    borderRadius: theme.$borderRadius,
+    flexDirection:'row',
+    padding: 20,
+  },
+  rqstauthorInfo: {
+    backgroundColor: 'white',
+    marginTop: 1,
     borderRadius: theme.$borderRadius,
     padding: 20,
   },

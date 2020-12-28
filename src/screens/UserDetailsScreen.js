@@ -49,41 +49,41 @@ const UserDetailsScreen = (props) => {
   if (user.image !== undefined) {
     if (user.image.avatar !== undefined) {
       images.push({
-        url: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+        url: `http://13.233.216.36:3000/api/user/avatar/${user.image.avatar}`,
         props: {
-          source: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+          source: `http://13.233.216.36:3000/api/user/avatar/${user.image.avatar}`,
         },
       });
     }
     if (user.image.head_shot !== undefined) {
       images.push({
-        url: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
+        url: `http://13.233.216.36:3000/api/user/avatar/${user.image.head_shot}`,
         props: {
-          source: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
+          source: `http://13.233.216.36:3000/api/user/avatar/${user.image.head_shot}`,
         },
       });
     }
     if (user.image.left_profile !== undefined) {
       images.push({
-        url: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
+        url: `http://13.233.216.36:3000/api/user/avatar/${user.image.left_profile}`,
         props: {
-          source: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
+          source: `http://13.233.216.36:3000/api/user/avatar/${user.image.left_profile}`,
         },
       });
     }
     if (user.image.right_profile !== undefined) {
       images.push({
-        url: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
+        url: `http://13.233.216.36:3000/api/user/avatar/${user.image.right_profile}`,
         props: {
-          source: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
+          source: `http://13.233.216.36:3000/api/user/avatar/${user.image.right_profile}`,
         },
       });
     }
     if (user.image.fullsize !== undefined) {
       images.push({
-        url: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
+        url: `http://13.233.216.36:3000/api/user/avatar/${user.image.fullsize}`,
         props: {
-          source: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
+          source: `http://13.233.216.36:3000/api/user/avatar/${user.image.fullsize}`,
         },
       });
     }
@@ -91,7 +91,7 @@ const UserDetailsScreen = (props) => {
 
   useEffect(() => {
     const getUserDetails = () => {
-      fetch(`https://api.starzhubs.com/api/user/${userId}`, {
+      fetch(`http://13.233.216.36:3000/api/user/${userId}`, {
         method: 'PATCH',
         headers: {
           Authorization: 'Bearer ' + auth.token,
@@ -132,7 +132,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const getLoggedUser = () => {
-    fetch(`https://api.starzhubs.com/api/user/profile`, {
+    fetch(`http://13.233.216.36:3000/api/user/profile`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -165,7 +165,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const checkFriendship = () => {
-    fetch(`https://api.starzhubs.com/api/user/connection/status/${userId}`, {
+    fetch(`http://13.233.216.36:3000/api/user/connection/status/${userId}`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -217,7 +217,7 @@ const UserDetailsScreen = (props) => {
         userId: userId,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/req/user`, requestOptions)
+    fetch(`http://13.233.216.36:3000/api/talent/req/user`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -268,7 +268,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const requestDeleteHandler = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${requestId}`, {
+    fetch(`http://13.233.216.36:3000/api/talent/req/reject/${requestId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -330,7 +330,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const approveRequest = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/user/approve/${requestId}/1`, {
+    fetch(`http://13.233.216.36:3000/api/talent/user/approve/${requestId}/1`, {
       method: 'PUT',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -357,7 +357,7 @@ const UserDetailsScreen = (props) => {
   };
 
   const unfriendRequest = (requestId) => {
-    fetch(`https://api.starzhubs.com/api/talent/req/reject/${requestId}`, {
+    fetch(`http://13.233.216.36:3000/api/talent/req/reject/${requestId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + auth.token,
@@ -430,7 +430,7 @@ const UserDetailsScreen = (props) => {
                   key={user.image.avatar}
                   style={{width: '100%', height: 300, resizeMode: 'cover'}}
                   source={{
-                    uri: `https://api.starzhubs.com/api/user/avatar/${user.image.avatar}`,
+                    uri: `http://13.233.216.36:3000/api/user/avatar/${user.image.avatar}`,
                     cache: 'reload',
                   }}
                 />
@@ -445,7 +445,7 @@ const UserDetailsScreen = (props) => {
                 <Image
                   style={{width: '100%', height: 300, resizeMode: 'cover'}}
                   source={{
-                    uri: `https://api.starzhubs.com/api/user/avatar/${user.image.head_shot}`,
+                    uri: `http://13.233.216.36:3000/api/user/avatar/${user.image.head_shot}`,
                   }}
                 />
               </TouchableOpacity>
@@ -459,7 +459,7 @@ const UserDetailsScreen = (props) => {
                 <Image
                   style={{width: '100%', height: 300, resizeMode: 'cover'}}
                   source={{
-                    uri: `https://api.starzhubs.com/api/user/avatar/${user.image.left_profile}`,
+                    uri: `http://13.233.216.36:3000/api/user/avatar/${user.image.left_profile}`,
                   }}
                 />
               </TouchableOpacity>
@@ -473,7 +473,7 @@ const UserDetailsScreen = (props) => {
                 <Image
                   style={{width: '100%', height: 300, resizeMode: 'cover'}}
                   source={{
-                    uri: `https://api.starzhubs.com/api/user/avatar/${user.image.right_profile}`,
+                    uri: `http://13.233.216.36:3000/api/user/avatar/${user.image.right_profile}`,
                   }}
                 />
               </TouchableOpacity>
@@ -487,7 +487,7 @@ const UserDetailsScreen = (props) => {
                 <Image
                   style={{width: '100%', height: 300, resizeMode: 'cover'}}
                   source={{
-                    uri: `https://api.starzhubs.com/api/user/avatar/${user.image.fullsize}`,
+                    uri: `http://13.233.216.36:3000/api/user/avatar/${user.image.fullsize}`,
                   }}
                 />
               </TouchableOpacity>

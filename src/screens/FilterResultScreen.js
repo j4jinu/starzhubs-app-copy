@@ -13,7 +13,7 @@ const FilterResultScreen = (props) => {
   const [userData, setUserData] = useState([]);
   useEffect(() => {
     const getCategory = () => {
-      fetch('https://api.starzhubs.com/api/category')
+      fetch('http://13.233.216.36:3000/api/category')
         .then((response) => response.json())
         .then((json) => {
           setData(json.categories);
@@ -53,7 +53,7 @@ const FilterResultScreen = (props) => {
                   source={{
                     uri:
                       item.image !== undefined
-                        ? `https://api.starzhubs.com/api/user/avatar/${item.image.avatar}`
+                        ? `http://13.233.216.36:3000/api/user/avatar/${item.image.avatar}`
                         : '',
                   }}
                 />

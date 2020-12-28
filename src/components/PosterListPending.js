@@ -22,7 +22,7 @@ const PosterListPending = (props) => {
   const getPosters = async (status) => {
     setPosters([]);
     try {
-      const response = await fetch(`https://api.starzhubs.com/api/poster/pending`, {
+      const response = await fetch(`http://13.233.216.36:3000/api/poster/pending`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,

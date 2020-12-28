@@ -23,7 +23,7 @@ const NotificationListScreen = (props) => {
 
   const getNotifications = async () => {
     try {
-      const res = await fetch(`https://api.starzhubs.com/api/alert`, {
+      const res = await fetch(`http://13.233.216.36:3000/api/alert`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,

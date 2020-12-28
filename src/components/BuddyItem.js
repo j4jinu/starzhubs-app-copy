@@ -15,7 +15,7 @@ const BuddyItem = (props) => {
           borderRadius: 100,
         }}
         source={{
-          uri: `https://api.starzhubs.com/api/user/avatar/${props.image.avatar}`,
+          uri: `http://13.233.216.36:3000/api/user/avatar/${props.image.avatar}`,
         }}
       />
       <View style={styles.details}>

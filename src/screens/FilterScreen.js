@@ -53,10 +53,18 @@ const FilterScreen = (props) => {
   const [visible, setVisible] = useState(false);
   const [categories, setCategories] = useState([]);
 
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    getCategory();
+  });
+
   useEffect(() => {
+    getCategory();
+  }, []);
+
+  unsubscribe;
     const getCategory = async () => {
       try {
-        const res = await fetch('https://api.starzhubs.com/api/category/app');
+        const res = await fetch('http://13.233.216.36:3000/api/category/app');
         const resData = await res.json();
         if (resData.success) {
           setCategories(resData.categories);
@@ -66,8 +74,6 @@ const FilterScreen = (props) => {
       } catch (error) {
       }
     };
-    getCategory();
-  }, []);
 
   const onSelectedItemsChange = (selectedItem) => {
     setSelectedItems(selectedItem);
@@ -135,7 +141,7 @@ const FilterScreen = (props) => {
       return alert('Enter a search query');
     }
     const searchRes = await fetch(
-      `https://api.starzhubs.com/api/user/search/u?key=${search}`,
+      `http://13.233.216.36:3000/api/user/search/u?key=${search}`,
       {
         method: 'PATCH',
       },
@@ -208,7 +214,7 @@ const FilterScreen = (props) => {
         bodyType: bodyType,
       }),
     };
-    fetch(`https://api.starzhubs.com/api/talent/filter`, requestOptions)
+    fetch(`http://13.233.216.36:3000/api/talent/filter`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {

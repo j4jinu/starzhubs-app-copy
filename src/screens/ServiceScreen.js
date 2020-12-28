@@ -26,7 +26,7 @@ const ServiceScreen = ({navigation}) => {
         Authorization: 'Bearer ' + auth.token,
       },
     };
-    fetch(`https://api.starzhubs.com/api/services/`, requestOptions)
+    fetch(`http://13.233.216.36:3000/api/services/`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {
@@ -60,7 +60,7 @@ const ServiceScreen = ({navigation}) => {
                 }}>
                 <Image
                   source={{
-                    uri: `https://api.starzhubs.com/api/services/view/${s.image}`,
+                    uri: `http://13.233.216.36:3000/api/services/view/${s.image}`,
                   }}
                   style={{
                     borderRadius: 50,

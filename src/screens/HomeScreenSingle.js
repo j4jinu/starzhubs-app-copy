@@ -22,15 +22,15 @@ const HomeScreenSingle = (props) => {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        let response = await fetch(`https://api.starzhubs.com/api/poster/random`);
+        let response = await fetch(`http://13.233.216.36:3000/api/poster/random`);
         let usersResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/5f5b2b8e96b2173a30948ac6`,
+          `http://13.233.216.36:3000/api/talent/filter/5f5b2b8e96b2173a30948ac6`,
           {
             method: 'PATCH',
           },
         );
         let mediaResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/random`,
+          `http://13.233.216.36:3000/api/talent/random`,
         );
         let userData = await usersResponse.json();
         userData.success ? setUsers(userData.data.users) : setUsers([]);
@@ -89,7 +89,7 @@ const HomeScreenSingle = (props) => {
                   height: deviceWidth / 2,
                 }}
                 source={{
-                  uri: `https://api.starzhubs.com/api/poster/view/${p.image}`,
+                  uri: `http://13.233.216.36:3000/api/poster/view/${p.image}`,
                 }}
               />
             </TouchableOpacity>

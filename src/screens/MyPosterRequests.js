@@ -14,15 +14,22 @@ const MyPosterRequests = (props) => {
   const auth = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [requests, setRequests] = useState([]);
+  const [rqstArr, setreqArr] = useState([]);
+
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    getPosterRequest();
+  });
 
   useEffect(() => {
     getPosterRequest();
+    unsubscribe;
   }, []);
+
 
   const getPosterRequest = async () => {
     try {
       let response = await fetch(
-        `https://api.starzhubs.com/api/user/poster/request/sent`,
+        `http://13.233.216.36:3000/api/user/poster/request/sent`,
         {
           method: 'GET',
           headers: {
@@ -31,7 +38,10 @@ const MyPosterRequests = (props) => {
         },
       );
       let userData = await response.json();
-      setRequests(userData.requests);
+     
+      setreqArr(userData.requests)
+      const sorted = rqstArr.sort((a, b) => {return b.isUserApproved < a.isUserApproved});
+      setRequests(sorted)
     } catch (error) {}
   };
 
@@ -72,7 +82,7 @@ const MyPosterRequests = (props) => {
                           source={{
                             uri:
                               item.posterId.image !== undefined
-                                ? `https://api.starzhubs.com/api/poster/view/${item.posterId.image}`
+                                ? `http://13.233.216.36:3000/api/poster/view/${item.posterId.image}`
                                 : '',
                           }}
                         />

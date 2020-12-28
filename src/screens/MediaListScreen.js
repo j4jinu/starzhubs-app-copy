@@ -22,7 +22,7 @@ const MediaListSceen = (props) => {
   useEffect(() => {
     const getCategoiries = async () => {
       try {
-        const response = await fetch('https://api.starzhubs.com/api/category');
+        const response = await fetch('http://13.233.216.36:3000/api/category');
         const categoryData = await response.json();
         if (categoryData.success) {
           setCategory(categoryData.categories);
@@ -47,7 +47,7 @@ const MediaListSceen = (props) => {
       }
       try {
         const userResponse = await fetch(
-          `https://api.starzhubs.com/api/talent/filter/${categoryId}`,
+          `http://13.233.216.36:3000/api/talent/filter/${categoryId}`,
           {
             method: 'PATCH',
             headers: {
@@ -79,7 +79,7 @@ const MediaListSceen = (props) => {
     );
   }
   return (
-    <View style={{ backgroundColor: '#fafafa' }}>
+    <View style={{ backgroundColor: '#fafafa', paddingBottom:'8%', justifyContent:'center'}}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -103,7 +103,7 @@ const MediaListSceen = (props) => {
       </ScrollView>
       {media.length > 0 && (
         <FlatList
-          style={{ paddingHorizontal: '2%' }}
+          style={{ paddingHorizontal: '2%',}}
           keyExtractor={(item, index) => item.id}
           data={media}
           renderItem={({ item }) => (

@@ -110,7 +110,7 @@ const PhotoUploadScreen = (props) => {
     };
     try {
       const uploadRes = await fetch(
-        `https://api.starzhubs.com/api/talent/upload/media`,
+        `http://13.233.216.36:3000/api/talent/upload/media`,
         requestOptions,
       );
       const uploadResData = await uploadRes.json();

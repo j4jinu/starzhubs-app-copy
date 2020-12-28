@@ -18,7 +18,7 @@ const PendingConnectionScreen = (props) => {
 
 
   const getRequests = () => {
-    fetch('https://api.starzhubs.com/api/talent/req/received', {
+    fetch('http://13.233.216.36:3000/api/talent/req/received', {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,

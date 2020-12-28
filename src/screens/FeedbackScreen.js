@@ -34,7 +34,7 @@ const FeedbackScreen = ({ navigation }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     };
-    fetch(`https://api.starzhubs.com/api/user/contact`, requestOptions)
+    fetch(`http://13.233.216.36:3000/api/user/contact`, requestOptions)
       .then((response) => response.json())
       .then(
         (response) => {

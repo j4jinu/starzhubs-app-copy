@@ -58,7 +58,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
     };
     try {
       const otpRes = await fetch(
-        'https://api.starzhubs.com/api/auth/reset',
+        'http://13.233.216.36:3000/api/auth/reset',
         options,
       );
       const otpData = await otpRes.json();
@@ -82,7 +82,7 @@ const ForgotPasswordScreen = ({ navigation }) => {
     };
     try {
       const resetRes = await fetch(
-        'https://api.starzhubs.com/api/auth/reset',
+        'http://13.233.216.36:3000/api/auth/reset',
         options,
       );
       const resetData = await resetRes.json();

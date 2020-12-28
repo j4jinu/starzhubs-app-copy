@@ -18,7 +18,7 @@ const PosterListRejected = (props) => {
     setLoading(true);
     setPosters([]);
     try {
-      const response = await fetch(`https://api.starzhubs.com/api/poster/denied`, {
+      const response = await fetch(`http://13.233.216.36:3000/api/poster/denied`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + auth.token,

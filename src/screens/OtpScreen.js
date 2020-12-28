@@ -31,7 +31,7 @@ const OtpScreen = (props) => {
       }),
     };
     const response = await fetch(
-      `https://api.starzhubs.com/api/user`,
+      `http://13.233.216.36:3000/api/user`,
       requestOptions,
     );
     const resData = await response.json();

@@ -7,11 +7,17 @@ const MyConnectionScreen = (props) => {
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [isFriends, setIsFriends] = useState([]);
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    getConnectionRequests();
+  });
+
   useEffect(() => {
     getConnectionRequests();
+    unsubscribe;
   }, []);
+  
   const getConnectionRequests = () => {
-    fetch(`https://api.starzhubs.com/api/talent/req/approved`, {
+    fetch(`http://13.233.216.36:3000/api/talent/req/approved`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + auth.token,

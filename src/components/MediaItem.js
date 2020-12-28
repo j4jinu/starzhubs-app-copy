@@ -34,7 +34,7 @@ const MediaItem = (props) => {
               style={{ width: '100%', height: deviceWidth / 2 }}
               resizeMode="cover"
               source={{
-                uri: `https://api.starzhubs.com/api/user/view/media/?${props.media[0].file}`,
+                uri: `http://13.233.216.36:3000/api/user/view/media/?${props.media[0].file}`,
               }}
             />
           ) : (
