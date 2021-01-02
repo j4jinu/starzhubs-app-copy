@@ -33,6 +33,10 @@ const EditMediaScreen = (props) => {
   const auth = useContext(AuthContext);
 
   const editMedia = async (values, { setSubmitting }) => {
+    console.log('====================================');
+    console.log("tid",values);
+    console.log('====================================');
+  
     var formData = new FormData();
     formData.append('talentId', talentId);
     formData.append('caption', values.description);

@@ -46,6 +46,14 @@ import EditMediaScreen from '../screens/EditMediaScreen';
 import MediaListSceen from '../screens/MediaListScreen';
 import MyPosterRequests from '../screens/MyPosterRequests';
 import ImageViewScreen from '../screens/ImageViewScreen';
+import MyMediaInitialScreen from '../screens/MyMediaInitialScreen';
+import Icon from 'react-native-vector-icons/Entypo';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
 
 const HomeNavigator = createStackNavigator(
   {
@@ -286,10 +294,77 @@ const AccountNavigator = createStackNavigator(
       },
     },
     MyMedia: {
-      screen: MyMediaScreen,
+      // screen: MyMediaScreen,
+      screen:MyMediaInitialScreen,
       navigationOptions: {
         title: '',
       },
+    },
+    MyMediaList: {
+      screen: MyMediaScreen,
+      navigationOptions: ({ navigate, navigation }) => ({
+        headerRight: () => (
+          <View style={{ flexDirection: 'row' }}>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    // onPress={() =>
+                    //   props.navigation.navigate('Photo', {
+                    //     talentId: t._id,
+                    //   })
+                    // }
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: theme.$borderRadius,
+                      borderWidth: 1,
+                      borderColor: '#e6e6e6',
+                      paddingHorizontal: 8,
+                      paddingVertical: 3,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginRight: 10,
+                    }}>
+                    <Icon
+                      style={{ marginRight: 10 }}
+                      name="camera"
+                      size={15}
+                      color={theme.$primaryColor}
+                    />
+                    <Text style={{ fontSize: 14 }}>Photo</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    // onPress={() =>
+                    //   props.navigation.navigate('Video', {
+                    //     talentId: t._id,
+                    //   })
+                    // }
+                    style={{
+                      backgroundColor: 'white',
+                      borderRadius: theme.$borderRadius,
+                      borderWidth: 1,
+                      borderColor: '#e6e6e6',
+                      paddingHorizontal: 8,
+                      paddingVertical: 3,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Icon
+                      style={{ marginRight: 10 }}
+                      name="video-camera"
+                      size={15}
+                      color={theme.$primaryColor}
+                    />
+                    <Text style={{ fontSize: 14 }}>Video</Text>
+                  </TouchableOpacity>
+                </View>
+          // <MaterialCommunityIcons
+          //   style={{ marginRight: 15 }}
+          //   size={25}
+          //   name="filter-outline"
+          //   onPress={() => navigation.navigate('Filter')}
+          // />
+        ),
+      }),
     },
     MediaDetails: {
       screen: MediaDetailsScreen,

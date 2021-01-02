@@ -16,50 +16,56 @@ import theme from '../config/theme';
 import { AuthContext } from '../context/authContext';
 
 const MyMediaScreen = (props) => {
+  const media = props.navigation.getParam('media')
+  const talentId = props.navigation.getParam('talentId')
+  console.log('====================================');
+  console.log("media",media);
+  console.log("media",talentId);
+  console.log('====================================');
   const auth = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [talents, setTalents] = useState([]);
   const [isNoMedia, setNoMedia] = useState(false);
 
-  const unsubscribe = props.navigation.addListener('didFocus', () => {
-    getTalents();
-  });
+  // const unsubscribe = props.navigation.addListener('didFocus', () => {
+  //   getTalents();
+  // });
 
-  useEffect(() => {
-    getTalents();
-    unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   getTalents();
+  //   // unsubscribe;
+  // }, []);
 
-  const getTalents = async () => {
-    try {
-      const res = await fetch('http://13.233.216.36:3000/api/user/talent', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${auth.token}`,
-        },
-      });
-      const resData = await res.json();
-      if (!resData.success) {
-        setLoading(false);
-        alert(resData.message);
-        return;
-      } else {
-        setTalents(resData.data.talents);
-        checkMediaMode(resData.data.talents)
-        setLoading(false);
-      }
-    } catch (error) {
-      setLoading(false);
-    }
-  };
+  // const getTalents = async () => {
+  //   try {
+  //     const res = await fetch('http://13.233.216.36:3000/api/user/talent', {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: `Bearer ${auth.token}`,
+  //       },
+  //     });
+  //     const resData = await res.json();
+  //     if (!resData.success) {
+  //       setLoading(false);
+  //       alert(resData.message);
+  //       return;
+  //     } else {
+  //       setTalents(resData.data.talents);
+  //       checkMediaMode(resData.data.talents)
+  //       setLoading(false);
+  //     }
+  //   } catch (error) {
+  //     setLoading(false);
+  //   }
+  // };
 
-  const checkMediaMode = (talents) => {
-    talents.forEach(c => {
-      if (c.media === [] || c.media === undefined || c.media.length === 0) {
-        setNoMedia(true)
-      }
-    });
-  }
+  // const checkMediaMode = (talents) => {
+  //   talents.forEach(c => {
+  //     if (c.media === [] || c.media === undefined || c.media.length === 0) {
+  //       setNoMedia(true)
+  //     }
+  //   });
+  // }
 
   if (loading) {
     return (
@@ -129,7 +135,7 @@ const MyMediaScreen = (props) => {
     );
   };
 
-  if (talents.length === 0) {
+  if (media.length === 0) {
     return (
       <View
         style={{
@@ -149,9 +155,9 @@ const MyMediaScreen = (props) => {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container}>
-          {talents.map((t) => (
+          {/* {talents.map((t) => ( */}
             <>
-              <View
+              {/* <View
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
@@ -215,10 +221,10 @@ const MyMediaScreen = (props) => {
                     <Text style={{ fontSize: 14 }}>Video</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </View> */}
 
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                {t.media.map((m) => (
+                {media.map((m) => (
                   <>
                     <View style={styles.gridItem}>
                       {m.fileType === 'image' ? (
@@ -256,14 +262,15 @@ const MyMediaScreen = (props) => {
                           }}
                           onPress={() =>
                             props.navigation.navigate('EditMedia', {
-                              talentId: t._id,
+                              talentId: talentId,
                               mediaFile: m.file,
                               mediaType: m.fileType,
                               caption: m.caption,
                               description: m.description,
                               mediaId: m._id,
                             })
-                          }>
+                          }
+                          >
                           <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Edit</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -271,7 +278,8 @@ const MyMediaScreen = (props) => {
                             borderRightWidth: 1, borderRightColor: 'white',
                             width: '50%', alignItems: 'center', justifyContent: 'center'
                           }}
-                          onPress={() => confirmDelete(t._id, m._id)}>
+                          onPress={() => confirmDelete(talentId, m._id)}
+                        >
                           <Text style={{ color: 'white', fontWeight: "bold", textTransform: 'uppercase' }}>Delete</Text>
                         </TouchableOpacity>
                       </View>
@@ -304,7 +312,7 @@ const MyMediaScreen = (props) => {
                 ))}
               </View>
             </>
-          ))}
+          {/* ))} */}
         </ScrollView>
       </View>
     );
