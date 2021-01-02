@@ -303,15 +303,18 @@ const AccountNavigator = createStackNavigator(
     MyMediaList: {
       screen: MyMediaScreen,
       navigationOptions: ({ navigate, navigation }) => ({
+        title: '',
         headerRight: () => (
           <View style={{ flexDirection: 'row' }}>
                   <TouchableOpacity
                     activeOpacity={0.7}
-                    // onPress={() =>
-                    //   props.navigation.navigate('Photo', {
-                    //     talentId: t._id,
-                    //   })
-                    // }
+                    onPress={() =>
+                      navigation.navigate('Photo', 
+                      {
+                        talentId: navigation.getParam('talentId'),
+                      }
+                      )
+                    }
                     style={{
                       backgroundColor: 'white',
                       borderRadius: theme.$borderRadius,
@@ -333,11 +336,12 @@ const AccountNavigator = createStackNavigator(
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.7}
-                    // onPress={() =>
-                    //   props.navigation.navigate('Video', {
-                    //     talentId: t._id,
-                    //   })
-                    // }
+                    onPress={() =>
+                      navigation.navigate('Video', {
+                      talentId: navigation.getParam('talentId'),
+                      }
+                      )
+                    }
                     style={{
                       backgroundColor: 'white',
                       borderRadius: theme.$borderRadius,
@@ -347,6 +351,7 @@ const AccountNavigator = createStackNavigator(
                       paddingVertical: 3,
                       flexDirection: 'row',
                       alignItems: 'center',
+                      marginRight: 10,
                     }}>
                     <Icon
                       style={{ marginRight: 10 }}

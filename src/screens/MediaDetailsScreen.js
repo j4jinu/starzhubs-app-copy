@@ -18,9 +18,6 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 const MediaDetailsScreen = (props) => {
   const auth = useContext(AuthContext);
   const mediaFile = props.navigation.getParam('mediaFile');
-  console.log('====================================');
-  console.log("file",mediaFile);
-  console.log('====================================');
   const mediaType = props.navigation.getParam('mediaType');
   const caption = props.navigation.getParam('caption');
   const description = props.navigation.getParam('description');

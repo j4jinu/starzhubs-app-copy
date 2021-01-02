@@ -8,44 +8,6 @@ const divider = (
   <View style={{ width: '100%', height: 1, backgroundColor: '#e6e6e6' }} />
 );
 
-const renderGridItem = (talents, props) => {
-  const mediaNo = talents.item.media.length;
-  return (
-    <>
-    <View
-      style={styles.gridItem}
-      >
-
-      <TouchableOpacity
-        style={{ flexDirection: 'row', width: '100%', marginBottom: 5, paddingHorizontal:'5%' }}
-        onPress={() => props.navigation.navigate('MyMediaList')}
-        activeOpacity={0.7}
-      >
-        <Icon
-          name="category"
-          size={30}
-          color={theme.$primaryColor}          
-        />
-        <View style={styles.details}>
-          <Text
-            style={{
-              fontSize: 15,
-              color: theme.$primaryColorText,
-              fontWeight: 'bold',
-              marginLeft:'3%'
-            }}>
-            {talents.item.category.title}
-          </Text>
-          <Text style={{fontSize: 12, color: 'gray',marginLeft:'3%'}}>
-            {mediaNo} Medias
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-    {divider}
-  </>
-  );
-};
 
 const MyMediaInitialScreen = (props) => {
 
@@ -53,9 +15,13 @@ const MyMediaInitialScreen = (props) => {
   const [loading, setLoading] = useState(true);
   const [talents, setTalents] = useState([]);
   const [isNoMedia, setNoMedia] = useState(false);
+  const unsubscribe = props.navigation.addListener('didFocus', () => {
+    getTalents();
+  });
 
   useEffect(() => {
     getTalents();
+    unsubscribe;
   }, []);
 
   const getTalents = async () => {
@@ -73,7 +39,6 @@ const MyMediaInitialScreen = (props) => {
         return;
       } else {
         setTalents(resData.data.talents);
-        // checkMediaMode(resData.data.talents)
         setLoading(false);
       }
     } catch (error) {
@@ -120,12 +85,12 @@ const MyMediaInitialScreen = (props) => {
           <View
             style={styles.gridItem}
             >
-      
             <TouchableOpacity
               style={{ flexDirection: 'row', width: '100%', marginBottom: 5, paddingHorizontal:'5%' }}
               onPress={() => props.navigation.navigate('MyMediaList',{
                 media:item.media,
-                talentId:item._id
+                talentId:item._id,
+                userId:item.userId
               })}
               activeOpacity={0.7}
             >

@@ -18,54 +18,11 @@ import { AuthContext } from '../context/authContext';
 const MyMediaScreen = (props) => {
   const media = props.navigation.getParam('media')
   const talentId = props.navigation.getParam('talentId')
-  console.log('====================================');
-  console.log("media",media);
-  console.log("media",talentId);
-  console.log('====================================');
+  const userId = props.navigation.getParam('userId')
   const auth = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [talents, setTalents] = useState([]);
   const [isNoMedia, setNoMedia] = useState(false);
-
-  // const unsubscribe = props.navigation.addListener('didFocus', () => {
-  //   getTalents();
-  // });
-
-  // useEffect(() => {
-  //   getTalents();
-  //   // unsubscribe;
-  // }, []);
-
-  // const getTalents = async () => {
-  //   try {
-  //     const res = await fetch('http://13.233.216.36:3000/api/user/talent', {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: `Bearer ${auth.token}`,
-  //       },
-  //     });
-  //     const resData = await res.json();
-  //     if (!resData.success) {
-  //       setLoading(false);
-  //       alert(resData.message);
-  //       return;
-  //     } else {
-  //       setTalents(resData.data.talents);
-  //       checkMediaMode(resData.data.talents)
-  //       setLoading(false);
-  //     }
-  //   } catch (error) {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const checkMediaMode = (talents) => {
-  //   talents.forEach(c => {
-  //     if (c.media === [] || c.media === undefined || c.media.length === 0) {
-  //       setNoMedia(true)
-  //     }
-  //   });
-  // }
 
   if (loading) {
     return (
@@ -113,7 +70,7 @@ const MyMediaScreen = (props) => {
       .then(
         (response) => {
           if (response.success === true) {
-            getTalents();
+            props.navigation.navigate('MyMedia');
             showToastWithGravityAndOffset()
           } else {
             alert(response.message);
@@ -155,74 +112,7 @@ const MyMediaScreen = (props) => {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container}>
-          {/* {talents.map((t) => ( */}
             <>
-              {/* <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: 10,
-                  paddingVertical: 8,
-                  marginTop: 10,
-                }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
-                  {t.category.title}
-                </Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() =>
-                      props.navigation.navigate('Photo', {
-                        talentId: t._id,
-                      })
-                    }
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: theme.$borderRadius,
-                      borderWidth: 1,
-                      borderColor: '#e6e6e6',
-                      paddingHorizontal: 8,
-                      paddingVertical: 3,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginRight: 10,
-                    }}>
-                    <Icon
-                      style={{ marginRight: 10 }}
-                      name="camera"
-                      size={15}
-                      color={theme.$primaryColor}
-                    />
-                    <Text style={{ fontSize: 14 }}>Photo</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() =>
-                      props.navigation.navigate('Video', {
-                        talentId: t._id,
-                      })
-                    }
-                    style={{
-                      backgroundColor: 'white',
-                      borderRadius: theme.$borderRadius,
-                      borderWidth: 1,
-                      borderColor: '#e6e6e6',
-                      paddingHorizontal: 8,
-                      paddingVertical: 3,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <Icon
-                      style={{ marginRight: 10 }}
-                      name="video-camera"
-                      size={15}
-                      color={theme.$primaryColor}
-                    />
-                    <Text style={{ fontSize: 14 }}>Video</Text>
-                  </TouchableOpacity>
-                </View>
-              </View> */}
-
               <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
                 {media.map((m) => (
                   <>
@@ -293,7 +183,7 @@ const MyMediaScreen = (props) => {
                                 mediaType: m.fileType,
                                 caption: m.caption,
                                 description: m.description,
-                                user: t._id,
+                                user: userId,
                                 status: 0
                               })
                             }>
@@ -312,7 +202,6 @@ const MyMediaScreen = (props) => {
                 ))}
               </View>
             </>
-          {/* ))} */}
         </ScrollView>
       </View>
     );
