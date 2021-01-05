@@ -11,12 +11,15 @@ import {
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import EIcon from 'react-native-vector-icons/Entypo';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../config/theme';
 const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [isEmailMode, setIsEmailMode] = useState(true);
   const [isSuccessMode, setIsSuccessMode] = useState(false);
+  const [eyeopen, seteyeopen] = useState({ icon: "eye-with-line", password: true });
+  const [eyeopenconfirm, seteyeopenconfirm] = useState({ iconconfirm: "eye-with-line", passwordconfirm: true });
   const [loading, setLoading] = useState(false);
   const passRegExp = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
   const emailRegExp = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[ \t]$/;
@@ -38,8 +41,9 @@ const ForgotPasswordScreen = ({ navigation }) => {
     otp: yup.number().integer('Invalid OTP').required('Enter the OTP'),
     newPassword: yup
       .string()
+      .min(8, ({ min }) => `Password must be atleast ${min} characters, atleast one uppercase one lowercase and  one digit`)
       .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
-      .max(8, ({ max }) => `Password should not be  more than ${max} `)
+      .max(20, ({ max }) => `Password should not be  more than ${max} `)
       .required('Enter Password'),
     confirmPassword: yup
       .string()
@@ -95,6 +99,21 @@ const ForgotPasswordScreen = ({ navigation }) => {
       alert('Something went wrong');
     }
   };
+  const handleEyeChange = () => {
+    seteyeopen(prevState => ({
+      icon: prevState.icon === "eye" ? "eye-with-line" : "eye",
+      password: !prevState.password
+    }));
+
+  }
+  const handleEyeChangeConfirm = () => {
+    seteyeopenconfirm(prevState => ({
+      iconconfirm: prevState.iconconfirm === "eye" ? "eye-with-line" : "eye",
+      passwordconfirm: !prevState.passwordconfirm
+    }));
+
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -113,102 +132,102 @@ const ForgotPasswordScreen = ({ navigation }) => {
               errors,
               values,
             }) => (
-                <React.Fragment>
-                  <Image
-                    source={require('../assets/lock.png')}
-                    style={{
-                      height: 60,
-                      width: '15%',
-                      marginBottom: '10%',
-                      alignSelf: 'center',
-                      marginTop: 30,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      color: '#fd9242',
-                      marginBottom: 15,
-                      alignSelf: 'center',
-                      fontFamily: 'montserrat-medium',
-                      fontSize: 22,
-                    }}>
-                    Forgot Password?
+              <React.Fragment>
+                <Image
+                  source={require('../assets/lock.png')}
+                  style={{
+                    height: 60,
+                    width: '15%',
+                    marginBottom: '10%',
+                    alignSelf: 'center',
+                    marginTop: 30,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: '#fd9242',
+                    marginBottom: 15,
+                    alignSelf: 'center',
+                    fontFamily: 'montserrat-medium',
+                    fontSize: 22,
+                  }}>
+                  Forgot Password?
                 </Text>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      marginHorizontal: 40,
-                      marginBottom: 10,
-                    }}>
-                    Please provide your registered email address so that we can
-                    help you reset your password.
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    marginHorizontal: 40,
+                    marginBottom: 10,
+                  }}>
+                  Please provide your registered email address so that we can
+                  help you reset your password.
                 </Text>
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
                   <View
                     style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderColor: '#e6e6e6',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        width: '90%',
-                        marginHorizontal: 15,
-                        marginVertical: 8,
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.email ? 'red' : 'gray',
-                      }}>
-                      <Icon
-                        name="envelope"
-                        size={20}
-                        color={theme.$primaryColor}
-                      />
-                      <TextInput
-                        style={styles.inputField}
-                        keyboardType={'email-address'}
-                        placeholder="Enter Email"
-                        placeholderTextColor="grey"
-                        autoCapitalize="sentences"
-                        autoCorrect
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                      />
-                    </View>
-                    {touched.email && errors.email && (
-                      <Text style={styles.errorText}>
-                        {touched.email && errors.email}
-                      </Text>
-                    )}
-                  </View>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: theme.$primaryColor,
-                      padding: 10,
-                      marginLeft: 10,
-                      width: 80,
+                      alignSelf: 'center',
+                      borderColor: '#e6e6e6',
+                      borderWidth: 1,
                       borderRadius: 8,
-                      alignSelf: 'flex-end',
-                      marginRight: '5%',
+                      width: '90%',
+                      marginHorizontal: 15,
+                      marginVertical: 8,
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      flexDirection: 'row',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                    onPress={handleSubmit}>
-                    {!loading && (
-                      <Text style={{ color: '#fff', fontWeight: 'bold' }}>
-                        Submit
-                      </Text>
-                    )}
-                    {loading && <ActivityIndicator size={30} color={'white'} />}
-                  </TouchableOpacity>
-                </React.Fragment>
-              )}
+                      borderColor: errors.email ? 'red' : 'gray',
+                    }}>
+                    <Icon
+                      name="envelope"
+                      size={20}
+                      color={theme.$primaryColor}
+                    />
+                    <TextInput
+                      style={styles.inputField}
+                      keyboardType={'email-address'}
+                      placeholder="Enter Email"
+                      placeholderTextColor="grey"
+                      autoCapitalize="sentences"
+                      autoCorrect
+                      onChangeText={handleChange('email')}
+                      onBlur={handleBlur('email')}
+                      value={values.email}
+                    />
+                  </View>
+                  {touched.email && errors.email && (
+                    <Text style={styles.errorText}>
+                      {touched.email && errors.email}
+                    </Text>
+                  )}
+                </View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: theme.$primaryColor,
+                    padding: 10,
+                    marginLeft: 10,
+                    width: 80,
+                    borderRadius: 8,
+                    alignSelf: 'flex-end',
+                    marginRight: '5%',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onPress={handleSubmit}>
+                  {!loading && (
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>
+                      Submit
+                    </Text>
+                  )}
+                  {loading && <ActivityIndicator size={30} color={'white'} />}
+                </TouchableOpacity>
+              </React.Fragment>
+            )}
           </Formik>
         )}
         {!isEmailMode && !isSuccessMode && (
@@ -226,168 +245,172 @@ const ForgotPasswordScreen = ({ navigation }) => {
               errors,
               touched,
             }) => (
-                <React.Fragment>
-                  <Text style={styles.title}>Change password</Text>
-                  <Text
-                    style={{
-                      alignSelf: 'flex-start',
-                      marginHorizontal: '5%',
-                      marginBottom: 20,
-                    }}>
-                    Please enter the OTP recieived in your email address.
+              <React.Fragment>
+                <Text style={styles.title}>Change password</Text>
+                <Text
+                  style={{
+                    alignSelf: 'flex-start',
+                    marginHorizontal: '5%',
+                    marginBottom: 20,
+                  }}>
+                  Please enter the OTP recieived in your email address.
                 </Text>
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 25,
+                  }}>
                   <View
                     style={{
-                      flexDirection: 'column',
+                      alignSelf: 'center',
+                      borderColor: '#e6e6e6',
+                      borderWidth: 1,
+                      borderRadius: 8,
+                      width: '90%',
+                      marginVertical: 8,
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.otp ? 'red' : 'gray',
+                    }}>
+                    <Icon
+                      name="envelope"
+                      size={20}
+                      color={theme.$primaryColor}
+                    />
+                    <TextInput
+                      style={styles.inputField}
+                      placeholder={'OTP'}
+                      placeholderTextColor="grey"
+                      autoCapitalize="sentences"
+                      autoCorrect
+                      onChangeText={handleChange('otp')}
+                      keyboardType={'number-pad'}
+                      onBlur={handleBlur('otp')}
+                      value={values.otp}
+                    />
+                  </View>
+                  {touched.otp && errors.otp && (
+                    <Text style={styles.errorText}>
+                      {touched.otp && errors.otp}
+                    </Text>
+                  )}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderColor: '#e6e6e6',
+                      borderWidth: 1,
+                      borderRadius: 8,
+                      width: '90%',
+                      marginVertical: 8,
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.newPassword ? 'red' : 'gray',
+                    }}>
+                    <Icon name="lock" size={20} color={theme.$primaryColor} />
+                    <TextInput
+                      secureTextEntry={eyeopen.password ? true : false}
+                      style={styles.inputField}
+                      placeholder={'Password'}
+                      placeholderTextColor="grey"
+                      onChangeText={handleChange('newPassword')}
+                      onBlur={handleBlur('newPassword')}
+                      value={values.newPassword}
+                    />
+
+                    <EIcon name={eyeopen.icon} onPress={() => handleEyeChange()} size={20} color="black" />
+                  </View>
+
+                  {touched.newPassword && errors.newPassword && (
+                    <Text style={styles.errorText}>
+                      {touched.newPassword && errors.newPassword}
+                    </Text>
+                  )}
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderColor: '#e6e6e6',
+                      borderWidth: 1,
+                      borderRadius: 8,
+                      width: '90%',
+                      marginVertical: 8,
+                      paddingLeft: 8,
+                      paddingRight: 8,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      borderColor: errors.confirmPassword ? 'red' : 'gray',
+                    }}>
+                    <Icon name="lock" size={20} color={theme.$primaryColor} />
+                    <TextInput
+                      secureTextEntry={eyeopenconfirm.passwordconfirm ? true : false}
+                      style={styles.inputField}
+                      placeholder={'Confirm Password'}
+                      placeholderTextColor="grey"
+                      onChangeText={handleChange('confirmPassword')}
+                      onBlur={handleBlur('confirmPassword')}
+                      value={values.confirmPassword}
+                    />
+                    <EIcon name={eyeopenconfirm.iconconfirm} onPress={() => handleEyeChangeConfirm()} size={20} color="black" />
+                  </View>
+                  {touched.confirmPassword && errors.confirmPassword && (
+                    <Text style={styles.errorText}>
+                      {touched.confirmPassword && errors.confirmPassword}
+                    </Text>
+                  )}
+                  <TouchableOpacity
+                    onPress={handleSubmit}
+                    style={{
+                      backgroundColor: theme.$primaryColor,
+                      width: 80,
+                      padding: 10,
+                      borderRadius: 8,
                       alignItems: 'center',
                       justifyContent: 'center',
-                      marginBottom: 25,
+                      alignSelf: 'flex-end',
+                      marginTop: 10,
+                      marginRight: '5%',
                     }}>
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderColor: '#e6e6e6',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        width: '90%',
-                        marginVertical: 8,
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.otp ? 'red' : 'gray',
-                      }}>
-                      <Icon
-                        name="envelope"
-                        size={20}
-                        color={theme.$primaryColor}
-                      />
-                      <TextInput
-                        style={styles.inputField}
-                        placeholder={'OTP'}
-                        placeholderTextColor="grey"
-                        autoCapitalize="sentences"
-                        autoCorrect
-                        onChangeText={handleChange('otp')}
-                        keyboardType={'number-pad'}
-                        onBlur={handleBlur('otp')}
-                        value={values.otp}
-                      />
-                    </View>
-                    {touched.otp && errors.otp && (
-                      <Text style={styles.errorText}>
-                        {touched.otp && errors.otp}
+                    {!loading && (
+                      <Text
+                        style={{
+                          color: '#fff',
+                          fontSize: 16,
+                        }}>
+                        Submit
                       </Text>
                     )}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderColor: '#e6e6e6',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        width: '90%',
-                        marginVertical: 8,
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.newPassword ? 'red' : 'gray',
-                      }}>
-                      <Icon name="lock" size={20} color={theme.$primaryColor} />
-                      <TextInput
-                        secureTextEntry
-                        style={styles.inputField}
-                        placeholder={'Password'}
-                        placeholderTextColor="grey"
-                        onChangeText={handleChange('newPassword')}
-                        onBlur={handleBlur('newPassword')}
-                        value={values.newPassword}
-                      />
-                    </View>
-                    {touched.newPassword && errors.newPassword && (
-                      <Text style={styles.errorText}>
-                        {touched.newPassword && errors.newPassword}
-                      </Text>
-                    )}
-                    <View
-                      style={{
-                        alignSelf: 'center',
-                        borderColor: '#e6e6e6',
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        width: '90%',
-                        marginVertical: 8,
-                        paddingLeft: 8,
-                        paddingRight: 8,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        borderColor: errors.confirmPassword ? 'red' : 'gray',
-                      }}>
-                      <Icon name="lock" size={20} color={theme.$primaryColor} />
-                      <TextInput
-                        secureTextEntry
-                        style={styles.inputField}
-                        placeholder={'Confirm Password'}
-                        placeholderTextColor="grey"
-                        onChangeText={handleChange('confirmPassword')}
-                        onBlur={handleBlur('confirmPassword')}
-                        value={values.confirmPassword}
-                      />
-                    </View>
-                    {touched.confirmPassword && errors.confirmPassword && (
-                      <Text style={styles.errorText}>
-                        {touched.confirmPassword && errors.confirmPassword}
-                      </Text>
-                    )}
-                    <TouchableOpacity
-                      onPress={handleSubmit}
-                      style={{
-                        backgroundColor: theme.$primaryColor,
-                        width: 80,
-                        padding: 10,
-                        borderRadius: 8,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        alignSelf: 'flex-end',
-                        marginTop: 10,
-                        marginRight: '5%',
-                      }}>
-                      {!loading && (
-                        <Text
-                          style={{
-                            color: '#fff',
-                            fontSize: 16,
-                          }}>
-                          Submit
-                        </Text>
-                      )}
-                      {loading && <ActivityIndicator size={30} color={'white'} />}
-                    </TouchableOpacity>
-                  </View>
-                </React.Fragment>
-              )}
+                    {loading && <ActivityIndicator size={30} color={'white'} />}
+                  </TouchableOpacity>
+                </View>
+              </React.Fragment>
+            )}
           </Formik>
         )}
         {isSuccessMode && (
           <React.Fragment>
-            <View style={{justifyContent:'center', flex:1, alignItems:'center'}}>
-            <Image
-              source={require('../assets/checked.png')}
-              style={{
-                height: 70,
-                width: '20%',
-                marginBottom: '10%',
-                tintColor: 'green',
-                marginTop: '40%',
-              }}
-            />
+            <View style={{ justifyContent: 'center', flex: 1, alignItems: 'center' }}>
+              <Image
+                source={require('../assets/checked.png')}
+                style={{
+                  height: 70,
+                  width: '20%',
+                  marginBottom: '10%',
+                  tintColor: 'green',
+                  marginTop: '40%',
+                }}
+              />
 
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Login');
-              }}>
-              <Text>Your password has been changed</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Login');
+                }}>
+                <Text>Your password has been changed</Text>
+              </TouchableOpacity>
             </View>
           </React.Fragment>
         )}
@@ -461,3 +484,4 @@ const styles = StyleSheet.create({
   },
 });
 export default ForgotPasswordScreen;
+

@@ -140,9 +140,6 @@ const UserDetailsScreen = (props) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('====================================');
-        console.log("user",response.data.user);
-        console.log('====================================');
         setLoggedUser(response.data.user);
       })
       .catch((error) => {});
@@ -205,6 +202,7 @@ const UserDetailsScreen = (props) => {
   });
 
   const handleSubmit = (values) => {
+    console.log("talents",checked)
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -747,10 +745,10 @@ const UserDetailsScreen = (props) => {
                         <TouchableOpacity
                           key={item._id}
                           onPress={() => {
-                            handleToggle(item._id);
+                            handleToggle(item.category._id);
                           }}
                           style={
-                            checked.indexOf(item._id) === -1
+                            checked.indexOf(item.category._id) === -1
                               ? styles.categoryItem
                               : styles.categoryItemActive
                           }>

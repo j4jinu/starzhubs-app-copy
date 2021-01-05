@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  View
 } from 'react-native';
 import WebView from 'react-native-webview';
 import theme from '../config/theme';
@@ -16,20 +17,12 @@ const MediaItem = (props) => {
   } else {
     return (
       <>
-        <TouchableOpacity
+        <View
           style={styles.gridItem}
           activeOpacity={0.7}
-          onPress={() =>
-            props.navigation.navigate('MediaDetails', {
-              mediaFile: props.media[0].file,
-              mediaType: props.media[0].fileType,
-              caption: props.media[0].caption,
-              description: props.media[0].description,
-              user: props.user[0] !== undefined ? props.user[0] : props.user,
-              status: 1,
-            })
-          }>
+          >
           {props.media[0].fileType === 'video' ? (
+            
             <WebView
               javaScriptEnabled={true}
               domStorageEnabled={true}
@@ -51,14 +44,30 @@ const MediaItem = (props) => {
               }}
             />
             )}
-          {props.user[0] !== undefined && (
-            <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
-          )}
-          <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
-          <Text numberOfLines={3} style={styles.mediaDescription}>
-            {props.media[0].description}
-          </Text>
-        </TouchableOpacity>
+          
+          <TouchableOpacity
+            activeOpacity={0.7}
+            
+            onPress={() =>
+              props.navigation.navigate('MediaDetails', {
+                mediaFile: props.media[0].file,
+                mediaType: props.media[0].fileType,
+                caption: props.media[0].caption,
+                description: props.media[0].description,
+                user: props.user[0] !== undefined ? props.user[0] : props.user,
+                status: 1,
+              })
+            }
+            >
+            {props.user[0] !== undefined && (
+              <Text style={styles.mediaAuthor}>{props.user[0].name}</Text>
+            )}
+            <Text style={styles.mediaTitle}>{props.media[0].caption}</Text>
+            <Text numberOfLines={3} style={styles.mediaDescription}>
+              {props.media[0].description}
+            </Text>
+          </TouchableOpacity>
+          </View>
       </>
     );
   }

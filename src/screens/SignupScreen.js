@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   View,
@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import { Formik } from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import theme from '../config/theme';
+import EIcon from 'react-native-vector-icons/Entypo';
 
 const emailRegExp = /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))|[ \t]$/;
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -32,7 +33,7 @@ const profileSchema = yup.object({
     .required('Enter Your Phone Number'),
   password: yup
     .string()
-    .min(8, ({ min }) => `Password must be atleast ${min} characters`)
+    .min(8, ({ min }) => `Password must be atleast ${min} characters, atleast one uppercase one lowercase and  one digit`)
     .matches(passRegExp, 'Atleast one uppercase one lowercase and  one digit')
     .max(20, ({ max }) => `Password should not be  more than ${max} `)
     .required('Enter Password'),
@@ -44,6 +45,8 @@ const profileSchema = yup.object({
 });
 
 const SignupScreen = (props) => {
+  const [eyeopen, seteyeopen] = useState({ icon: "eye-with-line", password: true });
+  const [eyeopenconfirm, seteyeopenconfirm] = useState({ iconconfirm: "eye-with-line", passwordconfirm: true });
   const register = async (values, { setSubmitting }) => {
     if (values.password !== values.confPassword) {
       setSubmitting(false);
@@ -79,7 +82,20 @@ const SignupScreen = (props) => {
       );
     }
   };
+  const handleEyeChange = () => {
+    seteyeopen(prevState => ({
+      icon: prevState.icon === "eye" ? "eye-with-line" : "eye",
+      password: !prevState.password
+    }));
 
+  }
+  const handleEyeChangeConfirm = () => {
+    seteyeopenconfirm(prevState => ({
+      iconconfirm: prevState.iconconfirm === "eye" ? "eye-with-line" : "eye",
+      passwordconfirm: !prevState.passwordconfirm
+    }));
+
+  }
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -105,166 +121,168 @@ const SignupScreen = (props) => {
             errors,
             values,
           }) => (
-              <>
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '95%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 8,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.name ? 'red' : 'gray',
-                  }}>
-                  <Icon name="user" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    autoCapitalize
-                    textContentType={'name'}
-                    style={styles.inputField}
-                    placeholder={'Full Name'}
-                    onChangeText={handleChange('name')}
-                    onBlur={handleBlur('name')}
-                    value={values.name}
-                  />
-                </View>
-                {touched.name && errors.name && (
-                  <Text style={styles.errorText}>
-                    {touched.name && errors.name}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '95%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.email ? 'red' : 'gray',
-                  }}>
-                  <Icon name="envelope" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'email-address'}
-                    textContentType={'emailAddress'}
-                    style={styles.inputField}
-                    placeholder={'Email address'}
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
-                    value={values.email}
-                  />
-                </View>
-                {touched.email && errors.email && (
-                  <Text style={styles.errorText}>
-                    {touched.email && errors.email}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '95%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.phone ? 'red' : 'gray',
-                  }}>
-                  <Icon name="phone" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    keyboardType={'number-pad'}
-                    style={styles.inputField}
-                    placeholder={'Phone Number'}
-                    onChangeText={handleChange('phone')}
-                    onBlur={handleBlur('phone')}
-                    value={values.phone}
-                  />
-                </View>
-                {touched.phone && errors.phone && (
-                  <Text style={styles.errorText}>
-                    {touched.phone && errors.phone}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '95%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.password ? 'red' : 'gray',
-                  }}>
-                  <Icon name="lock" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    secureTextEntry={true}
-                    style={styles.inputField}
-                    placeholder={'New Password'}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                  />
-                </View>
-                {touched.password && errors.password && (
-                  <Text style={styles.errorText}>
-                    {touched.password && errors.password}
-                  </Text>
-                )}
-                <View
-                  style={{
-                    alignSelf: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    width: '95%',
-                    paddingLeft: 8,
-                    paddingRight: 8,
-                    marginTop: 12,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    borderColor: errors.confPassword ? 'red' : 'gray',
-                  }}>
-                  <Icon name="lock" size={20} color={theme.$primaryColor} />
-                  <TextInput
-                    secureTextEntry={true}
-                    style={styles.inputField}
-                    placeholder={'Confirm Password'}
-                    onChangeText={handleChange('confPassword')}
-                    onBlur={handleBlur('confPassword')}
-                    value={values.confPassword}
-                  />
-                </View>
-                {touched.confPassword && errors.confPassword && (
-                  <Text style={styles.errorText}>
-                    {touched.confPassword && errors.confPassword}
-                  </Text>
-                )}
-                {!isSubmitting && (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.registerBtn}
-                    onPress={handleSubmit}>
-                    <Text style={styles.registerBtnText}>REGISTER</Text>
-                  </TouchableOpacity>
-                )}
-                {isSubmitting && (
-                  <ActivityIndicator
-                    style={{ marginTop: 10 }}
-                    size={'large'}
-                    color={theme.$primaryColor}
-                  />
-                )}
-              </>
-            )}
+            <>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '95%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.name ? 'red' : 'gray',
+                }}>
+                <Icon name="user" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  autoCapitalize
+                  textContentType={'name'}
+                  style={styles.inputField}
+                  placeholder={'Full Name'}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
+                />
+              </View>
+              {touched.name && errors.name && (
+                <Text style={styles.errorText}>
+                  {touched.name && errors.name}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '95%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.email ? 'red' : 'gray',
+                }}>
+                <Icon name="envelope" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'email-address'}
+                  textContentType={'emailAddress'}
+                  style={styles.inputField}
+                  placeholder={'Email address'}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  value={values.email}
+                />
+              </View>
+              {touched.email && errors.email && (
+                <Text style={styles.errorText}>
+                  {touched.email && errors.email}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '95%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.phone ? 'red' : 'gray',
+                }}>
+                <Icon name="phone" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  keyboardType={'number-pad'}
+                  style={styles.inputField}
+                  placeholder={'Phone Number'}
+                  onChangeText={handleChange('phone')}
+                  onBlur={handleBlur('phone')}
+                  value={values.phone}
+                />
+              </View>
+              {touched.phone && errors.phone && (
+                <Text style={styles.errorText}>
+                  {touched.phone && errors.phone}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '95%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.password ? 'red' : 'gray',
+                }}>
+                <Icon name="lock" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  secureTextEntry={eyeopen.password ? true : false}
+                  style={styles.inputField}
+                  placeholder={'New Password'}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  value={values.password}
+                />
+                <EIcon name={eyeopen.icon} onPress={() => handleEyeChange()} size={20} color="black" />
+              </View>
+              {touched.password && errors.password && (
+                <Text style={styles.errorText}>
+                  {touched.password && errors.password}
+                </Text>
+              )}
+              <View
+                style={{
+                  alignSelf: 'center',
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  width: '95%',
+                  paddingLeft: 8,
+                  paddingRight: 8,
+                  marginTop: 12,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: errors.confPassword ? 'red' : 'gray',
+                }}>
+                <Icon name="lock" size={20} color={theme.$primaryColor} />
+                <TextInput
+                  secureTextEntry={eyeopenconfirm.passwordconfirm ? true : false}
+                  style={styles.inputField}
+                  placeholder={'Confirm Password'}
+                  onChangeText={handleChange('confPassword')}
+                  onBlur={handleBlur('confPassword')}
+                  value={values.confPassword}
+                />
+                <EIcon name={eyeopenconfirm.iconconfirm} onPress={() => handleEyeChangeConfirm()} size={20} color="black" />
+              </View>
+              {touched.confPassword && errors.confPassword && (
+                <Text style={styles.errorText}>
+                  {touched.confPassword && errors.confPassword}
+                </Text>
+              )}
+              {!isSubmitting && (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  style={styles.registerBtn}
+                  onPress={handleSubmit}>
+                  <Text style={styles.registerBtnText}>REGISTER</Text>
+                </TouchableOpacity>
+              )}
+              {isSubmitting && (
+                <ActivityIndicator
+                  style={{ marginTop: 10 }}
+                  size={'large'}
+                  color={theme.$primaryColor}
+                />
+              )}
+            </>
+          )}
         </Formik>
         <View
           style={{

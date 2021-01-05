@@ -182,138 +182,138 @@ const FeedbackScreen = ({ navigation }) => {
               errors,
               isValid,
             }) => (
-                <>
-                  <View
+              <>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    width: '100%',
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.name ? 'red' : '#e6e6e6',
+                  }}>
+                  <Icon
+                    name="ios-person"
+                    size={18}
+                    color={theme.$primaryColor}
                     style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 5,
-                      width: '100%',
-                      marginTop: 12,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.name ? 'red' : '#e6e6e6',
-                    }}>
-                    <Icon
-                      name="ios-person"
-                      size={18}
-                      color={theme.$primaryColor}
-                      style={{
-                        marginLeft: '3%',
-                      }}
-                    />
-                    <TextInput
-                      name="name"
-                      style={styles.inputField}
-                      placeholder="Name"
-                      placeholderTextColor="#B1A9A4"
-                      onChangeText={handleChange('name')}
-                      onBlur={handleBlur('name')}
-                      value={values.name}
-                    />
-                  </View>
-                  {errors.name && (
-                    <Text
-                      style={{
-                        alignSelf: 'flex-start',
-                        marginHorizontal: 5,
-                        color: 'red',
-                      }}>
-                      {errors.name}
-                    </Text>
-                  )}
-                  <View
+                      marginLeft: '3%',
+                    }}
+                  />
+                  <TextInput
+                    name="name"
+                    style={styles.inputField}
+                    placeholder="Name"
+                    placeholderTextColor="#B1A9A4"
+                    onChangeText={handleChange('name')}
+                    onBlur={handleBlur('name')}
+                    value={values.name}
+                  />
+                </View>
+                {errors.name && (
+                  <Text
                     style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 5,
-                      width: '100%',
-                      marginTop: 12,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.email ? 'red' : '#e6e6e6',
+                      alignSelf: 'flex-start',
+                      marginHorizontal: 5,
+                      color: 'red',
                     }}>
-                    <EIcon
-                      name="email"
-                      size={18}
-                      color={theme.$primaryColor}
-                      style={{
-                        marginLeft: '3%',
-                      }}
-                    />
-                    <TextInput
-                      name="email"
-                      style={styles.inputField}
-                      placeholder="Email"
-                      placeholderTextColor="#B1A9A4"
-                      onChangeText={handleChange('email')}
-                      onBlur={handleBlur('email')}
-                      value={values.email}
-                      keyboardType="email-address"
-                    />
-                  </View>
-                  {errors.email && (
-                    <Text
-                      style={{
-                        alignSelf: 'flex-start',
-                        marginHorizontal: 5,
-                        color: 'red',
-                      }}>
-                      {errors.email}
-                    </Text>
-                  )}
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      borderWidth: 1,
-                      borderRadius: 5,
-                      width: '100%',
-                      marginTop: 12,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      borderColor: errors.message ? 'red' : '#e6e6e6',
-                    }}>
-                    <MIcon
-                      name="message"
-                      size={18}
-                      color={theme.$primaryColor}
-                      style={{
-                        marginLeft: '3%',
-                      }}
-                    />
-                    <TextInput
-                      name="message"
-                      style={styles.inputField}
-                      placeholder="Message"
-                      numberOfLines={4}
-                      multiline={true}
-                      placeholderTextColor="#B1A9A4"
-                      onChangeText={handleChange('message')}
-                      onBlur={handleBlur('message')}
-                      value={values.message}
-                      secureTextEntry
-                    />
-                  </View>
-                  {errors.message && (
-                    <Text
-                      style={{
-                        alignSelf: 'flex-start',
-                        marginHorizontal: 5,
-                        color: 'red',
-                      }}>
-                      {errors.message}
-                    </Text>
-                  )}
-                  <TouchableOpacity
-                    onPress={handleSubmit}
-                    disabled={!isValid}
-                    style={styles.SignupBtn}>
-                    <Text style={{ color: 'white', textAlign: 'center' }}>
-                      Submit
+                    {errors.name}
                   </Text>
-                  </TouchableOpacity>
-                </>
-              )}
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    width: '100%',
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.email ? 'red' : '#e6e6e6',
+                  }}>
+                  <EIcon
+                    name="email"
+                    size={18}
+                    color={theme.$primaryColor}
+                    style={{
+                      marginLeft: '3%',
+                    }}
+                  />
+                  <TextInput
+                    name="email"
+                    style={styles.inputField}
+                    placeholder="Email"
+                    placeholderTextColor="#B1A9A4"
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                    keyboardType="email-address"
+                  />
+                </View>
+                {errors.email && (
+                  <Text
+                    style={{
+                      alignSelf: 'flex-start',
+                      marginHorizontal: 5,
+                      color: 'red',
+                    }}>
+                    {errors.email}
+                  </Text>
+                )}
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderWidth: 1,
+                    borderRadius: 5,
+                    width: '100%',
+                    marginTop: 12,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderColor: errors.message ? 'red' : '#e6e6e6',
+                  }}>
+                  <MIcon
+                    name="message"
+                    size={18}
+                    color={theme.$primaryColor}
+                    style={{
+                      marginLeft: '3%',
+                    }}
+                  />
+                  <TextInput
+                    name="message"
+                    style={styles.inputField}
+                    placeholder="Message"
+                    numberOfLines={4}
+                    multiline={true}
+                    placeholderTextColor="#B1A9A4"
+                    onChangeText={handleChange('message')}
+                    onBlur={handleBlur('message')}
+                    value={values.message}
+                    secureTextEntry
+                  />
+                </View>
+                {errors.message && (
+                  <Text
+                    style={{
+                      alignSelf: 'flex-start',
+                      marginHorizontal: 5,
+                      color: 'red',
+                    }}>
+                    {errors.message}
+                  </Text>
+                )}
+                <TouchableOpacity
+                  onPress={handleSubmit}
+                  disabled={!isValid}
+                  style={styles.SignupBtn}>
+                  <Text style={{ color: 'white', textAlign: 'center' }}>
+                    Submit
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </Formik>
         </View>
       </View>
@@ -335,7 +335,6 @@ const styles = StyleSheet.create({
   inputField: {
     alignSelf: 'center',
     width: '90%',
-    textTransform: 'lowercase',
     paddingTop: 10,
     paddingLeft: 8,
     fontFamily: 'montserrat-regular',

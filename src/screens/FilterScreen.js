@@ -54,11 +54,17 @@ const FilterScreen = (props) => {
   const [categories, setCategories] = useState([]);
 
   const unsubscribe = props.navigation.addListener('didFocus', () => {
+    resetFields();
     getCategory();
+    setCategoryOn(false);
+    setGenderOn(false);
+    setBodyTypeOn(false)
+    setSkinToneOn(false)
   });
 
   useEffect(() => {
     getCategory();
+    resetFields();
   }, []);
 
   unsubscribe;
@@ -137,8 +143,8 @@ const FilterScreen = (props) => {
   };
 
   const doSearch = async () => {
-    if (search === '') {
-      return alert('Enter a search query');
+    if (search === '' || search.length<=2) {
+      return alert('Enter valid data');
     }
     const searchRes = await fetch(
       `http://13.233.216.36:3000/api/user/search/u?key=${search}`,
@@ -251,6 +257,8 @@ const FilterScreen = (props) => {
     setFatty(false);
     setAverageBuild(false);
     handleAgeValueChange(0, 100);
+    setHeightFromValue(0)
+
   };
   const onDismissSnackBar = () => {
     setVisible(false);
@@ -661,7 +669,7 @@ const FilterScreen = (props) => {
                   status={isFatty ? 'checked' : 'unchecked'}
                   onPress={() => {
                     setFatty(!isFatty);
-                    handleBodyType('Fatty');
+                    handleBodyType('Fat');
                   }}
                   color={theme.$primaryColor}
                 />
@@ -703,7 +711,7 @@ const FilterScreen = (props) => {
                 alignSelf: 'center',
                 marginTop: 1,
               }}>
-              Select bodytype
+              Select body type
             </Text>
           )}
           <View style={{ width: '100%', alignItems: 'center', marginTop: '5%' }}>

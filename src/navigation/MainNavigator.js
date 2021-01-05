@@ -106,11 +106,15 @@ const HomeNavigator = createStackNavigator(
     },
     UsersList: {
       screen: PortfolioListScreen,
-      title: 'Portfolios',
+      navigationOptions: {
+        title: 'Portfolios',
+      },
     },
     MediaList: {
       screen: MediaListSceen,
-      title: 'Media',
+      navigationOptions: {
+        title: 'Media List',
+      },
     },
   },
   {
@@ -249,7 +253,9 @@ const AccountNavigator = createStackNavigator(
     },
     EditTalents: {
       screen: EditTalentScreen,
-      title: 'Edit talent',
+      navigationOptions: {
+        title: 'Edit Talents',
+      },
     },
     AddTalents: {
       screen: AddTalentScreen,
